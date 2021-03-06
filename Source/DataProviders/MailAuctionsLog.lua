@@ -68,7 +68,7 @@ function JournalatorMailAuctionsLogProviderMixin:OnShow()
       count = item.count,
       unitPrice = item.value/item.count,
       rawDay = item.time,
-      date = Auctionator.Utilities.PrettyDate(item.time),
+      date = SecondsToTime(time() - item.time),
     })
   end
   self:AppendEntries(results, true)
