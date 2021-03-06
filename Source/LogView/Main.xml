@@ -1,0 +1,48 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame
+    name="JournalatorLogViewTemplate"
+    virtual="true"
+    parent="UIParent"
+    mixin="JournalatorLogViewMixin"
+    inherits="JournalatorPanelTemplate"
+    topLevel="true"
+    enableMouse="true"
+  >
+    <Scripts>
+      <OnKeyDown method="OnKeyDown" />
+      <OnKeyUp method="OnKeyUp" />
+    </Scripts>
+
+    <Anchors>
+      <Anchor point="CENTER" relativeKey="$parent" relativePoint="CENTER"/>
+    </Anchors>
+
+    <Frames>
+      <Frame inherits="JournalatorInvoiceLogViewTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-20"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+        </Anchors>
+      </Frame>
+
+      <Button parentKey="CloseDialog" inherits="UIPanelCloseButtonNoScripts">
+        <Anchors>
+          <Anchor point="TOPRIGHT" relativeKey="$parent" relativePoint="TOPRIGHT" />
+        </Anchors>
+        <Scripts>
+          <OnClick>self:GetParent():OnCloseClicked()</OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+
+    <Layers>
+      <Layer>
+        <FontString text="Journalator - Summary" inherits="GameFontHighlight">
+          <Anchors>
+            <Anchor point="TOP" relativeTo="$parent" relativePoint="TOP" y="-10"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Frame>
+</Ui>

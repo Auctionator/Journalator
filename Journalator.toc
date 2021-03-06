@@ -1,0 +1,13 @@
+## Interface: 90002
+## Title: Journalator
+## Version: AUTO_GENERATED_VERSION
+## Author: plusmouse
+## RequiredDeps: Auctionator
+## SavedVariables: JOURNALATOR_LOGS, JOURNALATOR_MAIL_AUCTIONS_LOG
+
+Journalator.lua
+Journalator.xml
+
+Locales\Manifest.xml
+
+Source\Manifest.xml

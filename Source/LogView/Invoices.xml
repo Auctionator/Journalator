@@ -1,0 +1,35 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame
+    name="JournalatorInvoiceLogViewTemplate"
+    virtual="true"
+    mixin="JournalatorInvoiceLogViewMixin"
+  >
+    <Scripts>
+      <OnLoad method="OnLoad" />
+    </Scripts>
+
+    <Frames>
+      <Frame parentKey="HistoricalPriceListing" inherits="AuctionatorResultsListingTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20"/>
+        </Anchors>
+      </Frame>
+
+      <Frame parentKey="HistoricalPriceInset" inherits="AuctionatorInsetDarkTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.HistoricalPriceListing" relativePoint="TOPLEFT" x="-5" y="-24"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent.HistoricalPriceListing" relativePoint="BOTTOMRIGHT" y="-2"/>
+        </Anchors>
+      </Frame>
+
+      <Frame parentKey="HistoricalPriceProvider" mixin="JournalatorMailAuctionsLogProviderMixin">
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnShow method="OnShow"/>
+          <OnUpdate method="OnUpdate"/>
+        </Scripts>
+      </Frame>
+    </Frames>
+  </Frame>
+</Ui>
