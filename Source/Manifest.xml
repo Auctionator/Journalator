@@ -6,6 +6,7 @@
   <Script file="MailMonitor.lua" />
   <Include file="MailMonitor.xml" />
   <Include file="DataProviders\Manifest.xml" />
+  <Include file="ResultsListing\Manifest.xml" />
   <Include file="LogView\Manifest.xml" />
   <Include file="SlashCmd\Manifest.xml" />
 </Ui>

@@ -103,5 +103,5 @@ function JournalatorMailAuctionsLogProviderMixin:Sort(fieldName, sortDirection)
 end
 
 function JournalatorMailAuctionsLogProviderMixin:GetRowTemplate()
-  return "AuctionatorResultsRowTemplate"
+  return "JournalatorLogViewResultsRowTemplate"
 end
