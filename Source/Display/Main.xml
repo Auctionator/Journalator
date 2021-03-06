@@ -1,9 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="JournalatorLogViewTemplate"
+    name="JournalatorDisplayTemplate"
     virtual="true"
     parent="UIParent"
-    mixin="JournalatorLogViewMixin"
+    mixin="JournalatorDisplayMixin"
     inherits="JournalatorPanelTemplate"
     topLevel="true"
     enableMouse="true"
@@ -18,7 +18,7 @@
     </Anchors>
 
     <Frames>
-      <Frame inherits="JournalatorInvoiceLogViewTemplate">
+      <Frame inherits="JournalatorInvoiceDisplayTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-20"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>

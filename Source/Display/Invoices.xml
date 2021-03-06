@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="JournalatorInvoiceLogViewTemplate"
+    name="JournalatorInvoiceDisplayTemplate"
     virtual="true"
-    mixin="JournalatorInvoiceLogViewMixin"
+    mixin="JournalatorInvoiceDisplayMixin"
   >
     <Scripts>
       <OnLoad method="OnLoad" />
