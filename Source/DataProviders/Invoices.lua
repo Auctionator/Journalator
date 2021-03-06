@@ -9,7 +9,7 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "In",
+    headerText = "In (including AH cut)",
     headerParameters = { "moneyIn" },
     cellTemplate = "AuctionatorPriceCellTemplate",
     cellParameters = { "moneyIn" }
@@ -23,7 +23,7 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "Unit Price",
+    headerText = "Unit Price (excluding AH cut)",
     headerParameters = { "unitPrice" },
     cellTemplate = "AuctionatorPriceCellTemplate",
     cellParameters = { "unitPrice" }
@@ -57,7 +57,7 @@ function JournalatorInvoicesDataProviderMixin:OnShow()
   for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
     local moneyIn, moneyOut
     if item.invoiceType == "seller" then
-      moneyIn = item.value
+      moneyIn = item.value + item.deposit - item.consignment
     else
       moneyOut = item.value
     end
