@@ -3,7 +3,7 @@
 ## Version: AUTO_GENERATED_VERSION
 ## Author: plusmouse
 ## RequiredDeps: Auctionator
-## SavedVariables: JOURNALATOR_LOGS, JOURNALATOR_MAIL_AUCTIONS_LOG
+## SavedVariables: JOURNALATOR_LOGS
 
 Journalator.lua
 Journalator.xml

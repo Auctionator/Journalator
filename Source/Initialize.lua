@@ -1,5 +1,4 @@
-function Journalator.Load()
-  JOURNALATOR_MAIL_AUCTIONS_LOG = JOURNALATOR_MAIL_AUCTIONS_LOG or {}
+function Journalator.Initialize()
   JOURNALATOR_LOGS = JOURNALATOR_LOGS or {
     Version = 1,
     Invoices = {},

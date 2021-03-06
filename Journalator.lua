@@ -9,6 +9,6 @@ end
 
 function JournalatorCoreMixin:OnEvent(eventName, name)
   if eventName == "ADDON_LOADED" and name == "Journalator" then
-    Journalator.Load()
+    Journalator.Initialize()
   end
 end

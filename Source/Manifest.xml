@@ -2,7 +2,7 @@
   <Script file="Locales.lua" />
   <Script file="Objects.lua" />
 
-  <Script file="Load.lua" />
+  <Script file="Initialize.lua" />
   <Include file="Monitor\Manifest.xml" />
   <Include file="DataProviders\Manifest.xml" />
   <Include file="ResultsListing\Manifest.xml" />
