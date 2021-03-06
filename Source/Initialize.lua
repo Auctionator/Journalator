@@ -10,7 +10,6 @@ function Journalator.Initialize()
 
   CreateFrame("Frame", "JNRMonitor", nil, "JournalatorMailMonitorTemplate")
   CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
-  JNRView:Hide()
 
   Journalator.SlashCmd.Initialize()
   Journalator.Source = {

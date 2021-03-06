@@ -7,6 +7,7 @@
     inherits="JournalatorPanelTemplate"
     topLevel="true"
     enableMouse="true"
+    hidden="true"
   >
     <Scripts>
       <OnKeyDown method="OnKeyDown" />

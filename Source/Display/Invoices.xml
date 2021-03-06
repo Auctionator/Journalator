@@ -31,5 +31,15 @@
         </Scripts>
       </Frame>
     </Frames>
+
+    <Layers>
+      <Layer>
+        <FontString text="Status unset" parentKey="StatusText" inherits="GameFontHighlight">
+          <Anchors>
+            <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT" y="15" x="-20"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
   </Frame>
 </Ui>

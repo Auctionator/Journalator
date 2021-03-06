@@ -51,9 +51,12 @@ function JournalatorInvoicesDataProviderMixin:OnLoad()
   AuctionatorDataProviderMixin.OnLoad(self)
 end
 
+local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
+
 function JournalatorInvoicesDataProviderMixin:OnShow()
   self:Reset()
   local results = {}
+  local monthlyTotal = 0
   for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
     local moneyIn, moneyOut
     if item.invoiceType == "seller" then
@@ -61,6 +64,8 @@ function JournalatorInvoicesDataProviderMixin:OnShow()
     else
       moneyOut = item.value
     end
+    local timeSinceEntry = time() - item.time
+
     table.insert(results, {
       itemName = item.itemName,
       moneyIn = moneyIn,
@@ -68,8 +73,21 @@ function JournalatorInvoicesDataProviderMixin:OnShow()
       count = item.count,
       unitPrice = item.value/item.count,
       rawDay = item.time,
-      date = SecondsToTime(time() - item.time),
+      date = SecondsToTime(timeSinceEntry),
     })
+
+    if timeSinceEntry < SECONDS_IN_A_MONTH then
+      if moneyIn ~= nil then
+        monthlyTotal = monthlyTotal + moneyIn
+      else
+        monthlyTotal = monthlyTotal - moneyOut
+      end
+    end
+  end
+  if monthlyTotal < 0 then
+    self:GetParent().StatusText:SetText("You lost " .. Auctionator.Utilities.CreateMoneyString(-monthlyTotal) .. " this month")
+  else
+    self:GetParent().StatusText:SetText("You gained " .. Auctionator.Utilities.CreateMoneyString(monthlyTotal) .. "this month")
   end
   self:AppendEntries(results, true)
 end
