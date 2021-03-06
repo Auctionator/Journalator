@@ -3,8 +3,7 @@
   <Script file="Objects.lua" />
 
   <Script file="Load.lua" />
-  <Script file="MailMonitor.lua" />
-  <Include file="MailMonitor.xml" />
+  <Include file="Monitor\Manifest.xml" />
   <Include file="DataProviders\Manifest.xml" />
   <Include file="ResultsListing\Manifest.xml" />
   <Include file="LogView\Manifest.xml" />
