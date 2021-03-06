@@ -1,4 +1,4 @@
-local MAIL_AUCTIONS_LOG_PROVIDER_LAYOUT ={
+local INVOICES_DATA_PROVIDER_LAYOUT ={
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = "Name",
@@ -45,13 +45,13 @@ local MAIL_AUCTIONS_LOG_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorMailAuctionsLogProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
+JournalatorInvoicesDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
 
-function JournalatorMailAuctionsLogProviderMixin:OnLoad()
+function JournalatorInvoicesDataProviderMixin:OnLoad()
   AuctionatorDataProviderMixin.OnLoad(self)
 end
 
-function JournalatorMailAuctionsLogProviderMixin:OnShow()
+function JournalatorInvoicesDataProviderMixin:OnShow()
   self:Reset()
   local results = {}
   for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
@@ -74,11 +74,11 @@ function JournalatorMailAuctionsLogProviderMixin:OnShow()
   self:AppendEntries(results, true)
 end
 
-function JournalatorMailAuctionsLogProviderMixin:GetTableLayout()
-  return MAIL_AUCTIONS_LOG_PROVIDER_LAYOUT
+function JournalatorInvoicesDataProviderMixin:GetTableLayout()
+  return INVOICES_DATA_PROVIDER_LAYOUT
 end
 
-function JournalatorMailAuctionsLogProviderMixin:UniqueKey(entry)
+function JournalatorInvoicesDataProviderMixin:UniqueKey(entry)
   return tostring(tostring(entry.price) .. tostring(entry.rawDay))
 end
 
@@ -92,7 +92,7 @@ local COMPARATORS = {
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorMailAuctionsLogProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorInvoicesDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -102,6 +102,6 @@ function JournalatorMailAuctionsLogProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-function JournalatorMailAuctionsLogProviderMixin:GetRowTemplate()
+function JournalatorInvoicesDataProviderMixin:GetRowTemplate()
   return "JournalatorLogViewResultsRowTemplate"
 end

@@ -1,5 +1,5 @@
 JournalatorInvoiceLogViewMixin = {}
 
 function JournalatorInvoiceLogViewMixin:OnLoad()
-  self.HistoricalPriceListing:Init(self.HistoricalPriceProvider)
+  self.ResultsListing:Init(self.DataProvider)
 end
