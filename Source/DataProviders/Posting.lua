@@ -49,6 +49,7 @@ JournalatorPostingDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMi
 
 function JournalatorPostingDataProviderMixin:OnLoad()
   AuctionatorDataProviderMixin.OnLoad(self)
+  self.processCountPerUpdate = 200
 end
 
 function JournalatorPostingDataProviderMixin:OnShow()
