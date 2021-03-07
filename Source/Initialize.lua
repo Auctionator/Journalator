@@ -8,7 +8,8 @@ function Journalator.Initialize()
     error("Unexpected log version")
   end
 
-  CreateFrame("Frame", "JNRMonitor", nil, "JournalatorMailMonitorTemplate")
+  CreateFrame("Frame", "JNRMailMonitor", nil, "JournalatorMailMonitorTemplate")
+  CreateFrame("Frame", "JNRPostingMonitor", nil, "JournalatorPostingMonitorTemplate")
   CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
 
   Journalator.SlashCmd.Initialize()

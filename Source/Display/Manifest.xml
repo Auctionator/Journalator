@@ -1,8 +1,11 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="Invoices.lua" />
+  <Script file="Posting.lua" />
+
   <Script file="Main.lua" />
 
   <Include file="Invoices.xml" />
+  <Include file="Posting.xml" />
 
   <Include file="Panel.xml" />
   <Include file="Main.xml" />

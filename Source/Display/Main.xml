@@ -22,6 +22,15 @@
       <Frame inherits="JournalatorInvoiceDisplayTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-20"/>
+          <Anchor point="BOTTOM" relativeKey="$parent" relativePoint="CENTER" y="10"/>
+          <Anchor point="RIGHT" relativeKey="$parent" relativePoint="RIGHT" x="-20"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="JournalatorPostingDisplayTemplate">
+        <Anchors>
+          <Anchor point="TOP" relativeKey="$parent" relativePoint="CENTER" y="-10"/>
+          <Anchor point="LEFT" relativeKey="$parent" relativePoint="LEFT" x="20"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>
