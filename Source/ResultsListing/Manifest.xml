@@ -1,3 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Include file="ResultsRow.xml" />
+  <Include file="PriceCell.lua" />
+  <Include file="PriceCell.xml" />
 </Ui>

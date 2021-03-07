@@ -11,14 +11,14 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = "In (including AH cut)",
     headerParameters = { "moneyIn" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellTemplate = "JournalatorPriceCellTemplate",
     cellParameters = { "moneyIn" }
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = "Out",
     headerParameters = { "moneyOut" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellTemplate = "JournalatorPriceCellTemplate",
     cellParameters = { "moneyOut" }
   },
   {
@@ -62,7 +62,7 @@ function JournalatorInvoicesDataProviderMixin:OnShow()
     if item.invoiceType == "seller" then
       moneyIn = item.value + item.deposit - item.consignment
     else
-      moneyOut = item.value
+      moneyOut = -item.value
     end
     local timeSinceEntry = time() - item.time
 
@@ -80,7 +80,7 @@ function JournalatorInvoicesDataProviderMixin:OnShow()
       if moneyIn ~= nil then
         monthlyTotal = monthlyTotal + moneyIn
       else
-        monthlyTotal = monthlyTotal - moneyOut
+        monthlyTotal = monthlyTotal + moneyOut
       end
     end
   end
