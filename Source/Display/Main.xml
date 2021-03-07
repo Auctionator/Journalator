@@ -12,6 +12,9 @@
     <Scripts>
       <OnKeyDown method="OnKeyDown" />
       <OnKeyUp method="OnKeyUp" />
+
+      <OnLoad method="OnLoad" />
+      <OnShow method="OnShow" />
     </Scripts>
 
     <Anchors>
@@ -19,18 +22,22 @@
     </Anchors>
 
     <Frames>
-      <Frame inherits="JournalatorInvoiceDisplayTemplate">
+      <Frame inherits="JournalatorInvoiceDisplayTemplate" parentArray="Views">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Invoices" type="string"/>
+				</KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-20"/>
-          <Anchor point="BOTTOM" relativeKey="$parent" relativePoint="CENTER" y="10"/>
-          <Anchor point="RIGHT" relativeKey="$parent" relativePoint="RIGHT" x="-20"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="JournalatorPostingDisplayTemplate">
+      <Frame inherits="JournalatorPostingDisplayTemplate" parentArray="Views">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Posting" type="string"/>
+				</KeyValues>
         <Anchors>
-          <Anchor point="TOP" relativeKey="$parent" relativePoint="CENTER" y="-10"/>
-          <Anchor point="LEFT" relativeKey="$parent" relativePoint="LEFT" x="20"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-20"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>
@@ -43,11 +50,38 @@
           <OnClick>self:GetParent():OnCloseClicked()</OnClick>
         </Scripts>
       </Button>
+
+<!--
+     <Button parentKey="SummaryTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryTab_Button" text="Summary">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Summary" type="string"/>
+				</KeyValues>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="20" y="-28"/>
+				</Anchors>
+			</Button>
+-->
+			<Button parentKey="InvoicesTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="Invoices">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Invoices" type="string"/>
+				</KeyValues>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="20" y="-28"/>
+				</Anchors>
+			</Button>
+			<Button parentKey="PostingTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="Posting">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Posting" type="string"/>
+				</KeyValues>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.InvoicesTab" relativePoint="RIGHT" x="-15" y="0"/>
+				</Anchors>
+			</Button>
     </Frames>
 
     <Layers>
       <Layer>
-        <FontString text="Journalator - Summary" inherits="GameFontHighlight">
+        <FontString text="Journalator - Display" inherits="GameFontHighlight">
           <Anchors>
             <Anchor point="TOP" relativeTo="$parent" relativePoint="TOP" y="-10"/>
           </Anchors>

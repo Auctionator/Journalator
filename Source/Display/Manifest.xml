@@ -2,11 +2,13 @@
   <Script file="Invoices.lua" />
   <Script file="Posting.lua" />
 
+  <Script file="TabButton.lua" />
   <Script file="Main.lua" />
 
   <Include file="Invoices.xml" />
   <Include file="Posting.xml" />
 
+  <Include file="TabButton.xml" />
   <Include file="Panel.xml" />
   <Include file="Main.xml" />
 </Ui>
