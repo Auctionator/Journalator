@@ -87,7 +87,7 @@ function JournalatorInvoicesDataProviderMixin:OnShow()
   if monthlyTotal < 0 then
     self:GetParent().StatusText:SetText("You lost " .. Auctionator.Utilities.CreateMoneyString(-monthlyTotal) .. " this month")
   else
-    self:GetParent().StatusText:SetText("You gained " .. Auctionator.Utilities.CreateMoneyString(monthlyTotal) .. "this month")
+    self:GetParent().StatusText:SetText("You gained " .. Auctionator.Utilities.CreateMoneyString(monthlyTotal) .. " this month")
   end
   self:AppendEntries(results, true)
 end
