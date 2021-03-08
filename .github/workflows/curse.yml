@@ -28,8 +28,6 @@ jobs:
     - run: ./Journalator/.github/workflows/get-translations.sh esES "${{secrets.plusmouse_curseforge}}"
     - run: ./Journalator/.github/workflows/get-translations.sh esMX "${{secrets.plusmouse_curseforge}}"
     - run: ./Journalator/.github/workflows/get-translations.sh ptBR "${{secrets.plusmouse_curseforge}}"
-    - name: Delete files for curse
-      run: rm -rf Journalator/README.md Journalator/.github Journalator/.gitignore Journalator/.git
     - name: Generate build number
       id: buildnumber
       uses: einaregilsson/build-number@v3
@@ -42,6 +40,8 @@ jobs:
         replace: "${{steps.buildnumber.outputs.build_number}} (alpha)"
     - name: Create zip
       run: zip -r Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip ./Journalator
+    - name: Delete files for curse
+      run: zip --delete Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip Journalator/README.md Journalator/.github Journalator/.gitignore Journalator/.git
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
