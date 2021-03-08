@@ -98,7 +98,7 @@ function JournalatorInvoicesDataProviderMixin:GetTableLayout()
 end
 
 function JournalatorInvoicesDataProviderMixin:UniqueKey(entry)
-  return tostring(tostring(entry.price) .. tostring(entry.rawDay))
+  return tostring(entry)
 end
 
 local COMPARATORS = {

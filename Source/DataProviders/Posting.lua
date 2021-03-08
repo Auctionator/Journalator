@@ -74,7 +74,7 @@ function JournalatorPostingDataProviderMixin:GetTableLayout()
 end
 
 function JournalatorPostingDataProviderMixin:UniqueKey(entry)
-  return tostring(tostring(entry.price) .. tostring(entry.rawDay))
+  return tostring(entry)
 end
 
 local COMPARATORS = {
