@@ -41,7 +41,7 @@ jobs:
     - name: Create zip
       run: zip -r Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip ./Journalator
     - name: Delete files for curse
-      run: zip --delete Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip Journalator/README.md Journalator/.github Journalator/.gitignore Journalator/.git
+      run: zip -d Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip Journalator/README.md Journalator/.github Journalator/.gitignore Journalator/.git
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1

@@ -1,7 +1,7 @@
 local POSTING_DATA_PROVIDER_LAYOUT ={
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "Name",
+    headerText = AUCTIONATOR_L_NAME,
     headerParameters = { "itemName" },
     cellTemplate = "AuctionatorStringCellTemplate",
     cellParameters = { "itemName" },
@@ -9,21 +9,21 @@ local POSTING_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "Total",
+    headerText = JOURNALATOR_L_TOTAL,
     headerParameters = { "total" },
     cellTemplate = "AuctionatorPriceCellTemplate",
     cellParameters = { "total" }
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "Deposit",
+    headerText = JOURNALATOR_L_DEPOSIT,
     headerParameters = { "deposit" },
     cellTemplate = "AuctionatorPriceCellTemplate",
     cellParameters = { "deposit" }
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "Unit Price",
+    headerText = AUCTIONATOR_L_UNIT_PRICE,
     headerParameters = { "unitPrice" },
     cellTemplate = "AuctionatorPriceCellTemplate",
     cellParameters = { "unitPrice" }

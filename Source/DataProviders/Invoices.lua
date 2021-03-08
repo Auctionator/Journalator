@@ -1,7 +1,7 @@
 local INVOICES_DATA_PROVIDER_LAYOUT ={
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "Name",
+    headerText = AUCTIONATOR_L_NAME,
     headerParameters = { "itemName" },
     cellTemplate = "AuctionatorStringCellTemplate",
     cellParameters = { "itemName" },
@@ -9,21 +9,21 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "In (including AH cut)",
+    headerText = JOURNALATOR_L_IN_INCLUDING_AH_CUT,
     headerParameters = { "moneyIn" },
     cellTemplate = "JournalatorPriceCellTemplate",
     cellParameters = { "moneyIn" }
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "Out",
+    headerText = JOURNALATOR_L_OUT,
     headerParameters = { "moneyOut" },
     cellTemplate = "JournalatorPriceCellTemplate",
     cellParameters = { "moneyOut" }
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = "Unit Price (excluding AH cut)",
+    headerText = JOURNALATOR_L_UNIT_PRICE_EXCLUDING_AH_CUT,
     headerParameters = { "unitPrice" },
     cellTemplate = "AuctionatorPriceCellTemplate",
     cellParameters = { "unitPrice" }
