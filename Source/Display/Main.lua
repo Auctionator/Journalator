@@ -1,9 +1,5 @@
 JournalatorDisplayMixin = CreateFromMixins(AuctionatorEscapeToCloseMixin)
 
-function JournalatorDisplayMixin:OnCloseClicked()
-  self:Hide()
-end
-
 function JournalatorDisplayMixin:OnLoad()
   PanelTemplates_SetNumTabs(self, #self.Tabs)
 end
@@ -16,6 +12,8 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
   for index, tab in ipairs(self.Tabs) do
     if tab.displayMode == displayMode then
       PanelTemplates_SetTab(self, index)
+      self.TitleText:SetText(tab.title)
+      break
     end
   end
 

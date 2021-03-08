@@ -27,7 +27,7 @@
 					<KeyValue key="displayMode" value="Invoices" type="string"/>
 				</KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-20"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-30"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>
@@ -37,19 +37,10 @@
 					<KeyValue key="displayMode" value="Posting" type="string"/>
 				</KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-20"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-30"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>
-
-      <Button parentKey="CloseDialog" inherits="UIPanelCloseButtonNoScripts">
-        <Anchors>
-          <Anchor point="TOPRIGHT" relativeKey="$parent" relativePoint="TOPRIGHT" />
-        </Anchors>
-        <Scripts>
-          <OnClick>self:GetParent():OnCloseClicked()</OnClick>
-        </Scripts>
-      </Button>
 
 <!--
      <Button parentKey="SummaryTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryTab_Button" text="Summary">
@@ -64,6 +55,7 @@
 			<Button parentKey="InvoicesTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="Invoices">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Invoices" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_INVOICES_TITLE" type="global"/>
 				</KeyValues>
 				<Anchors>
 					<Anchor point="BOTTOMLEFT" x="20" y="-28"/>
@@ -72,6 +64,7 @@
 			<Button parentKey="PostingTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="Posting">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Posting" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_POSTING_TITLE" type="global"/>
 				</KeyValues>
 				<Anchors>
 					<Anchor point="LEFT" relativeKey="$parent.InvoicesTab" relativePoint="RIGHT" x="-15" y="0"/>
@@ -81,7 +74,7 @@
 
     <Layers>
       <Layer>
-        <FontString text="Journalator - Display" inherits="GameFontHighlight">
+        <FontString inherits="GameFontHighlight" parentKey="Title">
           <Anchors>
             <Anchor point="TOP" relativeTo="$parent" relativePoint="TOP" y="-10"/>
           </Anchors>

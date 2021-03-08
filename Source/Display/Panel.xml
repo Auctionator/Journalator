@@ -1,21 +1,55 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-<Frame name="JournalatorPanelTemplate" virtual="true">
-  <KeyValues>
-    <KeyValue key="layoutType" value="SimplePanelTemplate" type="string"/>
-  </KeyValues>
-  <Size x="1200" y="500"/>
-  <Layers>
-    <Layer level="BACKGROUND" textureSubLevel="-6">
-      <Texture file="Interface\FrameGeneral\UI-Background-Rock" horizTile="true" vertTile="true" parentKey="Bg">
+  <Frame name="JournalatorPanelTemplate" virtual="true">
+    <Size x="1200" y="500"/>
+
+		<KeyValues>
+			<KeyValue key="layoutType" value="ButtonFrameTemplateNoPortrait" type="string"/>
+		</KeyValues>
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="-6">
+				<Texture file="Interface\FrameGeneral\UI-Background-Rock" horizTile="true" vertTile="true" parentKey="Bg">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="2" y="-21"/>
+						<Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="TitleBg" inherits="_UI-Frame-TitleTileBg">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="2" y="-2"/>
+						<Anchor point="TOPRIGHT" x="-25" y="-2"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BACKGROUND" textureSubLevel="-5">
+				<Texture parentKey="TopTileStreaks" inherits="_UI-Frame-TopTileStreaks">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="-21"/>
+						<Anchor point="TOPRIGHT" x="-2" y="-21"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString inherits="GameFontNormal" parentKey="TitleText" wordwrap="false">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="25" y="-5"/>
+						<Anchor point="TOPRIGHT" x="-25" y="-5"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame parentKey="NineSlice" inherits="NineSlicePanelTemplate"/>
+		</Frames>
+
+    <Frames>
+      <Button parentKey="CloseDialog" inherits="UIPanelCloseButtonNoScripts">
         <Anchors>
-          <Anchor point="TOPLEFT" x="0" y="-6"/>
-          <Anchor point="BOTTOMRIGHT" x="-2" y="3"/>
+          <Anchor point="TOPRIGHT" relativeKey="$parent" relativePoint="TOPRIGHT" x="5" y="5"/>
         </Anchors>
-      </Texture>
-    </Layer>
-  </Layers>
-  <Frames>
-    <Frame parentKey="NineSlice" inherits="NineSlicePanelTemplate"/>
-  </Frames>
-</Frame>
+        <Scripts>
+          <OnClick>self:GetParent():Hide()</OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+  </Frame>
 </Ui>
