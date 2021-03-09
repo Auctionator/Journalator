@@ -42,3 +42,11 @@ function JournalatorDisplayMixin:ExportCSVClicked()
     end
   end
 end
+
+function JournalatorDisplayMixin:RefreshButtonClicked()
+  for _, view in ipairs(self.Views) do
+    if view:IsShown() then
+      view.DataProvider:Refresh()
+    end
+  end
+end

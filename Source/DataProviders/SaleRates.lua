@@ -45,6 +45,10 @@ function JournalatorSaleRatesDataProviderMixin:OnLoad()
 end
 
 function JournalatorSaleRatesDataProviderMixin:OnShow()
+  self:Refresh()
+end
+
+function JournalatorSaleRatesDataProviderMixin:Refresh()
   self:Reset()
 
   local postedCounts = {}

@@ -19,12 +19,23 @@
     </Anchors>
 
     <Frames>
+      <Button inherits="RefreshButtonTemplate">
+        <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent" x="-40" y="-25"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():RefreshButtonClicked()
+          </OnClick>
+        </Scripts>
+      </Button>
+
       <Frame inherits="JournalatorInvoiceDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Invoices" type="string"/>
 				</KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-30"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="30"/>
         </Anchors>
       </Frame>
@@ -34,7 +45,7 @@
 					<KeyValue key="displayMode" value="Posting" type="string"/>
 				</KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-30"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>
@@ -44,7 +55,7 @@
 					<KeyValue key="displayMode" value="SaleRates" type="string"/>
 				</KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-30"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>

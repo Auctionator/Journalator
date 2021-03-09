@@ -55,6 +55,10 @@ end
 local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
 
 function JournalatorInvoicesDataProviderMixin:OnShow()
+  self:Refresh()
+end
+
+function JournalatorInvoicesDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
   local monthlyTotal = 0

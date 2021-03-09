@@ -53,6 +53,10 @@ function JournalatorPostingDataProviderMixin:OnLoad()
 end
 
 function JournalatorPostingDataProviderMixin:OnShow()
+  self:Refresh()
+end
+
+function JournalatorPostingDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
   for _, item in ipairs(JOURNALATOR_LOGS.Posting) do
