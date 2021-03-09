@@ -49,7 +49,7 @@
 				</Anchors>
 			</Button>
 -->
-			<Button parentKey="InvoicesTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="Invoices">
+			<Button parentKey="InvoicesTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="JOURNALATOR_L_INVOICES">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Invoices" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_INVOICES_TITLE" type="global"/>
@@ -58,7 +58,7 @@
 					<Anchor point="BOTTOMLEFT" x="20" y="-28"/>
 				</Anchors>
 			</Button>
-			<Button parentKey="PostingTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="Posting">
+			<Button parentKey="PostingTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="JOURNALATOR_L_POSTING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Posting" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_POSTING_TITLE" type="global"/>
