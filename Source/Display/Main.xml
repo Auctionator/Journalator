@@ -25,7 +25,7 @@
 				</KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-30"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="30"/>
         </Anchors>
       </Frame>
 
@@ -86,6 +86,15 @@
 					<Anchor point="LEFT" relativeKey="$parent.PostingTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
+
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_EXPORT_RESULTS" parentKey="ExportCSV">
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-8" y="10"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>self:GetParent():ExportCSVClicked()</OnClick>
+        </Scripts>
+      </Button>
     </Frames>
 
     <Layers>
