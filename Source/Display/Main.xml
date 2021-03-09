@@ -39,6 +39,16 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="JournalatorSaleRatesDisplayTemplate" parentArray="Views">
+				<KeyValues>
+					<KeyValue key="displayMode" value="SaleRates" type="string"/>
+				</KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-30"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+        </Anchors>
+      </Frame>
+
 <!--
      <Button parentKey="SummaryTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryTab_Button" text="Summary">
 				<KeyValues>
@@ -65,6 +75,15 @@
 				</KeyValues>
 				<Anchors>
 					<Anchor point="LEFT" relativeKey="$parent.InvoicesTab" relativePoint="RIGHT" x="-15" y="0"/>
+				</Anchors>
+			</Button>
+			<Button parentKey="SaleRatesTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorSaleRatesTab_Button" text="JOURNALATOR_L_SALE_RATES">
+				<KeyValues>
+					<KeyValue key="displayMode" value="SaleRates" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_SALE_RATES_TITLE" type="global"/>
+				</KeyValues>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.PostingTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
     </Frames>
