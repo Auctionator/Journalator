@@ -1,7 +1,8 @@
-JournalatorDisplayMixin = CreateFromMixins(AuctionatorEscapeToCloseMixin)
+JournalatorDisplayMixin = {}
 
 function JournalatorDisplayMixin:OnLoad()
   PanelTemplates_SetNumTabs(self, #self.Tabs)
+  table.insert(UISpecialFrames, self:GetName())
 end
 
 function JournalatorDisplayMixin:OnShow()

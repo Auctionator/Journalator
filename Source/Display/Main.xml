@@ -10,9 +10,6 @@
     hidden="true"
   >
     <Scripts>
-      <OnKeyDown method="OnKeyDown" />
-      <OnKeyUp method="OnKeyUp" />
-
       <OnLoad method="OnLoad" />
       <OnShow method="OnShow" />
     </Scripts>
