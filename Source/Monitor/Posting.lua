@@ -22,7 +22,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
     local deposit = C_AuctionHouse.CalculateCommodityDeposit(itemID, duration, quantity)
 
     table.insert(JOURNALATOR_LOGS.Posting, {
-      itemName = GetNameFromLink(link),
+      itemName = Journalator.Utilities.GetNameFromLink(link),
       buyout = unitPrice,
       bid = nil,
       count = quantity,

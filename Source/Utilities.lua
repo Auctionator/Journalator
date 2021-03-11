@@ -1,6 +1,6 @@
 Journalator.Utilities = {}
 
-function Journalator.Utilities.GetItemNameFromLink(link)
+function Journalator.Utilities.GetNameFromLink(link)
   return string.match(link, "%[(.+)%]")
 end
 
