@@ -38,7 +38,7 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_DATE,
+    headerText = JOURNALATOR_L_TIME_ELAPSED,
     headerParameters = { "rawDay" },
     cellTemplate = "AuctionatorStringCellTemplate",
     cellParameters = { "date" }
