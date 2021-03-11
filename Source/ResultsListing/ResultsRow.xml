@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
     name="JournalatorLogViewResultsRowTemplate"
+    mixin="JournalatorLogViewResultsRowMixin"
     inherits="AuctionatorResultsRowTemplate"
     virtual="true"
     enableMouse="true"

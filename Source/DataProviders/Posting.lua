@@ -4,7 +4,7 @@ local POSTING_DATA_PROVIDER_LAYOUT ={
     headerText = AUCTIONATOR_L_NAME,
     headerParameters = { "itemName" },
     cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "itemName" },
+    cellParameters = { "itemNamePretty" },
     width = 300,
   },
   {
@@ -60,15 +60,22 @@ function JournalatorPostingDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
   for _, item in ipairs(JOURNALATOR_LOGS.Posting) do
-    table.insert(results, {
+    local processedItem = {
       itemName = item.itemName,
+      itemNamePretty = item.itemName,
       total = item.buyout * item.count,
       count = item.count,
       unitPrice = item.buyout,
       rawDay = item.time,
       deposit = item.deposit,
       date = SecondsToTime(time() - item.time),
-    })
+      itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count),
+    }
+
+    if processedItem.itemLink ~= nil then
+      processedItem.itemNamePretty = Journalator.ApplyQualityColor(item.itemName, processedItem.itemLink)
+    end
+    table.insert(results, processedItem)
   end
   self:AppendEntries(results, true)
 end

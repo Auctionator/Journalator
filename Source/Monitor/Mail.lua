@@ -11,9 +11,11 @@ function JournalatorMailMonitorMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, MAIL_EVENTS)
 
   self.previousCache = {}
+  self.itemLog = {}
 
   hooksecurefunc(_G, "CheckInbox", function()
     self.previousCache = {}
+    self.itemLog = {}
   end)
 end
 
@@ -28,17 +30,29 @@ local function CacheMail(index)
   }
 end
 
-local function RecordAllMail()
+local function GetFirstItem(mailIndex)
+  for i = 1, ATTACHMENTS_MAX_RECEIVE do
+    local link = GetInboxItemLink(mailIndex, i)
+    if link then
+      return link
+    end
+  end
+end
+
+local function RecordAllMail(itemLog)
   local cache = {}
   for i = 1, GetInboxNumItems() do
     local mail = CacheMail(i)
-    cache[GetMailKey(mail)] = mail
+    local key = GetMailKey(mail)
+
+    cache[key] = mail
+    itemLog[key] = GetFirstItem(i) or itemLog[key]
   end
-  return cache
+  return cache, itemLog
 end
 
 --local invoiceType, itemName, playerName, bid, _, deposit, consignment, _, _, _, count, _ = GetInboxInvoiceInfo(index)
-local function SaveInvoice(mail)
+local function SaveInvoice(mail, itemLink)
   table.insert(JOURNALATOR_LOGS.Invoices, {
     invoiceType = mail.invoice[1],
     itemName = mail.invoice[2],
@@ -49,19 +63,21 @@ local function SaveInvoice(mail)
     consignment = mail.invoice[7],
     time = time(),
     source = Journalator.Source,
+    itemLink = itemLink,
   })
 end
 
 function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MAIL_INBOX_UPDATE" then
     if not next(self.previousCache) then
-      self.previousCache = RecordAllMail()
+      self.itemLog = {}
+      self.previousCache = RecordAllMail(self.itemLog)
     end
-    local newCache = RecordAllMail()
+    local newCache = RecordAllMail(self.itemLog)
     for key, mail in pairs(self.previousCache) do
       if newCache[key] == nil and mail.header[4] ~= RETRIEVING_DATA then
         if mail.invoice[1] ~= nil then
-          SaveInvoice(mail)
+          SaveInvoice(mail, self.itemLog[key])
         end
       end
     end

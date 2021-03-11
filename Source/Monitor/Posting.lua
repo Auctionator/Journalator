@@ -16,6 +16,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
       count = quantity,
       deposit = deposit,
       time = time(),
+      itemLink = link,
       source = Journalator.Source,
     })
   end)
@@ -31,6 +32,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
       count = quantity,
       deposit = deposit,
       time = time(),
+      itemLink = link,
       source = Journalator.Source,
     })
   end)

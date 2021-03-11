@@ -4,7 +4,7 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
     headerText = AUCTIONATOR_L_NAME,
     headerParameters = { "itemName" },
     cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "itemName" },
+    cellParameters = { "itemNamePretty" },
     width = 300,
   },
   {
@@ -71,14 +71,23 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
     end
     local timeSinceEntry = time() - item.time
 
+    local itemNamePretty = item.itemName
+    local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count)
+    if itemLink then
+      itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
+    end
+
+
     table.insert(results, {
       itemName = item.itemName,
+      itemNamePretty = itemNamePretty,
       moneyIn = moneyIn,
       moneyOut = moneyOut,
       count = item.count,
       unitPrice = item.value/item.count,
       rawDay = item.time,
       date = SecondsToTime(timeSinceEntry),
+      itemLink = itemLink,
     })
 
     if timeSinceEntry < SECONDS_IN_A_MONTH then
