@@ -35,7 +35,3 @@ function Journalator.GetItemInfo(name, deposit, count)
 
   return cleanItemLinkMap[GetKey(name, deposit, count)]
 end
-
-function Journalator.ApplyQualityColor(name, link)
-  return "|c" .. Auctionator.Utilities.GetQualityColorFromLink(link) .. name .. "|r"
-end

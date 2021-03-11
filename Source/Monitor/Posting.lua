@@ -1,16 +1,12 @@
 JournalatorPostingMonitorMixin = {}
 
-local function GetNameFromLink(link)
-  return string.match(link, "%[(.+)%]")
-end
-
 function JournalatorPostingMonitorMixin:OnLoad()
   hooksecurefunc(C_AuctionHouse, "PostItem", function(location, duration, quantity, bid, buyout)
     local link = select(7, GetContainerItemInfo(location:GetBagAndSlot()))
     local deposit = C_AuctionHouse.CalculateItemDeposit(location, duration, quantity)
 
     table.insert(JOURNALATOR_LOGS.Posting, {
-      itemName = GetNameFromLink(link),
+      itemName = Journalator.Utilities.GetNameFromLink(link),
       buyout = buyout,
       bid = bid,
       count = quantity,

@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="Locales.lua" />
   <Script file="Objects.lua" />
+  <Script file="Utilities.lua" />
 
   <Script file="GetItemInfo.lua" />
 
