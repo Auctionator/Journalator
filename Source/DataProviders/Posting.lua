@@ -45,16 +45,7 @@ local POSTING_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorPostingDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
-
-function JournalatorPostingDataProviderMixin:OnLoad()
-  AuctionatorDataProviderMixin.OnLoad(self)
-  self.processCountPerUpdate = 200
-end
-
-function JournalatorPostingDataProviderMixin:OnShow()
-  self:Refresh()
-end
+JournalatorPostingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorPostingDataProviderMixin:Refresh()
   self:Reset()
@@ -84,10 +75,6 @@ function JournalatorPostingDataProviderMixin:GetTableLayout()
   return POSTING_DATA_PROVIDER_LAYOUT
 end
 
-function JournalatorPostingDataProviderMixin:UniqueKey(entry)
-  return tostring(entry)
-end
-
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
   total = Auctionator.Utilities.NumberComparator,
@@ -104,8 +91,4 @@ function JournalatorPostingDataProviderMixin:Sort(fieldName, sortDirection)
   end)
 
   self:SetDirty()
-end
-
-function JournalatorPostingDataProviderMixin:GetRowTemplate()
-  return "JournalatorLogViewResultsRowTemplate"
 end

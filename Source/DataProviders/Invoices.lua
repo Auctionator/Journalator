@@ -45,18 +45,9 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorInvoicesDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
-
-function JournalatorInvoicesDataProviderMixin:OnLoad()
-  AuctionatorDataProviderMixin.OnLoad(self)
-  self.processCountPerUpdate = 200
-end
+JournalatorInvoicesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
-
-function JournalatorInvoicesDataProviderMixin:OnShow()
-  self:Refresh()
-end
 
 function JournalatorInvoicesDataProviderMixin:Refresh()
   self:Reset()
@@ -110,10 +101,6 @@ function JournalatorInvoicesDataProviderMixin:GetTableLayout()
   return INVOICES_DATA_PROVIDER_LAYOUT
 end
 
-function JournalatorInvoicesDataProviderMixin:UniqueKey(entry)
-  return tostring(entry)
-end
-
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
   invoiceType = Auctionator.Utilities.StringComparator,
@@ -132,8 +119,4 @@ function JournalatorInvoicesDataProviderMixin:Sort(fieldName, sortDirection)
   end)
 
   self:SetDirty()
-end
-
-function JournalatorInvoicesDataProviderMixin:GetRowTemplate()
-  return "JournalatorLogViewResultsRowTemplate"
 end

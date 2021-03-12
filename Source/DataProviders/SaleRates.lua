@@ -37,16 +37,7 @@ local SALE_RATES_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorSaleRatesDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
-
-function JournalatorSaleRatesDataProviderMixin:OnLoad()
-  AuctionatorDataProviderMixin.OnLoad(self)
-  self.processCountPerUpdate = 200
-end
-
-function JournalatorSaleRatesDataProviderMixin:OnShow()
-  self:Refresh()
-end
+JournalatorSaleRatesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorSaleRatesDataProviderMixin:Refresh()
   self:Reset()
@@ -115,10 +106,6 @@ function JournalatorSaleRatesDataProviderMixin:GetTableLayout()
   return SALE_RATES_DATA_PROVIDER_LAYOUT
 end
 
-function JournalatorSaleRatesDataProviderMixin:UniqueKey(entry)
-  return tostring(entry)
-end
-
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
   saleRate = Auctionator.Utilities.NumberComparator,
@@ -135,8 +122,4 @@ function JournalatorSaleRatesDataProviderMixin:Sort(fieldName, sortDirection)
   end)
 
   self:SetDirty()
-end
-
-function JournalatorSaleRatesDataProviderMixin:GetRowTemplate()
-  return "JournalatorLogViewResultsRowTemplate"
 end
