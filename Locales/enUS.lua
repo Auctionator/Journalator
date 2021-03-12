@@ -15,6 +15,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["TOTAL"] = "Total"
   L["DEPOSIT"] = "Deposit"
   L["TIME_ELAPSED"] = "Time Elapsed"
+  L["YOU_LOST_X_THIS_MONTH"] = "You lost %s this month."
+  L["YOU_GAINED_X_THIS_MONTH"] = "You gained %s this month."
 
   L["SALE_RATE"] = "Sale Rate"
   L["MEAN_PRICE"] = "Mean Price"
