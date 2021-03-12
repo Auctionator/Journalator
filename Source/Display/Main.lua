@@ -11,6 +11,15 @@ function JournalatorDisplayMixin:OnShow()
   self:SetDisplayMode(self.Tabs[1].displayMode)
 end
 
+function JournalatorDisplayMixin:OnUpdate()
+  local view = self:GetCurrentView()
+  if view ~= nil then
+    view.DataProvider:SetFilters({
+      searchText = self.SearchFilter:GetText(),
+    })
+  end
+end
+
 function JournalatorDisplayMixin:SetDisplayMode(displayMode)
   self.exportCSVDialog:Hide()
 
@@ -32,21 +41,29 @@ function JournalatorDisplayMixin:SetupExportCSVDialog()
   self.exportCSVDialog:SetPoint("CENTER")
 end
 
-function JournalatorDisplayMixin:ExportCSVClicked()
+function JournalatorDisplayMixin:GetCurrentView()
   for _, view in ipairs(self.Views) do
     if view:IsShown() then
-      view.DataProvider:GetCSV(function(result)
-        self.exportCSVDialog:SetExportString(result)
-        self.exportCSVDialog:Show()
-      end)
+      return view
     end
   end
 end
 
+function JournalatorDisplayMixin:ExportCSVClicked()
+  local view = self:GetCurrentView()
+
+  if view ~= nil then
+    view.DataProvider:GetCSV(function(result)
+      self.exportCSVDialog:SetExportString(result)
+      self.exportCSVDialog:Show()
+    end)
+  end
+end
+
 function JournalatorDisplayMixin:RefreshButtonClicked()
-  for _, view in ipairs(self.Views) do
-    if view:IsShown() then
-      view.DataProvider:Refresh()
-    end
+  local view = self:GetCurrentView()
+
+  if view ~= nil then
+    view.DataProvider:Refresh()
   end
 end

@@ -2,7 +2,7 @@
   <Frame
     name="JournalatorSaleRatesDisplayTemplate"
     virtual="true"
-    mixin="JournalatorSaleRatesDisplayMixin"
+    mixin="JournalatorDisplayTabMixin"
   >
     <Scripts>
       <OnLoad method="OnLoad" />

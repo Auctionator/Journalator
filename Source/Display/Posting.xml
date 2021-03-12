@@ -2,7 +2,7 @@
   <Frame
     name="JournalatorPostingDisplayTemplate"
     virtual="true"
-    mixin="JournalatorPostingDisplayMixin"
+    mixin="JournalatorDisplayTabMixin"
   >
     <Scripts>
       <OnLoad method="OnLoad" />

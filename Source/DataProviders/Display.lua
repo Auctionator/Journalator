@@ -2,21 +2,41 @@ JournalatorDisplayDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMi
 
 function JournalatorDisplayDataProviderMixin:OnLoad()
   AuctionatorDataProviderMixin.OnLoad(self)
-  self.processCountPerUpdate = 200
+  self.processCountPerUpdate = 200 --Reduce flickering when updating the display
+
+  self.filters = {
+    searchText = "", -- Text to filter item.itemName by
+  }
 end
 
 function JournalatorDisplayDataProviderMixin:OnShow()
   self:Refresh()
 end
 
+-- Load/refresh the current view with the current filters
 function JournalatorDisplayDataProviderMixin:Refresh()
   error("This should be overridden.")
 end
 
+-- Only sets the filters (and refreshes the view) if the filters have changed
 function JournalatorDisplayDataProviderMixin:SetFilters(filters)
-  self.filters = filters
+  local prevFilters = self.filters
+  for key, val in pairs(prevFilters) do
+    if filters[key] ~= val then
+      self.filters = filters
+      self.onPreserveScroll()
+      self:Refresh()
+      break
+    end
+  end
 end
 
+function JournalatorDisplayDataProviderMixin:Filter(item)
+  return string.match(string.lower(item.itemName), string.lower(self.filters.searchText))
+end
+
+-- Every entry is considered unique (unlike in Auctionator when that isn't
+-- always true)
 function JournalatorDisplayDataProviderMixin:UniqueKey(entry)
   return tostring(entry)
 end

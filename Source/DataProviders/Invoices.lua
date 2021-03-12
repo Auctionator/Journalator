@@ -54,38 +54,39 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
   local results = {}
   local monthlyTotal = 0
   for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
-    local moneyIn, moneyOut
-    if item.invoiceType == "seller" then
-      moneyIn = item.value + item.deposit - item.consignment
-    else
-      moneyOut = -item.value
-    end
-    local timeSinceEntry = time() - item.time
-
-    local itemNamePretty = item.itemName
-    local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count)
-    if itemLink then
-      itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
-    end
-
-
-    table.insert(results, {
-      itemName = item.itemName,
-      itemNamePretty = itemNamePretty,
-      moneyIn = moneyIn,
-      moneyOut = moneyOut,
-      count = item.count,
-      unitPrice = item.value/item.count,
-      rawDay = item.time,
-      date = SecondsToTime(timeSinceEntry),
-      itemLink = itemLink,
-    })
-
-    if timeSinceEntry < SECONDS_IN_A_MONTH then
-      if moneyIn ~= nil then
-        monthlyTotal = monthlyTotal + moneyIn
+    if self:Filter(item) then
+      local moneyIn, moneyOut
+      if item.invoiceType == "seller" then
+        moneyIn = item.value + item.deposit - item.consignment
       else
-        monthlyTotal = monthlyTotal + moneyOut
+        moneyOut = -item.value
+      end
+      local timeSinceEntry = time() - item.time
+
+      local itemNamePretty = item.itemName
+      local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count)
+      if itemLink then
+        itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
+      end
+
+      table.insert(results, {
+        itemName = item.itemName,
+        itemNamePretty = itemNamePretty,
+        moneyIn = moneyIn,
+        moneyOut = moneyOut,
+        count = item.count,
+        unitPrice = item.value/item.count,
+        rawDay = item.time,
+        date = SecondsToTime(timeSinceEntry),
+        itemLink = itemLink,
+      })
+
+      if timeSinceEntry < SECONDS_IN_A_MONTH then
+        if moneyIn ~= nil then
+          monthlyTotal = monthlyTotal + moneyIn
+        else
+          monthlyTotal = monthlyTotal + moneyOut
+        end
       end
     end
   end

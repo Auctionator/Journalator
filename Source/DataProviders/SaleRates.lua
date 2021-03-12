@@ -44,18 +44,7 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
 
   local postedCounts = {}
   for _, item in ipairs(JOURNALATOR_LOGS.Posting) do
-    if postedCounts[item.itemName] == nil then
-      postedCounts[item.itemName] = {
-        sold = 0,
-        totalSaleValue = 0,
-        posted = 0,
-      }
-    end
-    postedCounts[item.itemName].posted = postedCounts[item.itemName].posted + item.count
-  end
-
-  for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
-    if item.invoiceType == "seller" then
+    if self:Filter(item) then
       if postedCounts[item.itemName] == nil then
         postedCounts[item.itemName] = {
           sold = 0,
@@ -63,8 +52,23 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
           posted = 0,
         }
       end
-      postedCounts[item.itemName].sold = postedCounts[item.itemName].sold + item.count
-      postedCounts[item.itemName].totalSaleValue = postedCounts[item.itemName].totalSaleValue + item.value
+      postedCounts[item.itemName].posted = postedCounts[item.itemName].posted + item.count
+    end
+  end
+
+  for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
+    if self:Filter(item) then
+      if item.invoiceType == "seller" then
+        if postedCounts[item.itemName] == nil then
+          postedCounts[item.itemName] = {
+            sold = 0,
+            totalSaleValue = 0,
+            posted = 0,
+          }
+        end
+        postedCounts[item.itemName].sold = postedCounts[item.itemName].sold + item.count
+        postedCounts[item.itemName].totalSaleValue = postedCounts[item.itemName].totalSaleValue + item.value
+      end
     end
   end
 

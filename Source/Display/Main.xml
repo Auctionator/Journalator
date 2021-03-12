@@ -12,6 +12,7 @@
     <Scripts>
       <OnLoad method="OnLoad" />
       <OnShow method="OnShow" />
+      <OnUpdate method="OnUpdate" />
     </Scripts>
 
     <Anchors>
@@ -29,6 +30,13 @@
           </OnClick>
         </Scripts>
       </Button>
+
+      <EditBox parentKey="SearchFilter" autoFocus="false" historyLines="1" bytes="64" inherits="SearchBoxTemplate">
+        <Size x="250" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeKey="$parent" x="30" y="-28"/>
+        </Anchors>
+      </EditBox>
 
       <Frame inherits="JournalatorInvoiceDisplayTemplate" parentArray="Views">
 				<KeyValues>

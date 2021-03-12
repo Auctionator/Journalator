@@ -51,22 +51,24 @@ function JournalatorPostingDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
   for _, item in ipairs(JOURNALATOR_LOGS.Posting) do
-    local processedItem = {
-      itemName = item.itemName,
-      itemNamePretty = item.itemName,
-      total = item.buyout * item.count,
-      count = item.count,
-      unitPrice = item.buyout,
-      rawDay = item.time,
-      deposit = item.deposit,
-      date = SecondsToTime(time() - item.time),
-      itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count),
-    }
+    if self:Filter(item) then
+      local processedItem = {
+        itemName = item.itemName,
+        itemNamePretty = item.itemName,
+        total = item.buyout * item.count,
+        count = item.count,
+        unitPrice = item.buyout,
+        rawDay = item.time,
+        deposit = item.deposit,
+        date = SecondsToTime(time() - item.time),
+        itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count),
+      }
 
-    if processedItem.itemLink ~= nil then
-      processedItem.itemNamePretty = Journalator.ApplyQualityColor(item.itemName, processedItem.itemLink)
+      if processedItem.itemLink ~= nil then
+        processedItem.itemNamePretty = Journalator.ApplyQualityColor(item.itemName, processedItem.itemLink)
+      end
+      table.insert(results, processedItem)
     end
-    table.insert(results, processedItem)
   end
   self:AppendEntries(results, true)
 end
