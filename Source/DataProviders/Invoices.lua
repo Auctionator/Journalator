@@ -12,21 +12,24 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
     headerText = JOURNALATOR_L_IN_INCLUDING_AH_CUT,
     headerParameters = { "moneyIn" },
     cellTemplate = "JournalatorPriceCellTemplate",
-    cellParameters = { "moneyIn" }
+    cellParameters = { "moneyIn" },
+    width = 150,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_OUT,
     headerParameters = { "moneyOut" },
     cellTemplate = "JournalatorPriceCellTemplate",
-    cellParameters = { "moneyOut" }
+    cellParameters = { "moneyOut" },
+    width = 150,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_UNIT_PRICE_EXCLUDING_AH_CUT,
+    headerText = AUCTIONATOR_L_UNIT_PRICE,
     headerParameters = { "unitPrice" },
     cellTemplate = "AuctionatorPriceCellTemplate",
-    cellParameters = { "unitPrice" }
+    cellParameters = { "unitPrice" },
+    width = 150,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",

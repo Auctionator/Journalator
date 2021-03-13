@@ -12,21 +12,24 @@ local POSTING_DATA_PROVIDER_LAYOUT ={
     headerText = JOURNALATOR_L_TOTAL,
     headerParameters = { "total" },
     cellTemplate = "AuctionatorPriceCellTemplate",
-    cellParameters = { "total" }
+    cellParameters = { "total" },
+    width = 150,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_DEPOSIT,
     headerParameters = { "deposit" },
     cellTemplate = "AuctionatorPriceCellTemplate",
-    cellParameters = { "deposit" }
+    cellParameters = { "deposit" },
+    width = 150,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_UNIT_PRICE,
     headerParameters = { "unitPrice" },
     cellTemplate = "AuctionatorPriceCellTemplate",
-    cellParameters = { "unitPrice" }
+    cellParameters = { "unitPrice" },
+    width = 150,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",

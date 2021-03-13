@@ -11,7 +11,6 @@ JOURNALATOR_LOCALES.enUS = function()
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
   L["OUT"] = "Out"
-  L["UNIT_PRICE_EXCLUDING_AH_CUT"] = "Unit Price (excluding AH cut)"
   L["TOTAL"] = "Total"
   L["DEPOSIT"] = "Deposit"
   L["TIME_ELAPSED"] = "Time Elapsed"

@@ -19,7 +19,8 @@ local SALE_RATES_DATA_PROVIDER_LAYOUT ={
     headerText = JOURNALATOR_L_MEAN_PRICE,
     headerParameters = { "meanPrice" },
     cellTemplate = "AuctionatorPriceCellTemplate",
-    cellParameters = { "meanPrice" }
+    cellParameters = { "meanPrice" },
+    width = 150,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
