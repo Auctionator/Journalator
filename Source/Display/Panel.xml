@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame name="JournalatorPanelTemplate" virtual="true">
-    <Size x="1100" y="500"/>
+    <Size x="1200" y="500"/>
 
 		<KeyValues>
 			<KeyValue key="layoutType" value="ButtonFrameTemplateNoPortrait" type="string"/>

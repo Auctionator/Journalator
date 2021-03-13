@@ -33,6 +33,13 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = PLAYER,
+    headerParameters = { "otherPlayer" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "otherPlayer" }
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_QUANTITY,
     headerParameters = { "count" },
     cellTemplate = "AuctionatorStringCellTemplate",
@@ -72,6 +79,15 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
       end
 
+      local otherPlayer = item.playerName
+      if otherPlayer == nil then
+        if item.invoiceType == "seller" then
+          otherPlayer = GRAY_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_MULTIPLE_BUYERS)
+        else
+          otherPlayer = GRAY_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_MULTIPLE_SELLERS)
+        end
+      end
+
       table.insert(results, {
         itemName = item.itemName,
         itemNamePretty = itemNamePretty,
@@ -81,6 +97,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         unitPrice = item.value/item.count,
         rawDay = item.time,
         date = SecondsToTime(timeSinceEntry),
+        otherPlayer = otherPlayer,
         itemLink = itemLink,
       })
 

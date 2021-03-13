@@ -5,7 +5,7 @@ local POSTING_DATA_PROVIDER_LAYOUT ={
     headerParameters = { "itemName" },
     cellTemplate = "AuctionatorStringCellTemplate",
     cellParameters = { "itemNamePretty" },
-    width = 300,
+    width = 350,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",

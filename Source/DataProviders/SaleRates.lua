@@ -5,7 +5,7 @@ local SALE_RATES_DATA_PROVIDER_LAYOUT ={
     headerParameters = { "itemName" },
     cellTemplate = "AuctionatorStringCellTemplate",
     cellParameters = { "itemName" },
-    width = 300,
+    width = 350,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
