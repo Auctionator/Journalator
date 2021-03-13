@@ -6,7 +6,6 @@
     mixin="JournalatorDisplayMixin"
     inherits="JournalatorPanelTemplate"
     topLevel="true"
-    enableMouse="true"
     hidden="true"
   >
     <Scripts>

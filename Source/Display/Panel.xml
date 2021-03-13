@@ -1,6 +1,19 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="JournalatorPanelTemplate" virtual="true">
+  <Frame
+    name="JournalatorPanelTemplate"
+    virtual="true"
+    enableMouse="true"
+    movable="true"
+  >
     <Size x="1200" y="500"/>
+    <Scripts>
+      <OnMouseDown>
+        self:StartMoving()
+      </OnMouseDown>
+      <OnMouseUp>
+        self:StopMovingOrSizing()
+      </OnMouseUp>
+    </Scripts>
 
 		<KeyValues>
 			<KeyValue key="layoutType" value="ButtonFrameTemplateNoPortrait" type="string"/>
