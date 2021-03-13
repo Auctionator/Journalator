@@ -37,19 +37,19 @@ jobs:
       uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "AUTO_GENERATED_VERSION"
-        replace: "${{steps.buildnumber.outputs.build_number}} (alpha)"
+        replace: "${{steps.buildnumber.outputs.build_number}}"
     - name: Create zip
-      run: zip -r Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip ./Journalator
+      run: zip -r Journalator-build-${{steps.buildnumber.outputs.build_number}}.zip ./Journalator
     - name: Delete files for curse
-      run: zip -d Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip Journalator/README.md Journalator/.github\* Journalator/.gitignore Journalator/.git\*
+      run: zip -d Journalator-build-${{steps.buildnumber.outputs.build_number}}.zip Journalator/README.md Journalator/.github\* Journalator/.gitignore Journalator/.git\*
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: ${{ steps.buildnumber.outputs.build_number }}-alpha
-        release_name: Alpha ${{ steps.buildnumber.outputs.build_number }}
+        tag_name: ${{ steps.buildnumber.outputs.build_number }}-build
+        release_name: Build ${{ steps.buildnumber.outputs.build_number }}
         draft: false
         prerelease: false
     - name: Upload Release Asset
@@ -59,8 +59,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip
-        asset_name: Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip
+        asset_path: ./Journalator-build-${{steps.buildnumber.outputs.build_number}}.zip
+        asset_name: Journalator-build-${{steps.buildnumber.outputs.build_number}}.zip
         asset_content_type: application/zip
     - name: Curseforge Upload
-      run: ./Journalator/.github/workflows/upload.sh "Alpha ${{steps.buildnumber.outputs.build_number}}" "Journalator-alpha-${{steps.buildnumber.outputs.build_number}}.zip" "${{secrets.plusmouse_curseforge}}"
+      run: ./Journalator/.github/workflows/upload.sh "Build ${{steps.buildnumber.outputs.build_number}}" "Journalator-build-${{steps.buildnumber.outputs.build_number}}.zip" "${{secrets.plusmouse_curseforge}}"

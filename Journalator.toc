@@ -5,7 +5,6 @@
 ## RequiredDeps: Auctionator
 ## SavedVariables: JOURNALATOR_LOGS
 
-
 Journalator.lua
 Journalator.xml
 
