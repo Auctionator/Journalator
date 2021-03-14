@@ -32,7 +32,7 @@ function JournalatorDisplayDataProviderMixin:SetFilters(filters)
 end
 
 function JournalatorDisplayDataProviderMixin:Filter(item)
-  return string.match(string.lower(item.itemName), string.lower(self.filters.searchText))
+  return string.find(string.lower(item.itemName), string.lower(self.filters.searchText), 1, true)
 end
 
 -- Every entry is considered unique (unlike in Auctionator when that isn't
