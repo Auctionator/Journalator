@@ -7,6 +7,7 @@ function Journalator.Initialize()
   if JOURNALATOR_LOGS.Version ~= 1 then
     error("Unexpected log version")
   end
+  Journalator.CurrentVersion = GetAddOnMetadata("Journalator", "Version")
 
   CreateFrame("Frame", "JNRMailMonitor", nil, "JournalatorMailMonitorTemplate")
   CreateFrame("Frame", "JNRPostingMonitor", nil, "JournalatorPostingMonitorTemplate")

@@ -4,10 +4,12 @@ JOURNALATOR_LOCALES.enUS = function()
   L["INVOICES_TITLE"] = "Journalator - Invoices"
   L["POSTING_TITLE"] = "Journalator - Posting"
   L["SALE_RATES_TITLE"] = "Journalator - Sale Rates"
+  L["INFO_TITLE"] = "Journalator - Info"
 
   L["INVOICES"] = "Invoices"
   L["POSTING"] = "Posting"
   L["SALE_RATES"] = "Sale Rates"
+  L["JOURNALATOR"] = "Journalator"
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
   L["OUT"] = "Out"
@@ -23,5 +25,6 @@ JOURNALATOR_LOCALES.enUS = function()
   L["MEAN_PRICE"] = "Mean Price"
   L["AMOUNT_SOLD"] = "Amount Sold"
   L["AMOUNT_UNSOLD"] = "Amount Unsold"
+  L["ENGAGE_HEADER"] = "Engage With Journalator"
   return L
 end
