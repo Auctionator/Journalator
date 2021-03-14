@@ -28,3 +28,12 @@ function JournalatorLogViewResultsRowMixin:OnLeave()
     GameTooltip:Hide()
   end
 end
+
+function JournalatorLogViewResultsRowMixin:OnClick(button)
+  if button == "LeftButton" then
+    Auctionator.EventBus
+      :RegisterSource(self, "JournalatorLogViewResultsRowMixin")
+      :Fire(self, Journalator.Events.RowClicked, self.rowData)
+      :UnregisterSource(self)
+  end
+end
