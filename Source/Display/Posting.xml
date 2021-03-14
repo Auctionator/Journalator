@@ -6,9 +6,28 @@
   >
     <Scripts>
       <OnLoad method="OnLoad" />
+      <OnUpdate method="OnUpdate" />
     </Scripts>
 
     <Frames>
+      <Button inherits="RefreshButtonTemplate">
+        <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent" x="-20" y="25"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():RefreshButtonClicked()
+          </OnClick>
+        </Scripts>
+      </Button>
+
+      <EditBox parentKey="SearchFilter" autoFocus="false" historyLines="1" bytes="64" inherits="SearchBoxTemplate">
+        <Size x="250" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeKey="$parent" x="10" y="22"/>
+        </Anchors>
+      </EditBox>
+
       <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT"/>

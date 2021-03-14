@@ -11,7 +11,6 @@
     <Scripts>
       <OnLoad method="OnLoad" />
       <OnShow method="OnShow" />
-      <OnUpdate method="OnUpdate" />
     </Scripts>
 
     <Anchors>
@@ -19,31 +18,13 @@
     </Anchors>
 
     <Frames>
-      <Button inherits="RefreshButtonTemplate">
-        <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent" x="-40" y="-25"/>
-        </Anchors>
-        <Scripts>
-          <OnClick>
-            self:GetParent():RefreshButtonClicked()
-          </OnClick>
-        </Scripts>
-      </Button>
-
-      <EditBox parentKey="SearchFilter" autoFocus="false" historyLines="1" bytes="64" inherits="SearchBoxTemplate">
-        <Size x="250" y="22"/>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeKey="$parent" x="30" y="-28"/>
-        </Anchors>
-      </EditBox>
-
       <Frame inherits="JournalatorInvoiceDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Invoices" type="string"/>
 				</KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="30"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>
 
