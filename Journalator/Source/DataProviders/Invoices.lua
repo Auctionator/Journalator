@@ -61,8 +61,8 @@ local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
 
 function JournalatorInvoicesDataProviderMixin:Refresh()
   self:Reset()
+
   local results = {}
-  local monthlyTotal = 0
   for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
     if self:Filter(item) then
       local moneyIn, moneyOut
@@ -100,16 +100,10 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         otherPlayer = otherPlayer,
         itemLink = itemLink,
       })
-
-      if timeSinceEntry < SECONDS_IN_A_MONTH then
-        if moneyIn ~= nil then
-          monthlyTotal = monthlyTotal + moneyIn
-        else
-          monthlyTotal = monthlyTotal + moneyOut
-        end
-      end
     end
   end
+
+  local monthlyTotal = Journalator.GetProfit(Journalator.Constants.SECONDS_IN_A_MONTH)
   if monthlyTotal < 0 then
     self:GetParent().StatusText:SetText(JOURNALATOR_L_YOU_LOST_X_THIS_MONTH:format(Auctionator.Utilities.CreateMoneyString(-monthlyTotal)))
   else

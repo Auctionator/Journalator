@@ -39,9 +39,8 @@ jobs:
         find: "AUTO_GENERATED_VERSION"
         replace: "0.${{steps.buildnumber.outputs.build_number}}"
     - name: Create zip
-      run: zip -r Journalator-0.${{steps.buildnumber.outputs.build_number}}.zip ./Journalator
-    - name: Delete files for curse
-      run: zip -d Journalator-0.${{steps.buildnumber.outputs.build_number}}.zip Journalator/README.md Journalator/.github\* Journalator/.gitignore Journalator/.git\*
+      run: zip -r Journalator-0.${{steps.buildnumber.outputs.build_number}}.zip ./Journalator*
+      working-directory: ./Journalator/
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1

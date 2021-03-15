@@ -1,0 +1,12 @@
+## Interface: 90005
+## Title: Journalator (LDB Plugin)
+## Version: AUTO_GENERATED_VERSION
+## Author: plusmouse
+## RequiredDeps: Auctionator
+
+Libs\Manifest.xml
+
+Journalator-LDB.lua
+Journalator-LDB.xml
+
+Initialize.lua

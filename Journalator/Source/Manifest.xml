@@ -2,7 +2,9 @@
   <Script file="Locales.lua" />
   <Script file="Objects.lua" />
   <Script file="Events.lua" />
+  <Script file="Constants.lua" />
   <Script file="Utilities.lua" />
+  <Script file="GetProfit.lua" />
 
   <Script file="GetItemInfo.lua" />
 

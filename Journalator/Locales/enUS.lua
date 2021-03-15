@@ -26,5 +26,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["AMOUNT_SOLD"] = "Amount Sold"
   L["AMOUNT_UNSOLD"] = "Amount Unsold"
   L["ENGAGE_HEADER"] = "Engage With Journalator"
+
+  L["MONTHLY_PROFIT"] = "Monthly Profit"
+  L["DAILY_PROFIT"] = "Daily Profit"
   return L
 end
