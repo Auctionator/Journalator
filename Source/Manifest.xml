@@ -5,6 +5,7 @@
   <Script file="Utilities.lua" />
 
   <Script file="GetItemInfo.lua" />
+  <Script file="GetProfit.lua" />
 
   <Script file="Initialize.lua" />
   <Include file="Monitor\Manifest.xml" />
