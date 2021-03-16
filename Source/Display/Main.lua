@@ -1,6 +1,8 @@
 JournalatorDisplayMixin = {}
 
 function JournalatorDisplayMixin:OnLoad()
+  self:RegisterForDrag("LeftButton")
+
   PanelTemplates_SetNumTabs(self, #self.Tabs)
   table.insert(UISpecialFrames, self:GetName())
 

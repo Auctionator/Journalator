@@ -2,18 +2,17 @@
   <Frame
     name="JournalatorPanelTemplate"
     virtual="true"
-    enableMouse="true"
     movable="true"
     clampedToScreen="true"
   >
     <Size x="1200" y="500"/>
     <Scripts>
-      <OnMouseDown>
+      <OnDragStart>
         self:StartMoving()
-      </OnMouseDown>
-      <OnMouseUp>
+      </OnDragStart>
+      <OnDragStop>
         self:StopMovingOrSizing()
-      </OnMouseUp>
+      </OnDragStop>
     </Scripts>
 
 		<KeyValues>
