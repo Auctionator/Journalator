@@ -122,6 +122,12 @@
             <Anchor point="TOP" relativeTo="$parent" relativePoint="TOP" y="-10"/>
           </Anchors>
         </FontString>
+
+        <FontString text="Status unset" parentKey="StatusText" inherits="GameFontHighlight">
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" y="15" x="20"/>
+          </Anchors>
+        </FontString>
       </Layer>
     </Layers>
   </Frame>

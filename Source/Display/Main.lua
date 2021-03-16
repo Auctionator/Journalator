@@ -9,6 +9,18 @@ end
 
 function JournalatorDisplayMixin:OnShow()
   self:SetDisplayMode(self.Tabs[1].displayMode)
+  self:SetProfitText()
+end
+
+local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
+
+function JournalatorDisplayMixin:SetProfitText()
+  local monthlyTotal = Journalator.GetProfit(time() - SECONDS_IN_A_MONTH, time())
+  if monthlyTotal < 0 then
+    self.StatusText:SetText(JOURNALATOR_L_YOU_LOST_X_THIS_MONTH:format(Auctionator.Utilities.CreateMoneyString(-monthlyTotal)))
+  else
+    self.StatusText:SetText(JOURNALATOR_L_YOU_GAINED_X_THIS_MONTH:format(Auctionator.Utilities.CreateMoneyString(monthlyTotal)))
+  end
 end
 
 function JournalatorDisplayMixin:SetDisplayMode(displayMode)

@@ -31,7 +31,7 @@
       <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="40"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
         </Anchors>
       </Frame>
 
@@ -50,15 +50,5 @@
         </Scripts>
       </Frame>
     </Frames>
-
-    <Layers>
-      <Layer>
-        <FontString text="Status unset" parentKey="StatusText" inherits="GameFontHighlight">
-          <Anchors>
-            <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" y="17" x="-20"/>
-          </Anchors>
-        </FontString>
-      </Layer>
-    </Layers>
   </Frame>
 </Ui>

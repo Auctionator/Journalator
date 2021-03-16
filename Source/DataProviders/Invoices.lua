@@ -57,8 +57,6 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
 
 JournalatorInvoicesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
-
 function JournalatorInvoicesDataProviderMixin:Refresh()
   self:Reset()
 
@@ -101,13 +99,6 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         itemLink = itemLink,
       })
     end
-  end
-
-  local monthlyTotal = Journalator.GetProfit(SECONDS_IN_A_MONTH)
-  if monthlyTotal < 0 then
-    self:GetParent().StatusText:SetText(JOURNALATOR_L_YOU_LOST_X_THIS_MONTH:format(Auctionator.Utilities.CreateMoneyString(-monthlyTotal)))
-  else
-    self:GetParent().StatusText:SetText(JOURNALATOR_L_YOU_GAINED_X_THIS_MONTH:format(Auctionator.Utilities.CreateMoneyString(monthlyTotal)))
   end
   self:AppendEntries(results, true)
 end
