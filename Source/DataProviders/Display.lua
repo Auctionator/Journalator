@@ -6,6 +6,7 @@ function JournalatorDisplayDataProviderMixin:OnLoad()
 
   self.filters = {
     searchText = "", -- Text to filter item.itemName by
+    secondsToInclude = 0, -- Time period to be included in the view
   }
 end
 
@@ -32,7 +33,12 @@ function JournalatorDisplayDataProviderMixin:SetFilters(filters)
 end
 
 function JournalatorDisplayDataProviderMixin:Filter(item)
-  return string.find(string.lower(item.itemName), string.lower(self.filters.searchText), 1, true)
+  local dateCheck = true
+  if self.filters.secondsToInclude ~= 0 then
+    dateCheck = (time() - item.time) <= self.filters.secondsToInclude
+  end
+
+  return dateCheck and string.find(string.lower(item.itemName), string.lower(self.filters.searchText), 1, true)
 end
 
 -- Every entry is considered unique (unlike in Auctionator when that isn't

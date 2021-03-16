@@ -1,9 +1,11 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Script file="Tab.lua" />
+  <Script file="DataTab.lua" />
   <Script file="Info.lua" />
 
   <Script file="TabButton.lua" />
   <Script file="Main.lua" />
+
+  <Include file="DataTab.xml" />
 
   <Include file="Invoices.xml" />
   <Include file="Posting.xml" />

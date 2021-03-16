@@ -26,5 +26,11 @@ JOURNALATOR_LOCALES.enUS = function()
   L["AMOUNT_SOLD"] = "Amount Sold"
   L["AMOUNT_UNSOLD"] = "Amount Unsold"
   L["ENGAGE_HEADER"] = "Engage With Journalator"
+
+  L["ALL_TIME"] = "All time"
+  L["LAST_MONTH"] = "Last month"
+  L["LAST_WEEK"] = "Last week"
+  L["LAST_DAY"] = "Last day"
+  L["LAST_HOUR"] = "Last hour"
   return L
 end

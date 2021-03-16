@@ -2,46 +2,9 @@
   <Frame
     name="JournalatorPostingDisplayTemplate"
     virtual="true"
-    mixin="JournalatorDisplayTabMixin"
+    inherits="JournalatorDataTabDisplayTemplate"
   >
-    <Scripts>
-      <OnLoad method="OnLoad" />
-      <OnUpdate method="OnUpdate" />
-    </Scripts>
-
     <Frames>
-      <Button inherits="RefreshButtonTemplate">
-        <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent" x="-20" y="25"/>
-        </Anchors>
-        <Scripts>
-          <OnClick>
-            self:GetParent():RefreshButtonClicked()
-          </OnClick>
-        </Scripts>
-      </Button>
-
-      <EditBox parentKey="SearchFilter" autoFocus="false" historyLines="1" bytes="64" inherits="SearchBoxTemplate">
-        <Size x="250" y="22"/>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeKey="$parent" x="10" y="22"/>
-        </Anchors>
-      </EditBox>
-
-      <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
-        </Anchors>
-      </Frame>
-
-      <Frame parentKey="ResultsListingInset" inherits="AuctionatorInsetDarkTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" relativePoint="TOPLEFT" x="-5" y="-24"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" relativePoint="BOTTOMRIGHT" y="-2"/>
-        </Anchors>
-      </Frame>
-
       <Frame parentKey="DataProvider" mixin="JournalatorPostingDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
