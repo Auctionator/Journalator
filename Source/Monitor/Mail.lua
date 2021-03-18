@@ -67,6 +67,29 @@ local function SaveInvoice(mail, itemLink)
   })
 end
 
+local function SaveFailed(failedType, itemInfo, itemLink)
+  local itemName, quantityText = string.match(itemInfo, "(.*) %((%d+)%)")
+
+  local quantity = 1
+  if itemName == nil then
+    itemName = itemInfo
+  else
+    quantity = tonumber(quantityText)
+  end
+
+  table.insert(JOURNALATOR_LOGS.Failures, {
+    failedType = failedType,
+    itemName = itemName,
+    count = quantity,
+    time = time(),
+    source = Journalator.Source,
+    itemLink = itemLink,
+  })
+end
+
+local expiredText = AUCTION_EXPIRED_MAIL_SUBJECT:gsub("%%s", "(.*)")
+local cancelledText = AUCTION_REMOVED_MAIL_SUBJECT:gsub("%%s", "(.*)")
+
 function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MAIL_INBOX_UPDATE" then
     if not next(self.previousCache) then
@@ -78,6 +101,10 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
       if newCache[key] == nil and mail.header[4] ~= RETRIEVING_DATA then
         if mail.invoice[1] ~= nil then
           SaveInvoice(mail, self.itemLog[key])
+        elseif string.match(mail.header[4], expiredText) then
+          SaveFailed("expired", string.match(mail.header[4], expiredText), self.itemLog[key])
+        elseif string.match(mail.header[4], cancelledText) then
+          SaveFailed("cancelled", string.match(mail.header[4], cancelledText), self.itemLog[key])
         end
       end
     end

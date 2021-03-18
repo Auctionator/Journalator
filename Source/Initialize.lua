@@ -3,7 +3,9 @@ function Journalator.Initialize()
     Version = 1,
     Invoices = {},
     Posting = {},
+    Failures = {}
   }
+  JOURNALATOR_LOGS.Failures = JOURNALATOR_LOGS.Failures or {}
   if JOURNALATOR_LOGS.Version ~= 1 then
     error("Unexpected log version")
   end

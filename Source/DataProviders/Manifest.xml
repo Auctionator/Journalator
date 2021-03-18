@@ -4,4 +4,5 @@
   <Script file="Invoices.lua" />
   <Script file="Posting.lua" />
   <Script file="SaleRates.lua" />
+  <Script file="Failures.lua" />
 </Ui>
