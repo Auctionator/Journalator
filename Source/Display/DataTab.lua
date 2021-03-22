@@ -38,7 +38,7 @@ function JournalatorDataTabDisplayMixin:UpdateRealms()
 
   local realms = Journalator.Utilities.GetSortedKeys(realmsAndChars)
   local realmValues = Journalator.Utilities.GetSortedKeys(realmsAndChars)
-  table.insert(realms, 1, "All Realms")
+  table.insert(realms, 1, JOURNALATOR_L_ALL_REALMS)
   table.insert(realmValues, 1, "")
 
   self.RealmDropDown:InitAgain(realms, realmValues)

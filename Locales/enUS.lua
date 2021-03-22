@@ -32,5 +32,6 @@ JOURNALATOR_LOCALES.enUS = function()
   L["LAST_WEEK"] = "Last week"
   L["LAST_DAY"] = "Last day"
   L["LAST_HOUR"] = "Last hour"
+  L["ALL_REALMS"] = "All Realms"
   return L
 end

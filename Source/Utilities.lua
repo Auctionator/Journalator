@@ -18,4 +18,3 @@ function Journalator.Utilities.GetSortedKeys(a)
 
   return result
 end
-
