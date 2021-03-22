@@ -6,6 +6,7 @@
 
   <Script file="GetItemInfo.lua" />
   <Script file="GetProfit.lua" />
+  <Script file="GetCharactersAndRealms.lua" />
 
   <Script file="Initialize.lua" />
   <Include file="Monitor\Manifest.xml" />

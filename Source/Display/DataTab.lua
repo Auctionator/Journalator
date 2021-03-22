@@ -26,12 +26,30 @@ end
 
 function JournalatorDataTabDisplayMixin:RefreshButtonClicked()
   self.DataProvider:Refresh()
+  self:UpdateRealms()
+end
+
+function JournalatorDataTabDisplayMixin:OnShow()
+  self:UpdateRealms()
+end
+
+function JournalatorDataTabDisplayMixin:UpdateRealms()
+  local realmsAndChars = Journalator.GetCharactersAndRealms()
+
+  local realms = Journalator.Utilities.GetSortedKeys(realmsAndChars)
+  local realmValues = Journalator.Utilities.GetSortedKeys(realmsAndChars)
+  table.insert(realms, 1, "All Realms")
+  table.insert(realmValues, 1, "")
+
+  self.RealmDropDown:InitAgain(realms, realmValues)
+  self.RealmDropDown:SetValue("")
 end
 
 function JournalatorDataTabDisplayMixin:OnUpdate()
   self.DataProvider:SetFilters({
     searchText = self.SearchFilter:GetText(),
-    secondsToInclude = self.TimePeriodDropDown:GetValue()
+    secondsToInclude = self.TimePeriodDropDown:GetValue(),
+    realm = self.RealmDropDown:GetValue(),
   })
 end
 

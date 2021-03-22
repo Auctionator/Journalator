@@ -33,12 +33,19 @@ function JournalatorDisplayDataProviderMixin:SetFilters(filters)
 end
 
 function JournalatorDisplayDataProviderMixin:Filter(item)
-  local dateCheck = true
+  local check = true
+
   if self.filters.secondsToInclude ~= 0 then
-    dateCheck = (time() - item.time) <= self.filters.secondsToInclude
+    check = check and (time() - item.time) <= self.filters.secondsToInclude
   end
 
-  return dateCheck and string.find(string.lower(item.itemName), string.lower(self.filters.searchText), 1, true)
+  if self.filters.realm ~= "" then
+    check = check and self.filters.realm == item.source.realm
+  end
+
+  check = check and string.find(string.lower(item.itemName), string.lower(self.filters.searchText), 1, true)
+
+  return check
 end
 
 -- Every entry is considered unique (unlike in Auctionator when that isn't

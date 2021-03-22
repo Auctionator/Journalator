@@ -6,6 +6,7 @@
   >
     <Scripts>
       <OnLoad method="OnLoad" />
+      <OnShow method="OnShow" />
       <OnUpdate method="OnUpdate" />
     </Scripts>
 
@@ -34,6 +35,15 @@
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame parentKey="RealmDropDown" inherits="AuctionatorDropDown">
+        <Size y="20" x="200"/>
+        <KeyValues>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT" x="200"/>
         </Anchors>
       </Frame>
 
