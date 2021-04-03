@@ -1,3 +1,2 @@
 Journalator = {
-  Tooltips = {}
 }

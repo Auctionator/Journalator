@@ -1,3 +1,5 @@
+Journalator.Tooltips = {}
+
 local function GetSaleRate(itemName)
   local sold, posted = 0, 0
   for _, item in ipairs(JOURNALATOR_LOGS.Posting) do
