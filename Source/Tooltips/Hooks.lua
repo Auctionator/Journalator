@@ -1,13 +1,14 @@
+local function IsAuctionableItem(itemLink)
+  local bindType = select(14, GetItemInfo(itemLink))
+  return bindType ~= LE_ITEM_BIND_ON_ACQUIRE and bindType ~= LE_ITEM_BIND_QUEST
+end
+
 hooksecurefunc(Auctionator.Tooltip, "ShowTipWithPricingDBKey",
   function(tooltipFrame, dbKeys, itemLink, itemCount)
-    if #dbKeys == 0 or itemLink == nil then
+    if #dbKeys == 0 or itemLink == nil or not IsAuctionableItem(itemLink) then
       return
     end
 
-    local bindType = select(14, GetItemInfo(itemLink))
-    if bindType == LE_ITEM_BIND_ON_ACQUIRE or bindType == LE_ITEM_BIND_QUEST then
-      return
-    end
 
     local itemName = Journalator.Utilities.GetNameFromLink(itemLink)
     local salesRate, failedCount = Journalator.Tooltips.GetSalesInfo(itemName)
