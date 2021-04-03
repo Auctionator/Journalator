@@ -3,7 +3,7 @@ JournalatorConfigBasicOptionsFrameMixin = CreateFromMixins(AuctionatorPanelConfi
 function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
   Auctionator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:OnLoad()")
 
-  self.name = JOURNALATOR_L_JOURNALATOR or "Fail"
+  self.name = JOURNALATOR_L_JOURNALATOR
 
   self:SetupPanel()
 end
