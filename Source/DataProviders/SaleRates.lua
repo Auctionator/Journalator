@@ -79,11 +79,10 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
     local saleRate, saleRatePretty, meanPrice
     if entry.posted == 0 then
       saleRate = 100
-      saleRatePretty = "100%"
     else
       saleRate = 100 * entry.sold / entry.posted
-      saleRatePretty = tostring(math.floor(saleRate)) .. "%"
     end
+    saleRatePretty = Journalator.Utilities.PrettyPercentage(saleRate)
 
     if entry.sold == 0 then
       meanPrice = nil

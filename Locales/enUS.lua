@@ -39,5 +39,9 @@ JOURNALATOR_LOCALES.enUS = function()
   L["TYPE_OF_FAILURE"] = "Type of Failure"
   L["EXPIRED"] = "Expired"
   L["CANCELLED"] = "Cancelled"
+
+  L["CONFIG_BASIC_OPTIONS_TEXT"] = "Basic options for enabling features in Journalator."
+  L["CONFIG_TOOLTIP_SALE_RATE"] = "Show your sale rate for an item in the item's tooltip."
+  L["CONFIG_TOOLTIP_FAILURES"] = "Show how many auctions failed for an item in the item's tooltip."
   return L
 end

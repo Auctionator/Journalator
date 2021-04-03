@@ -14,4 +14,6 @@
   <Include file="ResultsListing\Manifest.xml" />
   <Include file="Display\Manifest.xml" />
   <Include file="SlashCmd\Manifest.xml" />
+  <Include file="Tooltips\Manifest.xml" />
+  <Include file="Config\Manifest.xml" />
 </Ui>
