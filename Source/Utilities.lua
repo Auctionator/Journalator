@@ -8,6 +8,10 @@ function Journalator.ApplyQualityColor(name, link)
   return "|c" .. Auctionator.Utilities.GetQualityColorFromLink(link) .. name .. "|r"
 end
 
+function Journalator.Utilities.PrettyPercentage(value)
+  return tostring(math.floor(value)) .. "%"
+end
+
 function Journalator.Utilities.GetSortedKeys(a)
   local result = {}
 
