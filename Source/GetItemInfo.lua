@@ -14,7 +14,7 @@ end
 
 local scannedInfos = 0
 local function MapItemLinks()
-  local currentInfos = #JOURNALATOR_LOGS.Posting + #JOURNALATOR_LOGS.Invoices
+  local currentInfos = #JOURNALATOR_LOGS.Posting
   if scannedInfos >= currentInfos then
     return
   end
