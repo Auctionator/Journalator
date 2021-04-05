@@ -95,7 +95,7 @@
       <Frame inherits="AuctionatorTranslatorTemplate" parentKey="deDE">
         <KeyValues>
           <KeyValue key="textureLocation" type="string" value="Interface\AddOns\Auctionator\Images\deDE"/>
-          <KeyValue key="translators" type="global" value="AUCTIONATOR_L_TRANSLATORS_HELP"/>
+          <KeyValue key="translators" type="string" value="flow0284"/>
           <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_TRANSLATORS_GERMAN" type="global"/>
         </KeyValues>
         <Anchors>
