@@ -27,7 +27,7 @@ local function GetFailureCount(itemName)
   local failedCount = 0
   for _, item in ipairs(JOURNALATOR_LOGS.Failures) do
     if item.itemName == itemName then
-      failedCount = failedCount + 1
+      failedCount = failedCount + item.count
     end
   end
   return tostring(failedCount)
