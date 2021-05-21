@@ -30,6 +30,9 @@ JOURNALATOR_LOCALES.enUS = function()
   L["ENGAGE_HEADER"] = "Engage With Journalator"
 
   L["ALL_TIME"] = "All time"
+  L["LAST_YEAR"] = "Last year"
+  L["LAST_6_MONTHS"] = "Last 6 months"
+  L["LAST_3_MONTHS"] = "Last 3 months"
   L["LAST_MONTH"] = "Last month"
   L["LAST_WEEK"] = "Last week"
   L["LAST_DAY"] = "Last day"
