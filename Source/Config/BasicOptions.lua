@@ -13,6 +13,8 @@ function JournalatorConfigBasicOptionsFrameMixin:OnShow()
 
   self.TooltipSaleRate:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE))
   self.TooltipFailures:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES))
+  self.TooltipLastSold:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD))
+  self.TooltipLastBought:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT))
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Save()
@@ -20,6 +22,8 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
 
   Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE, self.TooltipSaleRate:GetChecked())
   Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES, self.TooltipFailures:GetChecked())
+  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD, self.TooltipLastSold:GetChecked())
+  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT, self.TooltipLastBought:GetChecked())
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Cancel()

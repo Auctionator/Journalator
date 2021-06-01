@@ -33,8 +33,26 @@ local function GetFailureCount(itemName)
   return tostring(failedCount)
 end
 
+local function GetLastSold(itemName)
+  for index = #JOURNALATOR_LOGS.Invoices, 1, -1 do
+    local item = JOURNALATOR_LOGS.Invoices[index]
+    if item.invoiceType == "seller" and item.itemName == itemName then
+      return item.value / item.count
+    end
+  end
+end
+
+local function GetLastBought(itemName)
+  for index = #JOURNALATOR_LOGS.Invoices, 1, -1 do
+    local item = JOURNALATOR_LOGS.Invoices[index]
+    if item.invoiceType == "buyer" and item.itemName == itemName then
+      return item.value / item.count
+    end
+  end
+end
+
 function Journalator.Tooltips.GetSalesInfo(itemName)
-  local salesRate, failedString
+  local salesRate, failedString, lastSold, lastBought
 
   if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE) then
     salesRate = GetSaleRate(itemName)
@@ -44,5 +62,13 @@ function Journalator.Tooltips.GetSalesInfo(itemName)
     failedString = GetFailureCount(itemName)
   end
 
-  return salesRate, failedString
+  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SALE) then
+    lastSold = GetLastSold(itemName)
+  end
+
+  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_PURCHASE) then
+    lastBought = GetLastBought(itemName)
+  end
+
+  return salesRate, failedString, lastSold, lastBought
 end

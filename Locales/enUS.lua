@@ -28,6 +28,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["AMOUNT_SOLD"] = "Amount Sold"
   L["AMOUNT_UNSOLD"] = "Amount Unsold"
   L["ENGAGE_HEADER"] = "Engage With Journalator"
+  L["LAST_SOLD"] = "Last Sold"
+  L["LAST_BOUGHT"] = "Last Bought"
 
   L["ALL_TIME"] = "All time"
   L["LAST_YEAR"] = "Last year"
@@ -46,5 +48,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_BASIC_OPTIONS_TEXT"] = "Basic options for enabling features in Journalator."
   L["CONFIG_TOOLTIP_SALE_RATE"] = "Show your sale rate for an item in the item's tooltip."
   L["CONFIG_TOOLTIP_FAILURES"] = "Show how many auctions failed for an item in the item's tooltip."
+  L["CONFIG_TOOLTIP_LAST_SOLD"] = "Show the last price that your auction of an item sold for in the item's tooltip."
+  L["CONFIG_TOOLTIP_LAST_BOUGHT"] = "Show the last price that you bought an auction of an item at in the item's tooltip."
   return L
 end

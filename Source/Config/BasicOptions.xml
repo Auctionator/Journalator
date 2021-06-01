@@ -35,6 +35,24 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.TooltipSaleRate" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipLastSold">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_LAST_SOLD" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipFailures" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipLastBought">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_LAST_BOUGHT" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastSold" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
    </Frames>
   </Frame>
 </Ui>
