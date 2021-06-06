@@ -194,7 +194,7 @@
       <Frame inherits="AuctionatorTranslatorTemplate" parentKey="ruRU">
         <KeyValues>
           <KeyValue key="textureLocation" type="string" value="Interface\AddOns\Auctionator\Images\ruRU"/>
-          <KeyValue key="translators" type="global" value="AUCTIONATOR_L_TRANSLATORS_HELP"/>
+          <KeyValue key="translators" type="string" value="vitality_spirit"/>
           <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_TRANSLATORS_RUSSIAN" type="global"/>
         </KeyValues>
 			  <Anchors>
