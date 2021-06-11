@@ -1,0 +1,5 @@
+ignore:
+  - README.md
+  - scripts
+required-dependencies:
+  - auctionator

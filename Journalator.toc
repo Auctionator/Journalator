@@ -1,10 +1,9 @@
 ## Interface: 90005
 ## Title: Journalator
-## Version: AUTO_GENERATED_VERSION
+## Version: @project-version@
 ## Author: plusmouse
 ## RequiredDeps: Auctionator
 ## SavedVariables: JOURNALATOR_LOGS
-
 
 Journalator.lua
 Journalator.xml
