@@ -1,6 +1,6 @@
 JournalatorMailMonitorMixin = {}
 
-MAIL_EVENTS = {
+local MAIL_EVENTS = {
   "MAIL_SHOW",
   "MAIL_CLOSED",
   "MAIL_INBOX_UPDATE",

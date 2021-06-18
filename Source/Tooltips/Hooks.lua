@@ -28,7 +28,7 @@ hooksecurefunc(Auctionator.Tooltip, "ShowTipWithPricingDBKey",
     tooltipFrame:Show()
 end)
 
-PET_TOOLTIP_SPACING = " "
+local PET_TOOLTIP_SPACING = " "
 
 hooksecurefunc(Auctionator.Tooltip, "AddPetTip",
   function(speciesID)
