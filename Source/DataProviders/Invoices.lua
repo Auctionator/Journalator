@@ -57,6 +57,18 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
 
 JournalatorInvoicesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
+local function AddRealmToPlayerName(item)
+  if item.playerName == nil then
+    return nil
+  end
+
+  if item.source.realm ~= Journalator.Source.realm and not string.match(item.playerName, "-") then
+    return item.playerName .. "-" .. string.gsub(item.source.realm, "[ -]", "")
+  else
+    return item.playerName
+  end
+end
+
 function JournalatorInvoicesDataProviderMixin:Refresh()
   self:Reset()
 
@@ -77,7 +89,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
       end
 
-      local otherPlayer = item.playerName
+      local otherPlayer = AddRealmToPlayerName(item)
       if otherPlayer == nil then
         if item.invoiceType == "seller" then
           otherPlayer = GRAY_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_MULTIPLE_BUYERS)
