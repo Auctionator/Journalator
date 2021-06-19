@@ -33,7 +33,7 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = PLAYER,
+    headerText = JOURNALATOR_L_PLAYER,
     headerParameters = { "otherPlayer" },
     cellTemplate = "AuctionatorStringCellTemplate",
     cellParameters = { "otherPlayer" }

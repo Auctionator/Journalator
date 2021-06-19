@@ -22,6 +22,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["YOU_GAINED_X_THIS_MONTH_WITH_XX"] = "You gained %s this month, with %s incoming and %s outgoing."
   L["MULTIPLE_BUYERS"] = "Multiple Buyers"
   L["MULTIPLE_SELLERS"] = "Multiple Sellers"
+  L["PLAYER"] = "Player"
 
   L["SALE_RATE"] = "Sale Rate"
   L["MEAN_PRICE"] = "Mean Price"
