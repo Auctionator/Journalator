@@ -23,6 +23,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["MULTIPLE_BUYERS"] = "Multiple Buyers"
   L["MULTIPLE_SELLERS"] = "Multiple Sellers"
   L["PLAYER"] = "Player"
+  L["SOURCE"] = "Source"
 
   L["SALE_RATE"] = "Sale Rate"
   L["MEAN_PRICE"] = "Mean Price"

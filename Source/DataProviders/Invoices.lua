@@ -40,6 +40,14 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_SOURCE,
+    headerParameters = { "sourceCharacter" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "sourceCharacter" },
+    defaultHide = true,
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_QUANTITY,
     headerParameters = { "count" },
     cellTemplate = "AuctionatorStringCellTemplate",
@@ -56,18 +64,6 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
 }
 
 JournalatorInvoicesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
-
-local function AddRealmToPlayerName(item)
-  if item.playerName == nil then
-    return nil
-  end
-
-  if item.source.realm ~= Journalator.Source.realm and not string.match(item.playerName, "-") then
-    return item.playerName .. "-" .. string.gsub(item.source.realm, "[ -]", "")
-  else
-    return item.playerName
-  end
-end
 
 function JournalatorInvoicesDataProviderMixin:Refresh()
   self:Reset()
@@ -89,7 +85,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
       end
 
-      local otherPlayer = AddRealmToPlayerName(item)
+      local otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source)
       if otherPlayer == nil then
         if item.invoiceType == "seller" then
           otherPlayer = GRAY_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_MULTIPLE_BUYERS)
@@ -97,6 +93,8 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
           otherPlayer = GRAY_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_MULTIPLE_SELLERS)
         end
       end
+
+      local sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source)
 
       table.insert(results, {
         itemName = item.itemName,
@@ -108,6 +106,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         rawDay = item.time,
         date = SecondsToTime(timeSinceEntry),
         otherPlayer = otherPlayer,
+        sourceCharacter = sourceCharacter,
         itemLink = itemLink,
       })
     end
@@ -139,3 +138,10 @@ function JournalatorInvoicesDataProviderMixin:Sort(fieldName, sortDirection)
 
   self:SetDirty()
 end
+
+Auctionator.Config.Create("JOURNALATOR_COLUMNS_INVOICES", "journalator_columns_invoices", {})
+
+function JournalatorInvoicesDataProviderMixin:GetColumnHideStates()
+  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_COLUMNS_INVOICES)
+end
+

@@ -15,6 +15,14 @@ local FAILURES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_SOURCE,
+    headerParameters = { "sourceCharacter" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "sourceCharacter" },
+    defaultHide = true,
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_QUANTITY,
     headerParameters = { "count" },
     cellTemplate = "AuctionatorStringCellTemplate",
@@ -50,6 +58,7 @@ function JournalatorFailuresDataProviderMixin:Refresh()
         rawDay = item.time,
         date = SecondsToTime(time() - item.time),
         itemLink = item.itemLink,
+        sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
       }
 
       if processedItem.itemLink ~= nil then
@@ -81,4 +90,10 @@ function JournalatorFailuresDataProviderMixin:Sort(fieldName, sortDirection)
   end)
 
   self:SetDirty()
+end
+
+Auctionator.Config.Create("JOURNALATOR_COLUMNS_FAILURES", "journalator_columns_failures", {})
+
+function JournalatorFailuresDataProviderMixin:GetColumnHideStates()
+  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_COLUMNS_FAILURES)
 end

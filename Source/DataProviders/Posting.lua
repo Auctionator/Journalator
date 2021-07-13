@@ -33,6 +33,14 @@ local POSTING_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_SOURCE,
+    headerParameters = { "sourceCharacter" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "sourceCharacter" },
+    defaultHide = true,
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_QUANTITY,
     headerParameters = { "count" },
     cellTemplate = "AuctionatorStringCellTemplate",
@@ -65,6 +73,7 @@ function JournalatorPostingDataProviderMixin:Refresh()
         deposit = item.deposit,
         date = SecondsToTime(time() - item.time),
         itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count),
+        sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
       }
 
       if processedItem.itemLink ~= nil then
@@ -96,4 +105,10 @@ function JournalatorPostingDataProviderMixin:Sort(fieldName, sortDirection)
   end)
 
   self:SetDirty()
+end
+
+Auctionator.Config.Create("JOURNALATOR_COLUMNS_POSTING", "journalator_columns_posting", {})
+
+function JournalatorPostingDataProviderMixin:GetColumnHideStates()
+  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_COLUMNS_POSTING)
 end

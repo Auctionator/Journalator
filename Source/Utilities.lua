@@ -22,3 +22,15 @@ function Journalator.Utilities.GetSortedKeys(a)
 
   return result
 end
+
+function Journalator.Utilities.AddRealmToPlayerName(playerName, source)
+  if playerName == nil then
+    return nil
+  end
+
+  if source.realm ~= Journalator.Source.realm and not string.match(playerName, "-") then
+    return playerName .. "-" .. string.gsub(source.realm, "[ -]", "")
+  else
+    return playerName
+  end
+end
