@@ -43,44 +43,44 @@ JournalatorSaleRatesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataP
 function JournalatorSaleRatesDataProviderMixin:Refresh()
   self:Reset()
 
-  local postedCounts = {}
-  for _, item in ipairs(JOURNALATOR_LOGS.Posting) do
+  local salesCounts = {}
+  for _, item in ipairs(JOURNALATOR_LOGS.Failures) do
     if self:Filter(item) then
-      if postedCounts[item.itemName] == nil then
-        postedCounts[item.itemName] = {
+      if salesCounts[item.itemName] == nil then
+        salesCounts[item.itemName] = {
           sold = 0,
           totalSaleValue = 0,
-          posted = 0,
+          failed = 0,
         }
       end
-      postedCounts[item.itemName].posted = postedCounts[item.itemName].posted + item.count
+      salesCounts[item.itemName].failed = salesCounts[item.itemName].failed + item.count
     end
   end
 
   for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
     if self:Filter(item) then
       if item.invoiceType == "seller" then
-        if postedCounts[item.itemName] == nil then
-          postedCounts[item.itemName] = {
+        if salesCounts[item.itemName] == nil then
+          salesCounts[item.itemName] = {
             sold = 0,
             totalSaleValue = 0,
-            posted = 0,
+            failed = 0,
           }
         end
-        postedCounts[item.itemName].sold = postedCounts[item.itemName].sold + item.count
-        postedCounts[item.itemName].totalSaleValue = postedCounts[item.itemName].totalSaleValue + item.value
+        salesCounts[item.itemName].sold = salesCounts[item.itemName].sold + item.count
+        salesCounts[item.itemName].totalSaleValue = salesCounts[item.itemName].totalSaleValue + item.value
       end
     end
   end
 
   local results = {}
-  for key, entry in pairs(postedCounts) do
+  for key, entry in pairs(salesCounts) do
 
     local saleRate, saleRatePretty, meanPrice
-    if entry.posted == 0 then
+    if entry.failed == 0 then
       saleRate = 100
     else
-      saleRate = 100 * entry.sold / entry.posted
+      saleRate = entry.sold/(entry.sold + entry.failed) * 100
     end
     saleRatePretty = Journalator.Utilities.PrettyPercentage(saleRate)
 
@@ -96,7 +96,7 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
       saleRatePretty = saleRatePretty,
       meanPrice = meanPrice,
       sold = entry.sold,
-      unsold = math.max(0, entry.posted - entry.sold),
+      unsold = entry.failed,
     })
   end
 

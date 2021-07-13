@@ -1,10 +1,10 @@
 Journalator.Tooltips = {}
 
 local function GetSaleRate(itemName)
-  local sold, posted = 0, 0
-  for _, item in ipairs(JOURNALATOR_LOGS.Posting) do
+  local sold, failed = 0, 0
+  for _, item in ipairs(JOURNALATOR_LOGS.Failures) do
     if item.itemName == itemName then
-      posted = posted + item.count
+      failed = failed + item.count
     end
   end
 
@@ -14,12 +14,10 @@ local function GetSaleRate(itemName)
     end
   end
 
-  if posted == 0 and sold == 0 then
+  if sold == 0 and failed == 0 then
     return AUCTIONATOR_L_UNKNOWN
-  elseif posted == 0 then
-    return "100%"
   else
-    return Journalator.Utilities.PrettyPercentage(sold/posted * 100)
+    return Journalator.Utilities.PrettyPercentage(sold/(sold + failed) * 100)
   end
 end
 
