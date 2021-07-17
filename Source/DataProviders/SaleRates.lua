@@ -85,7 +85,7 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
     saleRatePretty = Journalator.Utilities.PrettyPercentage(saleRate)
 
     if entry.sold == 0 then
-      meanPrice = nil
+      meanPrice = 0
     else
       meanPrice = math.floor(entry.totalSaleValue / entry.sold)
     end

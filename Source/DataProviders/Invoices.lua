@@ -71,7 +71,8 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
   local results = {}
   for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
     if self:Filter(item) then
-      local moneyIn, moneyOut
+      local moneyIn = 0
+      local moneyOut = 0
       if item.invoiceType == "seller" then
         moneyIn = item.value + item.deposit - item.consignment
       else
@@ -102,7 +103,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         moneyIn = moneyIn,
         moneyOut = moneyOut,
         count = item.count,
-        unitPrice = item.value/item.count,
+        unitPrice = math.floor(item.value/item.count),
         rawDay = item.time,
         date = SecondsToTime(timeSinceEntry),
         otherPlayer = otherPlayer,
