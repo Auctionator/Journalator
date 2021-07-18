@@ -5,15 +5,18 @@ JOURNALATOR_LOCALES.enUS = function()
   L["POSTING_TITLE"] = "Journalator - Posting"
   L["SALE_RATES_TITLE"] = "Journalator - Sale Rates"
   L["FAILURE_TITLE"] = "Journalator - Failed Auctions"
+  L["VENDORING_TITLE"] = "Journalator - Vendoring"
   L["INFO_TITLE"] = "Journalator - Info"
 
   L["INVOICES"] = "Invoices"
   L["POSTING"] = "Posting"
   L["SALE_RATES"] = "Sale Rates"
   L["FAILURES"] = "Failures"
+  L["VENDORING"] = "Vendoring"
   L["JOURNALATOR"] = "Journalator"
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
+  L["IN"] = "In"
   L["OUT"] = "Out"
   L["TOTAL"] = "Total"
   L["DEPOSIT"] = "Deposit"

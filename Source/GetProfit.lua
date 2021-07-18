@@ -20,7 +20,16 @@ function Journalator.GetProfit(startTime, endTime)
     end
   end
 
-  local profit = 0
+  local vendoring = Journalator.Archiving.GetRange(startTime, "Vendoring")
+  for _, item in ipairs(vendoring) do
+    if item.time >= startTime and item.time <= endTime then
+      if item.vendorType == "sell" then
+        incoming = incoming + item.unitPrice * item.count
+      else
+        outgoing = outgoing + item.unitPrice * item.count
+      end
+    end
+  end
 
   return incoming - outgoing, incoming, outgoing
 end

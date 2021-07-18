@@ -5,4 +5,5 @@
   <Script file="Posting.lua" />
   <Script file="SaleRates.lua" />
   <Script file="Failures.lua" />
+  <Script file="Vendoring.lua" />
 </Ui>
