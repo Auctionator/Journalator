@@ -31,9 +31,15 @@ end
 
 function JournalatorLogViewResultsRowMixin:OnClick(button)
   if button == "LeftButton" then
-    Auctionator.EventBus
-      :RegisterSource(self, "JournalatorLogViewResultsRowMixin")
-      :Fire(self, Journalator.Events.RowClicked, self.rowData)
-      :UnregisterSource(self)
+    if IsModifiedClick("CHATLINK") then
+      if self.rowData.itemLink ~= nil then
+        ChatEdit_InsertLink(self.rowData.itemLink)
+      end
+    else
+      Auctionator.EventBus
+        :RegisterSource(self, "JournalatorLogViewResultsRowMixin")
+        :Fire(self, Journalator.Events.RowClicked, self.rowData)
+        :UnregisterSource(self)
+    end
   end
 end
