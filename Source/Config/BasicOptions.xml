@@ -18,12 +18,21 @@
         </KeyValues>
       </Frame>
 
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="TooltipsHeading">
+        <KeyValues>
+          <KeyValue key="headingText" value="AUCTIONATOR_L_CONFIG_TOOLTIPS_CATEGORY" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
       <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipSaleRate">
         <KeyValues>
           <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_SALE_RATE" type="global" />
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT" />
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipsHeading" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
 
@@ -51,6 +60,24 @@
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastSold" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="VendoringHeading">
+        <KeyValues>
+          <KeyValue key="headingText" value="JOURNALATOR_L_CONFIG_VENDORING" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastBought" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="GroupTrash">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_GROUP_TRASH" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.VendoringHeading" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
    </Frames>

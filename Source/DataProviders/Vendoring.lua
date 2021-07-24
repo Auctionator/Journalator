@@ -55,14 +55,19 @@ local VENDORING_DATA_PROVIDER_LAYOUT ={
 
 JournalatorVendoringDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
+local TRASH_COLOR = "ff9d9d9d"
+local function IsNotTrash(itemLink)
+  return Auctionator.Utilities.GetQualityColorFromLink(itemLink) ~= TRASH_COLOR
+end
+
 function JournalatorVendoringDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
+  local trashValue = 0
   for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Vendoring")) do
     if self:Filter(item) then
       local moneyIn = 0
       local moneyOut = 0
-      local itemNamePretty = item.itemName
 
       if item.vendorType == "sell" then
         moneyIn = item.unitPrice * item.count
@@ -70,24 +75,46 @@ function JournalatorVendoringDataProviderMixin:Refresh()
         moneyOut = -item.unitPrice * item.count
       end
 
-      if item.itemLink then
-        itemNamePretty = Journalator.ApplyQualityColor(item.itemName, item.itemLink)
+      if not Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_TRASH) or
+         IsNotTrash(item.itemLink) then
+        table.insert(results, {
+          itemName = item.itemName,
+          itemNamePretty = Journalator.ApplyQualityColor(item.itemName, item.itemLink),
+          moneyIn = moneyIn,
+          moneyOut = moneyOut,
+          count = item.count,
+          unitPrice = item.unitPrice,
+          rawDay = item.time,
+          date = SecondsToTime(time() - item.time),
+          itemLink = item.itemLink,
+          sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        })
+      else
+        trashValue = trashValue + moneyIn - moneyOut
       end
-
-      table.insert(results, {
-        itemName = item.itemName,
-        itemNamePretty = itemNamePretty,
-        moneyIn = moneyIn,
-        moneyOut = moneyOut,
-        total = item.unitPrice * item.count,
-        count = item.count,
-        unitPrice = item.unitPrice,
-        rawDay = item.time,
-        date = SecondsToTime(time() - item.time),
-        itemLink = item.itemLink,
-        sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-      })
     end
+  end
+  if trashValue ~= 0 and Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_TRASH) then
+    local moneyIn = 0
+    local moneyOut = 0
+    if trashValue > 0 then
+      moneyIn = trashValue
+    else
+      moneyOut = trashValue
+    end
+
+    table.insert(results, {
+      itemName = JOURNALATOR_L_TRASH,
+      itemNamePretty = "|c"..TRASH_COLOR .. JOURNALATOR_L_TRASH .. "|r",
+      moneyIn = moneyIn,
+      moneyOut = moneyOut,
+      count = 1,
+      unitPrice = math.abs(trashValue),
+      rawDay = time(),
+      date = "",
+      itemLink = nil,
+      sourceCharacter = "",
+    })
   end
   self:AppendEntries(results, true)
 end
@@ -98,7 +125,7 @@ end
 
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
-  total = Auctionator.Utilities.NumberComparator,
+  sourceCharacter = Auctionator.Utilities.StringComparator,
   moneyIn = Auctionator.Utilities.NumberComparator,
   moneyOut = Auctionator.Utilities.NumberComparator,
   unitPrice = Auctionator.Utilities.NumberComparator,
