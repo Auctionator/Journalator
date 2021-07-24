@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="Locales.lua" />
   <Script file="Objects.lua" />
+  <Script file="Constants.lua" />
   <Script file="Events.lua" />
   <Script file="Utilities.lua" />
 
@@ -9,6 +10,7 @@
   <Script file="GetCharactersAndRealms.lua" />
 
   <Script file="Initialize.lua" />
+  <Include file="Archiving\Manifest.xml" />
   <Include file="Monitor\Manifest.xml" />
   <Include file="DataProviders\Manifest.xml" />
   <Include file="ResultsListing\Manifest.xml" />

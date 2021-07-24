@@ -48,7 +48,7 @@ JournalatorFailuresDataProviderMixin = CreateFromMixins(JournalatorDisplayDataPr
 function JournalatorFailuresDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
-  for _, item in ipairs(JOURNALATOR_LOGS.Failures) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Failures")) do
     if self:Filter(item) then
       local processedItem = {
         itemName = item.itemName,

@@ -2,13 +2,13 @@ Journalator.Tooltips = {}
 
 local function GetSaleRate(itemName)
   local sold, failed = 0, 0
-  for _, item in ipairs(JOURNALATOR_LOGS.Failures) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(0, "Failures")) do
     if item.itemName == itemName then
       failed = failed + item.count
     end
   end
 
-  for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(0, "Invoices")) do
     if item.invoiceType == "seller" and item.itemName == itemName then
       sold = sold + item.count
     end
@@ -23,7 +23,7 @@ end
 
 local function GetFailureCount(itemName)
   local failedCount = 0
-  for _, item in ipairs(JOURNALATOR_LOGS.Failures) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(0, "Failures")) do
     if item.itemName == itemName then
       failedCount = failedCount + item.count
     end
@@ -32,8 +32,9 @@ local function GetFailureCount(itemName)
 end
 
 local function GetLastSold(itemName)
-  for index = #JOURNALATOR_LOGS.Invoices, 1, -1 do
-    local item = JOURNALATOR_LOGS.Invoices[index]
+  local invoices = Journalator.Archiving.GetRange(0, "Invoices")
+  for index = #invoices, 1, -1 do
+    local item = invoices[index]
     if item.invoiceType == "seller" and item.itemName == itemName then
       return item.value / item.count
     end
@@ -41,8 +42,9 @@ local function GetLastSold(itemName)
 end
 
 local function GetLastBought(itemName)
-  for index = #JOURNALATOR_LOGS.Invoices, 1, -1 do
-    local item = JOURNALATOR_LOGS.Invoices[index]
+  local invoices = Journalator.Archiving.GetRange(0, "Invoices")
+  for index = #invoices, 1, -1 do
+    local item = invoices[index]
     if item.invoiceType == "buyer" and item.itemName == itemName then
       return item.value / item.count
     end

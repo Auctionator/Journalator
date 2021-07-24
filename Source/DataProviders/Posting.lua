@@ -61,7 +61,7 @@ JournalatorPostingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataPro
 function JournalatorPostingDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
-  for _, item in ipairs(JOURNALATOR_LOGS.Posting) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Posting")) do
     if self:Filter(item) then
       local processedItem = {
         itemName = item.itemName,

@@ -44,7 +44,7 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
   self:Reset()
 
   local salesCounts = {}
-  for _, item in ipairs(JOURNALATOR_LOGS.Failures) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Failures")) do
     if self:Filter(item) then
       if salesCounts[item.itemName] == nil then
         salesCounts[item.itemName] = {
@@ -57,7 +57,7 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
     end
   end
 
-  for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Invoices")) do
     if self:Filter(item) then
       if item.invoiceType == "seller" then
         if salesCounts[item.itemName] == nil then

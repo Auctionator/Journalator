@@ -14,13 +14,13 @@ end
 
 local scannedInfos = 0
 local function MapItemLinks()
-  local currentInfos = #JOURNALATOR_LOGS.Posting
+  local currentInfos = #Journalator.State.Logs.Posting
   if scannedInfos >= currentInfos then
     return
   end
   scannedInfos = currentInfos
 
-  for index, item in ipairs(JOURNALATOR_LOGS.Posting) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(0, "Posting")) do
     if item.itemLink ~= nil then
       local key = GetKey(item.itemName, item.deposit, item.count)
       if not cleanItemLinkMap[key] then

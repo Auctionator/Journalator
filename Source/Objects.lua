@@ -1,2 +1,4 @@
 Journalator = {
+  State = {},
+  Archiving = {},
 }

@@ -48,6 +48,14 @@ function JournalatorDisplayDataProviderMixin:Filter(item)
   return check
 end
 
+function JournalatorDisplayDataProviderMixin:GetTimeForRange()
+  if self.filters.secondsToInclude == 0 then
+    return 0
+  else
+    return time() - self.filters.secondsToInclude
+  end
+end
+
 -- Every entry is considered unique (unlike in Auctionator when that isn't
 -- always true)
 function JournalatorDisplayDataProviderMixin:UniqueKey(entry)

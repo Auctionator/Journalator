@@ -3,3 +3,5 @@ ignore:
   - scripts
 required-dependencies:
   - auctionator
+externals:
+  Embeds/Archivist: https://github.com/emptyrivers/Archivist
