@@ -1,3 +1,14 @@
+-- Invoices/Posting/etc. data is separated into stores inside an Archivist
+-- instance.
+--
+-- Each store covers the period of a month (configured by
+-- Journalator.Constants.ARCHIVE_INTERVAL), and includes all the
+-- Invoices/Posting/etc. entries for that month, stored in the
+-- Invoices/Posting/etc. keys, which contain ordered arrays by time ascending of
+-- the entries.
+--
+-- Usage of Archivist is best explained by reading the Github documentation
+-- https://github.com/emptyrivers/Archivist
 local Archivist = select(2, ...).Archivist
 
 function Journalator.Archiving.InitializeStore(store)
@@ -29,8 +40,8 @@ function Journalator.Archiving.Initialize()
 
   local storeTime = JOURNALATOR_ARCHIVE_TIMES[#JOURNALATOR_ARCHIVE_TIMES]
   local currentTime = time()
-  -- If more than a month has elapsed since the last store was created, update
-  -- the time and create a new one.
+  -- If more than a month (the ARCHIVE_INTERVAL) has elapsed since the last
+  -- store was created, update the time and create a new one.
   if currentTime - storeTime > Journalator.Constants.ARCHIVE_INTERVAL then
     storeTime = currentTime
     archive:Create("SometimesLocked", Journalator.Constants.STORE_PREFIX .. storeTime)

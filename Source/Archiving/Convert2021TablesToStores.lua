@@ -1,3 +1,11 @@
+-- when Journalator was first created the information on postings, sales, etc.
+-- was stored in uncompressed unserialized tables, which was vulnerable to the
+-- SavedVariables constant limit if there was too much data.
+--
+-- This file includes the code to convert from the original format into the
+-- Archivist based stores format.
+
+-- Get the oldest time in any section (Invoices/Posting/etc.)
 local function GetOldestTime(input)
   local oldestTime = nil
 
@@ -14,6 +22,8 @@ local function GetOldestTime(input)
   return oldestTime
 end
 
+-- Place the items from the section (Invoices/Posting/etc.) in the correct store
+-- for their time.
 local function ImportSection(section, input, archiveTimes, stores)
   local storeIndex = 1
   for index, item in ipairs(input[section]) do

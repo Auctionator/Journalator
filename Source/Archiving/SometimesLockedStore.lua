@@ -1,3 +1,11 @@
+-- Manage archivist stores that they are usually opened in a read-only mode so
+-- that no time needs to be spent compressing the store for storage on
+-- PLAYER_LOGOUT.
+--
+-- Usually just the store for the latest month (as configured by
+-- Journalator.Constants.ARCHIVE_INTERVAL) is in a read/write mode.
+-- The default setting for a store is read/write. To open in read-only mode set
+-- the locked parameter to true.
 local Archivist = select(2, ...).Archivist
 
 local prototype = {
