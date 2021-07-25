@@ -60,11 +60,11 @@ function Journalator.Tooltips.GetSalesInfo(itemName)
     failedString = GetFailureCount(itemName)
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SALE) then
+  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD) then
     lastSold = GetLastSold(itemName)
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_PURCHASE) then
+  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT) then
     lastBought = GetLastBought(itemName)
   end
 
