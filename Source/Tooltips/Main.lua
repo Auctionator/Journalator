@@ -51,6 +51,13 @@ local function GetLastBought(itemName)
   end
 end
 
+function Journalator.Tooltips.AnyEnabled()
+  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE) or
+    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES) or
+    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SALE) or
+    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_PURCHASE)
+end
+
 function Journalator.Tooltips.GetSalesInfo(itemName)
   local salesRate, failedString, lastSold, lastBought
 
