@@ -20,7 +20,7 @@ function Journalator.Archiving.LoadAll(cb)
   local index = 1
   local ticker = C_Timer.NewTicker(0, function()
     local time = JOURNALATOR_ARCHIVE_TIMES[index]
-    Journalator.State.Archive:Open("SometimesLocked", Journalator.Constants.STORE_PREFIX .. time)
+    Journalator.State.Archive:Open("SometimesLocked", Journalator.Constants.STORE_PREFIX .. time, true)
     index = index + 1
 
     if index > #JOURNALATOR_ARCHIVE_TIMES then
