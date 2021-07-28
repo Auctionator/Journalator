@@ -16,8 +16,11 @@ function Journalator.Initialize()
   CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
 
   Journalator.SlashCmd.Initialize()
+
+  local faction = UnitFactionGroup("player")
   Journalator.Source = {
     realm = GetRealmName(),
     character = GetUnitName("player"),
+    faction = faction,
   }
 end
