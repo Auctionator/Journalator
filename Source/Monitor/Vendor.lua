@@ -1,11 +1,30 @@
 JournalatorVendorMonitorMixin = {}
 
+local function GetGUIDFromBagAndSlot(bag, slot)
+  local location = ItemLocation:CreateFromBagAndSlot(bag, slot)
+  if location:IsValid() then
+    local guid = C_Item.GetItemGUID(location)
+    return guid
+  end
+end
+
+local function IsGUIDInBag(guid)
+  for bag = 0, 4 do
+    for slot = 1, GetContainerNumSlots(bag) do
+      if GetGUIDFromBagAndSlot(bag, slot) == guid then
+        return true
+      end
+    end
+  end
+  return false
+end
+
 function JournalatorVendorMonitorMixin:OnLoad()
   -- Used to detect the successful sale of an item
-  self.expectedToSell = {}
+  self.expectedToUpdate = {}
 
   FrameUtil.RegisterFrameForEvents(self, {
-    "MERCHANT_SHOW", "MERCHANT_CLOSED", "BAG_UPDATE", "PLAYER_MONEY"
+    "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE"
   })
 
   hooksecurefunc(_G, "UseContainerItem", function(bag, slot)
@@ -16,9 +35,13 @@ function JournalatorVendorMonitorMixin:OnLoad()
     local _, itemCount, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
 
     local item = Item:CreateFromItemLink(itemLink)
+    if item:IsItemEmpty() then
+      return
+    end
+    local guid = GetGUIDFromBagAndSlot(bag, slot)
     item:ContinueOnItemLoad(function()
       local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
-      self.expectedToSell = {
+      self.expectedToUpdate[guid] = {
         vendorType = "sell",
         itemName = Journalator.Utilities.GetNameFromLink(itemLink),
         count = itemCount,
@@ -28,6 +51,39 @@ function JournalatorVendorMonitorMixin:OnLoad()
         source = Journalator.State.Source,
       }
     end)
+  end)
+  MerchantFrame:HookScript("OnEnter", function()
+    local itemLocation = C_Cursor.GetCursorItem()
+    if itemLocation ~= nil then
+      local guid = C_Item.GetItemGUID(itemLocation)
+      local itemLink = C_Item.GetItemLink(itemLocation)
+      local itemCount = C_Item.GetStackCount(itemLocation)
+      local item = Item:CreateFromItemLocation(itemLocation)
+      item:ContinueOnItemLoad(function()
+        local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
+        self.lastCursorItem = {
+          guid = guid,
+          item = {
+            vendorType = "sell",
+            itemName = Journalator.Utilities.GetNameFromLink(itemLink),
+            count = itemCount,
+            unitPrice = vendorPrice,
+            itemLink = itemLink,
+            time = time(),
+            source = Journalator.State.Source,
+          },
+        }
+      end)
+    end
+  end)
+  MerchantFrame:HookScript("OnLeave", function()
+    self.lastCursorItem = nil
+  end)
+  hooksecurefunc(_G, "PickupMerchantItem", function(index)
+    if self.lastCursorItem ~= nil then
+      self.expectedToUpdate[self.lastCursorItem.guid] = self.lastCursorItem.item
+      self.lastCursorItem = nil
+    end
   end)
 
   hooksecurefunc(_G, "BuybackItem", function(index)
@@ -77,11 +133,14 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MERCHANT_SHOW" then
     self.merchantShown = true
   elseif eventName == "MERCHANT_CLOSED" then
+    self.expectedToUpdate = {}
     self.merchantShown = false
-  elseif eventName == "BAG_UPDATE" then
-    self.expectedToSell = nil
-  elseif eventName == "PLAYER_MONEY" and self.expectedToSell then
-    table.insert(Journalator.State.Logs.Vendoring, self.expectedToSell)
-    self.expectedToSell = nil
+  elseif eventName == "MERCHANT_UPDATE" then
+    for guid, item in pairs(self.expectedToUpdate) do
+      if item.vendorType == "sell" and not IsGUIDInBag(guid) then
+        table.insert(Journalator.State.Logs.Vendoring, item)
+        self.expectedToUpdate[guid] = nil
+      end
+    end
   end
 end
