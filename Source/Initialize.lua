@@ -10,8 +10,6 @@ function Journalator.Initialize()
 
   Journalator.State.CurrentVersion = GetAddOnMetadata("Journalator", "Version")
 
-  Journalator.CurrentVersion = GetAddOnMetadata("Journalator", "Version")
-
   SetupMonitors()
 
   Journalator.SlashCmd.Initialize()
