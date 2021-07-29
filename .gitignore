@@ -4,3 +4,4 @@ Changelog*
 *.swp
 tmp
 .release
+Embeds/**

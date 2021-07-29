@@ -5,7 +5,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
     local link = select(7, GetContainerItemInfo(location:GetBagAndSlot()))
     local deposit = C_AuctionHouse.CalculateItemDeposit(location, duration, quantity)
 
-    table.insert(JOURNALATOR_LOGS.Posting, {
+    table.insert(Journalator.State.Logs.Posting, {
       itemName = Journalator.Utilities.GetNameFromLink(link),
       buyout = buyout,
       bid = bid,
@@ -13,7 +13,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
       deposit = deposit,
       time = time(),
       itemLink = link,
-      source = Journalator.Source,
+      source = Journalator.State.Source,
     })
   end)
   hooksecurefunc(C_AuctionHouse, "PostCommodity", function(location, duration, quantity, unitPrice)
@@ -21,7 +21,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
     local itemID = GetItemInfoInstant(link)
     local deposit = C_AuctionHouse.CalculateCommodityDeposit(itemID, duration, quantity)
 
-    table.insert(JOURNALATOR_LOGS.Posting, {
+    table.insert(Journalator.State.Logs.Posting, {
       itemName = Journalator.Utilities.GetNameFromLink(link),
       buyout = unitPrice,
       bid = nil,
@@ -29,7 +29,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
       deposit = deposit,
       time = time(),
       itemLink = link,
-      source = Journalator.Source,
+      source = Journalator.State.Source,
     })
   end)
 end

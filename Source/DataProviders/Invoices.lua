@@ -69,7 +69,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
   self:Reset()
 
   local results = {}
-  for _, item in ipairs(JOURNALATOR_LOGS.Invoices) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Invoices")) do
     if self:Filter(item) then
       local moneyIn = 0
       local moneyOut = 0

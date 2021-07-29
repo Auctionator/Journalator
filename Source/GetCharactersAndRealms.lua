@@ -10,7 +10,7 @@ end
 function Journalator.GetCharactersAndRealms()
   local cache = {}
 
-  for key, log in pairs(JOURNALATOR_LOGS) do
+  for key, log in pairs(Journalator.State.Logs) do
     if key ~= "Version" then
       SearchLog(log, cache)
     end

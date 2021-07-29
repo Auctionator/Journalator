@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="SometimesLockedStore.lua" />
+  <Script file="Initialize.lua" />
+  <Script file="GetRange.lua" />
+  <Script file="LoadAll.lua" />
+  <Script file="Convert2021TablesToStores.lua" />
+</Ui>

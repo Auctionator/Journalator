@@ -28,7 +28,7 @@ function Journalator.Utilities.AddRealmToPlayerName(playerName, source)
     return nil
   end
 
-  if source.realm ~= Journalator.Source.realm and not string.match(playerName, "-") then
+  if source.realm ~= Journalator.State.Source.realm and not string.match(playerName, "-") then
     return playerName .. "-" .. string.gsub(source.realm, "[ -]", "")
   else
     return playerName

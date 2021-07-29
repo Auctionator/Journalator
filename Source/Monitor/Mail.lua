@@ -53,7 +53,7 @@ end
 
 --local invoiceType, itemName, playerName, bid, _, deposit, consignment, _, _, _, count, _ = GetInboxInvoiceInfo(index)
 local function SaveInvoice(mail, itemLink)
-  table.insert(JOURNALATOR_LOGS.Invoices, {
+  table.insert(Journalator.State.Logs.Invoices, {
     invoiceType = mail.invoice[1],
     itemName = mail.invoice[2],
     playerName = mail.invoice[3],
@@ -62,7 +62,7 @@ local function SaveInvoice(mail, itemLink)
     deposit = mail.invoice[6],
     consignment = mail.invoice[7],
     time = time(),
-    source = Journalator.Source,
+    source = Journalator.State.Source,
     itemLink = itemLink,
   })
 end
@@ -77,12 +77,12 @@ local function SaveFailed(failedType, itemInfo, itemLink)
     quantity = tonumber(quantityText)
   end
 
-  table.insert(JOURNALATOR_LOGS.Failures, {
+  table.insert(Journalator.State.Logs.Failures, {
     failedType = failedType,
     itemName = itemName,
     count = quantity,
     time = time(),
-    source = Journalator.Source,
+    source = Journalator.State.Source,
     itemLink = itemLink,
   })
 end

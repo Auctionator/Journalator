@@ -12,6 +12,14 @@ end
 function JournalatorDisplayMixin:OnShow()
   self:SetDisplayMode(self.Tabs[1].displayMode)
   self:SetProfitText()
+
+  Journalator.Archiving.LoadAll(function()
+    local view = self:GetCurrentDataView()
+    if view ~= nil then
+      Journalator.GetItemInfo_MapFullLinks()
+      view.DataProvider:Refresh()
+    end
+  end)
 end
 
 local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
