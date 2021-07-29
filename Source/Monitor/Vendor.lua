@@ -32,11 +32,11 @@ local function GetAllSalesIDs()
   return salesIDs
 end
 
-local function IsAnyNewGUIDs(oldGUIDs)
+local function IsAnyNewSalesIDs(oldSalesIDs)
   for bag = 0, 4 do
     for slot = 1, GetContainerNumSlots(bag) do
       local salesID = GetSalesIDFromBagAndSlot(bag, slot)
-      if salesID ~= nil and tIndexOf(oldGUIDs, salesID) == nil then
+      if salesID ~= nil and tIndexOf(oldSalesIDs, salesID) == nil then
         return true
       end
     end
@@ -142,7 +142,7 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
       time = time(),
       source = Journalator.State.Source,
     }
-    self.lastScannedGUIDs = GetAllSalesIDs()
+    self.lastScannedSalesIDs = GetAllSalesIDs()
   end)
 end
 
@@ -189,9 +189,9 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
 
       -- Check if any new item has appeared in the player's bag (which is enough
       -- to check if a buyback item has been bought back)
-      elseif item.vendorType == "buyback" and IsAnyNewGUIDs(self.lastScannedGUIDs) then
+      elseif item.vendorType == "buyback" and IsAnyNewSalesIDs(self.lastScannedSalesIDs) then
         table.insert(Journalator.State.Logs.Vendoring, item)
-        self.lastScannedGUIDs = GetAllSalesIDs()
+        self.lastScannedSalesIDs = GetAllSalesIDs()
         self.expectedToUpdate[salesID] = nil
       end
     end
