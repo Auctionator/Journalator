@@ -45,7 +45,7 @@
 
       <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="Version">
         <KeyValues>
-          <KeyValue key="subHeadingText" value="Journalator.CurrentVersion" type="global"/>
+          <KeyValue key="subHeadingText" value="Journalator.State.CurrentVersion" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.VersionHeading" relativePoint="BOTTOMLEFT" y="10"/>
