@@ -26,7 +26,15 @@ function JournalatorVendorMonitorMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
     "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE"
   })
+  self:RegisterRightClickToSellHandlers()
+  self:RegisterDragToSellHandlers()
 
+  self:RegisterBuybackHandlers()
+
+  self:RegisterPurchaseHandlers()
+end
+
+function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
   hooksecurefunc(_G, "UseContainerItem", function(bag, slot)
     if not self.merchantShown then
       return
@@ -52,6 +60,9 @@ function JournalatorVendorMonitorMixin:OnLoad()
       }
     end)
   end)
+end
+
+function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   MerchantFrame:HookScript("OnEnter", function()
     local itemLocation = C_Cursor.GetCursorItem()
     if itemLocation ~= nil then
@@ -85,7 +96,9 @@ function JournalatorVendorMonitorMixin:OnLoad()
       self.lastCursorItem = nil
     end
   end)
+end
 
+function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
   hooksecurefunc(_G, "BuybackItem", function(index)
     if not self.merchantShown then
       return
@@ -104,7 +117,9 @@ function JournalatorVendorMonitorMixin:OnLoad()
       source = Journalator.State.Source,
     })
   end)
+end
 
+function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
   hooksecurefunc(_G, "BuyMerchantItem", function(index, quantity)
     if not self.merchantShown then
       return
