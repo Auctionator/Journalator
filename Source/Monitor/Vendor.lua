@@ -1,21 +1,47 @@
 JournalatorVendorMonitorMixin = {}
 
-local function GetGUIDFromBagAndSlot(bag, slot)
+local function GetSalesIDFromBagAndSlot(bag, slot)
   local location = ItemLocation:CreateFromBagAndSlot(bag, slot)
   if location:IsValid() then
-    local guid = C_Item.GetItemGUID(location)
-    return guid
+    return C_Item.GetItemGUID(location) .. " " .. C_Item.GetStackCount(location)
   end
 end
 
-local function IsGUIDInBag(guid)
+local function IsSalesIDInBag(salesID)
   for bag = 0, 4 do
     for slot = 1, GetContainerNumSlots(bag) do
-      if GetGUIDFromBagAndSlot(bag, slot) == guid then
+      if GetSalesIDFromBagAndSlot(bag, slot) == salesID then
         return true
       end
     end
   end
+  return false
+end
+
+local function GetAllSalesIDs()
+  local salesIDs = {}
+  for bag = 0, 4 do
+    for slot = 1, GetContainerNumSlots(bag) do
+      local salesID = GetSalesIDFromBagAndSlot(bag, slot)
+      if salesID ~= nil then
+        table.insert(salesIDs, salesID)
+      end
+    end
+  end
+
+  return salesIDs
+end
+
+local function IsAnyNewGUIDs(oldGUIDs)
+  for bag = 0, 4 do
+    for slot = 1, GetContainerNumSlots(bag) do
+      local salesID = GetSalesIDFromBagAndSlot(bag, slot)
+      if salesID ~= nil and tIndexOf(oldGUIDs, salesID) == nil then
+        return true
+      end
+    end
+  end
+
   return false
 end
 
@@ -46,10 +72,10 @@ function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
     if item:IsItemEmpty() then
       return
     end
-    local guid = GetGUIDFromBagAndSlot(bag, slot)
+    local salesID = GetSalesIDFromBagAndSlot(bag, slot)
     item:ContinueOnItemLoad(function()
       local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
-      self.expectedToUpdate[guid] = {
+      self.expectedToUpdate[salesID] = {
         vendorType = "sell",
         itemName = Journalator.Utilities.GetNameFromLink(itemLink),
         count = itemCount,
@@ -66,14 +92,14 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   MerchantFrame:HookScript("OnEnter", function()
     local itemLocation = C_Cursor.GetCursorItem()
     if itemLocation ~= nil then
-      local guid = C_Item.GetItemGUID(itemLocation)
+      local salesID = C_Item.GetItemGUID(itemLocation)
       local itemLink = C_Item.GetItemLink(itemLocation)
       local itemCount = C_Item.GetStackCount(itemLocation)
       local item = Item:CreateFromItemLocation(itemLocation)
       item:ContinueOnItemLoad(function()
         local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
         self.lastCursorItem = {
-          guid = guid,
+          salesID = salesID,
           item = {
             vendorType = "sell",
             itemName = Journalator.Utilities.GetNameFromLink(itemLink),
@@ -92,7 +118,7 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   end)
   hooksecurefunc(_G, "PickupMerchantItem", function(index)
     if self.lastCursorItem ~= nil then
-      self.expectedToUpdate[self.lastCursorItem.guid] = self.lastCursorItem.item
+      self.expectedToUpdate[self.lastCursorItem.salesID] = self.lastCursorItem.item
       self.lastCursorItem = nil
     end
   end)
@@ -107,7 +133,7 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
     local name, _, price, quantity = GetBuybackItemInfo(index)
     local link = GetBuybackItemLink(index)
 
-    table.insert(Journalator.State.Logs.Vendoring, {
+    self.expectedToUpdate["buyback"] = {
       vendorType = "buyback",
       itemName = name,
       count = quantity,
@@ -115,7 +141,8 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
       itemLink = link,
       time = time(),
       source = Journalator.State.Source,
-    })
+    }
+    self.lastScannedGUIDs = GetAllSalesIDs()
   end)
 end
 
@@ -147,14 +174,25 @@ end
 function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MERCHANT_SHOW" then
     self.merchantShown = true
+
   elseif eventName == "MERCHANT_CLOSED" then
     self.expectedToUpdate = {}
     self.merchantShown = false
+
   elseif eventName == "MERCHANT_UPDATE" then
-    for guid, item in pairs(self.expectedToUpdate) do
-      if item.vendorType == "sell" and not IsGUIDInBag(guid) then
+    for salesID, item in pairs(self.expectedToUpdate) do
+      -- Check if an item sold to the vendor has disappeared from the player's
+      -- bag
+      if item.vendorType == "sell" and not IsSalesIDInBag(salesID) then
         table.insert(Journalator.State.Logs.Vendoring, item)
-        self.expectedToUpdate[guid] = nil
+        self.expectedToUpdate[salesID] = nil
+
+      -- Check if any new item has appeared in the player's bag (which is enough
+      -- to check if a buyback item has been bought back)
+      elseif item.vendorType == "buyback" and IsAnyNewGUIDs(self.lastScannedGUIDs) then
+        table.insert(Journalator.State.Logs.Vendoring, item)
+        self.lastScannedGUIDs = GetAllSalesIDs()
+        self.expectedToUpdate[salesID] = nil
       end
     end
   end
