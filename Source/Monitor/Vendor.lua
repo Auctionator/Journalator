@@ -1,8 +1,11 @@
 JournalatorVendorMonitorMixin = {}
 
 function JournalatorVendorMonitorMixin:OnLoad()
+  -- Used to detect the successful sale of an item
+  self.expectedToSell = {}
+
   FrameUtil.RegisterFrameForEvents(self, {
-    "MERCHANT_SHOW", "MERCHANT_CLOSED"
+    "MERCHANT_SHOW", "MERCHANT_CLOSED", "BAG_UPDATE", "PLAYER_MONEY"
   })
 
   hooksecurefunc(_G, "UseContainerItem", function(bag, slot)
@@ -15,18 +18,15 @@ function JournalatorVendorMonitorMixin:OnLoad()
     local item = Item:CreateFromItemLink(itemLink)
     item:ContinueOnItemLoad(function()
       local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
-
-      if vendorPrice ~= nil and vendorPrice ~= 0 then
-        table.insert(Journalator.State.Logs.Vendoring, {
-          vendorType = "sell",
-          itemName = Journalator.Utilities.GetNameFromLink(itemLink),
-          count = itemCount,
-          unitPrice = vendorPrice,
-          itemLink = itemLink,
-          time = time(),
-          source = Journalator.State.Source,
-        })
-      end
+      self.expectedToSell = {
+        vendorType = "sell",
+        itemName = Journalator.Utilities.GetNameFromLink(itemLink),
+        count = itemCount,
+        unitPrice = vendorPrice,
+        itemLink = itemLink,
+        time = time(),
+        source = Journalator.State.Source,
+      }
     end)
   end)
 
@@ -78,5 +78,10 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
     self.merchantShown = true
   elseif eventName == "MERCHANT_CLOSED" then
     self.merchantShown = false
+  elseif eventName == "BAG_UPDATE" then
+    self.expectedToSell = nil
+  elseif eventName == "PLAYER_MONEY" and self.expectedToSell then
+    table.insert(Journalator.State.Logs.Vendoring, self.expectedToSell)
+    self.expectedToSell = nil
   end
 end
