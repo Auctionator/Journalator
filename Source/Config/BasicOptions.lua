@@ -16,7 +16,7 @@ function JournalatorConfigBasicOptionsFrameMixin:OnShow()
   self.TooltipLastSold:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD))
   self.TooltipLastBought:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT))
 
-  self.GroupTrash:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_TRASH))
+  self.GroupJunk:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK))
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Save()
@@ -27,7 +27,7 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
   Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD, self.TooltipLastSold:GetChecked())
   Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT, self.TooltipLastBought:GetChecked())
 
-  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_TRASH, self.GroupTrash:GetChecked())
+  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK, self.GroupJunk:GetChecked())
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Cancel()

@@ -72,9 +72,9 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="GroupTrash">
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="GroupJunk">
         <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_GROUP_TRASH" type="global" />
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_GROUP_JUNK" type="global" />
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.VendoringHeading" relativePoint="BOTTOMLEFT" />

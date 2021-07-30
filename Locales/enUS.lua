@@ -27,7 +27,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["MULTIPLE_SELLERS"] = "Multiple Sellers"
   L["PLAYER"] = "Player"
   L["SOURCE"] = "Source"
-  L["TRASH"] = "Trash"
+  L["JUNK"] = "Junk"
 
   L["SALE_RATE"] = "Sale Rate"
   L["MEAN_PRICE"] = "Mean Price"
@@ -57,6 +57,6 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_TOOLTIP_LAST_SOLD"] = "Show the last price that your auction of an item sold for in the item's tooltip."
   L["CONFIG_TOOLTIP_LAST_BOUGHT"] = "Show the last price that you bought an auction of an item at in the item's tooltip."
   L["CONFIG_VENDORING"] = "Vendoring"
-  L["CONFIG_GROUP_TRASH"] = "Group trash items in the \"Vendoring\" tab"
+  L["CONFIG_GROUP_JUNK"] = "Group junk items in the \"Vendoring\" tab"
   return L
 end

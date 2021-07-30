@@ -55,15 +55,15 @@ local VENDORING_DATA_PROVIDER_LAYOUT ={
 
 JournalatorVendoringDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-local TRASH_COLOR = "ff9d9d9d"
+local JUNK_COLOR = "ff9d9d9d"
 local function IsNotTrash(itemLink)
-  return Auctionator.Utilities.GetQualityColorFromLink(itemLink) ~= TRASH_COLOR
+  return Auctionator.Utilities.GetQualityColorFromLink(itemLink) ~= JUNK_COLOR
 end
 
 function JournalatorVendoringDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
-  local trashValue = 0
+  local junkValue = 0
   for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Vendoring")) do
     if self:Filter(item) then
       local moneyIn = 0
@@ -75,7 +75,7 @@ function JournalatorVendoringDataProviderMixin:Refresh()
         moneyOut = -item.unitPrice * item.count
       end
 
-      if not Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_TRASH) or
+      if not Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK) or
          IsNotTrash(item.itemLink) then
         table.insert(results, {
           itemName = item.itemName,
@@ -90,26 +90,26 @@ function JournalatorVendoringDataProviderMixin:Refresh()
           sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         })
       else
-        trashValue = trashValue + moneyIn - moneyOut
+        junkValue = junkValue + moneyIn - moneyOut
       end
     end
   end
-  if trashValue ~= 0 and Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_TRASH) then
+  if junkValue ~= 0 and Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK) then
     local moneyIn = 0
     local moneyOut = 0
-    if trashValue > 0 then
-      moneyIn = trashValue
+    if junkValue > 0 then
+      moneyIn = junkValue
     else
-      moneyOut = trashValue
+      moneyOut = junkValue
     end
 
     table.insert(results, {
-      itemName = JOURNALATOR_L_TRASH,
-      itemNamePretty = "|c"..TRASH_COLOR .. JOURNALATOR_L_TRASH .. "|r",
+      itemName = JOURNALATOR_L_JUNK,
+      itemNamePretty = "|c"..JUNK_COLOR .. JOURNALATOR_L_JUNK .. "|r",
       moneyIn = moneyIn,
       moneyOut = moneyOut,
       count = 1,
-      unitPrice = math.abs(trashValue),
+      unitPrice = math.abs(junkValue),
       rawDay = time(),
       date = "",
       itemLink = nil,
