@@ -133,7 +133,7 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
     local name, _, price, quantity = GetBuybackItemInfo(index)
     local link = GetBuybackItemLink(index)
 
-    self.expectedToUpdate["buyback"] = {
+    self.expectedToUpdate["buy"] = {
       vendorType = "buyback",
       itemName = name,
       count = quantity,
@@ -158,7 +158,7 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
     local link = GetMerchantItemLink(index)
 
     if price ~= 0 and numInStock ~= 0 then
-      table.insert(Journalator.State.Logs.Vendoring, {
+      self.expectedToUpdate["buy"] = {
         vendorType = "purchase",
         itemName = name,
         count = quantity,
@@ -166,7 +166,8 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
         itemLink = link,
         time = time(),
         source = Journalator.State.Source,
-      })
+      }
+      self.lastScannedSalesIDs = GetAllSalesIDs()
     end
   end)
 end
@@ -189,7 +190,7 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
 
       -- Check if any new item has appeared in the player's bag (which is enough
       -- to check if a buyback item has been bought back)
-      elseif item.vendorType == "buyback" and IsAnyNewSalesIDs(self.lastScannedSalesIDs) then
+      elseif item.vendorType == "buy" and IsAnyNewSalesIDs(self.lastScannedSalesIDs) then
         table.insert(Journalator.State.Logs.Vendoring, item)
         self.lastScannedSalesIDs = GetAllSalesIDs()
         self.expectedToUpdate[salesID] = nil
