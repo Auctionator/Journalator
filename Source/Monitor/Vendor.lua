@@ -19,17 +19,17 @@ local function IsSalesIDInBag(salesID)
 end
 
 local function GetAllSalesIDs()
-  local salesIDs = {}
+  local result = {}
   for bag = 0, 4 do
     for slot = 1, GetContainerNumSlots(bag) do
       local salesID = GetSalesIDFromBagAndSlot(bag, slot)
       if salesID ~= nil then
-        table.insert(salesIDs, salesID)
+        table.insert(result, salesID)
       end
     end
   end
 
-  return salesIDs
+  return result
 end
 
 local function IsAnyNewSalesIDs(oldSalesIDs)
@@ -50,10 +50,11 @@ function JournalatorVendorMonitorMixin:OnLoad()
   self.expectedToUpdate = {}
 
   FrameUtil.RegisterFrameForEvents(self, {
-    "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE"
+    "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE", "BAG_UPDATE"
   })
   self:RegisterRightClickToSellHandlers()
   self:RegisterDragToSellHandlers()
+  self:RegisterIgnoreDestroys()
 
   self:RegisterBuybackHandlers()
 
@@ -124,6 +125,14 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   end)
 end
 
+function JournalatorVendorMonitorMixin:RegisterIgnoreDestroys()
+  -- Prevents destroying an item that can't be sold being treated as a sale
+  hooksecurefunc(_G, "DeleteCursorItem", function()
+    self.expectedToUpdate  = {}
+    self.lastScannedSalesIDs = GetAllSalesIDs()
+  end)
+end
+
 function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
   hooksecurefunc(_G, "BuybackItem", function(index)
     if not self.merchantShown then
@@ -180,7 +189,9 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
     self.expectedToUpdate = {}
     self.merchantShown = false
 
-  elseif eventName == "MERCHANT_UPDATE" then
+  elseif eventName == "MERCHANT_CLOSED" then
+
+  elseif eventName == "MERCHANT_UPDATE" or eventName == "BAG_UPDATE" then
     for salesID, item in pairs(self.expectedToUpdate) do
       -- Check if an item sold to the vendor has disappeared from the player's
       -- bag
@@ -190,7 +201,8 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
 
       -- Check if any new item has appeared in the player's bag (which is enough
       -- to check if a buyback item has been bought back)
-      elseif item.vendorType == "buy" and IsAnyNewSalesIDs(self.lastScannedSalesIDs) then
+      elseif (item.vendorType == "purchase" or item.vendorType == "buyback")
+          and IsAnyNewSalesIDs(self.lastScannedSalesIDs) then
         table.insert(Journalator.State.Logs.Vendoring, item)
         self.lastScannedSalesIDs = GetAllSalesIDs()
         self.expectedToUpdate[salesID] = nil
