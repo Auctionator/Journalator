@@ -2,7 +2,6 @@ local function SetupMonitors()
   CreateFrame("Frame", "JNRMailMonitor", nil, "JournalatorMailMonitorTemplate")
   CreateFrame("Frame", "JNRPostingMonitor", nil, "JournalatorPostingMonitorTemplate")
   CreateFrame("Frame", "JNRVendorMonitor", nil, "JournalatorVendorMonitorTemplate")
-  CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
 end
 
 function Journalator.Initialize()
@@ -11,6 +10,8 @@ function Journalator.Initialize()
   Journalator.State.CurrentVersion = GetAddOnMetadata("Journalator", "Version")
 
   SetupMonitors()
+
+  CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
 
   Journalator.SlashCmd.Initialize()
 
