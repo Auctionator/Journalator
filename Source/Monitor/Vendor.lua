@@ -1,10 +1,14 @@
 JournalatorVendorMonitorMixin = {}
 
-local function GetSalesIDFromBagAndSlot(bag, slot)
-  local location = ItemLocation:CreateFromBagAndSlot(bag, slot)
+local function GetSalesIDFromLocation(location)
   if location:IsValid() then
     return C_Item.GetItemGUID(location) .. " " .. C_Item.GetStackCount(location)
   end
+end
+
+local function GetSalesIDFromBagAndSlot(bag, slot)
+  local location = ItemLocation:CreateFromBagAndSlot(bag, slot)
+  return GetSalesIDFromLocation(location)
 end
 
 local function IsSalesIDInBag(salesID)
@@ -93,7 +97,7 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   MerchantFrame:HookScript("OnEnter", function()
     local itemLocation = C_Cursor.GetCursorItem()
     if itemLocation ~= nil then
-      local salesID = C_Item.GetItemGUID(itemLocation)
+      local salesID = GetSalesIDFromLocation(itemLocation)
       local itemLink = C_Item.GetItemLink(itemLocation)
       local itemCount = C_Item.GetStackCount(itemLocation)
       local item = Item:CreateFromItemLocation(itemLocation)
