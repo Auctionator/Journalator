@@ -122,10 +122,10 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
     self.lastCursorItem = nil
   end)
   hooksecurefunc(_G, "PickupMerchantItem", function(index)
-    if self.lastCursorItem ~= nil then
+    if self.lastCursorItem ~= nil and C_Cursor.GetCursorItem() == nil then
       self.expectedToUpdate[self.lastCursorItem.salesID] = self.lastCursorItem.item
-      self.lastCursorItem = nil
     end
+    self.lastCursorItem = nil
   end)
 end
 
