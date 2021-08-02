@@ -56,7 +56,7 @@ local VENDORING_DATA_PROVIDER_LAYOUT ={
 JournalatorVendoringDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 local JUNK_COLOR = "ff9d9d9d"
-local function IsNotTrash(itemLink)
+local function IsNotJunk(itemLink)
   return Auctionator.Utilities.GetQualityColorFromLink(itemLink) ~= JUNK_COLOR
 end
 
@@ -76,7 +76,7 @@ function JournalatorVendoringDataProviderMixin:Refresh()
       end
 
       if not Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK) or
-         IsNotTrash(item.itemLink) then
+         IsNotJunk(item.itemLink) then
         table.insert(results, {
           itemName = item.itemName,
           itemNamePretty = Journalator.ApplyQualityColor(item.itemName, item.itemLink),
