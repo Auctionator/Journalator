@@ -58,11 +58,14 @@ function JournalatorVendorMonitorMixin:OnLoad()
   })
   self:RegisterRightClickToSellHandlers()
   self:RegisterDragToSellHandlers()
-  self:RegisterIgnoreDestroys()
 
   self:RegisterBuybackHandlers()
 
   self:RegisterPurchaseHandlers()
+end
+
+function JournalatorVendorMonitorMixin:OnUpdate()
+  self:CheckCursorItemsForDragging()
 end
 
 function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
@@ -93,48 +96,79 @@ function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
   end)
 end
 
+function JournalatorVendorMonitorMixin:UpdateCursorItem()
+  self.lastCursorItem = nil
+
+  if not self.merchantShown then
+    return
+  end
+
+  local itemLocation = C_Cursor.GetCursorItem()
+  if itemLocation then
+    local salesID = GetSalesIDFromLocation(itemLocation)
+    local itemLink = C_Item.GetItemLink(itemLocation)
+    local itemCount = C_Item.GetStackCount(itemLocation)
+
+    self.expectedToUpdate[salesID] = nil
+
+    local item = Item:CreateFromItemLocation(itemLocation)
+    item:ContinueOnItemLoad(function()
+      -- If this item has been queued to be sold, it should no longer be on the
+      -- cursor and in the queue, we just reset the queue so it works to check
+      -- it.
+      if self.expectedToUpdate[salesID] ~= nil then
+        return
+      end
+
+      local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
+      self.lastCursorItem = {
+        salesID = salesID,
+        item = {
+          vendorType = "sell",
+          itemName = Journalator.Utilities.GetNameFromLink(itemLink),
+          count = itemCount,
+          unitPrice = vendorPrice,
+          itemLink = itemLink,
+          time = time(),
+          source = Journalator.State.Source,
+        },
+      }
+    end)
+  end
+end
+
 function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
-  MerchantFrame:HookScript("OnEnter", function()
-    local itemLocation = C_Cursor.GetCursorItem()
-    if itemLocation ~= nil then
-      local salesID = GetSalesIDFromLocation(itemLocation)
-      local itemLink = C_Item.GetItemLink(itemLocation)
-      local itemCount = C_Item.GetStackCount(itemLocation)
-      local item = Item:CreateFromItemLocation(itemLocation)
-      item:ContinueOnItemLoad(function()
-        local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
-        self.lastCursorItem = {
-          salesID = salesID,
-          item = {
-            vendorType = "sell",
-            itemName = Journalator.Utilities.GetNameFromLink(itemLink),
-            count = itemCount,
-            unitPrice = vendorPrice,
-            itemLink = itemLink,
-            time = time(),
-            source = Journalator.State.Source,
-          },
-        }
-      end)
-    end
-  end)
-  MerchantFrame:HookScript("OnLeave", function()
-    self.lastCursorItem = nil
-  end)
   hooksecurefunc(_G, "PickupMerchantItem", function(index)
+    if not self.merchantShown then
+      return
+    end
+
     if self.lastCursorItem ~= nil and C_Cursor.GetCursorItem() == nil then
       self.expectedToUpdate[self.lastCursorItem.salesID] = self.lastCursorItem.item
     end
     self.lastCursorItem = nil
   end)
+
+  -- Handle pickups by other addons
+  hooksecurefunc(_G, "PickupGuildBankItem", function()
+    self:UpdateCursorItem()
+  end)
+  hooksecurefunc(_G, "PickupInventoryItem", function()
+    self:UpdateCursorItem()
+  end)
+  hooksecurefunc(_G, "PickupBagFromSlot", function()
+    self:UpdateCursorItem()
+  end)
+  hooksecurefunc(_G, "PickupItem", function()
+    self:UpdateCursorItem()
+  end)
+  hooksecurefunc(_G, "PickupContainerItem", function()
+    self:UpdateCursorItem()
+  end)
 end
 
-function JournalatorVendorMonitorMixin:RegisterIgnoreDestroys()
-  -- Prevents destroying an item that can't be sold being treated as a sale
-  hooksecurefunc(_G, "DeleteCursorItem", function()
-    self.expectedToUpdate  = {}
-    self.lastScannedSalesIDs = GetAllSalesIDs()
-  end)
+function JournalatorVendorMonitorMixin:CheckCursorItemsForDragging()
+  self:UpdateCursorItem()
 end
 
 function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
@@ -187,9 +221,11 @@ end
 
 function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MERCHANT_SHOW" then
+    self:SetScript("OnUpdate", self.OnUpdate)
     self.merchantShown = true
 
   elseif eventName == "MERCHANT_CLOSED" then
+    self:SetScript("OnUpdate", nil)
     self.expectedToUpdate = {}
     self.merchantShown = false
 
