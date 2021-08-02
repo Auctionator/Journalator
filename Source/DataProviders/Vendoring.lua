@@ -63,6 +63,8 @@ end
 function JournalatorVendoringDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
+  -- Used to group junk as one item (when the option is on), to avoid filling up
+  -- the view with junk items.
   local junkValue = 0
   for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Vendoring")) do
     if self:Filter(item) then
@@ -75,6 +77,7 @@ function JournalatorVendoringDataProviderMixin:Refresh()
         moneyOut = -item.unitPrice * item.count
       end
 
+      -- If not junk or the group junk option is off, include normally
       if not Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK) or
          IsNotJunk(item.itemLink) then
         table.insert(results, {
@@ -94,6 +97,8 @@ function JournalatorVendoringDataProviderMixin:Refresh()
       end
     end
   end
+
+  -- Create junk group item, without any normal details like a date or source.
   if junkValue ~= 0 and Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK) then
     local moneyIn = 0
     local moneyOut = 0
