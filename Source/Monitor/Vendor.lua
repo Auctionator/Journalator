@@ -4,7 +4,7 @@ local EQUIPMENT_SLOT_CAP = 19
 
 local function GetGUIDFromLocation(location)
   if location:IsValid() then
-    return C_Item.GetItemGUID(location) .. " " .. C_Item.GetStackCount(location)
+    return C_Item.GetItemGUID(location)
   end
 end
 
@@ -214,7 +214,11 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
     local name, _, price, quantity = GetBuybackItemInfo(index)
     local link = GetBuybackItemLink(index)
 
-    self.sellQueue["buy"] = {
+    -- There is no duplicate check for the same item being clicked multiple
+    -- times, as even if there are duplicates, the code checking for a
+    -- successful buyback uses guids for the items in the bag to detect newly
+    -- purchased ones - avoiding the duplicates.
+    table.insert(self.purchaseQueue, {
       vendorType = "buyback",
       itemName = name,
       count = quantity,
@@ -222,7 +226,8 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
       itemLink = link,
       time = time(),
       source = Journalator.State.Source,
-    }
+    })
+    self:SortPurchaseQueue()
   end)
 end
 
@@ -249,16 +254,28 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
         time = time(),
         source = Journalator.State.Source,
       })
-      -- Sort in descending order, group by item. Used to determine which
-      -- purchases have gone through, and affects the order in which items are
-      -- added to the vendor logs.
-      table.sort(self.purchaseQueue, function(a, b)
-        if a.itemLink == b.itemLink then
-          return b.count < a.count
-        else
-          return a.itemLink < b.itemLink
-        end
-      end)
+      self:SortPurchaseQueue()
+    end
+  end)
+
+  hooksecurefunc(_G, "SplitContainerItem", function(bag, slot, splitAmount)
+    self:ResetQueues()
+  end)
+
+  hooksecurefunc(C_TradeSkillUI, "CraftRecipe", function(recipeID, ...)
+    self:ResetQueues()
+  end)
+end
+
+function JournalatorVendorMonitorMixin:SortPurchaseQueue()
+  -- Sort in descending order, group by item. Used to determine which
+  -- purchases have gone through, and affects the order in which items are
+  -- added to the vendor logs.
+  table.sort(self.purchaseQueue, function(a, b)
+    if a.itemLink == b.itemLink then
+      return b.count < a.count
+    else
+      return a.itemLink < b.itemLink
     end
   end)
 end
@@ -275,6 +292,7 @@ function JournalatorVendorMonitorMixin:UpdateForCompletedPurchases()
       if details.itemLink == item.itemLink then
         if self.oldStackSizes[guid] == nil then
           foundMatch = true
+          self.oldStackSizes[guid] = {itemLink = item.itemLink, count = item.count}
           break
         elseif newStackSizes[guid].count - self.oldStackSizes[guid].count >= item.count then
           foundMatch = true
