@@ -1,5 +1,7 @@
 JournalatorVendorMonitorMixin = {}
 
+local EQUIPMENT_SLOT_CAP = 19
+
 local function GetSalesIDFromLocation(location)
   if location:IsValid() then
     return C_Item.GetItemGUID(location) .. " " .. C_Item.GetStackCount(location)
@@ -11,6 +13,11 @@ local function GetSalesIDFromBagAndSlot(bag, slot)
   return GetSalesIDFromLocation(location)
 end
 
+local function GetSalesIDFromEquipmentSlot(slot)
+  local location = ItemLocation:CreateFromEquipmentSlot(slot)
+  return GetSalesIDFromLocation(location)
+end
+
 local function IsSalesIDInPossession(salesID)
   for bag = 0, 4 do
     -- Start the slots at 0 in include the container's item
@@ -18,6 +25,12 @@ local function IsSalesIDInPossession(salesID)
       if GetSalesIDFromBagAndSlot(bag, slot) == salesID then
         return true
       end
+    end
+  end
+
+  for equipmentSlot = 1, EQUIPMENT_SLOT_CAP do
+    if GetSalesIDFromEquipmentSlot(equipmentSlot) == salesID then
+      return true
     end
   end
   return false
@@ -32,6 +45,13 @@ local function GetAllSalesIDs()
       if salesID ~= nil then
         table.insert(result, salesID)
       end
+    end
+  end
+
+  for equipmentSlot = 1, EQUIPMENT_SLOT_CAP do
+    local salesID = GetSalesIDFromEquipmentSlot(equipmentSlot)
+    if salesID ~= nil then
+      table.insert(result, salesID)
     end
   end
 
