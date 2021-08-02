@@ -59,7 +59,7 @@ local function GetGUIDStackSizes()
 end
 
 function JournalatorVendorMonitorMixin:OnLoad()
-  self:ResetExpected()
+  self:ResetQueues()
 
   FrameUtil.RegisterFrameForEvents(self, {
     "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE"
@@ -73,16 +73,21 @@ function JournalatorVendorMonitorMixin:OnLoad()
 end
 
 function JournalatorVendorMonitorMixin:OnUpdate()
-  self:CheckCursorItemsForDragging()
+  self:UpdateCursorItem()
 end
 
-  -- Used to detect the successful sale of an item
-function JournalatorVendorMonitorMixin:ResetExpected()
-  self.expectedToSell = {}
-  self.expectedToPurchase = {}
+function JournalatorVendorMonitorMixin:ResetQueues()
+  -- Used to detect the successful sale or purchase of items
+  -- Keeping a queue is necessary as addons automating merchants can make bulk
+  -- purchases (reagents) and sales (e.g. of junk) which aren't fulfilled
+  -- immediately.
+  self.sellQueue = {}
+  self.purchaseQueue = {}
 end
 
 function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
+  --Detect when an attempt to sell an item is done by right-clicking an item in
+  --a bag. This handler also works for addon automated sales.
   hooksecurefunc(_G, "UseContainerItem", function(bag, slot)
     if not self.merchantShown then
       return
@@ -97,7 +102,7 @@ function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
     local guid = GetGUIDFromBagAndSlot(bag, slot)
     item:ContinueOnItemLoad(function()
       local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
-      self.expectedToSell[guid] = {
+      self.sellQueue[guid] = {
         vendorType = "sell",
         itemName = Journalator.Utilities.GetNameFromLink(itemLink),
         count = itemCount,
@@ -110,6 +115,9 @@ function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
   end)
 end
 
+-- Used to identify the item selected/being dragged by the cursor
+-- The selected item may be sold, destroyed, repositioned in the bag, or left
+-- as-is.
 function JournalatorVendorMonitorMixin:UpdateCursorItem()
   self.lastCursorItem = nil
 
@@ -123,14 +131,16 @@ function JournalatorVendorMonitorMixin:UpdateCursorItem()
     local itemLink = C_Item.GetItemLink(itemLocation)
     local itemCount = C_Item.GetStackCount(itemLocation)
 
-    self.expectedToSell[guid] = nil
+    -- If the item is currently selected by the cursor it will be locked in the
+    -- bag, so it isn't currently waiting for a sale of it to process.
+    self.sellQueue[guid] = nil
 
     local item = Item:CreateFromItemLocation(itemLocation)
     item:ContinueOnItemLoad(function()
       -- If this item has been queued to be sold, it should no longer be on the
       -- cursor and in the queue, we just reset the queue so it works to check
       -- it.
-      if self.expectedToSell[guid] ~= nil then
+      if self.sellQueue[guid] ~= nil then
         return
       end
 
@@ -152,13 +162,14 @@ function JournalatorVendorMonitorMixin:UpdateCursorItem()
 end
 
 function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
+  -- Handle case when the cursor is used to select and sell an item
   hooksecurefunc(_G, "PickupMerchantItem", function(index)
     if not self.merchantShown then
       return
     end
 
     if self.lastCursorItem ~= nil and C_Cursor.GetCursorItem() == nil then
-      self.expectedToSell[self.lastCursorItem.guid] = self.lastCursorItem.item
+      self.sellQueue[self.lastCursorItem.guid] = self.lastCursorItem.item
     end
     self.lastCursorItem = nil
   end)
@@ -181,10 +192,19 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   end)
 end
 
-function JournalatorVendorMonitorMixin:CheckCursorItemsForDragging()
-  self:UpdateCursorItem()
+function JournalatorVendorMonitorMixin:UpdateForCompletedSales()
+  -- Checks if an item sold to a vendor has disappeared from the player's bag or
+  -- equipped items.
+  for guid, item in pairs(self.sellQueue) do
+    if not IsGUIDInPossession(guid) then
+      table.insert(Journalator.State.Logs.Vendoring, item)
+      self.sellQueue[guid] = nil
+    end
+  end
 end
 
+-- Handle items being repurchased from the vendor aftering having been sold
+-- earlier.
 function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
   hooksecurefunc(_G, "BuybackItem", function(index)
     if not self.merchantShown then
@@ -194,7 +214,7 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
     local name, _, price, quantity = GetBuybackItemInfo(index)
     local link = GetBuybackItemLink(index)
 
-    self.expectedToSell["buy"] = {
+    self.sellQueue["buy"] = {
       vendorType = "buyback",
       itemName = name,
       count = quantity,
@@ -206,6 +226,8 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
   end)
 end
 
+-- Handle normal purchase of items. This even works when the cursor is used to
+-- drag and item from the vendor into a bag.
 function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
   hooksecurefunc(_G, "BuyMerchantItem", function(index, quantity)
     if not self.merchantShown then
@@ -218,7 +240,7 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
     local link = GetMerchantItemLink(index)
 
     if price ~= 0 and numInStock ~= 0 then
-      table.insert(self.expectedToPurchase,{
+      table.insert(self.purchaseQueue,{
         vendorType = "purchase",
         itemName = name,
         count = quantity,
@@ -227,9 +249,10 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
         time = time(),
         source = Journalator.State.Source,
       })
-      -- Sort in descending order. Used to determine which purchases have gone
-      -- through.
-      table.sort(self.expectedToPurchase, function(a, b)
+      -- Sort in descending order, group by item. Used to determine which
+      -- purchases have gone through, and affects the order in which items are
+      -- added to the vendor logs.
+      table.sort(self.purchaseQueue, function(a, b)
         if a.itemLink == b.itemLink then
           return b.count < a.count
         else
@@ -240,12 +263,47 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
   end)
 end
 
+function JournalatorVendorMonitorMixin:UpdateForCompletedPurchases()
+  local newStackSizes = GetGUIDStackSizes()
+  local newQueue = {}
+  for _, item in ipairs(self.purchaseQueue) do
+
+    local foundMatch = false
+
+    -- Identify stack with new items in it corresponding to the purchase.
+    for guid, details in pairs(newStackSizes) do
+      if details.itemLink == item.itemLink then
+        if self.oldStackSizes[guid] == nil then
+          foundMatch = true
+          break
+        elseif newStackSizes[guid].count - self.oldStackSizes[guid].count >= item.count then
+          foundMatch = true
+          -- We've accounted for the items, so update the old stack size count
+          -- so that we can identify other stacks for other purchases.
+          self.oldStackSizes[guid].count = self.oldStackSizes[guid].count + item.count
+          break
+        end
+      end
+    end
+
+    if foundMatch then
+      table.insert(Journalator.State.Logs.Vendoring, item)
+    else
+      -- Didn't find an appropriate stack of the item in the bag, so leave the
+      -- purchase queued.
+      table.insert(newQueue, item)
+    end
+  end
+  self.oldStackSizes = newStackSizes
+  self.purchaseQueue = newQueue
+end
+
 function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MERCHANT_SHOW" then
     self:SetScript("OnUpdate", self.OnUpdate)
     self:RegisterEvent("BAG_UPDATE")
 
-    self:ResetExpected()
+    self:ResetQueues()
     self.oldStackSizes = GetGUIDStackSizes()
     self.merchantShown = true
 
@@ -253,45 +311,13 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
     self:SetScript("OnUpdate", nil)
     self:UnregisterEvent("BAG_UPDATE")
 
-    self:ResetExpected()
+    self:ResetQueues()
     self.merchantShown = false
 
   elseif eventName == "MERCHANT_UPDATE" then
-    for guid, item in pairs(self.expectedToSell) do
-      -- Check if an item sold to the vendor has disappeared from the player's
-      -- bag
-      if not IsGUIDInPossession(guid) then
-        table.insert(Journalator.State.Logs.Vendoring, item)
-        self.expectedToSell[guid] = nil
-      end
-    end
+    self:UpdateForCompletedSales()
 
   elseif eventName == "BAG_UPDATE" then
-    local newStackSizes = GetGUIDStackSizes()
-    local newExpected = {}
-    for _, item in ipairs(self.expectedToPurchase) do
-
-      local foundMatch = false
-
-      for guid, details in pairs(newStackSizes) do
-        if details.itemLink == item.itemLink then
-          if self.oldStackSizes[guid] == nil then
-            foundMatch = true
-            break
-          elseif newStackSizes[guid].count - self.oldStackSizes[guid].count >= item.count then
-            foundMatch = true
-            self.oldStackSizes[guid].count = self.oldStackSizes[guid].count + item.count
-            break
-          end
-        end
-      end
-
-      if foundMatch then
-        table.insert(Journalator.State.Logs.Vendoring, item)
-      else
-        table.insert(newExpected, item)
-      end
-    end
-    self.oldStackSizes = newStackSizes
+    self:UpdateForCompletedPurchases()
   end
 end
