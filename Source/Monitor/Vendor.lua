@@ -11,9 +11,10 @@ local function GetSalesIDFromBagAndSlot(bag, slot)
   return GetSalesIDFromLocation(location)
 end
 
-local function IsSalesIDInBag(salesID)
+local function IsSalesIDInPossession(salesID)
   for bag = 0, 4 do
-    for slot = 1, GetContainerNumSlots(bag) do
+    -- Start the slots at 0 in include the container's item
+    for slot = 0, GetContainerNumSlots(bag) do
       if GetSalesIDFromBagAndSlot(bag, slot) == salesID then
         return true
       end
@@ -25,7 +26,8 @@ end
 local function GetAllSalesIDs()
   local result = {}
   for bag = 0, 4 do
-    for slot = 1, GetContainerNumSlots(bag) do
+    -- Start the slots at 0 in include the container's item
+    for slot = 0, GetContainerNumSlots(bag) do
       local salesID = GetSalesIDFromBagAndSlot(bag, slot)
       if salesID ~= nil then
         table.insert(result, salesID)
@@ -235,7 +237,7 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
     for salesID, item in pairs(self.expectedToUpdate) do
       -- Check if an item sold to the vendor has disappeared from the player's
       -- bag
-      if item.vendorType == "sell" and not IsSalesIDInBag(salesID) then
+      if item.vendorType == "sell" and not IsSalesIDInPossession(salesID) then
         table.insert(Journalator.State.Logs.Vendoring, item)
         self.expectedToUpdate[salesID] = nil
 
