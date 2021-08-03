@@ -390,7 +390,7 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
 
   elseif eventName == "MERCHANT_CLOSED" then
     self:SetScript("OnUpdate", nil)
-    self:UnregisterEvent("BAG_UPDATE")
+    FrameUtil.UnregisterFrameForEvents(self, PURCHASE_VALIDATION_EVENTS)
 
     self:ResetQueues()
     self.merchantShown = false
