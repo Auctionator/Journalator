@@ -201,6 +201,15 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.koKR" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
+
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_OPEN_ADDON_OPTIONS" parentKey="OptionsButton">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.Inset" relativePoint="TOPRIGHT" x="10" />
+        </Anchors>
+        <Scripts>
+          <OnClick>self:GetParent():OpenOptions()</OnClick>
+        </Scripts>
+      </Button>
     </Frames>
   </Frame>
 </Ui>
