@@ -11,6 +11,7 @@
   <Include file="Posting.xml" />
   <Include file="SaleRates.xml" />
   <Include file="Failures.xml" />
+  <Include file="Vendoring.xml" />
   <Include file="Info.xml" />
 
   <Include file="TabButton.xml" />

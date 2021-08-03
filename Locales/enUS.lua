@@ -5,15 +5,18 @@ JOURNALATOR_LOCALES.enUS = function()
   L["POSTING_TITLE"] = "Journalator - Posting"
   L["SALE_RATES_TITLE"] = "Journalator - Sale Rates"
   L["FAILURE_TITLE"] = "Journalator - Failed Auctions"
+  L["VENDORING_TITLE"] = "Journalator - Vendoring"
   L["INFO_TITLE"] = "Journalator - Info"
 
   L["INVOICES"] = "Invoices"
   L["POSTING"] = "Posting"
   L["SALE_RATES"] = "Sale Rates"
   L["FAILURES"] = "Failures"
+  L["VENDORING"] = "Vendoring"
   L["JOURNALATOR"] = "Journalator"
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
+  L["IN"] = "In"
   L["OUT"] = "Out"
   L["TOTAL"] = "Total"
   L["DEPOSIT"] = "Deposit"
@@ -24,6 +27,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["MULTIPLE_SELLERS"] = "Multiple Sellers"
   L["PLAYER"] = "Player"
   L["SOURCE"] = "Source"
+  L["JUNK"] = "Junk"
 
   L["SALE_RATE"] = "Sale Rate"
   L["MEAN_PRICE"] = "Mean Price"
@@ -52,5 +56,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_TOOLTIP_FAILURES"] = "Show how many auctions failed for an item in the item's tooltip."
   L["CONFIG_TOOLTIP_LAST_SOLD"] = "Show the last price that your auction of an item sold for in the item's tooltip."
   L["CONFIG_TOOLTIP_LAST_BOUGHT"] = "Show the last price that you bought an auction of an item at in the item's tooltip."
+  L["CONFIG_VENDORING"] = "Vendoring"
+  L["CONFIG_GROUP_JUNK"] = "Group junk items in the \"Vendoring\" tab"
   return L
 end

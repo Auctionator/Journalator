@@ -1,7 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="Mail.lua" />
   <Script file="Posting.lua" />
+  <Script file="Vendor.lua" />
 
   <Include file="Mail.xml" />
   <Include file="Posting.xml" />
+  <Include file="Vendor.xml" />
 </Ui>
