@@ -58,12 +58,18 @@ local function GetGUIDStackSizes()
   return result
 end
 
+local MERCHANT_EVENTS = {
+  "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE"
+}
+
+local PURCHASE_VALIDATION_EVENTS = {
+  "BAG_UPDATE"
+}
+
 function JournalatorVendorMonitorMixin:OnLoad()
   self:ResetQueues()
 
-  FrameUtil.RegisterFrameForEvents(self, {
-    "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE"
-  })
+  FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS)
   self:RegisterRightClickToSellHandlers()
   self:RegisterDragToSellHandlers()
 
@@ -74,6 +80,8 @@ end
 
 function JournalatorVendorMonitorMixin:OnUpdate()
   self:UpdateCursorItem()
+
+  self:CheckPurchaseQueueForBagSpace()
 end
 
 function JournalatorVendorMonitorMixin:ResetQueues()
@@ -95,10 +103,15 @@ function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
 
     local _, itemCount, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
 
+    if itemLink == nil then
+      return
+    end
+
     local item = Item:CreateFromItemLink(itemLink)
     if item:IsItemEmpty() then
       return
     end
+
     local guid = GetGUIDFromBagAndSlot(bag, slot)
     item:ContinueOnItemLoad(function()
       local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
@@ -243,9 +256,10 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
 
     local name, _, price, stackSize, numInStock = GetMerchantItemInfo(index)
     local link = GetMerchantItemLink(index)
+    local extraCurrenciesNeeded = GetMerchantItemCostInfo(index)
 
-    if price ~= 0 and numInStock ~= 0 then
-      table.insert(self.purchaseQueue,{
+    if extraCurrenciesNeeded == 0 and price ~= 0 and numInStock >= quantity then
+      table.insert(self.purchaseQueue, {
         vendorType = "purchase",
         itemName = name,
         count = quantity,
@@ -256,14 +270,6 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
       })
       self:SortPurchaseQueue()
     end
-  end)
-
-  hooksecurefunc(_G, "SplitContainerItem", function(bag, slot, splitAmount)
-    self:ResetQueues()
-  end)
-
-  hooksecurefunc(C_TradeSkillUI, "CraftRecipe", function(recipeID, ...)
-    self:ResetQueues()
   end)
 end
 
@@ -312,14 +318,53 @@ function JournalatorVendorMonitorMixin:UpdateForCompletedPurchases()
       table.insert(newQueue, item)
     end
   end
+
   self.oldStackSizes = newStackSizes
+  self.purchaseQueue = newQueue
+end
+
+-- Assumes GetItemInfo data is loaded
+-- Returns true if there a bag such that a stack of slotSizeNeeded of itemLink
+-- that can fit in it.
+local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
+  local stackSize = select(8, GetItemInfo(itemLink))
+
+  for bag = 0, 4 do
+    local available = 0
+
+    for slot = 1, GetContainerNumSlots(bag) do
+      local _, itemCount, _, _, _, _, slotLink = GetContainerItemInfo(bag, slot)
+      if itemCount == 0 then
+        available = available + stackSize
+      elseif itemLink == slotLink then
+        available = available + stackSize - itemCount
+      end
+    end
+
+    if available >= slotSizeNeeded then
+      return true
+    end
+  end
+
+  return false
+end
+
+function JournalatorVendorMonitorMixin:CheckPurchaseQueueForBagSpace()
+  local newQueue = {}
+  for index, item in ipairs(self.purchaseQueue) do
+    if GetItemInfo(item.itemLink) == nil or
+        IsLargeEnoughSlotAvailable(item.itemLink, item.count) then
+      table.insert(newQueue, item)
+    end
+  end
+
   self.purchaseQueue = newQueue
 end
 
 function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MERCHANT_SHOW" then
     self:SetScript("OnUpdate", self.OnUpdate)
-    self:RegisterEvent("BAG_UPDATE")
+    FrameUtil.RegisterFrameForEvents(self, PURCHASE_VALIDATION_EVENTS)
 
     self:ResetQueues()
     self.oldStackSizes = GetGUIDStackSizes()
