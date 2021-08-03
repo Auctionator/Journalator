@@ -256,9 +256,20 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
 
     local name, _, price, stackSize, numInStock = GetMerchantItemInfo(index)
     local link = GetMerchantItemLink(index)
+    local maxStackSize = GetMerchantItemMaxStack(index)
     local extraCurrenciesNeeded = GetMerchantItemCostInfo(index)
 
-    if extraCurrenciesNeeded == 0 and price ~= 0 and numInStock >= quantity then
+    if
+      -- Has a copper/silver/gold price
+      price ~= 0
+      -- Ignore special currencies (simplifies further calculations)
+      and extraCurrenciesNeeded == 0
+      -- In stock, and not buying more than on sale
+      and (numInStock == -1 or numInStock >= quantity)
+      -- Buying more than a maxed out stack fails with "Internal Bag Error"
+      and maxStackSize >= quantity
+    then
+      print("queued", link, maxStackSize, quantity)
       table.insert(self.purchaseQueue, {
         vendorType = "purchase",
         itemName = name,
@@ -274,9 +285,10 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
 end
 
 function JournalatorVendorMonitorMixin:SortPurchaseQueue()
-  -- Sort in descending order, group by item. Used to determine which
-  -- purchases have gone through, and affects the order in which items are
-  -- added to the vendor logs.
+  -- Sort in descending order by stack size, grouped by item. Used to determine
+  -- which purchases have gone through, and affects the order in which items are
+  -- added to the vendor logs, by slotting each stack into the new stacks added,
+  -- largest to smallest.
   table.sort(self.purchaseQueue, function(a, b)
     if a.itemLink == b.itemLink then
       return b.count < a.count
@@ -324,8 +336,7 @@ function JournalatorVendorMonitorMixin:UpdateForCompletedPurchases()
 end
 
 -- Assumes GetItemInfo data is loaded
--- Returns true if there a bag such that a stack of slotSizeNeeded of itemLink
--- that can fit in it.
+-- Returns true if a bag has the space for all of slotSizeNeeded*itemLink
 local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
   local stackSize = select(8, GetItemInfo(itemLink))
 
@@ -334,7 +345,7 @@ local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
 
     for slot = 1, GetContainerNumSlots(bag) do
       local _, itemCount, _, _, _, _, slotLink = GetContainerItemInfo(bag, slot)
-      if itemCount == 0 then
+      if itemCount == 0 or itemCount == nil then
         available = available + stackSize
       elseif itemLink == slotLink then
         available = available + stackSize - itemCount
@@ -349,6 +360,13 @@ local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
   return false
 end
 
+-- Used to remove items from the purchase queue when there is no space for them
+-- in a bag
+-- Calculating in advance whether a given item will fit when multiple items
+-- can be purchased at once is awkward, so we check afterwards to see if ANY of
+-- the items can fit independently. So when one item does get added to the bag
+-- the remaining items will either fit (and get purchased), or not, and get
+-- removed from the queue..
 function JournalatorVendorMonitorMixin:CheckPurchaseQueueForBagSpace()
   local newQueue = {}
   for index, item in ipairs(self.purchaseQueue) do
