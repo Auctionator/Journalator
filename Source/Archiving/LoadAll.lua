@@ -1,34 +1,38 @@
-local callbacks = {}
-local alreadyRunning = false
+local allCallbacks = {}
+local frame = nil
 
-function Journalator.Archiving.LoadAll(cb)
-  if Journalator.State.LoadedAllStores and cb ~= nil then
-    cb()
+function Journalator.Archiving.LoadAll(callback)
+  if Journalator.State.LoadedAllStores and callback ~= nil then
+    callback()
     return
   end
 
-  if cb ~= nil then
-    table.insert(callbacks, cb)
+  if callback ~= nil then
+    table.insert(allCallbacks, callback)
   end
 
-  if alreadyRunning then
+  if frame ~= nil then
     return
   end
 
-  alreadyRunning = true
+  frame = CreateFrame("FRAME")
 
   local index = 1
-  local ticker = C_Timer.NewTicker(0, function()
+
+  frame:SetScript("OnUpdate", function()
     local time = JOURNALATOR_ARCHIVE_TIMES[index]
+
     Journalator.State.Archive:Open("SometimesLocked", Journalator.Constants.STORE_PREFIX .. time, true)
     index = index + 1
 
     if index > #JOURNALATOR_ARCHIVE_TIMES then
+      frame:SetScript("OnUpdate", nil)
+
       Journalator.State.LoadedAllStores = true
-      for _, cb in ipairs(callbacks) do
-        cb()
+      for _, callback in ipairs(allCallbacks) do
+        callback()
       end
-      callbacks = {}
+      allCallbacks = {}
     end
-  end, #JOURNALATOR_ARCHIVE_TIMES)
+  end)
 end
