@@ -269,7 +269,6 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
       -- Buying more than a maxed out stack fails with "Internal Bag Error"
       and maxStackSize >= quantity
     then
-      print("queued", link, maxStackSize, quantity)
       table.insert(self.purchaseQueue, {
         vendorType = "purchase",
         itemName = name,
