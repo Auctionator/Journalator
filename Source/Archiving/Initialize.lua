@@ -33,7 +33,7 @@ function Journalator.Archiving.Initialize()
   end
 
   -- Create a store if there aren't any already
-  if JOURNALATOR_ARCHIVE_TIMES == nil then
+  if JOURNALATOR_ARCHIVE_TIMES == nil or #JOURNALATOR_ARCHIVE_TIMES == 0 then
     JOURNALATOR_ARCHIVE_TIMES = { time() }
     archive:Create("SometimesLocked", Journalator.Constants.STORE_PREFIX .. JOURNALATOR_ARCHIVE_TIMES[1])
   end
