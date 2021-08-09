@@ -83,11 +83,3 @@ function JournalatorDisplayMixin:ExportCSVClicked()
     end)
   end
 end
-
-function JournalatorDisplayMixin:RefreshButtonClicked()
-  local view = self:GetCurrentDataView()
-
-  if view ~= nil then
-    view.DataProvider:Refresh()
-  end
-end
