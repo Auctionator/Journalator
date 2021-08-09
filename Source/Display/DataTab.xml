@@ -47,6 +47,15 @@
         </Anchors>
       </Frame>
 
+      <Frame parentKey="FactionDropDown" inherits="AuctionatorDropDown">
+        <Size y="20" x="200"/>
+        <KeyValues>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT" x="400"/>
+        </Anchors>
+      </Frame>
+
       <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" y="-10"/>

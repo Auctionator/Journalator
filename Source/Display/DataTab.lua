@@ -31,6 +31,16 @@ function JournalatorDataTabDisplayMixin:OnLoad()
     60 * 60,
   })
   self.TimePeriodDropDown:SetValue(SECONDS_IN_A_MONTH)
+
+  self.FactionDropDown:InitAgain({
+    JOURNALATOR_L_ALL_FACTIONS,
+    FACTION_ALLIANCE,
+    FACTION_HORDE,
+  }, {
+    "",
+    "Alliance",
+    "Horde",
+  })
 end
 
 function JournalatorDataTabDisplayMixin:RefreshButtonClicked()
@@ -61,6 +71,7 @@ function JournalatorDataTabDisplayMixin:OnUpdate()
     searchText = self.SearchFilter:GetText(),
     secondsToInclude = self.TimePeriodDropDown:GetValue(),
     realm = self.RealmDropDown:GetValue(),
+    faction = self.FactionDropDown:GetValue(),
   })
 
   local newTime = self.DataProvider:GetTimeForRange()

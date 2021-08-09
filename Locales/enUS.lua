@@ -47,6 +47,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["LAST_HOUR"] = "Last hour"
   L["ALL_REALMS"] = "All Realms"
 
+  L["ALL_FACTIONS"] = "All Factions"
+
   L["TYPE_OF_FAILURE"] = "Type of Failure"
   L["EXPIRED"] = "Expired"
   L["CANCELLED"] = "Cancelled"
