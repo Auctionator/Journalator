@@ -7,6 +7,9 @@ function JournalatorDataTabDisplayMixin:OnLoad()
     Journalator.Events.RowClicked
   })
 
+  -- Used to only scan segments already open for realms and characters
+  self.earliestRangeTime = time()
+
   local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
   self.TimePeriodDropDown:InitAgain({
     JOURNALATOR_L_ALL_TIME,
@@ -40,7 +43,9 @@ function JournalatorDataTabDisplayMixin:OnShow()
 end
 
 function JournalatorDataTabDisplayMixin:UpdateRealms()
-  local realmsAndChars = Journalator.GetCharactersAndRealms()
+  local prevRealm = self.RealmDropDown:GetValue() or ""
+
+  local realmsAndChars = Journalator.GetCharactersAndRealms(self.earliestRangeTime)
 
   local realms = Journalator.Utilities.GetSortedKeys(realmsAndChars)
   local realmValues = Journalator.Utilities.GetSortedKeys(realmsAndChars)
@@ -48,7 +53,7 @@ function JournalatorDataTabDisplayMixin:UpdateRealms()
   table.insert(realmValues, 1, "")
 
   self.RealmDropDown:InitAgain(realms, realmValues)
-  self.RealmDropDown:SetValue("")
+  self.RealmDropDown:SetValue(prevRealm)
 end
 
 function JournalatorDataTabDisplayMixin:OnUpdate()
@@ -57,6 +62,13 @@ function JournalatorDataTabDisplayMixin:OnUpdate()
     secondsToInclude = self.TimePeriodDropDown:GetValue(),
     realm = self.RealmDropDown:GetValue(),
   })
+
+  local newTime = self.DataProvider:GetTimeForRange()
+  if newTime < self.earliestRangeTime then
+    self.earliestRangeTime = newTime
+    self:UpdateRealms()
+  end
+
 end
 
 function JournalatorDataTabDisplayMixin:ReceiveEvent(eventName, eventData)
