@@ -1,0 +1,41 @@
+<Ui>
+  <DropDownToggleButton name="CollectionatorFilterDropDownTemplate" inherits="UIMenuButtonStretchTemplate" virtual="true" registerForClicks="LeftButtonDown" mixin="CollectionatorFilterDropDownMixin">
+    <Size x="93" y="25"/>
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture parentKey="Icon" file="Interface\ChatFrame\ChatFrameExpandArrow">
+          <Size x="10" y="12"/>
+          <Anchors>
+            <Anchor point="RIGHT" relativeKey="$parent.Right" relativePoint="RIGHT" x="-5"/>
+          </Anchors>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button parentKey="ResetButton" inherits="AuctionatorResetButton">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPRIGHT" x="1" y="-6"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():Reset()
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Frame parentKey="DropDown" inherits="UIDropDownMenuTemplate"/>
+    </Frames>
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnClick method="OnClick"/>
+    </Scripts>
+  </DropDownToggleButton>
+
+  <EditBox name="CollectionatorFilterSearchBoxTemplate" autoFocus="false" historyLines="1" bytes="64" inherits="SearchBoxTemplate" virtual="true">
+    <Size x="180" y="22"/>
+    <Scripts>
+      <OnEnterPressed>
+        self:GetParent():Refresh()
+      </OnEnterPressed>
+    </Scripts>
+  </EditBox>
+</Ui>

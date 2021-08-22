@@ -101,7 +101,7 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
   end
 
   table.sort(results, function(left, right)
-    return left.saleRate < right.saleRate
+    return left.saleRate > right.saleRate
   end)
   self:AppendEntries(results, true)
 end

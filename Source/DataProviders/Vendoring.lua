@@ -108,7 +108,7 @@ function JournalatorVendoringDataProviderMixin:Refresh()
       moneyOut = junkValue
     end
 
-    table.insert(results, {
+    table.insert(results, 1, {
       itemName = JOURNALATOR_L_JUNK,
       itemNamePretty = "|c"..JUNK_COLOR .. JOURNALATOR_L_JUNK .. "|r",
       moneyIn = moneyIn,
