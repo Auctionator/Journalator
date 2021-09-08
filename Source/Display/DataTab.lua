@@ -53,24 +53,18 @@ function JournalatorDataTabDisplayMixin:OnShow()
 end
 
 function JournalatorDataTabDisplayMixin:UpdateRealms()
-  local prevRealm = self.RealmDropDown:GetValue() or ""
-
   local realmsAndChars = Journalator.GetCharactersAndRealms(self.earliestRangeTime)
 
   local realms = Journalator.Utilities.GetSortedKeys(realmsAndChars)
-  local realmValues = Journalator.Utilities.GetSortedKeys(realmsAndChars)
-  table.insert(realms, 1, JOURNALATOR_L_ALL_REALMS)
-  table.insert(realmValues, 1, "")
 
-  self.RealmDropDown:InitAgain(realms, realmValues)
-  self.RealmDropDown:SetValue(prevRealm)
+  self.RealmDropDown:SetRealms(realms, true)
 end
 
 function JournalatorDataTabDisplayMixin:OnUpdate()
   self.DataProvider:SetFilters({
     searchText = self.SearchFilter:GetText(),
     secondsToInclude = self.TimePeriodDropDown:GetValue(),
-    realm = self.RealmDropDown:GetValue(),
+    realm = function(realmName) return self.RealmDropDown:GetValue(realmName) end,
     faction = self.FactionDropDown:GetValue(),
   })
 
