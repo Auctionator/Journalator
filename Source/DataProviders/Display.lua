@@ -7,6 +7,7 @@ function JournalatorDisplayDataProviderMixin:OnLoad()
   self.filters = {
     searchText = "", -- Text to filter item.itemName by
     secondsToInclude = 0, -- Time period to be included in the view
+    realm = function() return true end,
     faction = "",
   }
 end
@@ -40,9 +41,7 @@ function JournalatorDisplayDataProviderMixin:Filter(item)
     check = check and (time() - item.time) <= self.filters.secondsToInclude
   end
 
-  if self.filters.realm ~= "" then
-    check = check and self.filters.realm == item.source.realm
-  end
+  check = check and self.filters.realm(item.source.realm)
 
   if self.filters.faction ~= "" then
     check = check and self.filters.faction == item.source.faction

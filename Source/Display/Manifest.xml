@@ -1,9 +1,12 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="RealmsFilter.lua" />
   <Script file="DataTab.lua" />
   <Script file="Info.lua" />
 
   <Script file="TabButton.lua" />
   <Script file="Main.lua" />
+
+  <Include file="RealmsFilter.xml" />
 
   <Include file="DataTab.xml" />
 

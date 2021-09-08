@@ -38,14 +38,11 @@
         </Anchors>
       </Frame>
 
-      <Frame parentKey="RealmDropDown" inherits="AuctionatorDropDown">
-        <Size y="20" x="200"/>
-        <KeyValues>
-        </KeyValues>
+      <DropDownToggleButton parentKey="RealmDropDown" inherits="JournalatorRealmsFilterDropDownTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT" x="200"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT" x="215" y="-2"/>
         </Anchors>
-      </Frame>
+      </DropDownToggleButton>
 
       <Frame parentKey="FactionDropDown" inherits="AuctionatorDropDown">
         <Size y="20" x="200"/>
