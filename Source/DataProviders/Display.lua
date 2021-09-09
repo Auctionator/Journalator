@@ -7,7 +7,7 @@ function JournalatorDisplayDataProviderMixin:OnLoad()
   self.filters = {
     searchText = "", -- Text to filter item.itemName by
     secondsToInclude = 0, -- Time period to be included in the view
-    realm = function() return true end,
+    realm = function() return false end,
     faction = "",
   }
 end
@@ -25,7 +25,9 @@ end
 function JournalatorDisplayDataProviderMixin:SetFilters(filters)
   local prevFilters = self.filters
   for key, val in pairs(prevFilters) do
-    if filters[key] ~= val then
+    if (type(filters[key]) == "function" and filters[key]()) or
+       (type(filters[key]) ~= "function" and filters[key] ~= val)
+       then
       self.filters = filters
       self.onPreserveScroll()
       self:Refresh()

@@ -27,8 +27,18 @@ local function JournalatorRealmsFilterDropDownMenu_Initialize(self)
   end
 end
 
+-- When realm ~= nil returns a boolean indicating whether the realm is toggled
+-- on.
+-- If realm == nil returns true if the filter state has changed since the last
+-- such call. Used to avoid refreshing DataProviders more than necessary.
 function JournalatorRealmsFilterDropDownMixin:GetValue(realm)
-  return self.settings[realm]
+  if realm ~= nil then
+    return self.settings[realm]
+  else
+    local changed = self.hasChanged
+    self.hasChanged = false
+    return changed
+  end
 end
 
 function JournalatorRealmsFilterDropDownMixin:SetRealms(allRealms, preserve)
@@ -45,6 +55,7 @@ function JournalatorRealmsFilterDropDownMixin:SetRealms(allRealms, preserve)
   for key, value in pairs(oldState) do
     self.settings[key] = value
   end
+  self.hasChanged = true
 end
 
 function JournalatorRealmsFilterDropDownMixin:GetRealms()
@@ -77,6 +88,7 @@ function JournalatorRealmsFilterDropDownMixin:Reset()
     self.settings[realm] = true
   end
   self:SetTextForRealms()
+  self.hasChanged = true
 end
 
 function JournalatorRealmsFilterDropDownMixin:ToggleNone()
@@ -93,11 +105,13 @@ function JournalatorRealmsFilterDropDownMixin:ToggleNone()
     self:Reset()
   end
   self:SetTextForRealms()
+  self.hasChanged = true
 end
 
 function JournalatorRealmsFilterDropDownMixin:ToggleFilter(name)
   self.settings[name] = not self.settings[name]
   self:SetTextForRealms()
+  self.hasChanged = true
 end
 
 function JournalatorRealmsFilterDropDownMixin:OnClick()
