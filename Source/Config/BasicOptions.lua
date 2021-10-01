@@ -1,11 +1,19 @@
-JournalatorConfigBasicOptionsFrameMixin = CreateFromMixins(AuctionatorPanelConfigMixin)
+JournalatorConfigBasicOptionsFrameMixin = {}
 
 function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
   Auctionator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:OnLoad()")
 
   self.name = JOURNALATOR_L_JOURNALATOR
 
-  self:SetupPanel()
+  self.cancel = function()
+    self:Cancel()
+  end
+
+  self.okay = function()
+    self:Save()
+  end
+
+  InterfaceOptions_AddCategory(self, "Journalator")
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:OnShow()
