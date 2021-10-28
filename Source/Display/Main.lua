@@ -58,6 +58,7 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
 
   self.ExportCSV:SetShown(self:GetCurrentDataView() ~= nil)
   self.StatusText:SetShown(self:GetCurrentDataView() ~= nil)
+  self.Filters:SetShown(self:GetCurrentDataView() ~= nil)
 end
 
 function JournalatorDisplayMixin:SetupExportCSVDialog()

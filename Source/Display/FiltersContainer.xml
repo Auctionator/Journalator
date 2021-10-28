@@ -1,0 +1,40 @@
+<Ui>
+  <Frame name="JournalatorFiltersContainerTemplate" mixin="JournalatorFiltersContainerMixin" virtual="true">
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnShow method="OnShow"/>
+    </Scripts>
+    <Frames>
+      <EditBox parentKey="SearchFilter" autoFocus="false" historyLines="1" bytes="64" inherits="SearchBoxTemplate">
+        <Size x="250" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeKey="$parent" x="10" y="22"/>
+        </Anchors>
+      </EditBox>
+
+      <Frame parentKey="TimePeriodDropDown" inherits="AuctionatorDropDown">
+        <Size y="20" x="200"/>
+        <KeyValues>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT"/>
+        </Anchors>
+      </Frame>
+
+      <DropDownToggleButton parentKey="RealmDropDown" inherits="JournalatorRealmsFilterDropDownTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT" x="215" y="-2"/>
+        </Anchors>
+      </DropDownToggleButton>
+
+      <Frame parentKey="FactionDropDown" inherits="AuctionatorDropDown">
+        <Size y="20" x="200"/>
+        <KeyValues>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT" x="400"/>
+        </Anchors>
+      </Frame>
+    </Frames>
+  </Frame>
+</Ui>

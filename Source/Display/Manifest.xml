@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="RealmsFilter.lua" />
   <Script file="DataTab.lua" />
+  <Script file="FiltersContainer.lua" />
   <Script file="Info.lua" />
 
   <Script file="TabButton.lua" />
@@ -15,6 +16,7 @@
   <Include file="SaleRates.xml" />
   <Include file="Failures.xml" />
   <Include file="Vendoring.xml" />
+  <Include file="FiltersContainer.xml" />
   <Include file="Info.xml" />
 
   <Include file="TabButton.xml" />

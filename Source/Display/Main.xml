@@ -18,6 +18,13 @@
     </Anchors>
 
     <Frames>
+      <Frame inherits="JournalatorFiltersContainerTemplate" parentKey="Filters">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+        </Anchors>
+      </Frame>
+
       <Frame inherits="JournalatorInvoiceDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Invoices" type="string"/>
