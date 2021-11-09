@@ -31,7 +31,7 @@
       <Frame parentKey="ResultsListingInset" inherits="AuctionatorInsetDarkTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" relativePoint="TOPLEFT" x="-5" y="-24"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" relativePoint="BOTTOMRIGHT" y="-2"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" relativePoint="BOTTOMRIGHT" y="2"/>
         </Anchors>
       </Frame>
     </Frames>
