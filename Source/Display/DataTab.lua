@@ -6,7 +6,7 @@ end
 
 function JournalatorDataTabDisplayMixin:RefreshButtonClicked()
   self.DataProvider:Refresh()
-  self.Filters:UpdateRealms()
+  self:GetParent().Filters:UpdateRealms()
 end
 
 function JournalatorDataTabDisplayMixin:OnUpdate()
