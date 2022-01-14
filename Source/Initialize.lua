@@ -5,20 +5,20 @@ local function SetupMonitors()
 end
 
 function Journalator.Initialize()
-  Journalator.Archiving.Initialize()
+  Journalator.Archiving.Initialize(function()
+    Journalator.State.CurrentVersion = GetAddOnMetadata("Journalator", "Version")
 
-  Journalator.State.CurrentVersion = GetAddOnMetadata("Journalator", "Version")
+    SetupMonitors()
 
-  SetupMonitors()
+    CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
 
-  CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
+    Journalator.SlashCmd.Initialize()
 
-  Journalator.SlashCmd.Initialize()
-
-  local faction = UnitFactionGroup("player")
-  Journalator.State.Source = {
-    realm = GetRealmName(),
-    character = GetUnitName("player"),
-    faction = faction,
-  }
+    local faction = UnitFactionGroup("player")
+    Journalator.State.Source = {
+      realm = GetRealmName(),
+      character = GetUnitName("player"),
+      faction = faction,
+    }
+  end)
 end

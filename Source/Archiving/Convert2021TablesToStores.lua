@@ -34,7 +34,7 @@ local function ImportSection(section, input, archiveTimes, stores)
   end
 end
 
-function Journalator.Archiving.Convert2021TablesToStores(input, archive)
+function Journalator.Archiving.Convert2021TablesToStores(input, archive, callback)
   local currentTime = time()
   local oldestTime = GetOldestTime(input) or currentTime
 
@@ -57,9 +57,36 @@ function Journalator.Archiving.Convert2021TablesToStores(input, archive)
     ImportSection("Vendoring", input, archiveTimes, stores)
   end
 
-  for _, s in ipairs(stores) do
-    archive:CloseStore(s)
+  -- Delete empty stores
+  local finalTimes = {}
+  local finalStores = {}
+  for index, store in ipairs(stores) do
+    if #store.Invoices == 0 and #store.Posting == 0 and #store.Failures == 0 and #store.Vendoring == 0 then
+      archive:DeleteStore(store)
+    else
+      table.insert(finalTimes, archiveTimes[index])
+      table.insert(finalStores, store)
+    end
   end
 
-  JOURNALATOR_ARCHIVE_TIMES = archiveTimes
+  JOURNALATOR_ARCHIVE_TIMES = finalTimes
+  JOURNALATOR_ARCHIVE_INTERVAL = Journalator.Constants.ARCHIVE_INTERVAL
+
+  local function closeNextStore(index)
+    archive:CloseStore(finalStores[index])
+
+    if index < #finalStores then
+      C_Timer.After(0, function()
+        closeNextStore(index + 1)
+      end)
+    else
+      callback()
+    end
+  end
+
+  if #finalStores > 0 then
+    closeNextStore(1)
+  else
+    callback()
+  end
 end

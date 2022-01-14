@@ -19,6 +19,7 @@ function Journalator.Archiving.LoadAll(callback)
 
   local index = 1
 
+  local fullStartTime = debugprofilestop()
   frame:SetScript("OnUpdate", function()
     local time = JOURNALATOR_ARCHIVE_TIMES[index]
 

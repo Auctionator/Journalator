@@ -1,6 +1,7 @@
 JournalatorDataTabDisplayMixin = {}
 
 function JournalatorDataTabDisplayMixin:OnLoad()
+  self.DataProvider:SetFilters(self:GetParent().Filters:GetFilters())
   self.ResultsListing:Init(self.DataProvider)
 end
 
