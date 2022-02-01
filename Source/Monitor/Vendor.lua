@@ -260,8 +260,10 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
     local extraCurrenciesNeeded = GetMerchantItemCostInfo(index)
 
     if
+      -- Has an item link (some timewalking items don't)
+      link ~= nil
       -- Has a copper/silver/gold price
-      price ~= 0
+      and price ~= 0
       -- Ignore special currencies (simplifies further calculations)
       and extraCurrenciesNeeded == 0
       -- In stock, and not buying more than on sale
