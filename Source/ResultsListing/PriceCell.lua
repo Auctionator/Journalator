@@ -1,4 +1,4 @@
-JournalatorPriceCellTemplateMixin = CreateFromMixins(AuctionatorCellMixin, TableBuilderCellMixin)
+JournalatorPriceCellTemplateMixin = CreateFromMixins(AuctionatorCellMixin, AuctionatorRetailImportTableBuilderCellMixin)
 
 function JournalatorPriceCellTemplateMixin:Init(columnName)
   self.columnName = columnName

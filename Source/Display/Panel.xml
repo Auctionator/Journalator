@@ -22,42 +22,28 @@
 			<Layer level="BACKGROUND" textureSubLevel="-6">
 				<Texture file="Interface\FrameGeneral\UI-Background-Rock" horizTile="true" vertTile="true" parentKey="Bg">
 					<Anchors>
-						<Anchor point="TOPLEFT" x="2" y="-21"/>
-						<Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
-					</Anchors>
-				</Texture>
-				<Texture parentKey="TitleBg" inherits="_UI-Frame-TitleTileBg">
-					<Anchors>
-						<Anchor point="TOPLEFT" x="2" y="-2"/>
-						<Anchor point="TOPRIGHT" x="-25" y="-2"/>
-					</Anchors>
-				</Texture>
-			</Layer>
-			<Layer level="BACKGROUND" textureSubLevel="-5">
-				<Texture parentKey="TopTileStreaks" inherits="_UI-Frame-TopTileStreaks">
-					<Anchors>
-						<Anchor point="TOPLEFT" x="0" y="-21"/>
-						<Anchor point="TOPRIGHT" x="-2" y="-21"/>
+						<Anchor point="TOPLEFT" y="-5"/>
+						<Anchor point="BOTTOMRIGHT"/>
 					</Anchors>
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
 				<FontString inherits="GameFontNormal" parentKey="TitleText" wordwrap="false">
 					<Anchors>
-						<Anchor point="TOPLEFT" x="25" y="-5"/>
+						<Anchor point="TOPLEFT" x="25" y="-10"/>
 						<Anchor point="TOPRIGHT" x="-25" y="-5"/>
 					</Anchors>
 				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
-			<Frame parentKey="NineSlice" inherits="NineSlicePanelTemplate"/>
+      <Frame parentKey="Border" inherits="AuctionatorPanelBorderTemplate"/>
 		</Frames>
 
     <Frames>
       <Button parentKey="CloseDialog" inherits="UIPanelCloseButtonNoScripts">
         <Anchors>
-          <Anchor point="TOPRIGHT" relativeKey="$parent" relativePoint="TOPRIGHT" x="5" y="5"/>
+          <Anchor point="TOPRIGHT"/>
         </Anchors>
         <Scripts>
           <OnClick>self:GetParent():Hide()</OnClick>

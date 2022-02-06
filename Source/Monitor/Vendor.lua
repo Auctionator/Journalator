@@ -3,7 +3,7 @@ JournalatorVendorMonitorMixin = {}
 local EQUIPMENT_SLOT_CAP = 19
 
 local function GetGUIDFromLocation(location)
-  if location:IsValid() then
+  if C_Item.DoesItemExist(location) then
     return C_Item.GetItemGUID(location)
   end
 end
