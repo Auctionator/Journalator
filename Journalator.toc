@@ -1,4 +1,6 @@
-## Interface: 90105
+## Interface-Mainline: 90105
+## Interface-TBC: 20503
+## Interface-Vanilla: 11401
 ## Title: Journalator
 ## Version: @project-version@
 ## Author: plusmouse

@@ -16,9 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: BigWigsMods/packager@master
+    - uses: BigWigsMods/packager@multitoc
       with:
-        args: -p 453921 -a qv63EkGb
+        args: -S -p 453921 -a qv63EkGb
       env:
         GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
         CF_API_KEY: ${{ secrets.plusmouse_curseforge }}
