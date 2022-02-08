@@ -4,7 +4,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["INVOICES_TITLE"] = "Journalator - Invoices"
   L["POSTING_TITLE"] = "Journalator - Posting"
   L["SALE_RATES_TITLE"] = "Journalator - Sale Rates"
-  L["FAILURE_TITLE"] = "Journalator - Failed Auctions"
+  L["FAILURES_TITLE"] = "Journalator - Failures"
   L["VENDORING_TITLE"] = "Journalator - Vendoring"
   L["INFO_TITLE"] = "Journalator - Info"
 
