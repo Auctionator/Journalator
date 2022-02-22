@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: BigWigsMods/packager@multitoc
+    - uses: BigWigsMods/packager@v2
       with:
         args: -S -p 453921 -a qv63EkGb
       env:
