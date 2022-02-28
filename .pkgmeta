@@ -1,6 +1,8 @@
 ignore:
   - README.md
   - scripts
+plain-copy:
+  - Source
 required-dependencies:
   - auctionator
 externals:
