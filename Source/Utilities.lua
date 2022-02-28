@@ -34,3 +34,10 @@ function Journalator.Utilities.AddRealmToPlayerName(playerName, source)
     return playerName
   end
 end
+
+function Journalator.Utilities.Message(message)
+  print(
+    INVASION_FONT_COLOR:WrapTextInColorCode("Journalator: ")
+    .. message
+  )
+end

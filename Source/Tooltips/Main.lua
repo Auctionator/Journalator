@@ -1,58 +1,50 @@
 Journalator.Tooltips = {}
 
 local function GetSaleRate(itemName)
-  local sold, failed = 0, 0
-  for _, item in ipairs(Journalator.Archiving.GetRange(0, "Failures")) do
-    if item.itemName == itemName then
-      failed = failed + item.count
-    end
-  end
+  local cache = JOURNALATOR_STATISTICS[itemName]
 
-  for _, item in ipairs(Journalator.Archiving.GetRange(0, "Invoices")) do
-    if item.invoiceType == "seller" and item.itemName == itemName then
-      sold = sold + item.count
-    end
-  end
-
-  if sold == 0 and failed == 0 then
+  if cache == nil or (cache.successes == 0 and cache.failures == 0) then
     return AUCTIONATOR_L_UNKNOWN
   else
-    return Journalator.Utilities.PrettyPercentage(sold/(sold + failed) * 100)
+    return Journalator.Utilities.PrettyPercentage(
+      cache.successes / (cache.failures + cache.successes) * 100
+    )
   end
 end
 
 local function GetFailureCount(itemName)
-  local failedCount = 0
-  for _, item in ipairs(Journalator.Archiving.GetRange(0, "Failures")) do
-    if item.itemName == itemName then
-      failedCount = failedCount + item.count
-    end
+  local cache = JOURNALATOR_STATISTICS[itemName]
+
+  if cache == nil then
+    return "0"
+  else
+    return tostring(cache.failures)
   end
-  return tostring(failedCount)
 end
 
 local function GetLastSold(itemName)
-  local invoices = Journalator.Archiving.GetRange(0, "Invoices")
-  for index = #invoices, 1, -1 do
-    local item = invoices[index]
-    if item.invoiceType == "seller" and item.itemName == itemName then
-      return item.value / item.count
-    end
+  local cache = JOURNALATOR_STATISTICS[itemName]
+
+  if cache == nil then
+    return nil
+  else
+    return cache.lastSold
   end
 end
 
 local function GetLastBought(itemName)
-  local invoices = Journalator.Archiving.GetRange(0, "Invoices")
-  for index = #invoices, 1, -1 do
-    local item = invoices[index]
-    if item.invoiceType == "buyer" and item.itemName == itemName then
-      return item.value / item.count
-    end
+  local cache = JOURNALATOR_STATISTICS[itemName]
+
+  if cache == nil then
+    return nil
+  else
+    return cache.lastBought
   end
 end
 
 function Journalator.Tooltips.AnyEnabled()
-  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE) or
+  return JOURNALATOR_STATISTICS ~= nil and
+    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE) or
     Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES) or
     Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SALE) or
     Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_PURCHASE)

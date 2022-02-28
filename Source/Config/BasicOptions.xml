@@ -80,6 +80,26 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.VendoringHeading" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="StatisticsHeading">
+        <KeyValues>
+          <KeyValue key="headingText" value="JOURNALATOR_L_STATISTICS" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.GroupJunk" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="JOURNALATOR_L_COMPUTE_STATISTICS" parentKey="ComputeFullStatistics">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.StatisticsHeading" relativePoint="BOTTOMLEFT" x="23"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():ComputeFullStatisticsClicked()
+          </OnClick>
+        </Scripts>
+      </Button>
    </Frames>
   </Frame>
 </Ui>

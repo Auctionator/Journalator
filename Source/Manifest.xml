@@ -10,9 +10,11 @@
   <Script file="GetCharactersAndRealms.lua" />
 
   <Script file="Initialize.lua" />
+  <Script file="AddToLogs.lua" />
 
   <Include file="Archiving\Manifest.xml" />
   <Include file="Monitor\Manifest.xml" />
+  <Include file="Statistics\Manifest.xml" />
   <Include file="DataProviders\Manifest.xml" />
   <Include file="ResultsListing\Manifest.xml" />
   <Include file="Display\Manifest.xml" />

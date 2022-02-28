@@ -38,6 +38,14 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
   Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK, self.GroupJunk:GetChecked())
 end
 
+function JournalatorConfigBasicOptionsFrameMixin:ComputeFullStatisticsClicked()
+  Journalator.Archiving.LoadAll(function()
+    Journalator.Statistics.ComputeFullCache()
+    Journalator.Utilities.Message(JOURNALATOR_L_FINISHED_COMPUTING_STATISTICS)
+  end)
+end
+
+
 function JournalatorConfigBasicOptionsFrameMixin:Cancel()
   Auctionator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:Cancel()")
 end

@@ -61,5 +61,9 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_TOOLTIP_LAST_BOUGHT"] = "Show the last price that you bought an auction of an item at in the item's tooltip."
   L["CONFIG_VENDORING"] = "Vendoring"
   L["CONFIG_GROUP_JUNK"] = "Group junk items in the \"Vendoring\" tab"
+
+  L["STATISTICS"] = "Statistics"
+  L["COMPUTE_STATISTICS"] = "Compute Statistics"
+  L["FINISHED_COMPUTING_STATISTICS"] = "Finished computing statistics."
   return L
 end

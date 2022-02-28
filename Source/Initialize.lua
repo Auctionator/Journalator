@@ -21,4 +21,6 @@ function Journalator.Initialize()
     character = GetUnitName("player"),
     faction = faction,
   }
+
+  Journalator.Statistics.InitializeCache()
 end

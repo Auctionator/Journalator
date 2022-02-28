@@ -53,18 +53,20 @@ end
 
 --local invoiceType, itemName, playerName, bid, _, deposit, consignment, _, _, _, count, _ = GetInboxInvoiceInfo(index)
 local function SaveInvoice(mail, itemLink)
-  table.insert(Journalator.State.Logs.Invoices, {
-    invoiceType = mail.invoice[1],
-    itemName = mail.invoice[2],
-    playerName = mail.invoice[3],
-    value = mail.invoice[4],
-    count = mail.invoice[11],
-    deposit = mail.invoice[6],
-    consignment = mail.invoice[7],
-    time = time(),
-    source = Journalator.State.Source,
-    itemLink = itemLink,
-  })
+  Journalator.AddToLogs({ Invoices = {
+    {
+      invoiceType = mail.invoice[1],
+      itemName = mail.invoice[2],
+      playerName = mail.invoice[3],
+      value = mail.invoice[4],
+      count = mail.invoice[11],
+      deposit = mail.invoice[6],
+      consignment = mail.invoice[7],
+      time = time(),
+      source = Journalator.State.Source,
+      itemLink = itemLink,
+    }
+  }})
 end
 
 local function SaveFailed(failedType, itemInfo, itemLink)
@@ -77,14 +79,16 @@ local function SaveFailed(failedType, itemInfo, itemLink)
     quantity = tonumber(quantityText)
   end
 
-  table.insert(Journalator.State.Logs.Failures, {
+  Journalator.AddToLogs({ Failures = {
+    {
     failedType = failedType,
     itemName = itemName,
     count = quantity,
     time = time(),
     source = Journalator.State.Source,
     itemLink = itemLink,
-  })
+    }
+  }})
 end
 
 local expiredText = AUCTION_EXPIRED_MAIL_SUBJECT:gsub("%%s", "(.*)")

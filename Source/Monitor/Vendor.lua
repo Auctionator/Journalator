@@ -210,7 +210,7 @@ function JournalatorVendorMonitorMixin:UpdateForCompletedSales()
   -- equipped items.
   for guid, item in pairs(self.sellQueue) do
     if not IsGUIDInPossession(guid) then
-      table.insert(Journalator.State.Logs.Vendoring, item)
+      Journalator.AddToLogs({ Vendoring = {item} })
       self.sellQueue[guid] = nil
     end
   end
@@ -324,7 +324,7 @@ function JournalatorVendorMonitorMixin:UpdateForCompletedPurchases()
     end
 
     if foundMatch then
-      table.insert(Journalator.State.Logs.Vendoring, item)
+      Journalator.AddToLogs({ Vendoring = {item} })
     else
       -- Didn't find an appropriate stack of the item in the bag, so leave the
       -- purchase queued.
