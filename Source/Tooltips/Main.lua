@@ -43,11 +43,12 @@ local function GetLastBought(itemName)
 end
 
 function Journalator.Tooltips.AnyEnabled()
-  return JOURNALATOR_STATISTICS ~= nil and
+  return JOURNALATOR_STATISTICS ~= nil and (
     Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE) or
     Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES) or
-    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SALE) or
-    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_PURCHASE)
+    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD) or
+    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT)
+    )
 end
 
 function Journalator.Tooltips.GetSalesInfo(itemName)
