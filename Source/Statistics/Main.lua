@@ -1,7 +1,9 @@
+local STATISTICS_VERSION = 2
+
 Journalator.Statistics = {}
 
 function Journalator.Statistics.InitializeCache()
-  if JOURNALATOR_STATISTICS == nil or JOURNALATOR_STATISTICS.Version ~= 1 then
+  if JOURNALATOR_STATISTICS == nil or JOURNALATOR_STATISTICS.Version ~= STATISTICS_VERSION then
     Journalator.Archiving.LoadAll(function()
       Journalator.Statistics.ComputeFullCache()
       Journalator.Utilities.Message(JOURNALATOR_L_FINISHED_COMPUTING_STATISTICS)
@@ -52,13 +54,21 @@ function Journalator.Statistics.UpdateCache(newEntries)
   end
 end
 
+local function reverseArray(array)
+  local result = {}
+  for index = #array, 1, -1 do
+    table.insert(result, array[index])
+  end
+
+  return result
+end
 function Journalator.Statistics.ComputeFullCache()
   JOURNALATOR_STATISTICS = {
     Version = 1,
   }
 
   Journalator.Statistics.UpdateCache({
-    Invoices = Journalator.Archiving.GetRange(0, "Invoices"),
-    Failures = Journalator.Archiving.GetRange(0, "Failures"),
+    Invoices = reverseArray(Journalator.Archiving.GetRange(0, "Invoices")),
+    Failures = reverseArray(Journalator.Archiving.GetRange(0, "Failures")),
   })
 end
