@@ -64,7 +64,7 @@ local function reverseArray(array)
 end
 function Journalator.Statistics.ComputeFullCache()
   JOURNALATOR_STATISTICS = {
-    Version = 1,
+    Version = STATISTICS_VERSION,
   }
 
   Journalator.Statistics.UpdateCache({
