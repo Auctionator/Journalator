@@ -58,6 +58,7 @@ function JournalatorRealmsFilterDropDownMixin:SetRealms(allRealms, preserve)
     self.settings[key] = value
   end
   self.hasChanged = true
+  self:SetTextForRealms()
 end
 
 function JournalatorRealmsFilterDropDownMixin:GetRealms()
