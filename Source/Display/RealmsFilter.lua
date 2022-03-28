@@ -1,22 +1,20 @@
 JournalatorRealmsFilterDropDownMixin = {}
-
-local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 local function JournalatorRealmsFilterDropDownMenu_Initialize(self)
   local realmsButton = self:GetParent()
 
-  local info = LibDD:UIDropDownMenu_CreateInfo()
+  local info = UIDropDownMenu_CreateInfo()
   info.text = AUCTIONATOR_L_NONE
   info.value = nil
   info.isNotRadio = true
   info.checked = false
   info.func = function(button)
     realmsButton:ToggleNone()
-    LibDD:ToggleDropDownMenu(1, nil, self, self:GetParent(), 9, 3)
+    ToggleDropDownMenu(1, nil, self, self:GetParent(), 9, 3)
   end
-  LibDD:UIDropDownMenu_AddButton(info)
+  UIDropDownMenu_AddButton(info)
 
   for _, realm in ipairs(realmsButton:GetRealms()) do
-    local info = LibDD:UIDropDownMenu_CreateInfo()
+    local info = UIDropDownMenu_CreateInfo()
     info.text = realm
     info.value = nil
     info.isNotRadio = true
@@ -25,7 +23,7 @@ local function JournalatorRealmsFilterDropDownMenu_Initialize(self)
     info.func = function(button)
       realmsButton:ToggleFilter(realm)
     end
-    LibDD:UIDropDownMenu_AddButton(info)
+    UIDropDownMenu_AddButton(info)
   end
 end
 
@@ -68,9 +66,8 @@ end
 function JournalatorRealmsFilterDropDownMixin:OnLoad()
   self.allRealms = {}
   self:Reset()
-  LibDD:Create_UIDropDownMenu(self.DropDown)
-  LibDD:UIDropDownMenu_SetInitializeFunction(self.DropDown, JournalatorRealmsFilterDropDownMenu_Initialize)
-  LibDD:UIDropDownMenu_SetDisplayMode(self.DropDown, "MENU")
+  UIDropDownMenu_SetInitializeFunction(self.DropDown, JournalatorRealmsFilterDropDownMenu_Initialize)
+  UIDropDownMenu_SetDisplayMode(self.DropDown, "MENU")
 end
 
 function JournalatorRealmsFilterDropDownMixin:SetTextForRealms()
@@ -119,6 +116,6 @@ function JournalatorRealmsFilterDropDownMixin:ToggleFilter(name)
 end
 
 function JournalatorRealmsFilterDropDownMixin:OnClick()
-	LibDD:ToggleDropDownMenu(1, nil, self.DropDown, self, 9, 3)
+	ToggleDropDownMenu(1, nil, self.DropDown, self, 9, 3)
 	PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 end

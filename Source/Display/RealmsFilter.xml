@@ -22,7 +22,7 @@
           </OnClick>
         </Scripts>
       </Button>
-      <Frame parentKey="DropDown"/>
+      <Frame parentKey="DropDown" inherits="UIDropDownMenuTemplate"/>
     </Frames>
     <Scripts>
       <OnLoad method="OnLoad"/>
