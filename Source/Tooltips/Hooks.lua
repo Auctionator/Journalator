@@ -51,5 +51,4 @@ hooksecurefunc(Auctionator.Tooltip, "AddPetTip",
     if lastBought ~= nil then
       BattlePetTooltip:AddLine(JOURNALATOR_L_LAST_BOUGHT .. PET_TOOLTIP_SPACING .. WHITE_FONT_COLOR:WrapTextInColorCode(Auctionator.Utilities.CreatePaddedMoneyString(lastBought)))
     end
-    BattlePetTooltip:Show()
 end)
