@@ -24,6 +24,15 @@ local SALE_RATES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_TOTAL,
+    headerParameters = { "totalPrice" },
+    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellParameters = { "totalPrice" },
+    width = 150,
+    defaultHide = true,
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_AMOUNT_SOLD,
     headerParameters = { "sold" },
     cellTemplate = "AuctionatorStringCellTemplate",
@@ -90,11 +99,14 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
       meanPrice = math.floor(entry.totalSaleValue / entry.sold)
     end
 
+    totalPrice = entry.totalSaleValue
+
     table.insert(results, {
       itemName = key,
       saleRate = saleRate,
       saleRatePretty = saleRatePretty,
       meanPrice = meanPrice,
+      totalPrice = totalPrice,
       sold = entry.sold,
       unsold = entry.failed,
     })
