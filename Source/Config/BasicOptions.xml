@@ -100,6 +100,24 @@
           </OnClick>
         </Scripts>
       </Button>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="MinimapIconHeading">
+        <KeyValues>
+          <KeyValue key="headingText" value="JOURNALATOR_L_MINIMAP_ICON" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ComputeFullStatistics" relativePoint="BOTTOMLEFT" x="-23" y="-10"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowMinimapIcon">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_SHOW_MINIMAP_ICON" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.MinimapIconHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
    </Frames>
   </Frame>
 </Ui>

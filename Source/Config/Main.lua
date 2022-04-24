@@ -4,3 +4,10 @@ Auctionator.Config.Create("JOURNALATOR_TOOLTIP_LAST_SOLD", "journalator_tooltip_
 Auctionator.Config.Create("JOURNALATOR_TOOLTIP_LAST_BOUGHT", "journalator_tooltip_last_bought", true)
 
 Auctionator.Config.Create("JOURNALATOR_VENDORING_GROUP_JUNK", "journalator_vendoring_group_junk", true)
+
+Auctionator.Config.Create("JOURNALATOR_MINIMAP_ICON", "journalator_minimap_icon", { hide = false })
+
+function Journalator.Config.Show()
+  InterfaceOptionsFrame:Show()
+  InterfaceOptionsFrame_OpenToCategory(JOURNALATOR_L_JOURNALATOR)
+end

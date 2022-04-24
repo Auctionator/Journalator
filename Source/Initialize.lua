@@ -23,4 +23,6 @@ function Journalator.Initialize()
   }
 
   Journalator.Statistics.InitializeCache()
+
+  Journalator.MinimapIcon.Initialize()
 end

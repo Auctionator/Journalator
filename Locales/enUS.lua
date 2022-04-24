@@ -65,5 +65,11 @@ JOURNALATOR_LOCALES.enUS = function()
   L["STATISTICS"] = "Statistics"
   L["COMPUTE_STATISTICS"] = "Compute Statistics"
   L["FINISHED_COMPUTING_STATISTICS"] = "Finished computing statistics."
+
+  L["MINIMAP_ICON"] = "Minimap Icon"
+  L["CONFIG_SHOW_MINIMAP_ICON"] = "Show minimap icon"
+  L["MONTHLY_PROFIT"] = "Monthly Profit"
+  L["DAILY_PROFIT"] = "Monthly Profit"
+
   return L
 end

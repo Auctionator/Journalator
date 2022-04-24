@@ -25,6 +25,8 @@ function JournalatorConfigBasicOptionsFrameMixin:OnShow()
   self.TooltipLastBought:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT))
 
   self.GroupJunk:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK))
+
+  self.ShowMinimapIcon:SetChecked(not Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_MINIMAP_ICON).hide)
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Save()
@@ -36,6 +38,9 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
   Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT, self.TooltipLastBought:GetChecked())
 
   Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK, self.GroupJunk:GetChecked())
+
+  Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_MINIMAP_ICON).hide = not self.ShowMinimapIcon:GetChecked()
+  Journalator.MinimapIcon.UpdateShown()
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:ComputeFullStatisticsClicked()

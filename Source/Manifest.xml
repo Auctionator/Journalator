@@ -11,6 +11,7 @@
 
   <Script file="Initialize.lua" />
   <Script file="AddToLogs.lua" />
+  <Script file="MinimapIcon.lua" />
 
   <Include file="Archiving\Manifest.xml" />
   <Include file="Monitor\Manifest.xml" />
