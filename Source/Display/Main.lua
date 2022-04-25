@@ -14,11 +14,16 @@ function JournalatorDisplayMixin:OnShow()
   self:SetProfitText()
 
   Journalator.Archiving.LoadAll(function()
+    self.ProgressBar:Hide()
     local view = self:GetCurrentDataView()
     if view ~= nil then
       Journalator.GetItemInfo_MapFullLinks()
       view.DataProvider:Refresh()
     end
+  end, function(current, total)
+    self.ProgressBar:SetMinMaxValues(0, total)
+    self.ProgressBar:SetValue(current)
+    self.ProgressBar.Text:SetFormattedText(JOURNALATOR_L_LOADING_X_X, current, total)
   end)
 end
 

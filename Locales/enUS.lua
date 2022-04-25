@@ -71,5 +71,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["MONTHLY_PROFIT"] = "Monthly Profit"
   L["DAILY_PROFIT"] = "Daily Profit"
 
+  L["LOADING_X_X"] = "Loading %d/%d"
+
   return L
 end

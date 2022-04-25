@@ -158,6 +158,25 @@
           <OnClick>self:GetParent():ExportCSVClicked()</OnClick>
         </Scripts>
       </Button>
+
+      <StatusBar parentKey="ProgressBar" frameStrata="HIGH" inherits="CastingBarFrameTemplate">
+        <Size x="195" y="13"/>
+        <Anchors>
+          <Anchor point="CENTER"/>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self.Spark:Hide();
+            self.Flash:Hide();
+          </OnLoad>
+
+          <!-- Override the scripts from the template, as this behavior is not desired. (copied from Blizzard lua) -->
+          <OnEvent></OnEvent>
+          <OnShow></OnShow>
+          <OnUpdate></OnUpdate>
+          <!-- Override the scripts from the template, as this behavior is not desired. (copied from Blizzard lua) -->
+        </Scripts>
+      </StatusBar>
     </Frames>
 
     <Layers>
