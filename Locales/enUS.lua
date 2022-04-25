@@ -69,7 +69,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["MINIMAP_ICON"] = "Minimap Icon"
   L["CONFIG_SHOW_MINIMAP_ICON"] = "Show minimap icon"
   L["MONTHLY_PROFIT"] = "Monthly Profit"
-  L["DAILY_PROFIT"] = "Monthly Profit"
+  L["DAILY_PROFIT"] = "Daily Profit"
 
   return L
 end
