@@ -12,7 +12,7 @@ local function GetProfitMonthly()
 end
 
 local function GetProfitDaily()
-  return GetProfitString(24 * 60 * 60)
+  return GetProfitString(24 * 60 * 60 - C_DateAndTime.GetSecondsUntilDailyReset())
 end
 
 local icon = LibStub("LibDBIcon-1.0")
