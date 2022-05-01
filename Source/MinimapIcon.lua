@@ -8,7 +8,10 @@ local function GetProfitString(period)
 end
 
 local function GetProfitMonthly()
-  return GetProfitString(30 * 24 * 60 * 60)
+  local d = date("*t")
+  d.day = 1
+  local monthStart = time(d) - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset()
+  return GetProfitString(time() - monthStart)
 end
 
 local function GetProfitDaily()
