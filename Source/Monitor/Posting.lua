@@ -1,7 +1,7 @@
 JournalatorPostingMonitorMixin = {}
 
 function JournalatorPostingMonitorMixin:OnLoad()
-  if Auctionator.Constants.IsTBC then
+  if Auctionator.Constants.IsTBC or Auctionator.Constants.IsClassic then
     Auctionator.EventBus:Register({
       ReceiveEvent = function(self, eventName, auctionData)
         Journalator.AddToLogs({ Posting = {
