@@ -1,5 +1,5 @@
-## Interface: 90200
-## Interface-Mainline: 90200
+## Interface: 90205
+## Interface-Mainline: 90205
 ## Interface-TBC: 20504
 ## Interface-Vanilla: 11403
 ## Title: Journalator
