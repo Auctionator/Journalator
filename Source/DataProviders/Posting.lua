@@ -66,9 +66,9 @@ function JournalatorPostingDataProviderMixin:Refresh()
       local processedItem = {
         itemName = item.itemName,
         itemNamePretty = item.itemName,
-        total = item.buyout * item.count,
+        total = (item.buyout or item.bid) * item.count,
         count = item.count,
-        unitPrice = item.buyout,
+        unitPrice = (item.buyout or item.bid),
         rawDay = item.time,
         deposit = item.deposit,
         date = SecondsToTime(time() - item.time),
