@@ -20,7 +20,7 @@ function JournalatorMailMonitorMixin:OnLoad()
 end
 
 local function GetMailKey(mail)
-  return mail.header[4] .. " " .. tostring(mail.header[7]) .. " " .. tostring(mail.invoice[11] or 0)
+  return mail.header[4] .. " " .. tostring(mail.header[7]) .. " " .. tostring(mail.invoice[4] or 0)
 end
 
 local function CacheMail(index)
@@ -41,7 +41,7 @@ end
 
 local function RecordAllMail(itemLog, counts)
   local cache = {}
-  local newCounts = {}
+  local counts = {}
   for i = 1, GetInboxNumItems() do
     local mail = CacheMail(i)
     local key = GetMailKey(mail)
@@ -49,21 +49,17 @@ local function RecordAllMail(itemLog, counts)
     cache[key] = mail
     itemLog[key] = GetFirstItem(i) or itemLog[key]
 
-    if newCounts[key] == nil then
-      newCounts[key] = 0
+    if counts[key] == nil then
+      counts[key] = 0
     end
 
     if mail.invoice[11] ~= nil then
-      newCounts[key] = newCounts[key] + mail.invoice[11]
+      counts[key] = counts[key] + mail.invoice[11]
     else
-      newCounts[key] = newCounts[key] + 1
-    end
-
-    if counts[key] == nil or newCounts[key] > counts[key] then
-      counts[key] = newCounts[key]
+      counts[key] = counts[key] + 1
     end
   end
-  return cache, itemLog, counts
+  return cache, counts
 end
 
 --local invoiceType, itemName, playerName, bid, _, deposit, consignment, _, _, _, count, _ = GetInboxInvoiceInfo(index)
@@ -117,21 +113,22 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MAIL_INBOX_UPDATE" then
     if not next(self.previousCache) then
       self.itemLog = {}
-      self.counts = {}
-      self.previousCache = RecordAllMail(self.itemLog, self.counts)
+      self.previousCache, self.previousCounts = RecordAllMail(self.itemLog)
     end
-    local newCache = RecordAllMail(self.itemLog, self.counts)
+    local newCache, newCounts = RecordAllMail(self.itemLog)
     for key, mail in pairs(self.previousCache) do
-      if newCache[key] == nil and mail.header[4] ~= RETRIEVING_DATA then
+      if (newCache[key] == nil or newCounts[key] < self.previousCounts[key]) and
+          mail.header[4] ~= RETRIEVING_DATA then
         if mail.invoice[1] ~= nil then
-          SaveInvoice(mail, self.itemLog[key], self.counts[key])
+          SaveInvoice(mail, self.itemLog[key], self.previousCounts[key] - (newCounts[key] or 0))
         elseif string.match(mail.header[4], expiredText) then
-          SaveFailed("expired", string.match(mail.header[4], expiredText), self.itemLog[key], self.counts[key])
+          SaveFailed("expired", string.match(mail.header[4], expiredText), self.itemLog[key], self.previousCounts[key] - (newCounts[key] or 0))
         elseif string.match(mail.header[4], cancelledText) then
-          SaveFailed("cancelled", string.match(mail.header[4], cancelledText), self.itemLog[key], self.counts[key])
+          SaveFailed("cancelled", string.match(mail.header[4], cancelledText), self.itemLog[key], self.previousCounts[key] - (newCounts[key] or 0))
         end
       end
     end
     self.previousCache = newCache
+    self.previousCounts = newCounts
   end
 end
