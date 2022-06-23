@@ -11,23 +11,10 @@ function JournalatorMailMonitorMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, MAIL_EVENTS)
 
   self.previousCache = {}
-  self.itemLog = {}
 
   hooksecurefunc(_G, "CheckInbox", function()
     self.previousCache = {}
-    self.itemLog = {}
   end)
-end
-
-local function GetMailKey(mail)
-  return mail.header[4] .. " " .. tostring(mail.header[7]) .. " " .. tostring(mail.invoice[4] or 0)
-end
-
-local function CacheMail(index)
-  return {
-    header = {GetInboxHeaderInfo(index)},
-    invoice = {GetInboxInvoiceInfo(index)},
-  }
 end
 
 local function GetFirstItem(mailIndex)
@@ -39,24 +26,43 @@ local function GetFirstItem(mailIndex)
   end
 end
 
-local function RecordAllMail(itemLog, counts)
+local function CacheMail(index)
+  return {
+    header = {GetInboxHeaderInfo(index)},
+    invoice = {GetInboxInvoiceInfo(index)},
+    itemLink = GetFirstItem(index)
+  }
+end
+
+local function GetMailKey(mail)
+  return
+    mail.header[4] ..  " " ..
+    tostring(mail.header[7]) .. " " ..
+    tostring(mail.invoice[4] or 0) .. " " ..
+    mail.itemLink
+end
+
+local function RecordAllMail(counts)
   local cache = {}
   local counts = {}
   for i = 1, GetInboxNumItems() do
-    local mail = CacheMail(i)
-    local key = GetMailKey(mail)
+    local firstItem = GetFirstItem(i)
 
-    cache[key] = mail
-    itemLog[key] = GetFirstItem(i) or itemLog[key]
+    if firstItem ~= nil then
+      local mail = CacheMail(i)
+      local key = GetMailKey(mail)
 
-    if counts[key] == nil then
-      counts[key] = 0
-    end
+      cache[key] = mail
 
-    if mail.invoice[11] ~= nil then
-      counts[key] = counts[key] + mail.invoice[11]
-    else
-      counts[key] = counts[key] + 1
+      if counts[key] == nil then
+        counts[key] = 0
+      end
+
+      if mail.invoice[11] ~= nil then
+        counts[key] = counts[key] + mail.invoice[11]
+      else
+        counts[key] = counts[key] + 1
+      end
     end
   end
   return cache, counts
@@ -65,7 +71,7 @@ end
 --local invoiceType, itemName, playerName, bid, _, deposit, consignment, _, _, _, count, _ = GetInboxInvoiceInfo(index)
 --count: Number of items seen across multiple similar mails for this item, used
 --to avoid losing items when processing a lot of them.
-local function SaveInvoice(mail, itemLink, count)
+local function SaveInvoice(mail, count)
   Journalator.AddToLogs({ Invoices = {
     {
       invoiceType = mail.invoice[1],
@@ -77,12 +83,12 @@ local function SaveInvoice(mail, itemLink, count)
       consignment = mail.invoice[7],
       time = time(),
       source = Journalator.State.Source,
-      itemLink = itemLink,
+      itemLink = mail.itemLink,
     }
   }})
 end
 
---multiplier: Number of similar mails for this item and quantity, used to avoid
+--multiplier: Number of similar mails for this itemLink and quantity, used to avoid
 --losing items when processing a lot of them.
 local function SaveFailed(failedType, itemInfo, itemLink, multiplier)
   local itemName, quantityText = string.match(itemInfo, "(.*) %((%d+)%)")
@@ -112,19 +118,18 @@ local cancelledText = AUCTION_REMOVED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MAIL_INBOX_UPDATE" then
     if not next(self.previousCache) then
-      self.itemLog = {}
-      self.previousCache, self.previousCounts = RecordAllMail(self.itemLog)
+      self.previousCache, self.previousCounts = RecordAllMail()
     end
-    local newCache, newCounts = RecordAllMail(self.itemLog)
+    local newCache, newCounts = RecordAllMail()
     for key, mail in pairs(self.previousCache) do
       if (newCache[key] == nil or newCounts[key] < self.previousCounts[key]) and
           mail.header[4] ~= RETRIEVING_DATA then
         if mail.invoice[1] ~= nil then
-          SaveInvoice(mail, self.itemLog[key], self.previousCounts[key] - (newCounts[key] or 0))
+          SaveInvoice(mail, self.previousCounts[key] - (newCounts[key] or 0))
         elseif string.match(mail.header[4], expiredText) then
-          SaveFailed("expired", string.match(mail.header[4], expiredText), self.itemLog[key], self.previousCounts[key] - (newCounts[key] or 0))
+          SaveFailed("expired", string.match(mail.header[4], expiredText), mail.itemLink, self.previousCounts[key] - (newCounts[key] or 0))
         elseif string.match(mail.header[4], cancelledText) then
-          SaveFailed("cancelled", string.match(mail.header[4], cancelledText), self.itemLog[key], self.previousCounts[key] - (newCounts[key] or 0))
+          SaveFailed("cancelled", string.match(mail.header[4], cancelledText), mail.itemLink, self.previousCounts[key] - (newCounts[key] or 0))
         end
       end
     end
