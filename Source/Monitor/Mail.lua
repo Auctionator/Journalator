@@ -116,7 +116,9 @@ local expiredText = AUCTION_EXPIRED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 local cancelledText = AUCTION_REMOVED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 
 function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
-  if eventName == "MAIL_INBOX_UPDATE" then
+  if eventName == "MAIL_SHOW" or eventName == "MAIL_CLOSED" then
+    self.previousCache, self.previousCounts = {}, {}
+  elseif eventName == "MAIL_INBOX_UPDATE" then
     if not next(self.previousCache) then
       self.previousCache, self.previousCounts = RecordAllMail()
     end
