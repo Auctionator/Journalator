@@ -39,7 +39,7 @@ local function GetMailKey(mail)
     mail.header[4] ..  " " ..
     tostring(mail.header[7]) .. " " ..
     tostring(mail.invoice[4] or 0) .. " " ..
-    mail.itemLink
+    (mail.itemLink or "")
 end
 
 local function RecordAllMail(counts)
@@ -47,10 +47,10 @@ local function RecordAllMail(counts)
   local counts = {}
   for i = 1, GetInboxNumItems() do
     local firstItem = GetFirstItem(i)
+    local mail = CacheMail(i)
+    local key = GetMailKey(mail)
 
-    if firstItem ~= nil then
-      local mail = CacheMail(i)
-      local key = GetMailKey(mail)
+    if firstItem ~= nil or mail.header[5] > 0 then -- Got an item or money
 
       cache[key] = mail
 
