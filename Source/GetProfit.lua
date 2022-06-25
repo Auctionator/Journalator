@@ -14,7 +14,8 @@ function Journalator.GetProfit(startTime, endTime)
   end
 
   -- Lost gold from deposits
-  for _, item in ipairs(invoices) do
+  local postings = Journalator.Archiving.GetRange(startTime, "Posting")
+  for _, item in ipairs(postings) do
     if item.time >= startTime and item.time <= endTime then
       outgoing = outgoing + item.deposit
     end
