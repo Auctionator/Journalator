@@ -36,10 +36,16 @@ end
 
 local function GetMailKey(mail)
   return
-    mail.header[3] ..  " " ..
-    mail.header[4] ..  " " ..
+    mail.header[3] .. " " ..
+    mail.header[4] .. " " ..
+    (mail.invoice[1] or "") .. " " ..
+    (mail.invoice[2] or "") .. " " ..
+    (mail.invoice[3] or "") .. " " ..
+    (mail.invoice[7] or "") .. " " ..
     tostring(mail.invoice[4] or 0) .. " " ..
     tostring(mail.invoice[5] or 0) .. " " ..
+    tostring(mail.invoice[6] or 0) .. " " ..
+    tostring(mail.invoice[11] or 0) .. " " ..
     (mail.itemLink or "")
 end
 
