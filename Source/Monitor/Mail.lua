@@ -37,8 +37,7 @@ end
 local function GetMailKey(mail)
   return
     mail.header[4] ..  " " ..
-    -- Take the mail time to the nearest second
-    tostring(math.floor(mail.header[7] * 24 * 60 * 60 + 0.5)) .. " " ..
+    tostring(mail.header[7]) .. " " ..
     tostring(mail.invoice[4] or 0) .. " " ..
     (mail.itemLink or "")
 end
