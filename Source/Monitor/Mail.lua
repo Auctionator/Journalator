@@ -1,6 +1,7 @@
 JournalatorMailMonitorMixin = {}
 
 local MAIL_EVENTS = {
+  "MAIL_SHOW",
   "MAIL_INBOX_UPDATE",
   "CLOSE_INBOX_ITEM",
 }
@@ -78,22 +79,17 @@ function JournalatorMailMonitorMixin:OnLoad()
 
   self:RegisterPickupHandlers()
 
-  self.mailQueued = false
-
-  -- Used to detect when a mail that had something now has nothing on it and
-  -- gets automatically deleted
-  self.waitingForDeletion = false
-  self.lastMailCount = nil
+  self:ResetState()
 
   hooksecurefunc(_G, "CheckInbox", function()
-    self.mailQueued = false
-    self.waitingForDeletion = false
-    self.lastMailCount = nil
+    self:ResetState()
   end)
 end
 
 function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
-  if eventName == "MAIL_INBOX_UPDATE" then
+  if eventName == "MAIL_SHOW" then
+    self:ResetState()
+  elseif eventName == "MAIL_INBOX_UPDATE" then
     self.mailQueued = false
     -- XXX: Possible edge case, if a mail arrives before the mail is deleted it
     -- may look like it wasn't deleted.
@@ -107,7 +103,17 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
   -- we wait for it to finish.
   elseif eventName == "CLOSE_INBOX_ITEM" then
     self.waitingForDeletion = true
+    self.lastMailCount = GetNumMails()
   end
+end
+
+function JournalatorMailMonitorMixin:ResetState()
+  self.mailQueued = false
+
+  -- Used to detect when a mail that had something now has nothing on it and
+  -- gets automatically deleted
+  self.waitingForDeletion = false
+  self.lastMailCount = nil
 end
 
 function JournalatorMailMonitorMixin:RegisterPickupHandlers()
