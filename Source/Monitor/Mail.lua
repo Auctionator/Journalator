@@ -13,6 +13,8 @@ local function CacheMail(index)
   }
 end
 
+-- Checks whether taking an item from the mail will cause it to be deleted (ie
+-- you're on the last item)
 local function IsOnLastStuff(mailIndex)
   local count = 0
   for attachmentIndex = 1, ATTACHMENTS_MAX do
@@ -91,8 +93,9 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
     self:ResetState()
   elseif eventName == "MAIL_INBOX_UPDATE" then
     self.mailQueued = false
-    -- XXX: Possible edge case, if a mail arrives before the mail is deleted it
-    -- may look like it wasn't deleted.
+    -- XXX: Possible edge case, if a mail arrives in the same event that this
+    -- mail is deleted it may look like it wasn't deleted, and delay processing
+    -- until the next deletion.
     if self.waitingForDeletion and GetNumMails() < self.lastMailCount then
       self.waitingForDeletion = false
     end
