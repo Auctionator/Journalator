@@ -172,7 +172,7 @@
       <Frame inherits="AuctionatorTranslatorTemplate" parentKey="itIT">
         <KeyValues>
           <KeyValue key="textureLocation" type="string" value="Interface\AddOns\Auctionator\Images\itIT"/>
-          <KeyValue key="translators" type="global" value="AUCTIONATOR_L_TRANSLATORS_HELP"/>
+          <KeyValue key="translators" type="string" value="Driidrii74"/>
           <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_TRANSLATORS_ITALIAN" type="global"/>
         </KeyValues>
 			  <Anchors>
@@ -194,7 +194,7 @@
       <Frame inherits="AuctionatorTranslatorTemplate" parentKey="ruRU">
         <KeyValues>
           <KeyValue key="textureLocation" type="string" value="Interface\AddOns\Auctionator\Images\ruRU"/>
-          <KeyValue key="translators" type="string" value="vitality_spirit"/>
+          <KeyValue key="translators" type="string" value="vitality_spirit, oleg_of_perm"/>
           <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_TRANSLATORS_RUSSIAN" type="global"/>
         </KeyValues>
 			  <Anchors>
