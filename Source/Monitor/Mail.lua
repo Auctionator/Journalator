@@ -93,6 +93,11 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
     self:ResetState()
   elseif eventName == "MAIL_INBOX_UPDATE" then
     self.mailQueued = false
+    -- Ask for all mail so that player names get cached before a user opens the
+    -- mail. On classic this reduces the chance that buyer names are missing.
+    for mailIndex = 1, (GetInboxNumItems()) do
+      CacheMail(mailIndex)
+    end
     -- XXX: Possible edge case, if a mail arrives in the same event that this
     -- mail is deleted it may look like it wasn't deleted, and delay processing
     -- until the next deletion.
