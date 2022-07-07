@@ -13,6 +13,15 @@ local function CacheMail(index)
   }
 end
 
+local function GetFirstAttachment(mailIndex)
+  for attachmentIndex = 1, ATTACHMENTS_MAX do
+    local link = GetInboxItemLink(mailIndex, attachmentIndex)
+    if link ~= nil then
+      return link
+    end
+  end
+end
+
 -- Checks whether taking an item from the mail will cause it to be deleted (ie
 -- you're on the last item)
 local function IsOnLastStuff(mailIndex)
@@ -93,11 +102,21 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
     self:ResetState()
   elseif eventName == "MAIL_INBOX_UPDATE" then
     self.mailQueued = false
+    self.seenAttachments = {}
+
     -- Ask for all mail so that player names get cached before a user opens the
     -- mail. On classic this reduces the chance that buyer names are missing.
     for mailIndex = 1, (GetInboxNumItems()) do
-      CacheMail(mailIndex)
+      local mail = CacheMail(mailIndex)
+
+      -- Cache basic attachment information (used when another addon finds a way
+      -- to skip the added hooks, say with a private copy of TakeInboxItem)
+      self.seenAttachments[mailIndex] = {
+        money = mail.header[5],
+        link = GetFirstAttachment(mailIndex),
+      }
     end
+
     -- XXX: Possible edge case, if a mail arrives in the same event that this
     -- mail is deleted it may look like it wasn't deleted, and delay processing
     -- until the next deletion.
@@ -105,11 +124,28 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
       self.waitingForDeletion = false
     end
     self.lastMailCount = GetNumMails()
+
   -- Case when automatically closing mail because its being deleted due to
   -- being empty (e.g empty cancellation mail now you've taken the items)
   -- No further items can be taken until this message finishes being deleted, so
   -- we wait for it to finish.
   elseif eventName == "CLOSE_INBOX_ITEM" then
+    local mailIndex = ...
+    local mail = CacheMail(mailIndex)
+
+    -- Special case, when a mail is deleted, but we haven't had a chance to
+    -- intercept the TakeInboxItem call it means that the hook was bypassed.
+    -- This uses the attachment cache to figure out what was attached and save
+    -- it anyway.
+    if not self.mailQueued then
+      local attachment = self.seenAttachments[mailIndex]
+      if attachment.money > 0 then
+        self:ProcessMailWithMoney(mail, true)
+      elseif attachment.link ~= nil then
+        self:ProcessMailWithItem(mail, true, attachment.link)
+      end
+    end
+
     self.waitingForDeletion = true
     self.lastMailCount = GetNumMails()
   end
@@ -134,7 +170,7 @@ function JournalatorMailMonitorMixin:RegisterPickupHandlers()
     if self:IsReady() and link ~= nil and Journalator.Monitor.BagSpaceCheck(link, count) then
       self.mailQueued = true
 
-      self:ProcessMailWithItem(CacheMail(mailIndex), IsOnLastStuff(mailIndex), link, count)
+      self:ProcessMailWithItem(CacheMail(mailIndex), IsOnLastStuff(mailIndex), link)
     end
   end)
   hooksecurefunc(_G, "TakeInboxMoney", function(mailIndex)
@@ -145,7 +181,7 @@ function JournalatorMailMonitorMixin:RegisterPickupHandlers()
     if self:IsReady() and money > 0 then
       self.mailQueued = true
 
-      self:ProcessMailWithMoney(CacheMail(mailIndex), IsOnLastStuff(mailIndex), money)
+      self:ProcessMailWithMoney(CacheMail(mailIndex), IsOnLastStuff(mailIndex))
     end
   end)
 end
@@ -159,7 +195,7 @@ end
 local expiredText = AUCTION_EXPIRED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 local cancelledText = AUCTION_REMOVED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 
-function JournalatorMailMonitorMixin:ProcessMailWithItem(mail, isLastStuff, itemLink, quantity)
+function JournalatorMailMonitorMixin:ProcessMailWithItem(mail, isLastStuff, itemLink)
   if mail.header[4] == RETRIEVING_DATA then
     return
   end
@@ -177,7 +213,7 @@ function JournalatorMailMonitorMixin:ProcessMailWithItem(mail, isLastStuff, item
   end
 end
 
-function JournalatorMailMonitorMixin:ProcessMailWithMoney(mail, isLastStuff, money)
+function JournalatorMailMonitorMixin:ProcessMailWithMoney(mail, isLastStuff)
   if mail.header[4] == RETRIEVING_DATA then
     return
   end
