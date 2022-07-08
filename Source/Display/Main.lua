@@ -43,7 +43,7 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName)
     local view = self:GetCurrentDataView()
     if view ~= nil then
       view.DataProvider:Refresh()
-      self:GetParent().Filters:UpdateRealms()
+      self.Filters:UpdateRealms()
     end
   end
 end
