@@ -1,7 +1,6 @@
 JournalatorMailMonitorMixin = {}
 
 local MAIL_EVENTS = {
-  "MAIL_SHOW",
   "MAIL_INBOX_UPDATE",
   "CLOSE_INBOX_ITEM",
 }
@@ -20,23 +19,6 @@ local function GetFirstAttachment(mailIndex)
       return link
     end
   end
-end
-
--- Checks whether taking an item from the mail will cause it to be deleted (ie
--- you're on the last item)
-local function IsOnLastStuff(mailIndex)
-  local count = 0
-  for attachmentIndex = 1, ATTACHMENTS_MAX do
-    if HasInboxItem(mailIndex, attachmentIndex) then
-      count = count + 1
-    end
-  end
-  local money = select(5, GetInboxHeaderInfo(mailIndex))
-
-  -- Reports when either
-  -- 1. Last item (gear/pet/etc.) and no money OR
-  -- 2. Only money left and no items (gear/pet/etc.)
-  return (count == 1 and money == 0) or (money > 0 and count == 0)
 end
 
 -- Sale or purchase
@@ -81,27 +63,12 @@ local function SaveFailed(failedType, itemInfo, itemLink)
   }})
 end
 
-local function GetNumMails()
-  return select(2, GetInboxNumItems())
-end
-
 function JournalatorMailMonitorMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, MAIL_EVENTS)
-
-  self:RegisterPickupHandlers()
-
-  self:ResetState()
-
-  hooksecurefunc(_G, "CheckInbox", function()
-    self:ResetState()
-  end)
 end
 
 function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
-  if eventName == "MAIL_SHOW" then
-    self:ResetState()
-  elseif eventName == "MAIL_INBOX_UPDATE" then
-    self.mailQueued = false
+  if eventName == "MAIL_INBOX_UPDATE" then
     self.seenAttachments = {}
 
     -- Ask for all mail so that player names get cached before a user opens the
@@ -117,14 +84,6 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
       }
     end
 
-    -- XXX: Possible edge case, if a mail arrives in the same event that this
-    -- mail is deleted it may look like it wasn't deleted, and delay processing
-    -- until the next deletion.
-    if self.waitingForDeletion and GetNumMails() < self.lastMailCount then
-      self.waitingForDeletion = false
-    end
-    self.lastMailCount = GetNumMails()
-
   -- Case when automatically closing mail because its being deleted due to
   -- being empty (e.g empty cancellation mail now you've taken the items)
   -- No further items can be taken until this message finishes being deleted, so
@@ -133,94 +92,42 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
     local mailIndex = ...
     local mail = CacheMail(mailIndex)
 
-    -- Special case, when a mail is deleted, but we haven't had a chance to
-    -- intercept the TakeInboxItem call it means that the hook was bypassed.
-    -- This uses the attachment cache to figure out what was attached and save
-    -- it anyway.
-    if not self.mailQueued then
-      local attachment = self.seenAttachments[mailIndex]
-      if attachment.money > 0 then
-        self:ProcessMailWithMoney(mail, true)
-      elseif attachment.link ~= nil then
-        self:ProcessMailWithItem(mail, true, attachment.link)
-      end
+    -- Use the cache to extract whatever was attached and log it.
+    local attachment = self.seenAttachments[mailIndex]
+    print("adding", attachment.link, attachment.money)
+    if attachment.money > 0 then
+      self:ProcessMailWithMoney(mail)
+    elseif attachment.link ~= nil then
+      self:ProcessMailWithItem(mail, attachment.link)
     end
-
-    self.waitingForDeletion = true
-    self.lastMailCount = GetNumMails()
   end
-end
-
-function JournalatorMailMonitorMixin:ResetState()
-  self.mailQueued = false
-
-  -- Used to detect when a mail that had something now has nothing on it and
-  -- gets automatically deleted
-  self.waitingForDeletion = false
-  self.lastMailCount = nil
-end
-
-function JournalatorMailMonitorMixin:RegisterPickupHandlers()
-  hooksecurefunc(_G, "TakeInboxItem", function(mailIndex, attachmentIndex)
-    local link = GetInboxItemLink(mailIndex, attachmentIndex)
-    local count = select(4, GetInboxItem(mailIndex, attachmentIndex))
-
-    -- Mail is with an item on it, the item can only be taken if it exists AND
-    -- there's space for it in the player's bag
-    if self:IsReady() and link ~= nil and Journalator.Monitor.BagSpaceCheck(link, count) then
-      self.mailQueued = true
-
-      self:ProcessMailWithItem(CacheMail(mailIndex), IsOnLastStuff(mailIndex), link)
-    end
-  end)
-  hooksecurefunc(_G, "TakeInboxMoney", function(mailIndex)
-    local money = select(5, GetInboxHeaderInfo(mailIndex))
-
-    -- XXX: Edge case, its untested what happens if the amount of money would
-    -- push the player over the Blizzard character gold-cap threshold.
-    if self:IsReady() and money > 0 then
-      self.mailQueued = true
-
-      self:ProcessMailWithMoney(CacheMail(mailIndex), IsOnLastStuff(mailIndex))
-    end
-  end)
-end
-
--- Ready if no other item has been picked up and is pending from mail and no
--- mail is being automatically deleted
-function JournalatorMailMonitorMixin:IsReady()
-  return not self.mailQueued and not self.waitingForDeletion
 end
 
 local expiredText = AUCTION_EXPIRED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 local cancelledText = AUCTION_REMOVED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 
-function JournalatorMailMonitorMixin:ProcessMailWithItem(mail, isLastStuff, itemLink)
+function JournalatorMailMonitorMixin:ProcessMailWithItem(mail, itemLink)
   if mail.header[4] == RETRIEVING_DATA then
     return
   end
 
-  if isLastStuff then
-    if mail.invoice[1] ~= nil then
-      SaveInvoice(mail, itemLink)
+  if mail.invoice[1] ~= nil then
+    SaveInvoice(mail, itemLink)
 
-    elseif string.match(mail.header[4], expiredText) then
-      SaveFailed("expired", string.match(mail.header[4], expiredText), itemLink)
+  elseif string.match(mail.header[4], expiredText) then
+    SaveFailed("expired", string.match(mail.header[4], expiredText), itemLink)
 
-    elseif string.match(mail.header[4], cancelledText) then
-      SaveFailed("cancelled", string.match(mail.header[4], cancelledText), itemLink)
-    end
+  elseif string.match(mail.header[4], cancelledText) then
+    SaveFailed("cancelled", string.match(mail.header[4], cancelledText), itemLink)
   end
 end
 
-function JournalatorMailMonitorMixin:ProcessMailWithMoney(mail, isLastStuff)
+function JournalatorMailMonitorMixin:ProcessMailWithMoney(mail)
   if mail.header[4] == RETRIEVING_DATA then
     return
   end
 
-  if isLastStuff then
-    if mail.invoice[1] ~= nil then
-      SaveInvoice(mail)
-    end
+  if mail.invoice[1] ~= nil then
+    SaveInvoice(mail)
   end
 end
