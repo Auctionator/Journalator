@@ -33,8 +33,8 @@ local FAILURES_DATA_PROVIDER_LAYOUT ={
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_TIME_ELAPSED,
     headerParameters = { "rawDay" },
-    cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "date" }
+    cellTemplate = "JournalatorTimeCellTemplate",
+    cellParameters = { "rawDay" }
   },
 }
 

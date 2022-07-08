@@ -58,8 +58,8 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_TIME_ELAPSED,
     headerParameters = { "rawDay" },
-    cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "date" }
+    cellTemplate = "JournalatorTimeCellTemplate",
+    cellParameters = { "rawDay" }
   },
 }
 
@@ -105,7 +105,6 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         count = item.count,
         unitPrice = math.floor(item.value/item.count),
         rawDay = item.time,
-        date = SecondsToTime(timeSinceEntry),
         otherPlayer = otherPlayer,
         sourceCharacter = sourceCharacter,
         itemLink = itemLink,
