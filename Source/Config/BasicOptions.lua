@@ -1,8 +1,6 @@
 JournalatorConfigBasicOptionsFrameMixin = {}
 
 function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
-  Journalator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:OnLoad()")
-
   self.name = JOURNALATOR_L_JOURNALATOR
 
   self.cancel = function()
@@ -17,8 +15,6 @@ function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:OnShow()
-  Journalator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:OnShow()")
-
   self.TooltipSaleRate:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SALE_RATE))
   self.TooltipFailures:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_FAILURES))
   self.TooltipLastSold:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_SOLD))
@@ -32,8 +28,6 @@ function JournalatorConfigBasicOptionsFrameMixin:OnShow()
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Save()
-  Journalator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:Save()")
-
   Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_SALE_RATE, self.TooltipSaleRate:GetChecked())
   Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_FAILURES, self.TooltipFailures:GetChecked())
   Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_LAST_SOLD, self.TooltipLastSold:GetChecked())
@@ -56,5 +50,5 @@ end
 
 
 function JournalatorConfigBasicOptionsFrameMixin:Cancel()
-  Journalator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:Cancel()")
+
 end

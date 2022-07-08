@@ -69,6 +69,7 @@ end
 
 function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MAIL_INBOX_UPDATE" then
+    Journalator.Debug.Message("JournalatorMailMonitor: inbox update", GetInboxNumItems())
     self.seenAttachments = {}
 
     -- Ask for all mail so that player names get cached before a user opens the
@@ -99,6 +100,8 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
     elseif attachment.link ~= nil then
       self:ProcessMailWithItem(mail, attachment.link)
     end
+
+    Journalator.Debug.Message("JournalatorMailMonitor: close mail", mailIndex, mail.header[4], attachment.link, attachment.money)
   end
 end
 
