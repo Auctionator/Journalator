@@ -94,7 +94,6 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
 
     -- Use the cache to extract whatever was attached and log it.
     local attachment = self.seenAttachments[mailIndex]
-    print("adding", attachment.link, attachment.money)
     if attachment.money > 0 then
       self:ProcessMailWithMoney(mail)
     elseif attachment.link ~= nil then
