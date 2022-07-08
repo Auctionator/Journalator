@@ -1,5 +1,9 @@
 JournalatorDisplayMixin = {}
 
+local REFRESH_EVENTS = {
+  Journalator.Events.LogsUpdated
+}
+
 function JournalatorDisplayMixin:OnLoad()
   self:RegisterForDrag("LeftButton")
 
@@ -13,6 +17,8 @@ function JournalatorDisplayMixin:OnShow()
   self:SetDisplayMode(self.Tabs[1].displayMode)
   self:SetProfitText()
 
+  Auctionator.EventBus:Register(self, REFRESH_EVENTS)
+
   Journalator.Archiving.LoadAll(function()
     self.ProgressBar:Hide()
     local view = self:GetCurrentDataView()
@@ -25,6 +31,21 @@ function JournalatorDisplayMixin:OnShow()
     self.ProgressBar:SetValue(current)
     self.ProgressBar.Text:SetFormattedText(JOURNALATOR_L_LOADING_X_X, current, total)
   end)
+end
+
+function JournalatorDisplayMixin:OnHide()
+  Auctionator.EventBus:Unregister(self, REFRESH_EVENTS)
+end
+
+function JournalatorDisplayMixin:ReceiveEvent(eventName)
+  if eventName == Journalator.Events.LogsUpdated then
+    Journalator.Debug.Message("JournalatorDisplay", eventName)
+    local view = self:GetCurrentDataView()
+    if view ~= nil then
+      view.DataProvider:Refresh()
+      self:GetParent().Filters:UpdateRealms()
+    end
+  end
 end
 
 local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
