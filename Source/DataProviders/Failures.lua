@@ -92,8 +92,8 @@ function JournalatorFailuresDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-Auctionator.Config.Create("JOURNALATOR_COLUMNS_FAILURES", "journalator_columns_failures", {})
+Journalator.Config.Create("COLUMNS_FAILURES", "columns_failures", {})
 
 function JournalatorFailuresDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_COLUMNS_FAILURES)
+  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_FAILURES)
 end

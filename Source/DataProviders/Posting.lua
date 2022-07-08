@@ -107,8 +107,8 @@ function JournalatorPostingDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-Auctionator.Config.Create("JOURNALATOR_COLUMNS_POSTING", "journalator_columns_posting", {})
+Journalator.Config.Create("COLUMNS_POSTING", "columns_posting", {})
 
 function JournalatorPostingDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_COLUMNS_POSTING)
+  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_POSTING)
 end

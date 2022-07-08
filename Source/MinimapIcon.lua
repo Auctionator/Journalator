@@ -42,11 +42,11 @@ function Journalator.MinimapIcon.Initialize()
     end
   })
 
-  icon:Register("Journalator", dataObj, Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_MINIMAP_ICON))
+  icon:Register("Journalator", dataObj, Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON))
 end
 
 function Journalator.MinimapIcon.UpdateShown()
-  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_MINIMAP_ICON).hide then
+  if Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON).hide then
     icon:Hide("Journalator")
   else
     icon:Show("Journalator")

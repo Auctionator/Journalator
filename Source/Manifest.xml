@@ -13,6 +13,9 @@
   <Script file="AddToLogs.lua" />
   <Script file="MinimapIcon.lua" />
 
+  <Script file="Debug.lua" />
+  <Include file="Config\Manifest.xml" />
+
   <Include file="Archiving\Manifest.xml" />
   <Include file="Monitor\Manifest.xml" />
   <Include file="Statistics\Manifest.xml" />
@@ -21,5 +24,4 @@
   <Include file="Display\Manifest.xml" />
   <Include file="SlashCmd\Manifest.xml" />
   <Include file="Tooltips\Manifest.xml" />
-  <Include file="Config\Manifest.xml" />
 </Ui>

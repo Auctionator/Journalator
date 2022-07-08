@@ -5,6 +5,8 @@ local function SetupMonitors()
 end
 
 function Journalator.Initialize()
+  Journalator.Config.InitializeData()
+
   Journalator.Archiving.Initialize()
 
   Journalator.State.CurrentVersion = GetAddOnMetadata("Journalator", "Version")

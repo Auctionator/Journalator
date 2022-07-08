@@ -44,29 +44,29 @@ end
 
 function Journalator.Tooltips.AnyEnabled()
   return JOURNALATOR_STATISTICS ~= nil and (
-    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE) or
-    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES) or
-    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD) or
-    Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT)
+    Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SALE_RATE) or
+    Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_FAILURES) or
+    Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_SOLD) or
+    Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT)
     )
 end
 
 function Journalator.Tooltips.GetSalesInfo(itemName)
   local salesRate, failedString, lastSold, lastBought
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE) then
+  if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SALE_RATE) then
     salesRate = GetSaleRate(itemName)
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES) then
+  if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_FAILURES) then
     failedString = GetFailureCount(itemName)
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD) then
+  if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_SOLD) then
     lastSold = GetLastSold(itemName)
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT) then
+  if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT) then
     lastBought = GetLastBought(itemName)
   end
 

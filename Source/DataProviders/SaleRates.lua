@@ -140,8 +140,8 @@ function JournalatorSaleRatesDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-Auctionator.Config.Create("JOURNALATOR_COLUMNS_SALE_RATES", "journalator_columns_sale_rates", {})
+Journalator.Config.Create("COLUMNS_SALE_RATES", "columns_sale_rates", {})
 
 function JournalatorSaleRatesDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_COLUMNS_SALE_RATES)
+  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_SALE_RATES)
 end

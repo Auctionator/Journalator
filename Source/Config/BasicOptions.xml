@@ -118,6 +118,24 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.MinimapIconHeading" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="AdvancedHeading">
+        <KeyValues>
+          <KeyValue key="headingText" value="AUCTIONATOR_L_CONFIG_ADVANCED_CATEGORY" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ShowMinimapIcon" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="DebugMode">
+        <KeyValues>
+          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_DEBUG" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.AdvancedHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
    </Frames>
   </Frame>
 </Ui>

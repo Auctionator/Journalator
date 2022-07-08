@@ -1,7 +1,7 @@
 JournalatorConfigBasicOptionsFrameMixin = {}
 
 function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
-  Auctionator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:OnLoad()")
+  Journalator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:OnLoad()")
 
   self.name = JOURNALATOR_L_JOURNALATOR
 
@@ -17,30 +17,34 @@ function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:OnShow()
-  Auctionator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:OnShow()")
+  Journalator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:OnShow()")
 
-  self.TooltipSaleRate:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE))
-  self.TooltipFailures:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES))
-  self.TooltipLastSold:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD))
-  self.TooltipLastBought:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT))
+  self.TooltipSaleRate:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SALE_RATE))
+  self.TooltipFailures:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_FAILURES))
+  self.TooltipLastSold:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_SOLD))
+  self.TooltipLastBought:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT))
 
-  self.GroupJunk:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK))
+  self.GroupJunk:SetChecked(Journalator.Config.Get(Journalator.Config.Options.VENDORING_GROUP_JUNK))
 
-  self.ShowMinimapIcon:SetChecked(not Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_MINIMAP_ICON).hide)
+  self.ShowMinimapIcon:SetChecked(not Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON).hide)
+
+  self.DebugMode:SetChecked(Journalator.Config.Get(Journalator.Config.Options.DEBUG))
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Save()
-  Auctionator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:Save()")
+  Journalator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:Save()")
 
-  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_SALE_RATE, self.TooltipSaleRate:GetChecked())
-  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_FAILURES, self.TooltipFailures:GetChecked())
-  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_SOLD, self.TooltipLastSold:GetChecked())
-  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_TOOLTIP_LAST_BOUGHT, self.TooltipLastBought:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_SALE_RATE, self.TooltipSaleRate:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_FAILURES, self.TooltipFailures:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_LAST_SOLD, self.TooltipLastSold:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT, self.TooltipLastBought:GetChecked())
 
-  Auctionator.Config.Set(Auctionator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK, self.GroupJunk:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.VENDORING_GROUP_JUNK, self.GroupJunk:GetChecked())
 
-  Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_MINIMAP_ICON).hide = not self.ShowMinimapIcon:GetChecked()
+  Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON).hide = not self.ShowMinimapIcon:GetChecked()
   Journalator.MinimapIcon.UpdateShown()
+
+  Journalator.Config.Set(Journalator.Config.Options.DEBUG, self.DebugMode:GetChecked())
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:ComputeFullStatisticsClicked()
@@ -52,5 +56,5 @@ end
 
 
 function JournalatorConfigBasicOptionsFrameMixin:Cancel()
-  Auctionator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:Cancel()")
+  Journalator.Debug.Message("JournalatorConfigBasicOptionsFrameMixin:Cancel()")
 end

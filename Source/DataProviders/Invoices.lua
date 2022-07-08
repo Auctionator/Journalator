@@ -140,9 +140,9 @@ function JournalatorInvoicesDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-Auctionator.Config.Create("JOURNALATOR_COLUMNS_INVOICES", "journalator_columns_invoices", {})
+Journalator.Config.Create("COLUMNS_INVOICES", "columns_invoices", {})
 
 function JournalatorInvoicesDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.JOURNALATOR_COLUMNS_INVOICES)
+  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_INVOICES)
 end
 

@@ -4,4 +4,5 @@ Journalator = {
   Monitor = {},
   MinimapIcon = {},
   Config = {},
+  Debug = {},
 }
