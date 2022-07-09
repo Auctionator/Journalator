@@ -1,6 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Script file="BagSpaceCheck.lua" />
-
   <Script file="Mail.lua" />
   <Script file="Posting.lua" />
   <Script file="Vendor.lua" />
