@@ -48,8 +48,8 @@ local VENDORING_DATA_PROVIDER_LAYOUT ={
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_DATE,
     headerParameters = { "rawDay" },
-    cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "date" }
+    cellTemplate = "JournalatorTimeCellTemplate",
+    cellParameters = { "rawDay" }
   },
 }
 
@@ -88,7 +88,6 @@ function JournalatorVendoringDataProviderMixin:Refresh()
           count = item.count,
           unitPrice = item.unitPrice,
           rawDay = item.time,
-          date = SecondsToTime(time() - item.time),
           itemLink = item.itemLink,
           sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         })
@@ -116,7 +115,6 @@ function JournalatorVendoringDataProviderMixin:Refresh()
       count = 1,
       unitPrice = math.abs(junkValue),
       rawDay = time(),
-      date = "",
       itemLink = nil,
       sourceCharacter = "",
     })

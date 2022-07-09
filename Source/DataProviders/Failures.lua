@@ -56,7 +56,6 @@ function JournalatorFailuresDataProviderMixin:Refresh()
         failedType = FAILED_TYPE_TO_TEXT[item.failedType],
         count = item.count,
         rawDay = item.time,
-        date = SecondsToTime(time() - item.time),
         itemLink = item.itemLink,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
       }
