@@ -78,7 +78,7 @@ function JournalatorVendoringDataProviderMixin:Refresh()
       end
 
       -- If not junk or the group junk option is off, include normally
-      if not Journalator.Config.Get(Journalator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK) or
+      if not Journalator.Config.Get(Journalator.Config.Options.VENDORING_GROUP_JUNK) or
          IsNotJunk(item.itemLink) then
         table.insert(results, {
           itemName = item.itemName,
@@ -98,7 +98,7 @@ function JournalatorVendoringDataProviderMixin:Refresh()
   end
 
   -- Create junk group item, without any normal details like a date or source.
-  if junkValue ~= 0 and Journalator.Config.Get(Journalator.Config.Options.JOURNALATOR_VENDORING_GROUP_JUNK) then
+  if junkValue ~= 0 and Journalator.Config.Get(Journalator.Config.Options.VENDORING_GROUP_JUNK) then
     local moneyIn = 0
     local moneyOut = 0
     if junkValue > 0 then
