@@ -58,15 +58,15 @@ function JournalatorDisplayMixin:SetProfitText()
   local monthlyTotal, incoming, outgoing = Journalator.GetProfit(time() - SECONDS_IN_A_MONTH, time())
   if monthlyTotal < 0 then
     self.StatusText:SetText(JOURNALATOR_L_YOU_LOST_X_THIS_MONTH_WITH_XX:format(
-      Auctionator.Utilities.CreateMoneyString(-monthlyTotal),
-      Auctionator.Utilities.CreateMoneyString(incoming),
-      Auctionator.Utilities.CreateMoneyString(outgoing)
+      GetMoneyString(-monthlyTotal, true),
+      GetMoneyString(incoming, true),
+      GetMoneyString(outgoing, true)
     ))
   else
     self.StatusText:SetText(JOURNALATOR_L_YOU_GAINED_X_THIS_MONTH_WITH_XX:format(
-      Auctionator.Utilities.CreateMoneyString(monthlyTotal),
-      Auctionator.Utilities.CreateMoneyString(incoming),
-      Auctionator.Utilities.CreateMoneyString(outgoing)
+      GetMoneyString(monthlyTotal, true),
+      GetMoneyString(incoming, true),
+      GetMoneyString(outgoing, true)
     ))
   end
 end

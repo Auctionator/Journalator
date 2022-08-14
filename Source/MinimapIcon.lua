@@ -1,9 +1,9 @@
 local function GetProfitString(period)
   local profit = Journalator.GetProfit(time() - period, time())
   if profit < 0 then
-    return RED_FONT_COLOR:WrapTextInColorCode("-" .. Auctionator.Utilities.CreateMoneyString(-profit))
+    return RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-profit, true))
   else
-    return GREEN_FONT_COLOR:WrapTextInColorCode(Auctionator.Utilities.CreateMoneyString(profit))
+    return GREEN_FONT_COLOR:WrapTextInColorCode(GetMoneyString(profit, true))
   end
 end
 
