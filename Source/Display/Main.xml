@@ -111,7 +111,7 @@
 					<KeyValue key="title" value="JOURNALATOR_L_INVOICES_TITLE" type="global"/>
 				</KeyValues>
 				<Anchors>
-					<Anchor point="BOTTOMLEFT" x="20" y="-28"/>
+					<Anchor point="BOTTOMLEFT" x="20" y="-30"/>
 				</Anchors>
 			</Button>
 			<Button parentKey="PostingTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="JOURNALATOR_L_POSTING">
