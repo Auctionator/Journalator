@@ -161,7 +161,7 @@
       <Frame inherits="AuctionatorTranslatorTemplate" parentKey="frFR">
         <KeyValues>
           <KeyValue key="textureLocation" type="string" value="Interface\AddOns\Auctionator\Images\frFR"/>
-          <KeyValue key="translators" type="global" value="AUCTIONATOR_L_TRANSLATORS_HELP"/>
+          <KeyValue key="translators" type="string" value="Driidrii74"/>
           <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_TRANSLATORS_FRENCH" type="global"/>
         </KeyValues>
 			  <Anchors>
@@ -172,7 +172,7 @@
       <Frame inherits="AuctionatorTranslatorTemplate" parentKey="itIT">
         <KeyValues>
           <KeyValue key="textureLocation" type="string" value="Interface\AddOns\Auctionator\Images\itIT"/>
-          <KeyValue key="translators" type="string" value="Driidrii74"/>
+          <KeyValue key="translators" type="global" value="AUCTIONATOR_L_TRANSLATORS_HELP"/>
           <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_TRANSLATORS_ITALIAN" type="global"/>
         </KeyValues>
 			  <Anchors>
