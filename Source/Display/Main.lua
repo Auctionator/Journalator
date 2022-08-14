@@ -5,6 +5,10 @@ local REFRESH_EVENTS = {
 }
 
 function JournalatorDisplayMixin:OnLoad()
+  ButtonFrameTemplate_HidePortrait(self)
+  ButtonFrameTemplate_HideButtonBar(self)
+  self.Inset:Hide()
+
   self:RegisterForDrag("LeftButton")
 
   PanelTemplates_SetNumTabs(self, #self.Tabs)
