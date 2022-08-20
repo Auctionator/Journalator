@@ -103,6 +103,12 @@ function JournalatorFiltersContainerMixin:Filter(item)
     check = check and self.filters.faction == item.source.faction
   end
 
+  -- Ignore broken results caused by WoW API not returning a valid name inside
+  -- the item link (code that generated them has been replaced, but some may
+  -- still exist in Journalator item logs)
+  if item.itemName == nil then
+    return false
+  end
   check = check and string.find(string.lower(item.itemName), string.lower(self.filters.searchText), 1, true)
 
   return check

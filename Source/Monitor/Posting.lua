@@ -7,7 +7,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
         Journalator.Debug.Message("JournalatorPostingMonitor: Auctionator post hook", auctionData.itemLink)
         Journalator.AddToLogs({ Posting = {
           {
-            itemName = Journalator.Utilities.GetNameFromLink(auctionData.itemLink),
+            itemName = Auctionator.Utilities.GetNameFromLink(auctionData.itemLink),
             buyout = auctionData.buyoutAmount,
             bid = math.floor(auctionData.bidAmount / auctionData.quantity),
             count = auctionData.quantity,
@@ -28,7 +28,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
 
       Journalator.AddToLogs({ Posting = {
         {
-        itemName = Journalator.Utilities.GetNameFromLink(link),
+        itemName = C_Item.GetItemName(location),
         buyout = buyout,
         bid = bid,
         count = quantity,
@@ -47,7 +47,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
       Journalator.Debug.Message("JournalatorPostingMonitor: Blizzard post commodity hook", link)
 
       table.insert(Journalator.State.Logs.Posting, {
-        itemName = Journalator.Utilities.GetNameFromLink(link),
+        itemName = C_Item.GetItemName(location),
         buyout = unitPrice,
         bid = nil,
         count = quantity,

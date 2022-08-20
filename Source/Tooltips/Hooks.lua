@@ -9,7 +9,7 @@ hooksecurefunc(Auctionator.Tooltip, "ShowTipWithPricingDBKey",
       return
     end
 
-    local itemName = Journalator.Utilities.GetNameFromLink(itemLink)
+    local itemName = GetItemInfo(itemLink)
     local salesRate, failedCount, lastSold, lastBought = Journalator.Tooltips.GetSalesInfo(itemName)
 
     if salesRate ~= nil then

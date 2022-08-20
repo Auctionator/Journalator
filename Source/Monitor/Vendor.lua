@@ -142,7 +142,7 @@ function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
       local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
       self.sellQueue[guid] = {
         vendorType = "sell",
-        itemName = Journalator.Utilities.GetNameFromLink(itemLink),
+        itemName = (GetItemInfo(itemLink)),
         count = itemCount,
         unitPrice = vendorPrice,
         itemLink = itemLink,
@@ -187,7 +187,7 @@ function JournalatorVendorMonitorMixin:UpdateCursorItem()
         guid = guid,
         item = {
           vendorType = "sell",
-          itemName = Journalator.Utilities.GetNameFromLink(itemLink),
+          itemName = (GetItemInfo(itemLink)),
           count = itemCount,
           unitPrice = vendorPrice,
           itemLink = itemLink,
