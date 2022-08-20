@@ -1,7 +1,8 @@
 JournalatorDisplayMixin = {}
 
 local REFRESH_EVENTS = {
-  Journalator.Events.LogsUpdated
+  Journalator.Events.LogsUpdated,
+  Journalator.Events.FiltersChanged,
 }
 
 function JournalatorDisplayMixin:OnLoad()
@@ -49,21 +50,25 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName)
       view.DataProvider:Refresh()
       self.Filters:UpdateRealms()
     end
+  elseif eventName == Journalator.Events.FiltersChanged then
+    self:SetProfitText()
   end
 end
 
 local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
 
 function JournalatorDisplayMixin:SetProfitText()
-  local monthlyTotal, incoming, outgoing = Journalator.GetProfit(time() - SECONDS_IN_A_MONTH, time())
+  local monthlyTotal, incoming, outgoing = Journalator.GetProfit(self.Filters:GetTimeForRange(), time(), function(item)
+    return self.Filters:Filter(item)
+  end)
   if monthlyTotal < 0 then
-    self.StatusText:SetText(JOURNALATOR_L_YOU_LOST_X_THIS_MONTH_WITH_XX:format(
+    self.StatusText:SetText(JOURNALATOR_L_YOU_LOST_X_WITH_XX:format(
       GetMoneyString(-monthlyTotal, true),
       GetMoneyString(incoming, true),
       GetMoneyString(outgoing, true)
     ))
   else
-    self.StatusText:SetText(JOURNALATOR_L_YOU_GAINED_X_THIS_MONTH_WITH_XX:format(
+    self.StatusText:SetText(JOURNALATOR_L_YOU_GAINED_X_WITH_XX:format(
       GetMoneyString(monthlyTotal, true),
       GetMoneyString(incoming, true),
       GetMoneyString(outgoing, true)

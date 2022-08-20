@@ -39,10 +39,19 @@ function JournalatorFiltersContainerMixin:OnLoad()
     "Alliance",
     "Horde",
   })
+
+  Auctionator.EventBus:RegisterSource(self, "JournalatorFiltersContainer")
+
+  self.filters = self:GetFilters()
 end
 
 function JournalatorFiltersContainerMixin:OnShow()
   self:UpdateRealms()
+end
+
+function JournalatorFiltersContainerMixin:OnUpdate()
+  self:UpdateMinTime(self:GetTimeForRange())
+  self:CheckFiltersChanged(self:GetFilters())
 end
 
 function JournalatorFiltersContainerMixin:UpdateRealms()
@@ -53,10 +62,50 @@ function JournalatorFiltersContainerMixin:UpdateRealms()
   self.RealmDropDown:SetRealms(realms, true)
 end
 
+function JournalatorFiltersContainerMixin:CheckFiltersChanged(filters)
+  local prevFilters = self.filters
+  for key, val in pairs(prevFilters) do
+    if (type(filters[key]) == "function" and filters[key]()) or
+       (type(filters[key]) ~= "function" and filters[key] ~= val)
+       then
+      self.filters = filters
+      Auctionator.EventBus:Fire(self, Journalator.Events.FiltersChanged)
+      break
+    end
+  end
+end
+
 function JournalatorFiltersContainerMixin:ReceiveEvent(eventName, eventData)
   if eventName == Journalator.Events.RowClicked and self:IsVisible() then
     self.SearchFilter:SetText(eventData.itemName)
   end
+end
+
+function JournalatorFiltersContainerMixin:GetTimeForRange()
+  local secondsToInclude = self.TimePeriodDropDown:GetValue()
+  if secondsToInclude == 0 then
+    return 0
+  else
+    return time() - secondsToInclude
+  end
+end
+
+function JournalatorFiltersContainerMixin:Filter(item)
+  local check = true
+
+  if self.filters.secondsToInclude ~= 0 then
+    check = check and (time() - item.time) <= self.filters.secondsToInclude
+  end
+
+  check = check and self.filters.realm(item.source.realm)
+
+  if self.filters.faction ~= "" then
+    check = check and self.filters.faction == item.source.faction
+  end
+
+  check = check and string.find(string.lower(item.itemName), string.lower(self.filters.searchText), 1, true)
+
+  return check
 end
 
 function JournalatorFiltersContainerMixin:GetFilters()

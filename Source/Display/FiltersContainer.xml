@@ -2,6 +2,7 @@
   <Frame name="JournalatorFiltersContainerTemplate" mixin="JournalatorFiltersContainerMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
+      <OnUpdate method="OnUpdate"/>
       <OnShow method="OnShow"/>
     </Scripts>
     <Frames>
