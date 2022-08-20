@@ -55,24 +55,43 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName)
   end
 end
 
-local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
-
 function JournalatorDisplayMixin:SetProfitText()
-  local monthlyTotal, incoming, outgoing = Journalator.GetProfit(self.Filters:GetTimeForRange(), time(), function(item)
-    return self.Filters:Filter(item)
-  end)
-  if monthlyTotal < 0 then
-    self.StatusText:SetText(JOURNALATOR_L_YOU_LOST_X_WITH_XX:format(
-      GetMoneyString(-monthlyTotal, true),
-      GetMoneyString(incoming, true),
-      GetMoneyString(outgoing, true)
+  if Journalator.Config.Get(Journalator.Config.Options.SHOW_DETAILED_STATUS) then
+    local sales, purchases, lostFees, lostDeposits, total = Journalator.GetDetailedProfits(self.Filters:GetTimeForRange(), time(), function(item)
+      return self.Filters:Filter(item)
+    end)
+
+    local totalString
+    if total < 0 then
+      totalString = "-" .. RED_FONT_COLOR:WrapTextInColorCode(GetMoneyString(-total, true))
+    else
+      totalString = GetMoneyString(total, true)
+    end
+
+    self.StatusText:SetText(JOURNALATOR_L_DETAILED_STATUS:format(
+      GetMoneyString(sales, true),
+      RED_FONT_COLOR:WrapTextInColorCode(GetMoneyString(lostFees, true)),
+      RED_FONT_COLOR:WrapTextInColorCode(GetMoneyString(lostDeposits, true)),
+      RED_FONT_COLOR:WrapTextInColorCode(GetMoneyString(purchases, true)),
+      totalString
     ))
   else
-    self.StatusText:SetText(JOURNALATOR_L_YOU_GAINED_X_WITH_XX:format(
-      GetMoneyString(monthlyTotal, true),
-      GetMoneyString(incoming, true),
-      GetMoneyString(outgoing, true)
-    ))
+    local monthlyTotal, incoming, outgoing = Journalator.GetProfit(self.Filters:GetTimeForRange(), time(), function(item)
+      return self.Filters:Filter(item)
+    end)
+    if monthlyTotal < 0 then
+      self.StatusText:SetText(JOURNALATOR_L_YOU_LOST_X_WITH_XX:format(
+        GetMoneyString(-monthlyTotal, true),
+        GetMoneyString(incoming, true),
+        GetMoneyString(outgoing, true)
+      ))
+    else
+      self.StatusText:SetText(JOURNALATOR_L_YOU_GAINED_X_WITH_XX:format(
+        GetMoneyString(monthlyTotal, true),
+        GetMoneyString(incoming, true),
+        GetMoneyString(outgoing, true)
+      ))
+    end
   end
 end
 

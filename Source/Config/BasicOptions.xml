@@ -90,9 +90,18 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowDetailedStatus">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_SHOW_DETAILED_STATUS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.StatisticsHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
       <Button inherits="UIPanelDynamicResizeButtonTemplate" text="JOURNALATOR_L_COMPUTE_STATISTICS" parentKey="ComputeFullStatistics">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.StatisticsHeading" relativePoint="BOTTOMLEFT" x="23"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ShowDetailedStatus" relativePoint="BOTTOMLEFT" x="23"/>
         </Anchors>
         <Scripts>
           <OnClick>

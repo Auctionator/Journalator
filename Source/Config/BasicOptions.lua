@@ -22,6 +22,8 @@ function JournalatorConfigBasicOptionsFrameMixin:OnShow()
 
   self.GroupJunk:SetChecked(Journalator.Config.Get(Journalator.Config.Options.VENDORING_GROUP_JUNK))
 
+  self.ShowDetailedStatus:SetChecked(Journalator.Config.Get(Journalator.Config.Options.SHOW_DETAILED_STATUS))
+
   self.ShowMinimapIcon:SetChecked(not Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON).hide)
 
   self.DebugMode:SetChecked(Journalator.Config.Get(Journalator.Config.Options.DEBUG))
@@ -34,6 +36,7 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
   Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT, self.TooltipLastBought:GetChecked())
 
   Journalator.Config.Set(Journalator.Config.Options.VENDORING_GROUP_JUNK, self.GroupJunk:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.SHOW_DETAILED_STATUS, self.ShowDetailedStatus:GetChecked())
 
   Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON).hide = not self.ShowMinimapIcon:GetChecked()
   Journalator.MinimapIcon.UpdateShown()

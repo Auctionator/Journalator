@@ -25,6 +25,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["YOU_LOST_X_WITH_XX"] = "You lost %s, with %s incoming and %s outgoing."
   L["YOU_GAINED_X_WITH_XX"] = "You gained %s, with %s incoming and %s outgoing."
 
+  L["DETAILED_STATUS"] = "Total Sold: %s | AH Fees: %s | Deposits: %s | Purchases: %s | NET Profit: %s"
+
   L["MULTIPLE_BUYERS"] = "Multiple Buyers"
   L["MULTIPLE_SELLERS"] = "Multiple Sellers"
   L["PLAYER"] = "Player"
@@ -63,6 +65,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_TOOLTIP_LAST_BOUGHT"] = "Show the last price that you bought an auction of an item at in the item's tooltip."
   L["CONFIG_VENDORING"] = "Vendoring"
   L["CONFIG_GROUP_JUNK"] = "Group junk items in the \"Vendoring\" tab"
+  L["CONFIG_SHOW_DETAILED_STATUS"] = "Show more details in status text in the main view."
 
   L["STATISTICS"] = "Statistics"
   L["COMPUTE_STATISTICS"] = "Compute Statistics"

@@ -7,6 +7,8 @@ Journalator.Config.Options = {
   VENDORING_GROUP_JUNK = "vendoring_group_junk",
   MINIMAP_ICON = "minimap_icon",
 
+  SHOW_DETAILED_STATUS = "show_detailed_status",
+
   DEBUG = "debug",
 }
 
@@ -17,6 +19,7 @@ Journalator.Config.Defaults = {
   [Journalator.Config.Options.TOOLTIP_LAST_BOUGHT] = true,
   [Journalator.Config.Options.VENDORING_GROUP_JUNK] = true,
   [Journalator.Config.Options.MINIMAP_ICON] = { hide = false },
+  [Journalator.Config.Options.SHOW_DETAILED_STATUS] = false,
   [Journalator.Config.Options.DEBUG] = false,
 }
 
