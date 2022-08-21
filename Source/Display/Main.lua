@@ -63,7 +63,7 @@ function JournalatorDisplayMixin:SetProfitText()
 
     local totalString
     if total < 0 then
-      totalString = "-" .. RED_FONT_COLOR:WrapTextInColorCode(GetMoneyString(-total, true))
+      totalString = RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-total, true))
     else
       totalString = GetMoneyString(total, true)
     end
