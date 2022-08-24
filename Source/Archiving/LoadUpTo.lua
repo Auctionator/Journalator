@@ -9,7 +9,8 @@ local function LoadNextArchive(frame)
     callback(#JOURNALATOR_ARCHIVE_TIMES - frame.index + 1, #JOURNALATOR_ARCHIVE_TIMES)
   end
 
-  if frame.index <= 1 or archiveTime <= frame.targetTime then
+  frame.index = frame.index - 1
+  if frame.index <= 0 or archiveTime <= frame.targetTime then
     frame:SetScript("OnUpdate", nil)
     Journalator.State.MinLoadedTime = frame.targetTime
 
@@ -19,8 +20,6 @@ local function LoadNextArchive(frame)
     end
     allCompletedCallbacks = {}
     allStatusCallbacks = {}
-  else
-    frame.index = frame.index - 1
   end
 end
 
