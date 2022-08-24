@@ -43,6 +43,7 @@ function JournalatorFiltersContainerMixin:OnLoad()
   Auctionator.EventBus:RegisterSource(self, "JournalatorFiltersContainer")
 
   self.filters = self:GetFilters()
+  self.pending = false
 end
 
 function JournalatorFiltersContainerMixin:OnShow()
@@ -126,6 +127,12 @@ end
 function JournalatorFiltersContainerMixin:UpdateMinTime(newTime)
   if newTime < self.earliestRangeTime then
     self.earliestRangeTime = newTime
-    self:UpdateRealms()
+    if not self.pending then
+      self.pending = true
+      Journalator.Archiving.LoadUpTo(self:GetTimeForRange(), function()
+        self:UpdateRealms()
+        self.pending = false
+      end)
+    end
   end
 end

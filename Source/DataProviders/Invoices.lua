@@ -68,8 +68,9 @@ JournalatorInvoicesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataPr
 function JournalatorInvoicesDataProviderMixin:Refresh()
   self:Reset()
 
+  local rangeTime = self:GetTimeForRange()
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Invoices")) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(rangeTime, "Invoices")) do
     if self:Filter(item) then
       local moneyIn = 0
       local moneyOut = 0
@@ -81,7 +82,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
       local timeSinceEntry = time() - item.time
 
       local itemNamePretty = item.itemName
-      local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count)
+      local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count, rangeTime)
       if itemLink then
         itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
       end

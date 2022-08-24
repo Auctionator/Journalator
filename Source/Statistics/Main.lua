@@ -4,7 +4,7 @@ Journalator.Statistics = {}
 
 function Journalator.Statistics.InitializeCache()
   if JOURNALATOR_STATISTICS == nil or JOURNALATOR_STATISTICS.Version ~= STATISTICS_VERSION then
-    Journalator.Archiving.LoadAll(function()
+    Journalator.Archiving.LoadUpTo(0, function()
       Journalator.Statistics.ComputeFullCache()
       Journalator.Utilities.Message(JOURNALATOR_L_FINISHED_COMPUTING_STATISTICS)
     end)

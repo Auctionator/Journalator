@@ -22,26 +22,22 @@ local function AddToMap(item)
 end
 
 local scannedInfos = 0
-local function MapItemLinks()
+local seenTime = nil
+local function MapItemLinks(timeLimit)
   local currentInfos = #Journalator.State.Logs.Posting
-  if scannedInfos >= currentInfos then
+  if scannedInfos >= currentInfos and (seenTime ~= nil and seenTime <= timeLimit) then
     return
   end
   scannedInfos = currentInfos
+  seenTime = timeLimit
 
-  for index, item in ipairs(Journalator.Archiving.GetRange(time() - Journalator.Constants.ARCHIVE_INTERVAL, "Posting")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(timeLimit, "Posting")) do
     AddToMap(item)
   end
 end
 
-function Journalator.GetItemInfo_MapFullLinks()
-  for index, item in ipairs(Journalator.Archiving.GetRange(0, "Posting")) do
-    AddToMap(item)
-  end
-end
-
-function Journalator.GetItemInfo(name, deposit, count)
-  MapItemLinks()
+function Journalator.GetItemInfo(name, deposit, count, timeLimit)
+  MapItemLinks(timeLimit - Journalator.Constants.ARCHIVE_INTERVAL)
 
   return cleanItemLinkMap[GetKey(name, deposit, count)]
 end

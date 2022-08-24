@@ -45,7 +45,7 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:ComputeFullStatisticsClicked()
-  Journalator.Archiving.LoadAll(function()
+  Journalator.Archiving.LoadUpTo(0, function()
     Journalator.Statistics.ComputeFullCache()
     Journalator.Utilities.Message(JOURNALATOR_L_FINISHED_COMPUTING_STATISTICS)
   end)

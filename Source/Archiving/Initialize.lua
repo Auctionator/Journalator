@@ -48,7 +48,9 @@ function Journalator.Archiving.Initialize()
     table.insert(JOURNALATOR_ARCHIVE_TIMES, storeTime)
   end
 
-  Journalator.State.Logs = archive:Open("SometimesLocked", Journalator.Constants.STORE_PREFIX .. storeTime)
+  local currentStore = Journalator.Constants.STORE_PREFIX .. storeTime
+  Journalator.State.Logs = archive:Open("SometimesLocked", currentStore)
+  Journalator.State.MinTimeLoaded = time()
 
   Journalator.Archiving.InitializeStore(Journalator.State.Logs)
 

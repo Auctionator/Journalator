@@ -20,21 +20,17 @@ end
 
 function JournalatorDisplayMixin:OnShow()
   self:SetDisplayMode(self.Tabs[1].displayMode)
-  self:SetProfitText()
 
   Auctionator.EventBus:Register(self, REFRESH_EVENTS)
 
-  Journalator.Archiving.LoadAll(function()
-    self.ProgressBar:Hide()
+  Journalator.Archiving.LoadUpTo(self.Filters:GetTimeForRange(), function()
+    self:OnLoadComplete()
     local view = self:GetCurrentDataView()
     if view ~= nil then
-      Journalator.GetItemInfo_MapFullLinks()
       view.DataProvider:Refresh()
     end
   end, function(current, total)
-    self.ProgressBar:SetMinMaxValues(0, total)
-    self.ProgressBar:SetValue(current)
-    self.ProgressBar.Text:SetFormattedText(JOURNALATOR_L_LOADING_X_X, current, total)
+    self:UpdateProgressBar(current, total)
   end)
 end
 
@@ -50,9 +46,25 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName)
       view.DataProvider:Refresh()
       self.Filters:UpdateRealms()
     end
-  elseif eventName == Journalator.Events.FiltersChanged then
-    self:SetProfitText()
+  elseif eventName == Journalator.Events.FiltersChanged and not self.ProgressBar:IsShown() then
+    Journalator.Archiving.LoadUpTo(self.Filters:GetTimeForRange(), function()
+      self:OnLoadComplete()
+    end, function(current, total)
+      self:UpdateProgressBar(current, total)
+    end)
   end
+end
+
+function JournalatorDisplayMixin:OnLoadComplete()
+  self.ProgressBar:Hide()
+  self:SetProfitText()
+end
+
+function JournalatorDisplayMixin:UpdateProgressBar(current, total)
+  self.ProgressBar:Show()
+  self.ProgressBar:SetMinMaxValues(0, total)
+  self.ProgressBar:SetValue(current)
+  self.ProgressBar.Text:SetFormattedText(JOURNALATOR_L_LOADING_X_X, current, total)
 end
 
 function JournalatorDisplayMixin:SetProfitText()

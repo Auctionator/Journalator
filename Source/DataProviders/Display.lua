@@ -10,14 +10,18 @@ function JournalatorDisplayDataProviderMixin:OnLoad()
 end
 
 function JournalatorDisplayDataProviderMixin:OnShow()
-  self:Refresh()
+  Journalator.Archiving.LoadUpTo(self:GetTimeForRange(), function()
+    self:Refresh()
+  end)
 end
 
 function JournalatorDisplayDataProviderMixin:ReceiveEvent(eventName, ...)
   if eventName == Journalator.Events.FiltersChanged then
     if self:IsVisible() then
       self.onPreserveScroll()
-      self:Refresh()
+      Journalator.Archiving.LoadUpTo(self:GetTimeForRange(), function()
+        self:Refresh()
+      end)
     end
   end
 end
