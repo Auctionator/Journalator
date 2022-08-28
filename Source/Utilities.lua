@@ -37,3 +37,7 @@ function Journalator.Utilities.Message(message)
     .. message
   )
 end
+
+function Journalator.Utilities.NormalizeRealmName(realmName)
+  return realmName:gsub("[ -]", "")
+end
