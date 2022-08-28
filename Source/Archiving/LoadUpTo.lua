@@ -12,7 +12,7 @@ local function LoadNextArchive(frame)
   frame.index = frame.index - 1
   if frame.index <= 0 or archiveTime <= frame.targetTime then
     frame:SetScript("OnUpdate", nil)
-    Journalator.State.MinLoadedTime = frame.targetTime
+    Journalator.State.MinTimeLoaded = math.min(frame.targetTime, archiveTime)
 
     Journalator.State.LoadedAllStores = true
     for _, callback in ipairs(allCompletedCallbacks) do
