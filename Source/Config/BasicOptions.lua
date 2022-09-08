@@ -1,6 +1,7 @@
 JournalatorConfigBasicOptionsFrameMixin = {}
 
 function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
+  self:SetParent(SettingsPanel or InterfaceOptionsFrame)
   self.name = JOURNALATOR_L_JOURNALATOR
 
   self.cancel = function()

@@ -2,7 +2,8 @@
   <Frame
     name="JournalatorConfigBasicOptionsFrame"
     mixin="JournalatorConfigBasicOptionsFrameMixin"
-    parent="InterfaceOptionsFrame">
+    hidden="true"
+    >
 
     <Scripts>
       <OnLoad method="OnLoad"/>
