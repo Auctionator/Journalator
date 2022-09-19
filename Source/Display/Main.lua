@@ -113,7 +113,11 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
   for index, tab in ipairs(self.Tabs) do
     if tab.displayMode == displayMode then
       PanelTemplates_SetTab(self, index)
-      self.TitleText:SetText(tab.title)
+      if self.GetTitleText then -- Dragonflight
+        self:GetTitleText():SetText(tab.title)
+      else
+        self.TitleText:SetText(tab.title)
+      end
       break
     end
   end
