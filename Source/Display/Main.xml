@@ -105,7 +105,7 @@
 				</Anchors>
 			</Button>
 -->
-			<Button parentKey="InvoicesTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="JOURNALATOR_L_INVOICES">
+			<Button parentKey="InvoicesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="JOURNALATOR_L_INVOICES">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Invoices" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_INVOICES_TITLE" type="global"/>
@@ -114,7 +114,7 @@
 					<Anchor point="BOTTOMLEFT" x="20" y="-30"/>
 				</Anchors>
 			</Button>
-			<Button parentKey="PostingTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="JOURNALATOR_L_POSTING">
+			<Button parentKey="PostingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="JOURNALATOR_L_POSTING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Posting" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_POSTING_TITLE" type="global"/>
@@ -123,7 +123,7 @@
 					<Anchor point="LEFT" relativeKey="$parent.InvoicesTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
-			<Button parentKey="SaleRatesTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorSaleRatesTab_Button" text="JOURNALATOR_L_SALE_RATES">
+			<Button parentKey="SaleRatesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSaleRatesTab_Button" text="JOURNALATOR_L_SALE_RATES">
 				<KeyValues>
 					<KeyValue key="displayMode" value="SaleRates" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_SALE_RATES_TITLE" type="global"/>
@@ -132,7 +132,7 @@
 					<Anchor point="LEFT" relativeKey="$parent.PostingTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
-			<Button parentKey="FailuresTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorFailuresTab_Button" text="JOURNALATOR_L_FAILURES">
+			<Button parentKey="FailuresTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFailuresTab_Button" text="JOURNALATOR_L_FAILURES">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Failures" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_FAILURES_TITLE" type="global"/>
@@ -141,7 +141,7 @@
 					<Anchor point="LEFT" relativeKey="$parent.SaleRatesTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
-			<Button parentKey="VendoringTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorVendoringTab_Button" text="JOURNALATOR_L_VENDORING">
+			<Button parentKey="VendoringTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendoringTab_Button" text="JOURNALATOR_L_VENDORING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Vendoring" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_VENDORING_TITLE" type="global"/>
@@ -150,7 +150,7 @@
 					<Anchor point="LEFT" relativeKey="$parent.FailuresTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
-			<Button parentKey="InfoTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
+			<Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Info" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_INFO_TITLE" type="global"/>

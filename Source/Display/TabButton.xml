@@ -1,5 +1,5 @@
 <Ui>
-  <Button name="JournalatorTabButtonTemplate" virtual="true" inherits="CharacterFrameTabButtonTemplate" mixin="JournalatorTabButtonMixin">
+  <Button name="JournalatorTabButtonTemplate" virtual="true" inherits="PanelTabButtonTemplate" mixin="JournalatorTabButtonMixin">
     <Scripts>
       <OnShow method="OnShow"/>
       <OnClick method="OnClick"/>
