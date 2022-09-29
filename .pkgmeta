@@ -1,3 +1,4 @@
+package-as: Journalator
 ignore:
   - README.md
   - scripts

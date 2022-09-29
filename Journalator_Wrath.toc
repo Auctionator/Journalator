@@ -1,0 +1,17 @@
+## Interface: 30400
+## Title: Journalator
+## Version: @project-version@
+## Author: plusmouse
+## RequiredDeps: Auctionator
+## SavedVariables: JOURNALATOR_CONFIG, JOURNALATOR_LOGS, JOURNALATOR_ARCHIVE, JOURNALATOR_ARCHIVE_TIMES, JOURNALATOR_STATISTICS
+
+Libs.xml
+Embeds.xml
+
+Journalator.lua
+Journalator.xml
+
+Locales\Manifest.xml
+
+Source\Manifest.xml
+Source_Classic\Display\TabButton.xml

@@ -24,7 +24,7 @@
     </Scripts>
 
     <Anchors>
-      <Anchor point="CENTER" relativeKey="$parent" relativePoint="CENTER"/>
+      <Anchor point="CENTER"/>
     </Anchors>
 
     <Frames>

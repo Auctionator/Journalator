@@ -1,8 +1,4 @@
 ## Interface: 90207
-## Interface-Mainline: 90207
-## Interface-Wrath: 30400
-## Interface-TBC: 20504
-## Interface-Vanilla: 11403
 ## Title: Journalator
 ## Version: @project-version@
 ## Author: plusmouse
@@ -18,3 +14,4 @@ Journalator.xml
 Locales\Manifest.xml
 
 Source\Manifest.xml
+Source_Mainline\Display\TabButton.xml

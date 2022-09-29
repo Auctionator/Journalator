@@ -19,6 +19,5 @@
   <Include file="FiltersContainer.xml" />
   <Include file="Info.xml" />
 
-  <Include file="TabButton.xml" />
   <Include file="Main.xml" />
 </Ui>
