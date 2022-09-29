@@ -18,11 +18,29 @@ local function GetGUIDFromEquipmentSlot(slot)
   return GetGUIDFromLocation(location)
 end
 
+local function GetCountLinkFromBagAndSlot(bag, slot)
+  if C_Container then
+    local info = C_Container.GetContainerItemInfo(bag, slot)
+    return info.stackCount, info.hyperlink
+  else
+    local _, count, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
+    return count, link
+  end
+end
+
+local function GetSlots(bag)
+  if C_Container then
+    return C_Container.GetContainerNumSlots(bag)
+  else
+    return GetContainerNumSlots(bag)
+  end
+end
+
 local function IsGUIDInPossession(guid)
   -- Check if an item in a bag has disappeared/been sold.
   for bag = 0, 4 do
     -- Start the slots at 0 in include the container's item
-    for slot = 0, GetContainerNumSlots(bag) do
+    for slot = 0, GetSlots(bag) do
       if GetGUIDFromBagAndSlot(bag, slot) == guid then
         return true
       end
@@ -44,10 +62,10 @@ local function GetGUIDStackSizes()
 
   for bag = 0, 4 do
     -- Start the slots at 0 in include the container's item
-    for slot = 0, GetContainerNumSlots(bag) do
+    for slot = 0, GetSlots(bag) do
       local guid = GetGUIDFromBagAndSlot(bag, slot)
       if guid ~= nil then
-        local _, count, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
+        local count, itemLink = GetCountLinkFromBagAndSlot(bag, slot)
         result[guid] = {count = count, itemLink = itemLink}
       end
     end
@@ -66,8 +84,8 @@ local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
   for bag = 0, 4 do
     local available = 0
 
-    for slot = 1, GetContainerNumSlots(bag) do
-      local _, itemCount, _, _, _, _, slotLink = GetContainerItemInfo(bag, slot)
+    for slot = 1, GetSlots(bag) do
+      local count, slotLink = GetCountLinkFromBagAndSlot(bag, slot)
       if itemCount == 0 or itemCount == nil then
         available = available + stackSize
       elseif itemLink == slotLink then
@@ -120,15 +138,12 @@ function JournalatorVendorMonitorMixin:ResetQueues()
 end
 
 function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
-  --Detect when an attempt to sell an item is done by right-clicking an item in
-  --a bag. This handler also works for addon automated sales.
-  hooksecurefunc(_G, "UseContainerItem", function(bag, slot)
+  local function ProcessDetails(bag, slot)
     if not self.merchantShown then
       return
     end
 
-    local _, itemCount, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
-
+    local itemCount, itemLink = GetCountLinkFromBagAndSlot(bag, slot)
     if itemLink == nil then
       return
     end
@@ -151,7 +166,14 @@ function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
         source = Journalator.State.Source,
       }
     end)
-  end)
+  end
+  --Detect when an attempt to sell an item is done by right-clicking an item in
+  --a bag. This handler also works for addon automated sales.
+  if C_Container then -- Dragonflight
+    hooksecurefunc(C_Container, "UseContainerItem", ProcessDetails)
+  else
+    hooksecurefunc(_G, "UseContainerItem", ProcessDetails)
+  end
 end
 
 -- Used to identify the item selected/being dragged by the cursor
@@ -226,9 +248,15 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   hooksecurefunc(_G, "PickupItem", function()
     self:UpdateCursorItem()
   end)
-  hooksecurefunc(_G, "PickupContainerItem", function()
-    self:UpdateCursorItem()
-  end)
+  if C_Container then
+    hooksecurefunc(C_Container, "PickupContainerItem", function()
+      self:UpdateCursorItem()
+    end)
+  else
+    hooksecurefunc(_G, "PickupContainerItem", function()
+      self:UpdateCursorItem()
+    end)
+  end
 end
 
 -- Used to log refund amounts for heirlooms (and probably a few other refundable

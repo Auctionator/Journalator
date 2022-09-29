@@ -21,7 +21,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
     }, { Auctionator.Selling.Events.AuctionCreated })
   else
     hooksecurefunc(C_AuctionHouse, "PostItem", function(location, duration, quantity, bid, buyout)
-      local link = select(7, GetContainerItemInfo(location:GetBagAndSlot()))
+      local link = C_Container.GetContainerItemInfo(location:GetBagAndSlot()).hyperlink
       local deposit = C_AuctionHouse.CalculateItemDeposit(location, duration, quantity)
 
       Journalator.Debug.Message("JournalatorPostingMonitor: Blizzard post item hook", link)
@@ -40,7 +40,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
       }})
     end)
     hooksecurefunc(C_AuctionHouse, "PostCommodity", function(location, duration, quantity, unitPrice)
-      local link = select(7, GetContainerItemInfo(location:GetBagAndSlot()))
+      local link = C_Container.GetContainerItemInfo(location:GetBagAndSlot()).hyperlink
       local itemID = GetItemInfoInstant(link)
       local deposit = C_AuctionHouse.CalculateCommodityDeposit(itemID, duration, quantity)
 
