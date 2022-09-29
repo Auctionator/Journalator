@@ -21,7 +21,12 @@ end
 local function GetCountLinkFromBagAndSlot(bag, slot)
   if C_Container then
     local info = C_Container.GetContainerItemInfo(bag, slot)
-    return info.stackCount, info.hyperlink
+
+    if info then
+      return info.stackCount, info.hyperlink
+    else
+      return nil
+    end
   else
     local _, count, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
     return count, link
@@ -85,7 +90,7 @@ local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
     local available = 0
 
     for slot = 1, GetSlots(bag) do
-      local count, slotLink = GetCountLinkFromBagAndSlot(bag, slot)
+      local itemCount, slotLink = GetCountLinkFromBagAndSlot(bag, slot)
       if itemCount == 0 or itemCount == nil then
         available = available + stackSize
       elseif itemLink == slotLink then
