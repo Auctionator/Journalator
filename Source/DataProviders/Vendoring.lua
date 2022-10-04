@@ -91,6 +91,11 @@ function JournalatorVendoringDataProviderMixin:Refresh()
           itemLink = item.itemLink,
           sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         })
+
+        if Auctionator.Utilities.ApplyProfessionQuality then
+          local entry = results[#results]
+          entry.itemNamePretty = Auctionator.Utilities.ApplyProfessionQuality(entry.itemNamePretty, entry.itemLink)
+        end
       else
         junkValue = junkValue + moneyIn - moneyOut
       end
