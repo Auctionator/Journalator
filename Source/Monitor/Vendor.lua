@@ -97,6 +97,7 @@ function JournalatorVendorMonitorMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS)
   self:RegisterRightClickToSellHandlers()
   self:RegisterDragToSellHandlers()
+  self:RegisterRefundHandlers()
 
   self:RegisterBuybackHandlers()
 
@@ -227,6 +228,43 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   end)
   hooksecurefunc(_G, "PickupContainerItem", function()
     self:UpdateCursorItem()
+  end)
+end
+
+-- Used to log refund amounts for heirlooms (and probably a few other refundable
+-- items)
+function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
+  hooksecurefunc(_G, "ContainerRefundItemPurchase", function(bag, slot, isEquipped)
+    if not self.merchantShown then
+      return
+    end
+
+    local money, _, refundSec = GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+
+    local _, itemCount, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
+
+    if itemLink == nil or refundSec == nil then
+      return
+    end
+
+    local item = Item:CreateFromItemLink(itemLink)
+    if item:IsItemEmpty() then
+      return
+    end
+
+    local guid = GetGUIDFromBagAndSlot(bag, slot)
+    item:ContinueOnItemLoad(function()
+      self.sellQueue[guid] = {
+        vendorType = "sell",
+        itemName = (GetItemInfo(itemLink)),
+        count = itemCount,
+        unitPrice = money,
+        itemLink = itemLink,
+        time = time(),
+        source = Journalator.State.Source,
+      }
+      DevTools_Dump(self.sellQueue[guid])
+    end)
   end)
 end
 
@@ -400,6 +438,7 @@ function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
     self:UpdateForCompletedSales()
 
   elseif eventName == "BAG_UPDATE" then
+    self:UpdateForCompletedSales()
     self:UpdateForCompletedPurchases()
   end
 end
