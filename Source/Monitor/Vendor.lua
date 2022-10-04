@@ -290,6 +290,10 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
     local name, _, price, quantity = GetBuybackItemInfo(index)
     local link = GetBuybackItemLink(index)
 
+    if link == nil then
+      return
+    end
+
     -- There is no duplicate check for the same item being clicked multiple
     -- times, as even if there are duplicates, the code checking for a
     -- successful buyback uses guids for the items in the bag to detect newly
