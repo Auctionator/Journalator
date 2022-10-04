@@ -41,6 +41,16 @@ local function GetSlots(bag)
   end
 end
 
+local function GetRefundInfo(bag, slot, isEquipped)
+  if C_Container then
+    local info = C_Container.GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+    return info.money, info.refundSeconds
+  else
+    local money, _, refundSec = GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+    return money, refundSec
+  end
+end
+
 local function IsGUIDInPossession(guid)
   -- Check if an item in a bag has disappeared/been sold.
   for bag = 0, 4 do
@@ -267,14 +277,14 @@ end
 -- Used to log refund amounts for heirlooms (and probably a few other refundable
 -- items)
 function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
-  hooksecurefunc(_G, "ContainerRefundItemPurchase", function(bag, slot, isEquipped)
+  local function ProcessDetails(bag, slot, isEquipped)
     if not self.merchantShown then
       return
     end
 
-    local money, _, refundSec = GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+    local money, refundSec = GetRefundInfo(bag, slot, isEquipped)
 
-    local _, itemCount, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
+    local itemCount, itemLink = GetCountLinkFromBagAndSlot(bag, slot)
 
     if itemLink == nil or refundSec == nil then
       return
@@ -298,7 +308,12 @@ function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
       }
       DevTools_Dump(self.sellQueue[guid])
     end)
-  end)
+  end
+  if C_Container then --Dragonflight
+    hooksecurefunc(C_Container, "ContainerRefundItemPurchase", ProcessDetails)
+  else
+    hooksecurefunc(_G, "ContainerRefundItemPurchase", ProcessDetails)
+  end
 end
 
 function JournalatorVendorMonitorMixin:UpdateForCompletedSales()
