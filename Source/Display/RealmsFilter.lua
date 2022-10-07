@@ -1,20 +1,23 @@
 JournalatorRealmsFilterDropDownMixin = {}
+
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
+
 local function JournalatorRealmsFilterDropDownMenu_Initialize(self)
   local realmsButton = self:GetParent()
 
-  local info = UIDropDownMenu_CreateInfo()
+  local info = LibDD:UIDropDownMenu_CreateInfo()
   info.text = AUCTIONATOR_L_NONE
   info.value = nil
   info.isNotRadio = true
   info.checked = false
   info.func = function(button)
     realmsButton:ToggleNone()
-    ToggleDropDownMenu(1, nil, self, self:GetParent(), 9, 3)
+    LibDD:ToggleDropDownMenu(1, nil, self, self:GetParent(), 9, 3)
   end
-  UIDropDownMenu_AddButton(info)
+  LibDD:UIDropDownMenu_AddButton(info)
 
   for _, realm in ipairs(realmsButton:GetRealms()) do
-    local info = UIDropDownMenu_CreateInfo()
+    local info = LibDD:UIDropDownMenu_CreateInfo()
     info.text = realm
     info.value = nil
     info.isNotRadio = true
@@ -23,7 +26,7 @@ local function JournalatorRealmsFilterDropDownMenu_Initialize(self)
     info.func = function(button)
       realmsButton:ToggleFilter(realm)
     end
-    UIDropDownMenu_AddButton(info)
+    LibDD:UIDropDownMenu_AddButton(info)
   end
 end
 
@@ -64,10 +67,12 @@ function JournalatorRealmsFilterDropDownMixin:GetRealms()
 end
 
 function JournalatorRealmsFilterDropDownMixin:OnLoad()
+  LibDD:Create_UIDropDownMenu(self.DropDown)
+  LibDD:UIDropDownMenu_SetInitializeFunction(self.DropDown, JournalatorRealmsFilterDropDownMenu_Initialize)
+  LibDD:UIDropDownMenu_SetDisplayMode(self.DropDown, "MENU")
+
   self.allRealms = {}
   self:Reset()
-  UIDropDownMenu_SetInitializeFunction(self.DropDown, JournalatorRealmsFilterDropDownMenu_Initialize)
-  UIDropDownMenu_SetDisplayMode(self.DropDown, "MENU")
 end
 
 function JournalatorRealmsFilterDropDownMixin:SetTextForRealms()
@@ -116,6 +121,6 @@ function JournalatorRealmsFilterDropDownMixin:ToggleFilter(name)
 end
 
 function JournalatorRealmsFilterDropDownMixin:OnClick()
-	ToggleDropDownMenu(1, nil, self.DropDown, self, 9, 3)
+	LibDD:ToggleDropDownMenu(1, nil, self.DropDown, self, 9, 3)
 	PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 end
