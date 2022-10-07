@@ -19,7 +19,7 @@ local function GetGUIDFromEquipmentSlot(slot)
 end
 
 local function GetCountLinkFromBagAndSlot(bag, slot)
-  if C_Container then
+  if C_Container and C_Container.GetContainerItemInfo then
     local info = C_Container.GetContainerItemInfo(bag, slot)
 
     if info then
@@ -34,7 +34,7 @@ local function GetCountLinkFromBagAndSlot(bag, slot)
 end
 
 local function GetSlots(bag)
-  if C_Container then
+  if C_Container and C_Container.GetContainerNumSlots then
     return C_Container.GetContainerNumSlots(bag)
   else
     return GetContainerNumSlots(bag)
@@ -42,7 +42,7 @@ local function GetSlots(bag)
 end
 
 local function GetRefundInfo(bag, slot, isEquipped)
-  if C_Container then
+  if C_Container and C_Container.GetContainerItemPurchaseInfo then
     local info = C_Container.GetContainerItemPurchaseInfo(bag, slot, isEquipped)
     return info.money, info.refundSeconds
   else
@@ -184,7 +184,7 @@ function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
   end
   --Detect when an attempt to sell an item is done by right-clicking an item in
   --a bag. This handler also works for addon automated sales.
-  if C_Container then -- Dragonflight
+  if C_Container and C_Container.UseContainerItem then -- Dragonflight
     hooksecurefunc(C_Container, "UseContainerItem", ProcessDetails)
   else
     hooksecurefunc(_G, "UseContainerItem", ProcessDetails)
@@ -263,7 +263,7 @@ function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
   hooksecurefunc(_G, "PickupItem", function()
     self:UpdateCursorItem()
   end)
-  if C_Container then
+  if C_Container and C_Container.PickupContainerItem then
     hooksecurefunc(C_Container, "PickupContainerItem", function()
       self:UpdateCursorItem()
     end)
@@ -309,7 +309,7 @@ function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
       DevTools_Dump(self.sellQueue[guid])
     end)
   end
-  if C_Container then --Dragonflight
+  if C_Container and C_Container.ContainerRefundItemPurchase then --Dragonflight
     hooksecurefunc(C_Container, "ContainerRefundItemPurchase", ProcessDetails)
   else
     hooksecurefunc(_G, "ContainerRefundItemPurchase", ProcessDetails)
