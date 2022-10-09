@@ -63,11 +63,25 @@ function JournalatorFiltersContainerMixin:UpdateRealms()
   self.RealmDropDown:SetRealms(realms, true)
 end
 
+local function CompareArrays(a1, a2)
+  if #a1 ~= #a2 then
+    return true
+  else
+    for index, val in ipairs(a1) do
+      if val ~= a2[index] then
+        return true
+      end
+    end
+  end
+  return false
+end
+
 function JournalatorFiltersContainerMixin:CheckFiltersChanged(filters)
   local prevFilters = self.filters
   for key, val in pairs(prevFilters) do
     if (type(filters[key]) == "function" and filters[key]()) or
-       (type(filters[key]) ~= "function" and filters[key] ~= val)
+       (type(filters[key]) == "table" and CompareArrays(filters[key], val)) or
+       (type(filters[key]) ~= "function" and type(filters[key]) ~= "table" and filters[key] ~= val)
        then
       self.filters = filters
       Auctionator.EventBus:Fire(self, Journalator.Events.FiltersChanged)
@@ -110,14 +124,23 @@ function JournalatorFiltersContainerMixin:Filter(item)
   if item.itemName == nil then
     return false
   end
-  check = check and string.find(string.lower(item.itemName), string.lower(self.filters.searchText), 1, true)
+
+  local anyMatch = false
+  local lower = string.lower(item.itemName)
+  for _, text in ipairs(self.filters.searchText) do
+    if string.find(lower, text, 1, true) then
+      anyMatch = true
+      break
+    end
+  end
+  check = check and anyMatch
 
   return check
 end
 
 function JournalatorFiltersContainerMixin:GetFilters()
   return {
-    searchText = self.SearchFilter:GetText(),
+    searchText = {strsplit("\a", (self.SearchFilter:GetText():lower():gsub("%|%|", "\a")))},
     secondsToInclude = self.TimePeriodDropDown:GetValue(),
     realm = function(realmName) return self.RealmDropDown:GetValue(realmName) end,
     faction = self.FactionDropDown:GetValue(),
