@@ -4,7 +4,7 @@ local SALE_RATES_DATA_PROVIDER_LAYOUT ={
     headerText = AUCTIONATOR_L_NAME,
     headerParameters = { "itemName" },
     cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "itemName" },
+    cellParameters = { "itemNamePretty" },
     width = 350,
   },
   {
@@ -52,8 +52,10 @@ JournalatorSaleRatesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataP
 function JournalatorSaleRatesDataProviderMixin:Refresh()
   self:Reset()
 
+  local timeForRange = self:GetTimeForRange()
+
   local salesCounts = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Failures")) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(timeForRange, "Failures")) do
     if self:Filter(item) then
       if salesCounts[item.itemName] == nil then
         salesCounts[item.itemName] = {
@@ -66,7 +68,7 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
     end
   end
 
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Invoices")) do
+  for _, item in ipairs(Journalator.Archiving.GetRange(timeForRange, "Invoices")) do
     if self:Filter(item) then
       if item.invoiceType == "seller" then
         if salesCounts[item.itemName] == nil then
@@ -101,15 +103,23 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
 
     totalPrice = entry.totalSaleValue
 
-    table.insert(results, {
+    local item = {
       itemName = key,
+      itemNamePretty = key,
+      itemLink = Journalator.GetItemInfo(key, 0, 0, timeForRange),
       saleRate = saleRate,
       saleRatePretty = saleRatePretty,
       meanPrice = meanPrice,
       totalPrice = totalPrice,
       sold = entry.sold,
       unsold = entry.failed,
-    })
+    }
+
+    if item.itemLink ~= nil then
+      item.itemNamePretty = Journalator.ApplyQualityColor(item.itemName, item.itemLink)
+    end
+
+    table.insert(results, item)
   end
 
   table.sort(results, function(left, right)

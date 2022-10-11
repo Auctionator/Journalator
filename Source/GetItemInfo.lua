@@ -18,6 +18,10 @@ local function AddToMap(item)
     if not cleanItemLinkMap[key] then
       cleanItemLinkMap[key] = CleanItemLink(item.itemLink)
     end
+    local genericKey = GetKey(item.itemName, 0, 0)
+    if not cleanItemLinkMap[genericKey] then
+      cleanItemLinkMap[genericKey] = cleanItemLinkMap[key]
+    end
   end
 end
 
