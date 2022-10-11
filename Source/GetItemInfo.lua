@@ -1,7 +1,7 @@
 local cleanItemLinkMap = {}
 
-local function GetKey(name, deposit, count)
-  return name .. "[]" .. (deposit/count)
+local function GetKey(name, unitPrice, deposit)
+  return name .. "[]" .. (unitPrice) .. " " .. (deposit)
 end
 
 local function CleanItemLink(link)
@@ -14,7 +14,7 @@ end
 
 local function AddToMap(item)
   if item.itemLink then
-    local key = GetKey(item.itemName, item.deposit, item.count)
+    local key = GetKey(item.itemName, item.buyout or item.bid, math.floor(item.deposit / item.count))
     if not cleanItemLinkMap[key] then
       cleanItemLinkMap[key] = CleanItemLink(item.itemLink)
     end
@@ -36,8 +36,10 @@ local function MapItemLinks(timeLimit)
   end
 end
 
-function Journalator.GetItemInfo(name, deposit, count, timeLimit)
+-- Returns an item link, given a unit price.
+-- If no unit price is known pass in 0.
+function Journalator.GetItemInfo(name, unitPrice, unitDeposit, timeLimit)
   MapItemLinks(timeLimit - Journalator.Constants.ARCHIVE_INTERVAL)
 
-  return cleanItemLinkMap[GetKey(name, deposit, count)]
+  return cleanItemLinkMap[GetKey(name, unitPrice, unitDeposit)]
 end

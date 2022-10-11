@@ -71,7 +71,7 @@ function JournalatorPostingDataProviderMixin:Refresh()
         unitPrice = (item.buyout or item.bid),
         rawDay = item.time,
         deposit = item.deposit,
-        itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count),
+        itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.buyout or item.bid, math.floor(item.deposit / item.count)),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
       }
 

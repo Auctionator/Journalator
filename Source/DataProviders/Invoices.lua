@@ -82,7 +82,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
       local timeSinceEntry = time() - item.time
 
       local itemNamePretty = item.itemName
-      local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, item.deposit, item.count, rangeTime)
+      local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), rangeTime)
       if itemLink then
         itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
       end
