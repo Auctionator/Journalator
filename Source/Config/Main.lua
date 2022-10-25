@@ -81,10 +81,10 @@ function Journalator.Config.Get(name)
 end
 
 function Journalator.Config.Show()
-  if Settings ~= nil then -- Dragonflight
-    Settings.OpenToCategory(JOURNALATOR_L_JOURNALATOR)
-  else
+  if InterfaceOptionsFrame ~= nil then
     InterfaceOptionsFrame:Show()
     InterfaceOptionsFrame_OpenToCategory(JOURNALATOR_L_JOURNALATOR)
+  else
+    Settings.OpenToCategory(JOURNALATOR_L_JOURNALATOR)
   end
 end
