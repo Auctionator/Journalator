@@ -53,7 +53,7 @@ end
 
 local function IsGUIDInPossession(guid)
   -- Check if an item in a bag has disappeared/been sold.
-  for bag = 0, 4 do
+  for bag = 0, 5 do
     -- Start the slots at 0 in include the container's item
     for slot = 0, GetSlots(bag) do
       if GetGUIDFromBagAndSlot(bag, slot) == guid then
@@ -116,8 +116,12 @@ local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
   return false
 end
 
-local MERCHANT_EVENTS = {
+local MERCHANT_EVENTS_CLASSIC = {
   "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE"
+}
+
+local MERCHANT_EVENTS_RETAIL = {
+  "PLAYER_INTERACTION_MANAGER_FRAME_SHOW", "PLAYER_INTERACTION_MANAGER_FRAME_HIDE", "MERCHANT_UPDATE"
 }
 
 local PURCHASE_VALIDATION_EVENTS = {
@@ -127,7 +131,12 @@ local PURCHASE_VALIDATION_EVENTS = {
 function JournalatorVendorMonitorMixin:OnLoad()
   self:ResetQueues()
 
-  FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS)
+  if Auctionator.Constants.IsClassic then
+    FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS_CLASSIC)
+  else
+    FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS_RETAIL)
+  end
+
   self:RegisterRightClickToSellHandlers()
   self:RegisterDragToSellHandlers()
   self:RegisterRefundHandlers()
@@ -306,7 +315,6 @@ function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
         time = time(),
         source = Journalator.State.Source,
       }
-      DevTools_Dump(self.sellQueue[guid])
     end)
   end
   if C_Container and C_Container.ContainerRefundItemPurchase then --Dragonflight
@@ -470,21 +478,41 @@ function JournalatorVendorMonitorMixin:CheckPurchaseQueueForBagSpace()
   self.purchaseQueue = newQueue
 end
 
+function JournalatorVendorMonitorMixin:OnMerchantShow()
+  self:SetScript("OnUpdate", self.OnUpdate)
+  FrameUtil.RegisterFrameForEvents(self, PURCHASE_VALIDATION_EVENTS)
+
+  self:ResetQueues()
+  self.oldStackSizes = GetGUIDStackSizes()
+  self.merchantShown = true
+end
+
+function JournalatorVendorMonitorMixin:OnMerchantHide()
+  self:SetScript("OnUpdate", nil)
+  FrameUtil.UnregisterFrameForEvents(self, PURCHASE_VALIDATION_EVENTS)
+
+  self:ResetQueues()
+  self.merchantShown = false
+end
+
 function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
-  if eventName == "MERCHANT_SHOW" then
-    self:SetScript("OnUpdate", self.OnUpdate)
-    FrameUtil.RegisterFrameForEvents(self, PURCHASE_VALIDATION_EVENTS)
+  if eventName == "MERCHANT_SHOW" then -- Classic
+    self:OnMerchantShow()
 
-    self:ResetQueues()
-    self.oldStackSizes = GetGUIDStackSizes()
-    self.merchantShown = true
+  elseif eventName == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then -- Dragonflight
+    local showType = ...
+    if showType == Enum.PlayerInteractionType.Merchant then
+      self:OnMerchantShow()
+    end
 
-  elseif eventName == "MERCHANT_CLOSED" then
-    self:SetScript("OnUpdate", nil)
-    FrameUtil.UnregisterFrameForEvents(self, PURCHASE_VALIDATION_EVENTS)
+  elseif eventName == "MERCHANT_CLOSED" then -- Classic
+    self:OnMerchantHide()
 
-    self:ResetQueues()
-    self.merchantShown = false
+  elseif eventName == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then -- Dragonflight
+    local hideType = ...
+    if hideType == Enum.PlayerInteractionType.Merchant then
+      self:OnMerchantHide()
+    end
 
   elseif eventName == "MERCHANT_UPDATE" then
     self:UpdateForCompletedSales()
