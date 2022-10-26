@@ -29,7 +29,7 @@ local function GetCountLinkFromBagAndSlot(bag, slot)
     end
   else
     local _, count, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
-    return count, link
+    return count, itemLink
   end
 end
 
