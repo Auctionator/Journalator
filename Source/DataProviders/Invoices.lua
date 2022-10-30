@@ -85,9 +85,6 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
       local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), rangeTime)
       if itemLink then
         itemNamePretty = Journalator.ApplyQualityColor(item.itemName, itemLink)
-        if Auctionator.Utilities.ApplyProfessionQuality and item.itemLink then
-          itemNamePretty = Auctionator.Utilities.ApplyProfessionQuality(itemNamePretty, itemLink)
-        end
       end
 
       local otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source)

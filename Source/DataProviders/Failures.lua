@@ -62,9 +62,6 @@ function JournalatorFailuresDataProviderMixin:Refresh()
 
       if processedItem.itemLink ~= nil then
         processedItem.itemNamePretty = Journalator.ApplyQualityColor(item.itemName, processedItem.itemLink)
-        if Auctionator.Utilities.ApplyProfessionQuality then
-          processedItem.itemNamePretty = Auctionator.Utilities.ApplyProfessionQuality(processedItem.itemNamePretty, processedItem.itemLink)
-        end
       end
 
       table.insert(results, processedItem)
