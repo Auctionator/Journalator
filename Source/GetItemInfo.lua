@@ -1,6 +1,9 @@
 local cleanItemLinkMap = {}
 
 local function GetKey(name, unitPrice, deposit)
+  if not Auctionator.Constants.IsClassic then -- Deposit bottoms out at 1s on retail
+    deposit = math.max(deposit, 100)
+  end
   return name .. "[]" .. (unitPrice) .. " " .. (deposit)
 end
 
