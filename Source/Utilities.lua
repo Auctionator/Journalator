@@ -41,3 +41,12 @@ end
 function Journalator.Utilities.NormalizeRealmName(realmName)
   return realmName:gsub("[ -]", "")
 end
+
+function Journalator.Utilities.GetRealmNames()
+  local connected = GetAutoCompleteRealms()
+  if #connected > 0 then
+    return connected
+  else
+    return { GetNormalizedRealmName() }
+  end
+end

@@ -1,24 +1,8 @@
 Journalator.Tooltips = {}
 
-local function GetRealmNames()
-  local connected = GetAutoCompleteRealms()
-  if #connected > 0 then
-    return connected
-  else
-    return { GetNormalizedRealmName() }
-  end
-end
-
 local function GetSaleRate(itemName)
-  local successes = 0
-  local failures = 0
-  for _, realm in ipairs(GetRealmNames()) do
-    local realmData = Journalator.Statistics.GetByNormalizedRealmName(itemName, realm)
-    if realmData ~= nil then
-      successes = successes + realmData.successes
-      failures = failures + realmData.failures
-    end
-  end
+  local successes = Journalator.API.v1.GetRealmSuccessCountByItemName(JOURNALATOR_L_JOURNALATOR, itemName)
+  local failures = Journalator.API.v1.GetRealmFailureCountByItemName(JOURNALATOR_L_JOURNALATOR, itemName)
 
   if successes == 0 and failures == 0 then
     return AUCTIONATOR_L_UNKNOWN
@@ -30,43 +14,15 @@ local function GetSaleRate(itemName)
 end
 
 local function GetFailureCount(itemName)
-  local failures = 0
-  for _, realm in ipairs(GetRealmNames()) do
-    local realmData = Journalator.Statistics.GetByNormalizedRealmName(itemName, realm)
-    if realmData ~= nil then
-      failures = failures + realmData.failures
-    end
-  end
-
-  return tostring(failures)
+  return tostring(Journalator.API.v1.GetRealmFailureCountByItemName(JOURNALATOR_L_JOURNALATOR, itemName))
 end
 
 local function GetLastSold(itemName)
-  local lastSold = nil
-  local lastSoldTime
-  for _, realm in ipairs(GetRealmNames()) do
-    local realmData = Journalator.Statistics.GetByNormalizedRealmName(itemName, realm)
-    if realmData ~= nil and realmData.lastSold ~= nil and (lastSoldTime == nil or lastSoldTime < realmData.lastSold.time) then
-      lastSold = realmData.lastSold.value
-      lastSoldTime = realmData.lastSold.time
-    end
-  end
-
-  return lastSold
+  return Journalator.API.v1.GetRealmLastSoldByItemName(JOURNALATOR_L_JOURNALATOR, itemName)
 end
 
 local function GetLastBought(itemName)
-  local lastBought = nil
-  local lastBoughtTime
-  for _, realm in ipairs(GetRealmNames()) do
-    local realmData = Journalator.Statistics.GetByNormalizedRealmName(itemName, realm)
-    if realmData ~= nil and realmData.lastBought ~= nil and (lastBoughtTime == nil or lastBoughtTime < realmData.lastBought.time) then
-      lastBought = realmData.lastBought.value
-      lastBoughtTime = realmData.lastBought.time
-    end
-  end
-
-  return lastBought
+  return Journalator.API.v1.GetRealmLastBoughtByItemName(JOURNALATOR_L_JOURNALATOR, itemName)
 end
 
 function Journalator.Tooltips.AnyEnabled()
