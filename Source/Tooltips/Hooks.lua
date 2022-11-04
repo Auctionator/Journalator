@@ -10,6 +10,11 @@ hooksecurefunc(Auctionator.Tooltip, "ShowTipWithPricingDBKey",
     end
 
     local itemName = GetItemInfo(itemLink)
+
+    if itemName == nil then
+      return
+    end
+
     local salesRate, failedCount, lastSold, lastBought = Journalator.Tooltips.GetSalesInfo(itemName)
 
     if salesRate ~= nil then
@@ -37,6 +42,11 @@ hooksecurefunc(Auctionator.Tooltip, "AddPetTip",
     end
 
     local itemName = C_PetJournal.GetPetInfoBySpeciesID(speciesID)
+
+    if itemName == nil then
+      return
+    end
+
     local salesRate, failedCount, lastSold, lastBought = Journalator.Tooltips.GetSalesInfo(itemName)
 
     if salesRate ~= nil then
