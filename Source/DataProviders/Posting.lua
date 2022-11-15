@@ -76,7 +76,8 @@ function JournalatorPostingDataProviderMixin:Refresh()
       }
 
       if processedItem.itemLink ~= nil then
-        processedItem.itemNamePretty = Journalator.ApplyQualityColor(item.itemName, processedItem.itemLink)
+        processedItem.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(processedItem.itemNamePretty, processedItem.itemLink)
+        processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemNamePretty, processedItem.itemLink)
       end
       table.insert(results, processedItem)
     end

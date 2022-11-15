@@ -80,9 +80,13 @@ function JournalatorVendoringDataProviderMixin:Refresh()
       -- If not junk or the group junk option is off, include normally
       if not Journalator.Config.Get(Journalator.Config.Options.VENDORING_GROUP_JUNK) or
          IsNotJunk(item.itemLink) then
+
+        local itemNamePretty = item.itemName
+        itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(itemNamePretty, item.itemLink)
+        itemNamePretty = Journalator.ApplyQualityColor(itemNamePretty, item.itemLink)
         table.insert(results, {
           itemName = item.itemName,
-          itemNamePretty = Journalator.ApplyQualityColor(item.itemName, item.itemLink),
+          itemNamePretty = itemNamePretty,
           moneyIn = moneyIn,
           moneyOut = moneyOut,
           count = item.count,

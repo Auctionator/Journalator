@@ -50,3 +50,18 @@ function Journalator.Utilities.GetRealmNames()
     return { GetNormalizedRealmName() }
   end
 end
+
+function Journalator.Utilities.AddQualityIconToItemName(itemName, itemLink)
+  if C_TradeSkillUI == nil or C_TradeSkillUI.GetItemReagentQualityByItemInfo == nil then
+    return itemName
+  end
+
+  local itemID = GetItemInfoInstant(itemLink)
+  local quality = C_TradeSkillUI.GetItemReagentQualityByItemInfo(itemID)
+  if quality ~= nil then
+    local icon = C_Texture.GetCraftingReagentQualityChatIcon(quality)
+    return AUCTION_HOUSE_CRAFTING_REAGANT_QUALITY_FORMAT:format(itemName, icon)
+  else
+    return itemName
+  end
+end
