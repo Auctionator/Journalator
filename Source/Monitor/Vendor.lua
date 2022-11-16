@@ -51,7 +51,7 @@ end
 
 local function GetRefundInfo(bag, slot, isEquipped)
   if C_Container and C_Container.GetContainerItemPurchaseInfo then
-    local info = C_Container.GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+    local info = C_Container.GetContainerItemPurchaseInfo(bag, slot, isEquipped or false)
     return info.money, info.refundSeconds
   else
     local money, _, refundSec = GetContainerItemPurchaseInfo(bag, slot, isEquipped)
