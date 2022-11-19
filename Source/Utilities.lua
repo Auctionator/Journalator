@@ -57,6 +57,10 @@ function Journalator.Utilities.AddQualityIconToItemName(itemName, itemLink)
   end
 
   local itemID = GetItemInfoInstant(itemLink)
+  if itemID == nil then -- pets won't have an item id from the link
+    return itemName
+  end
+
   local quality = C_TradeSkillUI.GetItemReagentQualityByItemInfo(itemID)
   if quality ~= nil then
     local icon = C_Texture.GetCraftingReagentQualityChatIcon(quality)
