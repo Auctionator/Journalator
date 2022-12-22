@@ -7,5 +7,5 @@ function Journalator.SlashCmd.Initialize()
 end
 
 function Journalator.SlashCmd.Handler(input)
-  JNRView:SetShown(not JNRView:IsShown())
+  Journalator.ToggleView()
 end

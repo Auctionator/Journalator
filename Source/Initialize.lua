@@ -13,8 +13,6 @@ function Journalator.Initialize()
 
   SetupMonitors()
 
-  CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
-
   Journalator.SlashCmd.Initialize()
 
   local faction = UnitFactionGroup("player")
@@ -27,4 +25,12 @@ function Journalator.Initialize()
   Journalator.Statistics.InitializeCache()
 
   Journalator.MinimapIcon.Initialize()
+
+  Journalator.ToggleView = function()
+    if JNRView == nil then
+      CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")
+    end
+
+    JNRView:SetShown(not JNRView:IsShown())
+  end
 end

@@ -31,7 +31,7 @@ function Journalator.MinimapIcon.Initialize()
       if button == "RightButton" then
         Journalator.Config.Show()
       else
-        JNRView:SetShown(not JNRView:IsShown())
+        Journalator.ToggleView()
       end
     end,
     OnTooltipShow = function(tip)
