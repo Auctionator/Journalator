@@ -63,25 +63,11 @@ function JournalatorFiltersContainerMixin:UpdateRealms()
   self.RealmDropDown:SetRealms(realms, true)
 end
 
-local function CompareArrays(a1, a2)
-  if #a1 ~= #a2 then
-    return true
-  else
-    for index, val in ipairs(a1) do
-      if val ~= a2[index] then
-        return true
-      end
-    end
-  end
-  return false
-end
-
 function JournalatorFiltersContainerMixin:CheckFiltersChanged(filters)
   local prevFilters = self.filters
   for key, val in pairs(prevFilters) do
     if (type(filters[key]) == "function" and filters[key]()) or
-       (type(filters[key]) == "table" and CompareArrays(filters[key], val)) or
-       (type(filters[key]) ~= "function" and type(filters[key]) ~= "table" and filters[key] ~= val)
+       (type(filters[key]) ~= "function" and filters[key] ~= val)
        then
       self.filters = filters
       Auctionator.EventBus:Fire(self, Journalator.Events.FiltersChanged)
@@ -92,7 +78,7 @@ end
 
 function JournalatorFiltersContainerMixin:ReceiveEvent(eventName, eventData)
   if eventName == Journalator.Events.RowClicked and self:IsVisible() then
-    self.SearchFilter:SetText(eventData.itemName)
+    self.SearchFilter:SetText("\"" .. eventData.itemName .. "\"")
   end
 end
 
@@ -125,22 +111,50 @@ function JournalatorFiltersContainerMixin:Filter(item)
     return false
   end
 
-  local anyMatch = false
-  local lower = string.lower(item.itemName)
-  for _, text in ipairs(self.filters.searchText) do
-    if string.find(lower, text, 1, true) then
-      anyMatch = true
-      break
-    end
-  end
-  check = check and anyMatch
+  check = check and self.filters.search(item.itemName)
 
   return check
 end
 
+-- Returns a function that will check if an item name matches any of the current
+-- search terms.
+function JournalatorFiltersContainerMixin:GetSearch()
+  local searchTexts = {strsplit("\a", (self.SearchFilter:GetText():lower():gsub("%|%|", "\a")))}
+  local searchTerms = {}
+  for _, text in ipairs(searchTexts) do
+    local exact = text:match("^\"(.*)\"$")
+    if exact ~= nil then
+      table.insert(searchTerms, {text = exact, isExact = true})
+    else
+      table.insert(searchTerms, {text = text, isExact = false})
+    end
+  end
+
+  return function(itemName)
+    if itemName == nil then -- Not using function-based filter change check
+      return false
+    end
+
+    local lower = string.lower(itemName)
+    for _, term in ipairs(searchTerms) do
+      if term.isExact then
+        if lower == term.text then
+          return true
+        end
+      else
+        if string.find(lower, term.text, 1, true) then
+          return true
+        end
+      end
+    end
+    return false
+  end
+end
+
 function JournalatorFiltersContainerMixin:GetFilters()
   return {
-    searchText = {strsplit("\a", (self.SearchFilter:GetText():lower():gsub("%|%|", "\a")))},
+    search = self:GetSearch(),
+    searchText = self.SearchFilter:GetText(), -- Used to check if filter changes
     secondsToInclude = self.TimePeriodDropDown:GetValue(),
     realm = function(realmName) return self.RealmDropDown:GetValue(realmName) end,
     faction = self.FactionDropDown:GetValue(),
