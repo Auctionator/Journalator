@@ -67,25 +67,26 @@ function JournalatorDisplayMixin:UpdateProgressBar(current, total)
   self.ProgressBar.Text:SetFormattedText(JOURNALATOR_L_LOADING_X_X, current, total)
 end
 
+local function ApplyNegativeToMoneyString(amount)
+  if amount < 0 then
+    return RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-amount, true))
+  else
+    return GetMoneyString(amount, true)
+  end
+end
+
 function JournalatorDisplayMixin:SetProfitText()
   if Journalator.Config.Get(Journalator.Config.Options.SHOW_DETAILED_STATUS) then
     local sales, purchases, lostFees, lostDeposits, total = Journalator.GetDetailedProfits(self.Filters:GetTimeForRange(), time(), function(item)
       return self.Filters:Filter(item)
     end)
 
-    local totalString
-    if total < 0 then
-      totalString = RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-total, true))
-    else
-      totalString = GetMoneyString(total, true)
-    end
-
     self.StatusText:SetText(JOURNALATOR_L_DETAILED_STATUS:format(
-      GetMoneyString(sales, true),
-      RED_FONT_COLOR:WrapTextInColorCode(GetMoneyString(lostFees, true)),
-      RED_FONT_COLOR:WrapTextInColorCode(GetMoneyString(lostDeposits, true)),
-      RED_FONT_COLOR:WrapTextInColorCode(GetMoneyString(purchases, true)),
-      totalString
+      ApplyNegativeToMoneyString(sales),
+      ApplyNegativeToMoneyString(-lostFees),
+      ApplyNegativeToMoneyString(-lostDeposits),
+      ApplyNegativeToMoneyString(-purchases),
+      ApplyNegativeToMoneyString(total)
     ))
   else
     local monthlyTotal, incoming, outgoing = Journalator.GetProfit(self.Filters:GetTimeForRange(), time(), function(item)
