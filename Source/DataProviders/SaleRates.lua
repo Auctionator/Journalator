@@ -136,6 +136,7 @@ local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
   saleRate = Auctionator.Utilities.NumberComparator,
   meanPrice = Auctionator.Utilities.NumberComparator,
+  totalPrice = Auctionator.Utilities.NumberComparator,
   sold = Auctionator.Utilities.NumberComparator,
   unsold = Auctionator.Utilities.NumberComparator,
 }
