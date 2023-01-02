@@ -92,6 +92,7 @@ end
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
   total = Auctionator.Utilities.NumberComparator,
+  deposit = Auctionator.Utilities.NumberComparator,
   unitPrice = Auctionator.Utilities.NumberComparator,
   count = Auctionator.Utilities.NumberComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
