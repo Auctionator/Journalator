@@ -3,6 +3,7 @@
     name="JournalatorDataTabDisplayTemplate"
     virtual="true"
     mixin="JournalatorDataTabDisplayMixin"
+    hidden="true"
   >
     <Scripts>
       <OnLoad method="OnLoad" />
