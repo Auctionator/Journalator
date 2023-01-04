@@ -15,6 +15,10 @@ function JournalatorDisplayMixin:OnLoad()
   PanelTemplates_SetNumTabs(self, #self.Tabs)
   table.insert(UISpecialFrames, self:GetName())
 
+  if Auctionator.Constants.IsClassic then
+    self:HideFulfillingTab()
+  end
+
   self:SetupExportCSVDialog()
 end
 
@@ -130,6 +134,16 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
   self.ExportCSV:SetShown(self:GetCurrentDataView() ~= nil)
   self.StatusText:SetShown(self:GetCurrentDataView() ~= nil)
   self.Filters:SetShown(self:GetCurrentDataView() ~= nil)
+end
+
+function JournalatorDisplayMixin:HideFulfillingTab()
+  local tabIndex = tIndexOf(self.Tabs, self.FulfillingTab)
+
+  local nextTab = self.Tabs[tabIndex + 1]
+  nextTab:ClearAllPoints()
+  nextTab:SetPoint(self.FulfillingTab:GetPoint(1))
+
+  self.FulfillingTab:Hide()
 end
 
 function JournalatorDisplayMixin:SetupExportCSVDialog()

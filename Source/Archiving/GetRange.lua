@@ -28,8 +28,10 @@ function Journalator.Archiving.GetRange(dateFrom, section)
   local items = {}
   for _, storeTime in ipairs(times) do
     local store = Journalator.State.Archive:Open("SometimesLocked", Journalator.Constants.STORE_PREFIX .. storeTime, true)
-    for index = #store[section], 1, -1 do
-      table.insert(items, store[section][index])
+    if store[section] ~= nil then
+      for index = #store[section], 1, -1 do
+        table.insert(items, store[section][index])
+      end
     end
   end
 

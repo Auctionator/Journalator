@@ -2,8 +2,10 @@
   <Script file="Mail.lua" />
   <Script file="Posting.lua" />
   <Script file="Vendor.lua" />
+  <Script file="CraftingOrder.lua" />
 
   <Include file="Mail.xml" />
   <Include file="Posting.xml" />
   <Include file="Vendor.xml" />
+  <Include file="CraftingOrder.xml" />
 </Ui>

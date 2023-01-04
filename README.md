@@ -15,3 +15,4 @@ To see your summary click the minimap icon or run the slash command `/jnr`.
 * Sale Rates: Shows how well your items sell.
 * Failures: All expired or cancelled items.
 * Vendoring: Items sold to and purchased from vendors.
+* Fulfilling: Crafting orders that you fulfilled.

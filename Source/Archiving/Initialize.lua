@@ -12,12 +12,16 @@
 local Archivist = select(2, ...).Archivist
 
 function Journalator.Archiving.InitializeStore(store)
-  if store.Version ~= 1 then
-    store.Version = 1
+  if store.Version == 1 or store.Version == 2 then
+    store.Version = 3
+    store.Fulfilling = {}
+  elseif store.Version ~= 3 then
+    store.Version = 3
     store.Invoices = {}
     store.Posting = {}
     store.Failures = {}
     store.Vendoring = {}
+    store.Fulfilling = {}
   end
 end
 

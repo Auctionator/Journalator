@@ -2,6 +2,7 @@ local function SetupMonitors()
   CreateFrame("Frame", "JNRMailMonitor", nil, "JournalatorMailMonitorTemplate")
   CreateFrame("Frame", "JNRPostingMonitor", nil, "JournalatorPostingMonitorTemplate")
   CreateFrame("Frame", "JNRVendorMonitor", nil, "JournalatorVendorMonitorTemplate")
+  CreateFrame("Frame", "JNRCraftingOrderMonitor", nil, "JournalatorCraftingOrderMonitorTemplate")
 end
 
 function Journalator.Initialize()

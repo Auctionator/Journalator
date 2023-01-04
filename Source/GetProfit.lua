@@ -39,6 +39,15 @@ function Journalator.GetProfit(startTime, endTime, filter)
     end
   end
 
+  local fulfillings = Journalator.Archiving.GetRange(startTime, "Fulfilling")
+  for _, item in ipairs(fulfillings) do
+    if item.time >= startTime and item.time <= endTime then
+      if filter(item) then
+        incoming = incoming + item.tipAmount - item.consortiumCut
+      end
+    end
+  end
+
   return incoming - outgoing, incoming, outgoing
 end
 

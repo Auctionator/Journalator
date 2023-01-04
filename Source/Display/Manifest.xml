@@ -16,6 +16,7 @@
   <Include file="SaleRates.xml" />
   <Include file="Failures.xml" />
   <Include file="Vendoring.xml" />
+  <Include file="Fulfilling.xml" />
   <Include file="FiltersContainer.xml" />
   <Include file="Info.xml" />
 

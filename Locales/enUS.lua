@@ -6,6 +6,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["SALE_RATES_TITLE"] = "Journalator - Sale Rates"
   L["FAILURES_TITLE"] = "Journalator - Failures"
   L["VENDORING_TITLE"] = "Journalator - Vendoring"
+  L["FULFILLING_TITLE"] = "Journalator - Fulfilling"
   L["INFO_TITLE"] = "Journalator - Info"
 
   L["INVOICES"] = "Invoices"
@@ -13,6 +14,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["SALE_RATES"] = "Sale Rates"
   L["FAILURES"] = "Failures"
   L["VENDORING"] = "Vendoring"
+  L["FULFILLING"] = "Fulfilling"
   L["JOURNALATOR"] = "Journalator"
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
@@ -77,6 +79,14 @@ JOURNALATOR_LOCALES.enUS = function()
   L["DAILY_PROFIT"] = "Daily Profit"
 
   L["LOADING_X_X"] = "Loading %d/%d"
+
+  L["PUBLIC"] = "Public"
+  L["GUILD"] = "Guild"
+  L["PERSONAL"] = "Personal"
+  L["CUSTOMER_NOTE"] = "Customer Note"
+  L["CRAFTER_NOTE"] = "Crafter Note"
+  L["CRAFTER"] = "Crafter"
+  L["TYPE"] = "Type"
 
   return L
 end
