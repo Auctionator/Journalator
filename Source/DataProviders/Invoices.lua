@@ -129,6 +129,7 @@ local COMPARATORS = {
   count = Auctionator.Utilities.NumberComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
   otherPlayer = Auctionator.Utilities.StringComparator,
+  sourceCharacter = Auctionator.Utilities.StringComparator,
 }
 
 function JournalatorInvoicesDataProviderMixin:Sort(fieldName, sortDirection)

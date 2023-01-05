@@ -78,6 +78,7 @@ end
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
   failedType = Auctionator.Utilities.StringComparator,
+  sourceCharacter = Auctionator.Utilities.StringComparator,
   count = Auctionator.Utilities.NumberComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
 }

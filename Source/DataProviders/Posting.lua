@@ -95,6 +95,7 @@ local COMPARATORS = {
   deposit = Auctionator.Utilities.NumberComparator,
   unitPrice = Auctionator.Utilities.NumberComparator,
   count = Auctionator.Utilities.NumberComparator,
+  sourceCharacter = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
