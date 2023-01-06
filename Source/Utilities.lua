@@ -73,13 +73,13 @@ end
 -- Removes slotID field from reagents entries
 function Journalator.Utilities.CleanReagents(basicReagents, specialReagents)
   local result = {}
-  for item in ipairs(basicReagents) do
+  for _, item in ipairs(basicReagents) do
     table.insert(result, {
       itemID = item.itemID,
       quantity = item.quantity,
     })
   end
-  for item in ipairs(specialReagents) do
+  for _, item in ipairs(specialReagents) do
     table.insert(result, {
       itemID = item.itemID,
       quantity = item.quantity,
