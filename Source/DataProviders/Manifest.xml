@@ -7,4 +7,5 @@
   <Script file="Failures.lua" />
   <Script file="Vendoring.lua" />
   <Script file="Fulfilling.lua" />
+  <Script file="CraftingOrdersPlaced.lua" />
 </Ui>

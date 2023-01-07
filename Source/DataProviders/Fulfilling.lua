@@ -39,13 +39,6 @@ local FULFILLING_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_CRAFTER_NOTE,
-    headerParameters = { "crafterNote" },
-    cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "crafterNote" },
-  },
-  {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_PLAYER,
     headerParameters = { "otherPlayer" },
     cellTemplate = "AuctionatorStringCellTemplate",
@@ -96,7 +89,6 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
         itemLink = item.itemLink,
         guildName = item.guildName or "",
         customerNote = item.customerNote,
-        crafterNote = item.crafterNote,
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
       }
@@ -121,7 +113,6 @@ local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
   moneyIn = Auctionator.Utilities.NumberComparator,
   customerNote = Auctionator.Utilities.StringComparator,
-  crafterNote = Auctionator.Utilities.StringComparator,
   otherPlayer = Auctionator.Utilities.StringComparator,
   sourceCharacter = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,

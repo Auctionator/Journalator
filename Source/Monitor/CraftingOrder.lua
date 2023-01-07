@@ -1,3 +1,7 @@
+CRAFTING_ORDER_EVENTS = {
+  "CRAFTINGORDERS_FULFILL_ORDER_RESPONSE",
+}
+
 JournalatorCraftingOrderMonitorMixin = {}
 
 function JournalatorCraftingOrderMonitorMixin:OnLoad()
@@ -5,18 +9,27 @@ function JournalatorCraftingOrderMonitorMixin:OnLoad()
     -- No crafting orders
     return
   else
-    self:HookFulfilling()
+    FrameUtil.RegisterFrameForEvents(self, CRAFTING_ORDER_EVENTS)
+
     self:HookPlacing()
   end
 end
 
-function JournalatorCraftingOrderMonitorMixin:HookFulfilling()
-  hooksecurefunc(C_CraftingOrders, "FulfillOrder", function(orderID, crafterNote, profession)
+function JournalatorCraftingOrderMonitorMixin:OnEvent(eventName, ...)
+  if eventName == "CRAFTINGORDERS_FULFILL_ORDER_RESPONSE" then
+    local state, orderID = ...
+
+    if state ~= Enum.CraftingOrderResult.Ok then
+      return
+    end
+
     local claimedOrder = C_CraftingOrders.GetClaimedOrder()
 
     if orderID ~= claimedOrder.orderID or claimedOrder.outputItemHyperlink == nil then
       return
     end
+
+    local reagents = Journalator.Utilities.CleanReagents(orderInfo.reagents)
 
     local item = Item:CreateFromItemLink(claimedOrder.outputItemHyperlink)
     item:ContinueOnItemLoad(function()
@@ -35,6 +48,7 @@ function JournalatorCraftingOrderMonitorMixin:HookFulfilling()
 
         itemName = itemName,
         itemLink = claimedOrder.outputItemHyperlink,
+        suppliedReagents = reagents,
         recraftItemLink = claimedOrder.recraftItemHyperlink,
         count = 1,
 
@@ -45,14 +59,13 @@ function JournalatorCraftingOrderMonitorMixin:HookFulfilling()
         tipAmount = claimedOrder.tipAmount,
         consortiumCut = claimedOrder.consortiumCut,
         customerNote = claimedOrder.customerNotes,
-        crafterNote = crafterNote,
 
         time = time(),
         source = Journalator.State.Source,
         }
       }})
     end)
-  end)
+  end
 end
 
 local possibleCraftingOrderOptions
@@ -127,7 +140,8 @@ function JournalatorCraftingOrderMonitorMixin:HookPlacing()
     end
 
     -- Save all reagents merging quality and non-quality reagents
-    local reagents = Journalator.Utilities.CleanReagents(orderInfo.reagentItems, orderInfo.craftingReagentItems)
+    local reagents = Journalator.Utilities.CleanReagents(orderInfo.reagentItems)
+    tAppendAll(reagents, Journalator.Utilities.CleanReagents(orderInfo.craftingReagentItems))
 
     local postingFee = C_CraftingOrders.CalculateCraftingOrderPostingFee(orderInfo.skillLineAbilityID, orderInfo.orderType, orderInfo.orderDuration)
 

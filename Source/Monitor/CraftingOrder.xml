@@ -2,6 +2,7 @@
   <Frame name="JournalatorCraftingOrderMonitorTemplate" mixin="JournalatorCraftingOrderMonitorMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
+      <OnEvent method="OnEvent"/>
     </Scripts>
   </Frame>
 </Ui>
