@@ -12,35 +12,35 @@ function JournalatorLogViewCraftingOrdersRowMixin:OnEnter()
   GameTooltip:AddLine(" ")
   if self.rowData.customerReagents or self.rowData.crafterReagents then
     if self.rowData.customerReagents and #self.rowData.customerReagents > 0 then
-      GameTooltip:AddLine(lightBlue:WrapTextInColorCode("Customer reagents:"))
+      GameTooltip:AddLine(lightBlue:WrapTextInColorCode(JOURNALATOR_L_CUSTOMER_REAGENTS_COLON))
       for _, reagent in ipairs(self.rowData.customerReagents) do
         local _, link = GetItemInfo(reagent.itemID)
         if link ~= nil then
           GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(Auctionator.Utilities.GetNameFromLink(link)) .. Auctionator.Utilities.CreateCountString(reagent.quantity))
         end
       end
-    elseif not self.rowData.customerReagents then
-      GameTooltip:AddLine("No records for crafter reagents")
+    elseif self.rowData.customerReagents then
+      GameTooltip:AddLine(lightBlue:WrapTextInColorCode(JOURNALATOR_L_NO_CUSTOMER_REAGENTS))
     else
-      GameTooltip:AddLine(lightBlue:WrapTextInColorCode("No customer reagents"))
+      GameTooltip:AddLine(JOURNALATOR_L_NO_RECORDS_CUSTOMER_REAGENTS)
     end
     GameTooltip:AddLine(" ")
 
     if self.rowData.crafterReagents and #self.rowData.crafterReagents > 0 then
-      GameTooltip:AddLine(lightBlue:WrapTextInColorCode("Crafter reagents:"))
+      GameTooltip:AddLine(lightBlue:WrapTextInColorCode(JOURNALATOR_L_CRAFTER_REAGENTS_COLON))
       for _, reagent in ipairs(self.rowData.crafterReagents) do
         local _, link = GetItemInfo(reagent.itemID)
         if link ~= nil then
           GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(Auctionator.Utilities.GetNameFromLink(link)) .. Auctionator.Utilities.CreateCountString(reagent.quantity))
         end
       end
-    elseif not self.rowData.crafterReagents then
-      GameTooltip:AddLine("No records for crafter reagents")
+    elseif self.rowData.crafterReagents then
+      GameTooltip:AddLine(lightBlue:WrapTextInColorCode(JOURNALATOR_L_NO_CRAFTER_REAGENTS))
     else
-      GameTooltip:AddLine(lightBlue:WrapTextInColorCode("No crafter reagents"))
+      GameTooltip:AddLine(JOURNALATOR_L_NO_RECORDS_CRAFTER_REAGENTS)
     end
   else
-    GameTooltip:AddLine("No reagents recorded")
+    GameTooltip:AddLine(JOURNALATOR_L_NO_RECORDS_FOR_REAGENTS)
   end
   GameTooltip:Show()
 end
