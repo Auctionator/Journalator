@@ -6,6 +6,9 @@
     virtual="true"
     enableMouse="true"
   >
+    <Scripts>
+      <OnHide method="OnHide"/>
+    </Scripts>
     <Layers>
       <Layer level="OVERLAY">
         <Texture parentKey="NormalTexture" atlas="auctionhouse-rowstripe-1">

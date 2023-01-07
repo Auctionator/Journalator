@@ -24,6 +24,8 @@ function Journalator.Initialize()
     faction = faction,
   }
 
+  Journalator.State.ItemIDToLink = {}
+
   Journalator.Statistics.InitializeCache()
 
   Journalator.MinimapIcon.Initialize()
