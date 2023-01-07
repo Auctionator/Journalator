@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="JournalatorCraftingOrderMonitorTemplate" mixin="JournalatorCraftingOrderMonitorMixin" virtual="true">
+  <Frame name="JournalatorCraftingOrderFulfillingMonitorTemplate" mixin="JournalatorCraftingOrderFulfillingMonitorMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
       <OnEvent method="OnEvent"/>
