@@ -104,6 +104,7 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
         source = Journalator.State.Source,
         }
       }})
+      self:ResetState()
     end)
   end
 end
