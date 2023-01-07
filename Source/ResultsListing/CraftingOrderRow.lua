@@ -19,6 +19,8 @@ function JournalatorLogViewCraftingOrdersRowMixin:OnEnter()
           GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(Auctionator.Utilities.GetNameFromLink(link)) .. Auctionator.Utilities.CreateCountString(reagent.quantity))
         end
       end
+    elseif not self.rowData.customerReagents then
+      GameTooltip:AddLine("No records for crafter reagents")
     else
       GameTooltip:AddLine(lightBlue:WrapTextInColorCode("No customer reagents"))
     end
@@ -32,6 +34,8 @@ function JournalatorLogViewCraftingOrdersRowMixin:OnEnter()
           GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(Auctionator.Utilities.GetNameFromLink(link)) .. Auctionator.Utilities.CreateCountString(reagent.quantity))
         end
       end
+    elseif not self.rowData.crafterReagents then
+      GameTooltip:AddLine("No records for crafter reagents")
     else
       GameTooltip:AddLine(lightBlue:WrapTextInColorCode("No crafter reagents"))
     end
