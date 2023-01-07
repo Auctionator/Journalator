@@ -4,6 +4,72 @@ CRAFTING_ORDER_EVENTS = {
 
 JournalatorCraftingOrderFulfillingMonitorMixin = {}
 
+local function ExcludeMatching(array, toExclude)
+  local hits = {}
+  for _, item in ipairs(toExclude) do
+    hits[item] = true
+  end
+
+  local result = {}
+  for _, item in ipairs(array) do
+    if not hits[item] then
+      table.insert(result, item)
+    end
+  end
+  return result
+end
+
+local function GetRequiredBasicNormalReagents(recipeSchematic)
+  local result = {}
+  for _, reagentSlotSchematic in ipairs(recipeSchematic.reagentSlotSchematics) do
+    if reagentSlotSchematic.reagentType == Enum.CraftingReagentType.Basic and
+       reagentSlotSchematic.dataSlotType == Enum.TradeskillSlotDataType.Reagent then
+      table.insert(result, {
+        itemID = reagentSlotSchematic.reagents[1].itemID,
+        quantity = reagentSlotSchematic.quantityRequired,
+        reagentSlot = reagentSlotSchematic.slotIndex
+      })
+    end
+  end
+  return result
+end
+
+local function GetCustomerReagents(reagentsData)
+  local result = {}
+  for _, r in ipairs(reagentsData) do
+    table.insert(result, {
+      itemID = r.reagent.itemID,
+      quantity = r.reagent.quantity,
+      reagentSlot = r.reagentSlot,
+    })
+  end
+  return result
+end
+
+local function GetCrafterReagents(customerReagents, allReagents)
+  return ExcludeMatching(allReagents, customerReagents)
+end
+
+local function GetSlotsWithReagents(recipeSchematic, reagents)
+  local reagentsToSlots = {}
+  for _, reagentSlotSchematic in ipairs(recipeSchematic.reagentSlotSchematics) do
+    for _, reagent in ipairs(reagentSlotSchematic.reagents) do
+      reagentsToSlots[reagent.itemID] = reagentSlotSchematic.slotIndex
+    end
+  end
+
+  local result = {}
+  for _, r in ipairs(reagents) do
+    table.insert(result, {
+      itemID = r.itemID,
+      quantity = r.quantity,
+      reagentSlot = reagentsToSlots[r.itemID]
+    })
+  end
+
+  return result
+end
+
 function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
   if Auctionator.Constants.IsClassic then
     -- No crafting orders
@@ -16,10 +82,17 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
       self.expectedCrafterNote.note = crafterNote
     end)
 
-    hooksecurefunc(C_TradeSkillUI, "CraftRecipe", function(_, _, craftingReagents, _, orderID)
+    hooksecurefunc(C_TradeSkillUI, "CraftRecipe", function(recipeID, _, craftingReagents, _, orderID)
       if orderID ~= nil then
-        self.usedReagents.orderID = orderID
-        self.usedReagents.reagents = CopyTable(craftingReagents)
+        self.potentialLocalReagents.orderID = orderID
+
+        local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false)
+
+        self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents)
+
+        local basicMissingReagents = ExcludeMatching(GetRequiredBasicNormalReagents(recipeSchematic), self.potentialLocalReagents.reagents)
+
+        tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
       end
     end)
 
@@ -29,27 +102,7 @@ end
 
 function JournalatorCraftingOrderFulfillingMonitorMixin:ResetState()
   self.expectedCrafterNote = {orderID = nil, note = nil}
-  self.usedReagents = {orderID = nil, reagents = nil}
-end
-
-local function GetCustomerReagents(reagentsData)
-  local customerReagents = {}
-  for _, r in ipairs(reagentsData) do
-    table.insert(customerReagents, r.reagent)
-  end
-  return customerReagents
-end
-
-local function GetCrafterReagents(customerReagents, allReagents)
-  local customerSlots = {}
-  for _, reagent in ipairs(customerReagents) do
-    customerSlots[reagent.dataSlotIndex] = true
-  end
-
-  return tFilter(
-    allReagents,
-    function(reagent) return not customerSlots[reagent.dataSlotIndex] end
-  )
+  self.potentialLocalReagents = {orderID = nil, reagents = nil}
 end
 
 function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
@@ -73,8 +126,8 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
 
     local customerReagents = GetCustomerReagents(claimedOrder.reagents)
     local crafterReagents
-    if self.usedReagents.orderID == orderID and self.usedReagents.reagents then
-      crafterReagents = GetCrafterReagents(customerReagents, self.usedReagents.reagents)
+    if self.potentialLocalReagents.orderID == orderID and self.potentialLocalReagents.reagents then
+      crafterReagents = GetCrafterReagents(customerReagents, self.potentialLocalReagents.reagents)
     end
 
     local item = Item:CreateFromItemLink(claimedOrder.outputItemHyperlink)
