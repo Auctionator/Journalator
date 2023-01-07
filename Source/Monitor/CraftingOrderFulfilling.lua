@@ -32,15 +32,23 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:ResetState()
   self.usedReagents = {orderID = nil, reagents = nil}
 end
 
+local function GetCustomerReagents(reagentsData)
+  local customerReagents = {}
+  for _, r in ipairs(reagentsData) do
+    table.insert(customerReagents, r.reagent)
+  end
+  return customerReagents
+end
+
 local function GetCrafterReagents(customerReagents, allReagents)
   local customerSlots = {}
-  for _, reagentInfo in ipairs(customerReagents) do
-    customerSlots[reagentInfo.dataSlotIndex] = true
+  for _, reagent in ipairs(customerReagents) do
+    customerSlots[reagent.dataSlotIndex] = true
   end
 
   return tFilter(
     allReagents,
-    function(entry) return not customerSlots[entry.dataSlotIndex] end
+    function(reagent) return not customerSlots[reagent.dataSlotIndex] end
   )
 end
 
@@ -63,10 +71,10 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
       crafterNote = self.expectedCrafterNote.note
     end
 
-    local customerReagents = Journalator.Utilities.CleanReagents(claimedOrder.reagents)
+    local customerReagents = GetCustomerReagents(claimedOrder.reagents)
     local crafterReagents
     if self.usedReagents.orderID == orderID and self.usedReagents.reagents then
-      crafterReagents = Journalator.Utilities.CleanReagents(GetCrafterReagents(claimedOrder.reagents, self.usedReagents.reagents))
+      crafterReagents = GetCrafterReagents(customerReagents, self.usedReagents.reagents)
     end
 
     local item = Item:CreateFromItemLink(claimedOrder.outputItemHyperlink)
@@ -86,8 +94,8 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
 
         itemName = itemName,
         itemLink = claimedOrder.outputItemHyperlink,
-        customerReagents = customerReagents,
-        crafterReagents = crafterReagents,
+        customerReagents = Journalator.Utilities.CleanReagents(customerReagents),
+        crafterReagents = Journalator.Utilities.CleanReagents(crafterReagents),
         recraftItemLink = claimedOrder.recraftItemHyperlink,
         count = 1,
 

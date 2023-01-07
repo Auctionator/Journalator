@@ -11,11 +11,6 @@ function JournalatorLogViewResultsRowMixin:OnEnter()
       GameTooltip:SetHyperlink(self.rowData.itemLink)
       GameTooltip:Show()
     end
-
-  elseif self.rowData.itemKey then
-    GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-    GameTooltip:SetItemKey(self.rowData.itemKey.itemID, self.rowData.itemKey.itemSuffix, 0, self.rowData.battlePetSpeciesID)
-    GameTooltip:Show()
   end
 end
 

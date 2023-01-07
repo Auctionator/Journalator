@@ -99,6 +99,8 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
         crafterNote = item.crafterNote,
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        customerReagents = item.customerReagents,
+        crafterReagents = item.crafterReagents,
       }
 
       if processedItem.itemLink ~= nil then
@@ -141,4 +143,8 @@ Journalator.Config.Create("COLUMNS_FULFILLING", "columns_fulfilling", {})
 
 function JournalatorFulfillingDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_FULFILLING)
+end
+
+function JournalatorFulfillingDataProviderMixin:GetRowTemplate()
+  return "JournalatorLogViewCraftingOrdersRowTemplate"
 end

@@ -98,6 +98,7 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Refresh()
         itemLink = item.itemLink,
         guildName = item.guildName or "",
         customerNote = item.customerNote,
+        customerReagents = item.customerReagents,
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
       }
@@ -142,4 +143,8 @@ Journalator.Config.Create("COLUMNS_CO_PLACED", "columns_fulfilling", {})
 
 function JournalatorCraftingOrdersPlacedDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_CO_PLACED)
+end
+
+function JournalatorCraftingOrdersPlacedDataProviderMixin:GetRowTemplate()
+  return "JournalatorLogViewCraftingOrdersRowTemplate"
 end
