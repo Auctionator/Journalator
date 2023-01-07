@@ -96,7 +96,7 @@ function JournalatorCraftingOrderPlacingMonitorMixin:HookPlacing()
 
         itemName = item:GetItemName(),
         itemLink = outputLink,
-        suppliedReagents = reagents,
+        customerReagents = reagents,
         recraftItemLink = recraftItemLink,
         count = 1,
 
