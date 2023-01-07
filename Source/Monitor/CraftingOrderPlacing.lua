@@ -57,13 +57,15 @@ function JournalatorCraftingOrderPlacingMonitorMixin:HookPlacing()
     end
 
     local minCraftQuality = orderInfo.minCraftingQualityID
-    if minCraftQuality and minCraftQuality > 3 then -- shift gear qualities to the same scale as they start a 4, not 1
+    -- shift gear qualities which start at 4, to the same scale as the qualities
+    -- found in fulfilled orders, which always start at 1
+    if minCraftQuality and minCraftQuality > 3 then
       minCraftQuality = minCraftQuality - 3
     end
 
     local recipeID = GetSpellIDFromSkillLineAbilityID(orderInfo.skillLineAbilityID)
 
-    -- Determine the output item
+    -- Determine the output item's item link
     local outputLink
     if isRecraft then
       -- Uses tooltip API as there isn't another option to get the hyperlink

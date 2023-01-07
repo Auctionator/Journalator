@@ -19,7 +19,7 @@ local function ExcludeMatching(array, toExclude)
   return result
 end
 
-local function GetRequiredBasicNormalReagents(recipeSchematic)
+local function GetBasicAndNotModifiedReagents(recipeSchematic)
   local result = {}
   for _, reagentSlotSchematic in ipairs(recipeSchematic.reagentSlotSchematics) do
     if reagentSlotSchematic.reagentType == Enum.CraftingReagentType.Basic and
@@ -88,9 +88,13 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
 
         local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false)
 
+        --Note we don't need to consider modified or non-basic reagents that are
+        --not included in the parameters because the recipe must have been
+        --supplied with the complete parameters for a given slot
+
         self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents)
 
-        local basicMissingReagents = ExcludeMatching(GetRequiredBasicNormalReagents(recipeSchematic), self.potentialLocalReagents.reagents)
+        local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
 
         tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
       end
@@ -102,6 +106,8 @@ end
 
 function JournalatorCraftingOrderFulfillingMonitorMixin:ResetState()
   self.expectedCrafterNote = {orderID = nil, note = nil}
+  -- Reagents with slot information that may have been used when crafting the
+  -- item.
   self.potentialLocalReagents = {orderID = nil, reagents = nil}
 end
 
@@ -126,6 +132,8 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
 
     local customerReagents = GetCustomerReagents(claimedOrder.reagents)
     local crafterReagents
+    -- Determine the reagents supplied by the crafter by excluding those
+    -- attached to the order from the list of potential reagents
     if self.potentialLocalReagents.orderID == orderID and self.potentialLocalReagents.reagents then
       crafterReagents = GetCrafterReagents(customerReagents, self.potentialLocalReagents.reagents)
     end
