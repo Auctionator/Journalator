@@ -85,6 +85,16 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="JournalatorCraftingOrdersPlacedDisplayTemplate" parentArray="Views">
+				<KeyValues>
+					<KeyValue key="displayMode" value="CraftingOrdersPlaced" type="string"/>
+				</KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+        </Anchors>
+      </Frame>
+
       <Frame inherits="JournalatorFulfillingDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Fulfilling" type="string"/>
@@ -160,13 +170,22 @@
 					<Anchor point="LEFT" relativeKey="$parent.FailuresTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
+			<Button parentKey="CraftingOrdersPlacedTab" inherits="JournalatorTabButtonTemplate" name="JournalatorCraftingOrdersPlacedTab_Button" text="JOURNALATOR_L_PLACING">
+				<KeyValues>
+					<KeyValue key="displayMode" value="CraftingOrdersPlaced" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_PLACING_TITLE" type="global"/>
+				</KeyValues>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.VendoringTab" relativePoint="RIGHT" x="-15" y="0"/>
+				</Anchors>
+			</Button>
 			<Button parentKey="FulfillingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFulfillingTab_Button" text="JOURNALATOR_L_FULFILLING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Fulfilling" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_FULFILLING_TITLE" type="global"/>
 				</KeyValues>
 				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.VendoringTab" relativePoint="RIGHT" x="-15" y="0"/>
+					<Anchor point="LEFT" relativeKey="$parent.CraftingOrdersPlacedTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
 			<Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">

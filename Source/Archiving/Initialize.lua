@@ -15,13 +15,21 @@ function Journalator.Archiving.InitializeStore(store)
   if store.Version == 1 or store.Version == 2 then
     store.Version = 3
     store.Fulfilling = {}
-  elseif store.Version ~= 3 then
-    store.Version = 3
+  end
+
+  if store.Version == 3 then
+    store.Version = 4
+    store.CraftingOrdersPlaced = {}
+  end
+
+  if store.Version ~= 4 then
+    store.Version = 4
     store.Invoices = {}
     store.Posting = {}
     store.Failures = {}
     store.Vendoring = {}
     store.Fulfilling = {}
+    store.CraftingOrdersPlaced = {}
   end
 end
 

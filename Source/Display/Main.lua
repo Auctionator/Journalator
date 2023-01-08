@@ -16,7 +16,7 @@ function JournalatorDisplayMixin:OnLoad()
   table.insert(UISpecialFrames, self:GetName())
 
   if Auctionator.Constants.IsClassic then
-    self:HideFulfillingTab()
+    self:HideCraftingOrderTabs()
   end
 
   self:SetupExportCSVDialog()
@@ -136,12 +136,14 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
   self.Filters:SetShown(self:GetCurrentDataView() ~= nil)
 end
 
-function JournalatorDisplayMixin:HideFulfillingTab()
-  local tabIndex = tIndexOf(self.Tabs, self.FulfillingTab)
+function JournalatorDisplayMixin:HideCraftingOrderTabs()
+  local startTab = self.CraftingOrdersPlacedTab
+  local endTab = self.FulfillingTab
+  local endTabIndex = tIndexOf(self.Tabs, endTab)
 
-  local nextTab = self.Tabs[tabIndex + 1]
+  local nextTab = self.Tabs[endTabIndex + 1]
   nextTab:ClearAllPoints()
-  nextTab:SetPoint(self.FulfillingTab:GetPoint(1))
+  nextTab:SetPoint(startTab:GetPoint(1))
 
   self.FulfillingTab:Hide()
 end

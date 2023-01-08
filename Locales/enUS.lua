@@ -7,6 +7,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["FAILURES_TITLE"] = "Journalator - Failures"
   L["VENDORING_TITLE"] = "Journalator - Vendoring"
   L["FULFILLING_TITLE"] = "Journalator - Fulfilling"
+  L["PLACING_TITLE"] = "Journalator - Placing"
   L["INFO_TITLE"] = "Journalator - Info"
 
   L["INVOICES"] = "Invoices"
@@ -15,6 +16,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["FAILURES"] = "Failures"
   L["VENDORING"] = "Vendoring"
   L["FULFILLING"] = "Fulfilling"
+  L["PLACING"] = "Placing"
   L["JOURNALATOR"] = "Journalator"
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
@@ -87,6 +89,16 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CRAFTER_NOTE"] = "Crafter Note"
   L["CRAFTER"] = "Crafter"
   L["TYPE"] = "Type"
+  L["TIP"] = "Tip"
+  L["POSTING_FEE"] = "Posting Fee"
+  
+  L["CUSTOMER_REAGENTS_COLON"] = "Customer reagents:"
+  L["CRAFTER_REAGENTS_COLON"] = "Crafter reagents:"
+  L["NO_RECORDS_CUSTOMER_REAGENTS"] = "No records for customer reagents"
+  L["NO_RECORDS_CRAFTER_REAGENTS"] = "No records for crafter reagents"
+  L["NO_RECORDS_FOR_REAGENTS"] = "No records for reagents"
+  L["NO_CUSTOMER_REAGENTS"] = "No customer reagents"
+  L["NO_CRAFTER_REAGENTS"] = "No crafter reagents"
 
   return L
 end

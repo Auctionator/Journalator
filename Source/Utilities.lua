@@ -69,3 +69,15 @@ function Journalator.Utilities.AddQualityIconToItemName(itemName, itemLink)
     return itemName
   end
 end
+
+-- Removes slotID field from reagents entries
+function Journalator.Utilities.CleanReagents(reagents)
+  local result = {}
+  for _, item in ipairs(reagents) do
+    table.insert(result, {
+      itemID = item.itemID,
+      quantity = item.quantity,
+    })
+  end
+  return result
+end
