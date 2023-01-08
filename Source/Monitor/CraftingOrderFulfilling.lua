@@ -127,7 +127,6 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
 
       -- Same usage as for the CraftRecipe hook
       self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents or {})
-      DevTools_Dump(self.potentialLocalReagents.reagents)
 
       local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
 
