@@ -1,3 +1,5 @@
+-- Records crafting orders created for another player to fulfil, including
+-- reagents supplied and expected output
 JournalatorCraftingOrderPlacingMonitorMixin = {}
 
 function JournalatorCraftingOrderPlacingMonitorMixin:OnLoad()

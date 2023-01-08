@@ -1,9 +1,15 @@
+-- Records crafting orders fulfilling by the current character, including
+-- reagents used if possible.
+-- Most of the code in this is detecting the reagents used,  with only the
+-- OnEvent function really being needed if detecting the order being fulfilling
+-- (no reagents) is enough.
 CRAFTING_ORDER_EVENTS = {
   "CRAFTINGORDERS_FULFILL_ORDER_RESPONSE",
 }
 
 JournalatorCraftingOrderFulfillingMonitorMixin = {}
 
+-- Only returns reagents in unoccupied slots from toExclude
 local function ExcludeMatching(array, toExclude)
   local hits = {}
   for _, item in ipairs(toExclude) do
@@ -19,6 +25,7 @@ local function ExcludeMatching(array, toExclude)
   return result
 end
 
+-- Returns reagents that don't get included in a CraftRecipe API call
 local function GetBasicAndNotModifiedReagents(recipeSchematic)
   local result = {}
   for _, reagentSlotSchematic in ipairs(recipeSchematic.reagentSlotSchematics) do
@@ -40,7 +47,7 @@ local function GetCustomerReagents(reagentsData)
     table.insert(result, {
       itemID = r.reagent.itemID,
       quantity = r.reagent.quantity,
-      reagentSlot = r.reagentSlot,
+      reagentSlot = r.reagentSlot, -- Used in ExcludeMatching
     })
   end
   return result
@@ -63,7 +70,7 @@ local function GetSlotsWithReagents(recipeSchematic, reagents)
     table.insert(result, {
       itemID = r.itemID,
       quantity = r.quantity,
-      reagentSlot = reagentsToSlots[r.itemID]
+      reagentSlot = reagentsToSlots[r.itemID] -- Used in ExcludeMatching
     })
   end
 
@@ -75,6 +82,9 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
     -- No crafting orders
     return
   else
+    -- Not all state is available in the fulfilled event, so we record the
+    -- missing stuff when the API calls that use it happen.
+
     self:ResetState()
 
     hooksecurefunc(C_CraftingOrders, "FulfillOrder", function(orderID, crafterNote, profession)
@@ -82,6 +92,7 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
       self.expectedCrafterNote.note = crafterNote
     end)
 
+    -- Normal recipe craft
     hooksecurefunc(C_TradeSkillUI, "CraftRecipe", function(recipeID, _, craftingReagents, _, orderID)
       if orderID == nil then
         return
@@ -103,10 +114,8 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
       tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
     end)
 
+    -- Recraft
     hooksecurefunc(C_TradeSkillUI, "RecraftRecipeForOrder", function(orderID, itemGUID, craftingReagents)
-      if orderID == nil then
-        return
-      end
       local claimedOrder = C_CraftingOrders.GetClaimedOrder()
       if not claimedOrder or claimedOrder.orderID ~= orderID then
         return
@@ -136,6 +145,8 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:ResetState()
   self.potentialLocalReagents = {orderID = nil, reagents = nil}
 end
 
+-- Use state recorded and event data to create a log entry for fulfilling this
+-- crafting order.
 function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
   if eventName == "CRAFTINGORDERS_FULFILL_ORDER_RESPONSE" then
     local state, orderID = ...
