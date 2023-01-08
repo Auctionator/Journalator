@@ -77,6 +77,7 @@ function JournalatorCraftingOrderPlacingMonitorMixin:HookPlacing()
         nil,
         orderInfo.minCraftingQualityID
       )
+      TooltipUtil.SurfaceArgs(tooltipInfo)
       outputLink = tooltipInfo.hyperlink
     else
       outputLink = Auctionator.CraftingInfo.GetOutputItemLink(recipeID, nil, orderInfo.craftingReagentItems)

@@ -7,12 +7,12 @@ JournalatorCraftingOrderFulfillingMonitorMixin = {}
 local function ExcludeMatching(array, toExclude)
   local hits = {}
   for _, item in ipairs(toExclude) do
-    hits[item] = true
+    hits[item.reagentSlot] = true
   end
 
   local result = {}
   for _, item in ipairs(array) do
-    if not hits[item] then
+    if not hits[item.reagentSlot] then
       table.insert(result, item)
     end
   end
@@ -83,21 +83,46 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
     end)
 
     hooksecurefunc(C_TradeSkillUI, "CraftRecipe", function(recipeID, _, craftingReagents, _, orderID)
-      if orderID ~= nil then
-        self.potentialLocalReagents.orderID = orderID
-
-        local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false)
-
-        --Note we don't need to consider modified or non-basic reagents that are
-        --not included in the parameters because the recipe must have been
-        --supplied with the complete parameters for a given slot
-
-        self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents)
-
-        local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
-
-        tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
+      if orderID == nil then
+        return
       end
+
+      self.potentialLocalReagents.orderID = orderID
+
+      local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false)
+
+      -- Note we don't need to consider modified or non-basic reagents that are
+      -- not included in the parameters because the recipe must have been
+      -- supplied with the complete parameters for a given slot, and if the
+      -- needed modified reagents _are_ missing the recipe craft fails.
+
+      self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents or {})
+
+      local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
+
+      tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
+    end)
+
+    hooksecurefunc(C_TradeSkillUI, "RecraftRecipeForOrder", function(orderID, itemGUID, craftingReagents)
+      if orderID == nil then
+        return
+      end
+      local claimedOrder = C_CraftingOrders.GetClaimedOrder()
+      if not claimedOrder or claimedOrder.orderID ~= orderID then
+        return
+      end
+
+      self.potentialLocalReagents.orderID = orderID
+
+      local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(claimedOrder.spellID, true)
+
+      -- Same usage as for the CraftRecipe hook
+      self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents or {})
+      DevTools_Dump(self.potentialLocalReagents.reagents)
+
+      local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
+
+      tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
     end)
 
     FrameUtil.RegisterFrameForEvents(self, CRAFTING_ORDER_EVENTS)
@@ -130,12 +155,13 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
       crafterNote = self.expectedCrafterNote.note
     end
 
-    local customerReagents = GetCustomerReagents(claimedOrder.reagents)
+    local customerReagentsWithSlots = GetCustomerReagents(claimedOrder.reagents)
+    local customerReagents = Journalator.Utilities.CleanReagents(customerReagentsWithSlots)
     local crafterReagents
     -- Determine the reagents supplied by the crafter by excluding those
     -- attached to the order from the list of potential reagents
     if self.potentialLocalReagents.orderID == orderID and self.potentialLocalReagents.reagents then
-      crafterReagents = GetCrafterReagents(customerReagents, self.potentialLocalReagents.reagents)
+      crafterReagents = Journalator.Utilities.CleanReagents(GetCrafterReagents(customerReagentsWithSlots, self.potentialLocalReagents.reagents))
     end
 
     local item = Item:CreateFromItemLink(claimedOrder.outputItemHyperlink)
@@ -155,8 +181,8 @@ function JournalatorCraftingOrderFulfillingMonitorMixin:OnEvent(eventName, ...)
 
         itemName = itemName,
         itemLink = claimedOrder.outputItemHyperlink,
-        customerReagents = Journalator.Utilities.CleanReagents(customerReagents),
-        crafterReagents = Journalator.Utilities.CleanReagents(crafterReagents),
+        customerReagents = customerReagents,
+        crafterReagents = crafterReagents,
         recraftItemLink = claimedOrder.recraftItemHyperlink,
         count = 1,
 
