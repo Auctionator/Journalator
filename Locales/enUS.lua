@@ -92,6 +92,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["TIP"] = "Tip"
   L["POSTING_FEE"] = "Posting Fee"
   
+  L["RECRAFT_X_TO_X"] = "Recraft %s to %s"
   L["CUSTOMER_REAGENTS_COLON"] = "Customer reagents:"
   L["CRAFTER_REAGENTS_COLON"] = "Crafter reagents:"
   L["NO_RECORDS_CUSTOMER_REAGENTS"] = "No records for customer reagents"

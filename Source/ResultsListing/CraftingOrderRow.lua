@@ -24,6 +24,18 @@ function JournalatorLogViewCraftingOrdersRowMixin:ShowTooltip()
   if self.rowData.itemLink then
     GameTooltip:SetHyperlink(self.rowData.itemLink)
   end
+
+  if self.rowData.isRecraft then
+    GameTooltip:AddLine(" ")
+    local inQuality = C_TradeSkillUI.GetItemCraftedQualityByItemInfo(self.rowData.recraftItemLink)
+    local outQuality = C_TradeSkillUI.GetItemCraftedQualityByItemInfo(self.rowData.itemLink)
+    local text = JOURNALATOR_L_RECRAFT_X_TO_X:format(
+      C_Texture.GetCraftingReagentQualityChatIcon(inQuality),
+      C_Texture.GetCraftingReagentQualityChatIcon(outQuality)
+    )
+    GameTooltip:AddLine(lightBlue:WrapTextInColorCode(text))
+  end
+
   GameTooltip:AddLine(" ")
   if self.rowData.customerReagents or self.rowData.crafterReagents then
     AddReagents(self.rowData.customerReagents,
@@ -42,6 +54,7 @@ function JournalatorLogViewCraftingOrdersRowMixin:ShowTooltip()
   else
     GameTooltip:AddLine(JOURNALATOR_L_NO_RECORDS_FOR_REAGENTS)
   end
+
   GameTooltip:Show()
 end
 
@@ -66,20 +79,24 @@ function JournalatorLogViewCraftingOrdersRowMixin:OnEnter()
   local allReagents = CopyTable(self.rowData.customerReagents or {})
   tAppendAll(allReagents, self.rowData.crafterReagents or {})
 
+  self.continuableContainer = ContinuableContainer:Create()
+
   -- Cache item data for all reagents ready for display in tooltip
   if #allReagents > 0 then
-    self.continuableContainer = ContinuableContainer:Create()
     for _, reagent in ipairs(allReagents) do
       self.continuableContainer:AddContinuable(Item:CreateFromItemID(reagent.itemID))
     end
-    self.continuableContainer:ContinueOnLoad(function()
-      self.continuableContainer = nil
-      self:ShowTooltip()
-    end)
-  -- No reagents, so just show the nothing text
-  else
-    self:ShowTooltip()
   end
+
+  if self.rowData.isRecraft then
+    self.continuableContainer:AddContinuable(Item:CreateFromItemLink(self.rowData.itemLink))
+    self.continuableContainer:AddContinuable(Item:CreateFromItemLink(self.rowData.recraftItemLink))
+  end
+
+  self.continuableContainer:ContinueOnLoad(function()
+    self.continuableContainer = nil
+    self:ShowTooltip()
+  end)
 end
 
 function JournalatorLogViewCraftingOrdersRowMixin:OnLeave()

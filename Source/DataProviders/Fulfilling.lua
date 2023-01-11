@@ -101,6 +101,8 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         customerReagents = item.customerReagents,
         crafterReagents = item.crafterReagents,
+        isRecraft = item.isRecraft,
+        recraftItemLink = item.recraftItemLink,
       }
 
       if processedItem.itemLink ~= nil then

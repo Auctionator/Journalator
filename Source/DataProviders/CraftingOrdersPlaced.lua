@@ -99,6 +99,8 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Refresh()
         guildName = item.guildName or "",
         customerNote = item.customerNote,
         customerReagents = item.customerReagents,
+        isRecraft = item.isRecraft,
+        recraftItemLink = item.recraftItemLink,
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
       }
