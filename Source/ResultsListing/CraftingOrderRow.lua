@@ -26,14 +26,16 @@ function JournalatorLogViewCraftingOrdersRowMixin:ShowTooltip()
   end
 
   if self.rowData.isRecraft then
-    GameTooltip:AddLine(" ")
     local inQuality = C_TradeSkillUI.GetItemCraftedQualityByItemInfo(self.rowData.recraftItemLink)
     local outQuality = C_TradeSkillUI.GetItemCraftedQualityByItemInfo(self.rowData.itemLink)
-    local text = JOURNALATOR_L_RECRAFT_X_TO_X:format(
-      C_Texture.GetCraftingReagentQualityChatIcon(inQuality),
-      C_Texture.GetCraftingReagentQualityChatIcon(outQuality)
-    )
-    GameTooltip:AddLine(lightBlue:WrapTextInColorCode(text))
+    if inQuality ~= nil and outQuality ~= nil then
+      GameTooltip:AddLine(" ")
+      local text = JOURNALATOR_L_RECRAFT_X_TO_X:format(
+        C_Texture.GetCraftingReagentQualityChatIcon(inQuality),
+        C_Texture.GetCraftingReagentQualityChatIcon(outQuality)
+      )
+      GameTooltip:AddLine(lightBlue:WrapTextInColorCode(text))
+    end
   end
 
   GameTooltip:AddLine(" ")
