@@ -39,7 +39,6 @@ function JournalatorQuestsMonitorMixin:OnEvent(eventName, ...)
       questID = questID,
       questName = nil,
       experience = experience,
-      isWorldQuest = self:IsWorldQuest(questID),
       rewardMoney = money,
       time = time(),
       source = Journalator.State.Source,
