@@ -4,6 +4,7 @@ local function SetupMonitors()
   CreateFrame("Frame", "JNRVendorMonitor", nil, "JournalatorVendorMonitorTemplate")
   CreateFrame("Frame", "JNRCraftingOrderPlacingMonitor", nil, "JournalatorCraftingOrderPlacingMonitorTemplate")
   CreateFrame("Frame", "JNRCraftingOrderFulfillingMonitor", nil, "JournalatorCraftingOrderFulfillingMonitorTemplate")
+  CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsMonitorTemplate")
 end
 
 function Journalator.Initialize()

@@ -8,6 +8,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["VENDORING_TITLE"] = "Journalator - Vendoring"
   L["FULFILLING_TITLE"] = "Journalator - Fulfilling"
   L["PLACING_TITLE"] = "Journalator - Placing"
+  L["QUESTING_TITLE"] = "Journalator - Questing"
   L["INFO_TITLE"] = "Journalator - Info"
 
   L["INVOICES"] = "Invoices"
@@ -17,6 +18,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["VENDORING"] = "Vendoring"
   L["FULFILLING"] = "Fulfilling"
   L["PLACING"] = "Placing"
+  L["QUESTING"] = "Questing"
   L["JOURNALATOR"] = "Journalator"
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
@@ -100,6 +102,14 @@ JOURNALATOR_LOCALES.enUS = function()
   L["NO_RECORDS_FOR_REAGENTS"] = "No records for reagents"
   L["NO_CUSTOMER_REAGENTS"] = "No customer reagents"
   L["NO_CRAFTER_REAGENTS"] = "No crafter reagents"
+
+  L["MONEY"] = "Money"
+  L["NO_ITEM_RECORDS"] = "No item records"
+  L["NO_CURRENCY_RECORDS"] = "No currency records"
+  L["WORLD_QUEST_ABBREVIATED"] = "WQ: %s"
+  L["ITEMS"] = "Items"
+  L["CURRENCIES"] = "Currencies"
+  L["EXPERIENCE"] = "Experience"
 
   return L
 end

@@ -105,6 +105,16 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="JournalatorQuestingDisplayTemplate" parentArray="Views">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Questing" type="string"/>
+				</KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+        </Anchors>
+      </Frame>
+
       <Frame inherits="JournalatorInfoDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Info" type="string"/>
@@ -185,8 +195,15 @@
 					<KeyValue key="title" value="JOURNALATOR_L_FULFILLING_TITLE" type="global"/>
 				</KeyValues>
 				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.CraftingOrdersPlacedTab" relativePoint="RIGHT" x="-15" y="0"/>
-				</Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.CraftingOrdersPlacedTab" relativePoint="RIGHT" x="-15" y="0"/> </Anchors>
+			</Button>
+			<Button parentKey="QuestingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorQuestingTab_Button" text="JOURNALATOR_L_QUESTING">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Questing" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_QUESTING_TITLE" type="global"/>
+				</KeyValues>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.CraftingOrdersPlacedTab" relativePoint="RIGHT" x="-15" y="0"/> </Anchors>
 			</Button>
 			<Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
 				<KeyValues>
@@ -194,7 +211,7 @@
 					<KeyValue key="title" value="JOURNALATOR_L_INFO_TITLE" type="global"/>
 				</KeyValues>
 				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.FulfillingTab" relativePoint="RIGHT" x="-15" y="0"/>
+					<Anchor point="LEFT" relativeKey="$parent.QuestingTab" relativePoint="RIGHT" x="-15" y="0"/>
 				</Anchors>
 			</Button>
 

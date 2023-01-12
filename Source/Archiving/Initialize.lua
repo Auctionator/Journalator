@@ -22,14 +22,20 @@ function Journalator.Archiving.InitializeStore(store)
     store.CraftingOrdersPlaced = {}
   end
 
-  if store.Version ~= 4 then
-    store.Version = 4
+  if store.Version == 4 then
+    store.Version = 5
+    store.Questing = {}
+  end
+
+  if store.Version ~= 5 then
+    store.Version = 5
     store.Invoices = {}
     store.Posting = {}
     store.Failures = {}
     store.Vendoring = {}
     store.Fulfilling = {}
     store.CraftingOrdersPlaced = {}
+    store.Questing = {}
   end
 end
 

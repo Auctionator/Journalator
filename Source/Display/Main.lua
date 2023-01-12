@@ -146,6 +146,7 @@ function JournalatorDisplayMixin:HideCraftingOrderTabs()
   nextTab:SetPoint(startTab:GetPoint(1))
 
   self.FulfillingTab:Hide()
+  self.CraftingOrdersPlacedTab:Hide()
 end
 
 function JournalatorDisplayMixin:SetupExportCSVDialog()
