@@ -221,6 +221,10 @@ function JournalatorQuestsMonitorMixin:PredictRewards(questID)
   self.rewardCurrencies[questID] = currencies
 end
 
+function JournalatorQuestsMonitorMixin:HasAnyRewards(questInfo)
+  return #questInfo.rewardItems > 0 or #questInfo.rewardCurrencies > 0 or questInfo.experience > 0 or questInfo.rewardMoney > 0
+end
+
 function JournalatorQuestsMonitorMixin:RemoveQuest(questID)
   Journalator.Debug.Message("removed", questID)
   self.pendingQuests[questID] = nil
@@ -245,7 +249,10 @@ function JournalatorQuestsMonitorMixin:CheckForCompleted()
         Journalator.Debug.Message("quest accept", questID, #items + #currencies, wantedCount)
         questInfo.rewardItems = items
         questInfo.rewardCurrencies = currencies
-        Journalator.AddToLogs({Questing = {questInfo}})
+        -- Don't record any empty quests
+        if self:HasAnyRewards(questInfo) then
+          Journalator.AddToLogs({Questing = {questInfo}})
+        end
         self:RemoveQuest(questID)
       else
         Journalator.Debug.Message("quest reject not enough loot", questID, wantedCount, #items + #currencies)
