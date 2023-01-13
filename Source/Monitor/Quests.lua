@@ -102,6 +102,7 @@ function JournalatorQuestsMonitorMixin:OnEvent(eventName, ...)
 
   elseif eventName == "QUEST_REMOVED" then
     local questID, isReplay = ...
+    Journalator.Debug.Message("quest removed", questID)
     self.removed[questID] = true
     self:CheckForCompleted()
   end
@@ -225,7 +226,7 @@ function JournalatorQuestsMonitorMixin:HasAnyRewards(questInfo)
 end
 
 function JournalatorQuestsMonitorMixin:RemoveQuest(questID)
-  Journalator.Debug.Message("removed", questID)
+  Journalator.Debug.Message("removed jnr", questID)
   self.pendingQuests[questID] = nil
   self.rewardItems[questID] = nil
   self.rewardCurrencies[questID] = nil
@@ -239,7 +240,7 @@ end
 
 function JournalatorQuestsMonitorMixin:CheckForCompleted()
   for questID, questInfo in pairs(self.pendingQuests) do
-    local currentName = self.pendingQuests[questID].questName ~= nil
+    local currentName = self.pendingQuests[questID].questName
     if currentName ~= nil and self.removed[questID] and self.lootExpectedCount[questID] ~= nil then
       local wantedCount = self.lootExpectedCount[questID]
       local items = self.rewardItems[questID] or {}
@@ -257,7 +258,7 @@ function JournalatorQuestsMonitorMixin:CheckForCompleted()
         Journalator.Debug.Message("quest reject not enough loot", questID, wantedCount, #items + #currencies)
       end
     else
-      Journalator.Debug.Message("quest reject not loaded", questID)
+      Journalator.Debug.Message("quest reject not loaded", questID, currentName ~= nil, self.removed[questID], self.lootExpectedCount[questID] ~= nil)
     end
   end
 end
