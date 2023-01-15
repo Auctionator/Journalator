@@ -20,6 +20,9 @@ function JournalatorQuestsClassicMonitorMixin:OnLoad()
   self.selectedChoice = {}
   hooksecurefunc("GetQuestReward", function(choice)
     local questID = GetQuestID()
+
+    self:EarlyCompleteCheck(questID)
+
     self.selectedChoice[questID] = choice
     self.reputationMonitor:SetReportKey(GetKeyByID(questID))
     Journalator.Debug.Message("get quest reward hook", questID, choice)
@@ -33,6 +36,9 @@ end
 function JournalatorQuestsClassicMonitorMixin:OnEvent(eventName, ...)
   if eventName == "QUEST_TURNED_IN" then
     local questID, experience, money = ...
+
+    self:EarlyCompleteCheck(questID)
+
     Journalator.Debug.Message("quest turned in", questID, experience, money)
     local questInfo = {
       state = "turned in",
@@ -166,5 +172,15 @@ function JournalatorQuestsClassicMonitorMixin:CheckForCompleted(questID)
     self:RemoveQuest(questID)
   else
     Journalator.Debug.Message("quest reject not loaded", questID, currentName ~= nil)
+  end
+end
+
+function JournalatorQuestsMainlineMonitorMixin:EarlyCompleteCheck(questID)
+  if self.pendingQuests[questID] then
+    if self.rewardTimers[questID] then
+      self.rewardTimers[questID]:Cancel()
+      self.rewardTimers[questID] = nil
+    end
+    self:CheckForCompleted(questID)
   end
 end
