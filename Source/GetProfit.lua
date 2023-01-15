@@ -48,6 +48,20 @@ function Journalator.GetProfit(startTime, endTime, filter)
     end
   end
 
+  local quests = Journalator.Archiving.GetRange(startTime, "Questing")
+  for _, item in ipairs(quests) do
+    local filterItem = {
+      itemName = item.questName,
+      time = item.time,
+      source = item.source,
+    }
+    if filterItem.time >= startTime and filterItem.time <= endTime then
+      if filter(filterItem) then
+        incoming = incoming + item.rewardMoney
+      end
+    end
+  end
+
   return incoming - outgoing, incoming, outgoing
 end
 
