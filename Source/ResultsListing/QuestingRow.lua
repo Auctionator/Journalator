@@ -95,7 +95,15 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
         if item.reputationChange > 0 then
           change = "+" .. change
         end
-        GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(item.factionName .. " " .. change))
+
+        local factionName
+        if item.factionID then
+          factionName = GetFactionInfoByID(item.factionID)
+        else
+          factionName = item.factionName
+        end
+
+        GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(factionName .. " " .. change))
       end
     end
   end

@@ -117,3 +117,25 @@ function Journalator.Utilities.MergeReputationChanges(reputationChanges)
 
   return result
 end
+
+do
+  local factionMap
+
+  -- Converts from a faction name to the faction id. Assumes that the faction is
+  -- in the player's reputation listing.
+  function Journalator.Utilities.GetFactionID(factionName)
+    if factionMap == nil or factionMap[factionName] == nil then
+      factionMap = {}
+      ExpandAllFactionHeaders()
+
+      for i = 1, GetNumFactions() do
+        local factionInfo = {GetFactionInfo(i)}
+        local name = factionInfo[1]
+        local id = factionInfo[14]
+        factionMap[name] = id
+      end
+    end
+
+    return factionMap[factionName]
+  end
+end

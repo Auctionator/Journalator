@@ -20,16 +20,16 @@ function JournalatorReputationMonitorMixin:OnEvent(eventName, ...)
 
     local text = ...
 
-    Journalator.Debug.Message("quest classic faction change", text)
+    Journalator.Debug.Message("quest faction change", text)
 
-    local faction, amount = text:match(REP_INCREASED_PATTERN)
+    local factionName, amount = text:match(REP_INCREASED_PATTERN)
     local multiplier = 1
-    if faction == nil or amount == nil then
-      faction, amount = text:match(REP_DECREASED_PATTERN)
+    if factionName == nil or amount == nil then
+      factionName, amount = text:match(REP_DECREASED_PATTERN)
       multiplier = -1
     end
 
-    if faction == nil or amount == nil then
+    if factionName == nil or amount == nil then
       return
     end
 
@@ -39,12 +39,21 @@ function JournalatorReputationMonitorMixin:OnEvent(eventName, ...)
     end
     amount = amount * multiplier
 
-    self.logged[self.reportKey] = self.logged[self.reportKey] or {}
-    table.insert(self.logged[self.reportKey], {
-      factionName = faction,
+    local entry = {
       reputationChange = amount,
-    })
-    Journalator.Debug.Message("reputation recorded", self.reportKey, faction, amount)
+    }
+
+    local factionID = Journalator.Utilities.GetFactionID(factionName)
+
+    if factionID ~= nil then
+      entry.factionID = factionID
+    else
+      entry.factionName = factionName
+    end
+
+    self.logged[self.reportKey] = self.logged[self.reportKey] or {}
+    table.insert(self.logged[self.reportKey], entry)
+    Journalator.Debug.Message("reputation recorded", self.reportKey, factionName, factionID, amount)
   end
 end
 
