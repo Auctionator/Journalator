@@ -10,9 +10,9 @@ local QUESTING_DATA_PROVIDER_LAYOUT ={
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_MONEY,
-    headerParameters = { "money" },
+    headerParameters = { "rewardMoney" },
     cellTemplate = "AuctionatorPriceCellTemplate",
-    cellParameters = { "money" },
+    cellParameters = { "rewardMoney" },
     width = 150,
   },
   {
@@ -69,7 +69,8 @@ function JournalatorQuestingDataProviderMixin:Refresh()
     if self:Filter(filterItem) then
       local processedItem = {
         itemName = item.questName,
-        money = item.rewardMoney,
+        rewardMoney = item.rewardMoney,
+        requiredMoney = item.requiredMoney,
         rawDay = item.time,
         itemLink = "quest:" .. item.questID,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
@@ -94,7 +95,7 @@ end
 
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
-  money = Auctionator.Utilities.NumberComparator,
+  rewardMoney = Auctionator.Utilities.NumberComparator,
   sourceCharacter = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
 }

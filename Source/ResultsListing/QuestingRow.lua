@@ -46,6 +46,12 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
   self.UpdateTooltip = self.OnEnter
   GameTooltip:SetHyperlink(self.rowData.itemLink)
 
+  if self.rowData.requiredMoney ~= nil then
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(JOURNALATOR_L_REQUIRED_COLON)
+    GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(GetMoneyString(self.rowData.requiredMoney, true)))
+  end
+
   local shownRewardsHeader = false
   if self.rowData.items then
     if #self.rowData.items > 0 then

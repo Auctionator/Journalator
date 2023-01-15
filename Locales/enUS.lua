@@ -112,6 +112,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["EXPERIENCE"] = "Experience"
   L["REWARDS_COLON"] = "Rewards:"
   L["REPUTATION_COLON"] = "Reputation:"
+  L["REQUIRED_COLON"] = "Required:"
 
   return L
 end

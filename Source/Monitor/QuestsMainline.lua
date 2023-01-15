@@ -47,10 +47,16 @@ function JournalatorQuestsMainlineMonitorMixin:OnEvent(eventName, ...)
       questID = questID,
       questName = nil,
       experience = experience,
-      rewardMoney = money,
+      rewardMoney = 0,
+      requiredMoney = nil,
       time = time(),
       source = Journalator.State.Source,
     }
+    if money >= 0 then
+      questInfo.rewardMoney = money
+    else
+      questInfo.requiredMoney = -money
+    end
     self.pendingQuests[questID] = questInfo
 
     self.rewardTimers[questID] = C_Timer.NewTimer(Journalator.Constants.QUEST_REWARD_DELAY, function()
@@ -112,6 +118,10 @@ function JournalatorQuestsMainlineMonitorMixin:HasAnyRewards(questInfo)
   return #questInfo.rewardItems > 0 or #questInfo.rewardCurrencies > 0 or questInfo.experience > 0 or questInfo.rewardMoney > 0
 end
 
+function JournalatorQuestsMainlineMonitorMixin:HasAnyCosts(questInfo)
+  return questInfo.requiredMoney ~= nil and questInfo.requiredMoney > 0
+end
+
 function JournalatorQuestsMainlineMonitorMixin:RemoveQuest(questID)
   Journalator.Debug.Message("removed jnr", questID)
   self.pendingQuests[questID] = nil
@@ -138,7 +148,7 @@ function JournalatorQuestsMainlineMonitorMixin:CheckForCompleted()
       questInfo.rewardItems = items
       questInfo.rewardCurrencies = currencies
       -- Don't record any empty quests
-      if self:HasAnyRewards(questInfo) then
+      if self:HasAnyRewards(questInfo) or self:HasAnyCosts(questInfo) then
         Journalator.AddToLogs({Questing = {questInfo}})
       end
       self:RemoveQuest(questID)
