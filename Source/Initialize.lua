@@ -4,7 +4,14 @@ local function SetupMonitors()
   CreateFrame("Frame", "JNRVendorMonitor", nil, "JournalatorVendorMonitorTemplate")
   CreateFrame("Frame", "JNRCraftingOrderPlacingMonitor", nil, "JournalatorCraftingOrderPlacingMonitorTemplate")
   CreateFrame("Frame", "JNRCraftingOrderFulfillingMonitor", nil, "JournalatorCraftingOrderFulfillingMonitorTemplate")
-  CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsMonitorTemplate")
+
+  local repMonitor = CreateFrame("Frame", "JNRReputationMonitor", nil, "JournalatorReputationMonitorTemplate")
+  if Auctionator.Constants.IsClassic then
+    CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsClassicMonitorTemplate")
+  else
+    CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsMainlineMonitorTemplate")
+  end
+  JNRQuestsMonitor:SetReputationMonitor(repMonitor)
 end
 
 function Journalator.Initialize()

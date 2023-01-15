@@ -4,12 +4,16 @@
   <Script file="Vendor.lua" />
   <Script file="CraftingOrderPlacing.lua" />
   <Script file="CraftingOrderFulfilling.lua" />
-  <Script file="Quests.lua" />
+  <Script file="QuestsClassic.lua" />
+  <Script file="QuestsMainline.lua" />
+  <Script file="Reputation.lua" />
 
   <Include file="Mail.xml" />
   <Include file="Posting.xml" />
   <Include file="Vendor.xml" />
   <Include file="CraftingOrderPlacing.xml" />
   <Include file="CraftingOrderFulfilling.xml" />
-  <Include file="Quests.xml" />
+  <Include file="QuestsClassic.xml" />
+  <Include file="QuestsMainline.xml" />
+  <Include file="Reputation.xml" />
 </Ui>

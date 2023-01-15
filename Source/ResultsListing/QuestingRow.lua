@@ -71,6 +71,20 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
     GameTooltip:AddLine(JOURNALATOR_L_NO_CURRENCY_RECORDS)
   end
 
+  if self.rowData.reputationChanges then
+    if #self.rowData.reputationChanges > 0 then
+      GameTooltip:AddLine(" ")
+      GameTooltip:AddLine(JOURNALATOR_L_REPUTATION_COLON)
+      for _, item in ipairs(self.rowData.reputationChanges) do
+        local change = tostring(item.reputationChange)
+        if item.reputationChange > 0 then
+          change = "+" .. change
+        end
+        GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(item.factionName .. " " .. change))
+      end
+    end
+  end
+
   GameTooltip:Show()
 end
 

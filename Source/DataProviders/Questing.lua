@@ -77,6 +77,7 @@ function JournalatorQuestingDataProviderMixin:Refresh()
         currencies = item.rewardCurrencies,
         itemCount = #item.rewardItems,
         currencyCount = #item.rewardCurrencies,
+        reputationChanges = item.reputationChanges,
         experience = item.experience,
         experiencePretty = FormatLargeNumber(item.experience),
       }
