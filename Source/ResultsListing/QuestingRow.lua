@@ -46,9 +46,14 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
   self.UpdateTooltip = self.OnEnter
   GameTooltip:SetHyperlink(self.rowData.itemLink)
 
+  local shownRewardsHeader = false
   if self.rowData.items then
     if #self.rowData.items > 0 then
       GameTooltip:AddLine(" ")
+      if not shownRewardsHeader then
+        GameTooltip:AddLine(JOURNALATOR_L_REWARDS_COLON)
+        shownRewardsHeader = true
+      end
       for _, item in ipairs(self.rowData.items) do
         local name, link = GetItemInfo(item.itemLink)
         AddItem(item.itemLink, item.quantity)
@@ -61,7 +66,11 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
 
   if self.rowData.currencies then
     if #self.rowData.currencies > 0 then
-      GameTooltip:AddLine(" ")
+      if not shownRewardsHeader then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine(JOURNALATOR_L_REWARDS_COLON)
+        shownRewardsHeader = true
+      end
       for _, item in ipairs(self.rowData.currencies) do
         AddCurrency(item.currencyID, item.quantity)
       end
