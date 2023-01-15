@@ -58,6 +58,9 @@ function Journalator.GetProfit(startTime, endTime, filter)
     if filterItem.time >= startTime and filterItem.time <= endTime then
       if filter(filterItem) then
         incoming = incoming + item.rewardMoney
+        if item.requiredMoney then
+          outgoing = outgoing + item.requiredMoney
+        end
       end
     end
   end
