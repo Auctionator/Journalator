@@ -134,14 +134,17 @@ function JournalatorQuestsClassicMonitorMixin:PredictRewards(questID)
     })
   end
 
-  local currencyRewards = GetNumRewardCurrencies()
-  for i = 1, currencyRewards do
-    local currencyID = GetQuestCurrencyID("reward", i)
-    local quantity = select(3, GetQuestCurrencyInfo("reward", i))
-    table.insert(currencies, {
-      currencyID = currencyID,
-      quantity = quantity,
-    })
+  -- Only Wrath onwards has currencies
+  if GetNumRewardCurrencies then
+    local currencyRewards = GetNumRewardCurrencies()
+    for i = 1, currencyRewards do
+      local currencyID = GetQuestCurrencyID("reward", i)
+      local quantity = select(3, GetQuestCurrencyInfo("reward", i))
+      table.insert(currencies, {
+        currencyID = currencyID,
+        quantity = quantity,
+      })
+    end
   end
 
   self.pendingQuests[questID].rewardItems = items
