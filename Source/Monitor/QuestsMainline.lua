@@ -38,6 +38,9 @@ function JournalatorQuestsMainlineMonitorMixin:OnEvent(eventName, ...)
     local questID, experience, money = ...
 
     self:EarlyCompleteCheck(questID)
+    -- Turn in for world quests doesn't trigger the earlier hook, so needs to be
+    -- set here.
+    self.reputationMonitor:SetReportKey(GetKeyByID(questID))
 
     Journalator.Debug.Message("quest turned in", questID, experience, money)
     local questInfo = {
