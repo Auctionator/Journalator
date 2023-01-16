@@ -14,6 +14,9 @@ function Journalator.GetCharactersAndRealms(fromTime)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "Posting"), cache)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "Failures"), cache)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "Vendoring"), cache)
+  SearchLog(Journalator.Archiving.GetRange(fromTime, "Fulfilling"), cache)
+  SearchLog(Journalator.Archiving.GetRange(fromTime, "CraftingOrdersPlaced"), cache)
+  SearchLog(Journalator.Archiving.GetRange(fromTime, "Questing"), cache)
 
   return cache
 end
