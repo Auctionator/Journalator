@@ -96,6 +96,9 @@ end
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
   rewardMoney = Auctionator.Utilities.NumberComparator,
+  itemCount = Auctionator.Utilities.NumberComparator,
+  currencyCount = Auctionator.Utilities.NumberComparator,
+  experience = Auctionator.Utilities.NumberComparator,
   sourceCharacter = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
 }

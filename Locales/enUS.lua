@@ -104,9 +104,6 @@ JOURNALATOR_LOCALES.enUS = function()
   L["NO_CRAFTER_REAGENTS"] = "No crafter reagents"
 
   L["MONEY"] = "Money"
-  L["NO_ITEM_RECORDS"] = "No item records"
-  L["NO_CURRENCY_RECORDS"] = "No currency records"
-  L["WORLD_QUEST_ABBREVIATED"] = "WQ: %s"
   L["ITEMS"] = "Items"
   L["CURRENCIES"] = "Currencies"
   L["EXPERIENCE"] = "Experience"

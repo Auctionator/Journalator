@@ -69,9 +69,6 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
         AddItem(item.itemLink, item.quantity)
       end
     end
-  else
-    GameTooltip:AddLine(" ")
-    GameTooltip:AddLine(JOURNALATOR_L_NO_ITEM_RECORDS)
   end
 
   if self.rowData.currencies then
@@ -85,9 +82,6 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
         AddCurrency(item.currencyID, item.quantity)
       end
     end
-  else
-    GameTooltip:AddLine(" ")
-    GameTooltip:AddLine(JOURNALATOR_L_NO_CURRENCY_RECORDS)
   end
 
   if self.rowData.reputationChanges then
