@@ -50,13 +50,13 @@ function Journalator.Archiving.Initialize()
     JOURNALATOR_LOGS = nil
   end
 
+  Journalator.State.Archive = archive
+
   -- Create a store if there aren't any already
   if JOURNALATOR_ARCHIVE_TIMES == nil or #JOURNALATOR_ARCHIVE_TIMES == 0 then
     JOURNALATOR_ARCHIVE_TIMES = {}
     Journalator.Archiving.MakeNewStore()
   end
-
-  Journalator.State.Archive = archive
 
   Journalator.Archiving.SetState()
 end
