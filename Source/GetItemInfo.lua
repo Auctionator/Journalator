@@ -46,7 +46,7 @@ end
 -- Returns an item link, given a unit price.
 -- If no unit price is known pass in 0.
 function Journalator.GetItemInfo(name, unitPrice, unitDeposit, timeLimit)
-  MapItemLinks(timeLimit - Journalator.Constants.ARCHIVE_INTERVAL)
+  MapItemLinks(timeLimit - Journalator.Constants.LINK_INTERVAL)
 
   return cleanItemLinkMap[GetKey(name, unitPrice, unitDeposit)]
 end

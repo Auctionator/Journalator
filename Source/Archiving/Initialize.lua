@@ -52,25 +52,42 @@ function Journalator.Archiving.Initialize()
 
   -- Create a store if there aren't any already
   if JOURNALATOR_ARCHIVE_TIMES == nil or #JOURNALATOR_ARCHIVE_TIMES == 0 then
-    JOURNALATOR_ARCHIVE_TIMES = { time() }
-    archive:Create("SometimesLocked", Journalator.Constants.STORE_PREFIX .. JOURNALATOR_ARCHIVE_TIMES[1])
+    JOURNALATOR_ARCHIVE_TIMES = {}
+    Journalator.Archiving.MakeNewStore()
   end
-
-  local storeTime = JOURNALATOR_ARCHIVE_TIMES[#JOURNALATOR_ARCHIVE_TIMES]
-  local currentTime = time()
-  -- If more than a month (the ARCHIVE_INTERVAL) has elapsed since the last
-  -- store was created, update the time and create a new one.
-  if currentTime - storeTime > Journalator.Constants.ARCHIVE_INTERVAL then
-    storeTime = currentTime
-    archive:Create("SometimesLocked", Journalator.Constants.STORE_PREFIX .. storeTime)
-    table.insert(JOURNALATOR_ARCHIVE_TIMES, storeTime)
-  end
-
-  local currentStore = Journalator.Constants.STORE_PREFIX .. storeTime
-  Journalator.State.Logs = archive:Open("SometimesLocked", currentStore)
-  Journalator.State.MinTimeLoaded = time()
-
-  Journalator.Archiving.InitializeStore(Journalator.State.Logs)
 
   Journalator.State.Archive = archive
+
+  Journalator.Archiving.SetState()
+end
+
+function Journalator.Archiving.MakeNewStore()
+  local storeTime = time()
+  local currentStore = Journalator.Constants.STORE_PREFIX .. storeTime
+
+  Journalator.State.Archive:Create("SometimesLocked", currentStore)
+  table.insert(JOURNALATOR_ARCHIVE_TIMES, storeTime)
+end
+
+function Journalator.Archiving.SetState()
+  local storeTime = JOURNALATOR_ARCHIVE_TIMES[#JOURNALATOR_ARCHIVE_TIMES]
+  local currentStore = Journalator.Constants.STORE_PREFIX .. storeTime
+
+  Journalator.State.Logs = Journalator.State.Archive:Open("SometimesLocked", currentStore)
+  Journalator.Archiving.InitializeStore(Journalator.State.Logs)
+  Journalator.State.MinTimeLoaded = time()
+end
+
+function Journalator.Archiving.AutogenerateStore()
+  local count = 0
+  for key, list in pairs(Journalator.State.Logs) do
+    if type(list) == "table" then
+      count = count + #list
+    end
+  end
+  if count >= Journalator.Constants.STORE_SIZE_LIMIT then
+    Journalator.Debug.Message("Generating new store", count)
+    Journalator.Archiving.MakeNewStore()
+    Journalator.Archiving.SetState()
+  end
 end

@@ -24,6 +24,10 @@ local function LoadNextArchive(frame)
 end
 
 function Journalator.Archiving.LoadUpTo(minTime, completedCallback, statusCallback)
+   -- Include a bit earlier so that the item link determination in
+   -- Journalator.GetItemInfo works without any extra lag
+  minTime = minTime - Journalator.Constants.LINK_INTERVAL
+
   if Journalator.State.MinTimeLoaded <= minTime or (frame and frame.index == 0) then
     if completedCallback ~= nil then
       completedCallback()

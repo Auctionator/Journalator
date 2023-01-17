@@ -1,4 +1,6 @@
 function Journalator.AddToLogs(newEntries)
+  Journalator.Archiving.AutogenerateStore()
+
   for key, list in pairs(newEntries) do
     for _, value in ipairs(list) do
       table.insert(Journalator.State.Logs[key], value)
