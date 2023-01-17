@@ -15,7 +15,9 @@ function JournalatorQuestsMainlineMonitorMixin:OnLoad()
   hooksecurefunc("GetQuestReward", function(choice)
     local questID = GetQuestID()
     self:EarlyCompleteCheck(questID)
-    self.reputationMonitor:SetReportKey(GetKeyByID(questID))
+    if self.reputationMonitor then
+      self.reputationMonitor:SetReportKey(GetKeyByID(questID))
+    end
     Journalator.Debug.Message("get quest reward hook", questID, choice)
   end)
 
@@ -37,10 +39,12 @@ function JournalatorQuestsMainlineMonitorMixin:OnEvent(eventName, ...)
   if eventName == "QUEST_TURNED_IN" then
     local questID, experience, money = ...
 
-    self:EarlyCompleteCheck(questID)
     -- Turn in for world quests doesn't trigger the earlier hook, so needs to be
-    -- set here.
-    self.reputationMonitor:SetReportKey(GetKeyByID(questID))
+    -- done here as well.
+    self:EarlyCompleteCheck(questID)
+    if self.reputationMonitor then
+      self.reputationMonitor:SetReportKey(GetKeyByID(questID), self:IsWorldQuest(questID))
+    end
 
     Journalator.Debug.Message("quest turned in", questID, experience, money)
     local questInfo = {
@@ -136,7 +140,9 @@ function JournalatorQuestsMainlineMonitorMixin:RemoveQuest(questID)
     self.rewardTimers[questID] = nil
   end
 
-  self.reputationMonitor:ClearByKey(GetKeyByID(questID))
+  if self.reputationMonitor then
+    self.reputationMonitor:ClearByKey(GetKeyByID(questID))
+  end
 end
 
 function JournalatorQuestsMainlineMonitorMixin:CheckForCompleted()
@@ -145,7 +151,12 @@ function JournalatorQuestsMainlineMonitorMixin:CheckForCompleted()
     if currentName ~= nil and self.rewardTimers[questID] == nil then
       local items = self.rewardItems[questID] or {}
       local currencies = self.rewardCurrencies[questID] or {}
-      local reputationChanges = self.reputationMonitor:GetByKey(GetKeyByID(questID))
+      local reputationChanges
+      if self.reputationMonitor then
+        reputationChanges = self.reputationMonitor:GetByKey(GetKeyByID(questID))
+      else
+        reputationChanges = {}
+      end
       Journalator.Debug.Message("quest accept", questID, #items + #currencies, #reputationChanges)
       questInfo.reputationChanges = reputationChanges
       questInfo.rewardItems = items
