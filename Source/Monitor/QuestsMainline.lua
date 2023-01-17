@@ -12,15 +12,6 @@ function JournalatorQuestsMainlineMonitorMixin:OnLoad()
   self.rewardItems = {}
   self.rewardCurrencies = {}
 
-  hooksecurefunc("GetQuestReward", function(choice)
-    local questID = GetQuestID()
-    self:EarlyCompleteCheck(questID)
-    if self.reputationMonitor then
-      self.reputationMonitor:SetReportKey(GetKeyByID(questID))
-    end
-    Journalator.Debug.Message("get quest reward hook", questID, choice)
-  end)
-
   FrameUtil.RegisterFrameForEvents(self, {
     "QUEST_TURNED_IN",
     "QUEST_REMOVED",
@@ -43,7 +34,7 @@ function JournalatorQuestsMainlineMonitorMixin:OnEvent(eventName, ...)
     -- done here as well.
     self:EarlyCompleteCheck(questID)
     if self.reputationMonitor then
-      self.reputationMonitor:SetReportKey(GetKeyByID(questID), self:IsWorldQuest(questID))
+      self.reputationMonitor:SetReportKey(GetKeyByID(questID), true)
     end
 
     Journalator.Debug.Message("quest turned in", questID, experience, money)
@@ -115,10 +106,6 @@ function JournalatorQuestsMainlineMonitorMixin:OnEvent(eventName, ...)
     end
     self:CheckForCompleted()
   end
-end
-
-function JournalatorQuestsMainlineMonitorMixin:IsWorldQuest(questID)
-  return C_QuestLog and C_QuestLog.IsWorldQuest and (C_QuestLog.IsWorldQuest(questID) or C_QuestLog.IsQuestTask(questID))
 end
 
 function JournalatorQuestsMainlineMonitorMixin:HasAnyRewards(questInfo)
