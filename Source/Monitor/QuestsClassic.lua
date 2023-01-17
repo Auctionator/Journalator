@@ -107,7 +107,7 @@ function JournalatorQuestsClassicMonitorMixin:PredictRewards(questID)
   local basicRewards = GetNumQuestRewards()
   for i = 1, basicRewards do
     local itemLink = GetQuestItemLink("reward", i)
-    local quantity = select(4, GetQuestItemInfo("reward", i))
+    local quantity = select(3, GetQuestItemInfo("reward", i))
     table.insert(items, {
       itemLink = itemLink,
       quantity = quantity,
@@ -117,7 +117,7 @@ function JournalatorQuestsClassicMonitorMixin:PredictRewards(questID)
   local choice = self.selectedChoice[questID]
   if choice ~= nil and choice ~= 0 then
     local itemLink = GetQuestItemLink("choice", choice)
-    local quantity = select(4, GetQuestItemInfo("choice", choice))
+    local quantity = select(3, GetQuestItemInfo("choice", choice))
     table.insert(items, {
       itemLink = itemLink,
       quantity = quantity,
