@@ -72,7 +72,7 @@ function JournalatorQuestingDataProviderMixin:Refresh()
         rewardMoney = item.rewardMoney,
         requiredMoney = item.requiredMoney,
         rawDay = item.time,
-        itemLink = "quest:" .. item.questID,
+        itemLink = GetQuestLink and GetQuestLink(item.questID),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         items = item.rewardItems,
         currencies = item.rewardCurrencies,

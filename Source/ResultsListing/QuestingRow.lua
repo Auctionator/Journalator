@@ -44,7 +44,7 @@ end
 function JournalatorLogViewQuestingRowMixin:ShowTooltip()
   GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
   self.UpdateTooltip = self.OnEnter
-  if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
+  if not self.rowData.itemLink then
     GameTooltip:SetText(self.rowData.itemName, 1, 1, 1)
   else
     GameTooltip:SetHyperlink(self.rowData.itemLink)
