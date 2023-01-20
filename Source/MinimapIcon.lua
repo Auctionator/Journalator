@@ -37,7 +37,6 @@ local function OnEnter(parent)
       end
     end, function(current, total)
       if isOpen then
-        GameTooltip:SetText(JOURNALATOR_L_JOURNALATOR)
         GameTooltip:SetText(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_LOADING_X_X:format(current, total)))
         GameTooltip:Show()
       end
