@@ -28,7 +28,7 @@ function Journalator.Archiving.LoadUpTo(minTime, completedCallback, statusCallba
    -- Journalator.GetItemInfo works without any extra lag
   minTime = minTime - Journalator.Constants.LINK_INTERVAL
 
-  if Journalator.State.MinTimeLoaded <= minTime or (frame and frame.index == 0) then
+  if Journalator.Archiving.IsLoadedUpTo(minTime) then
     if completedCallback ~= nil then
       completedCallback()
     end
@@ -58,4 +58,8 @@ function Journalator.Archiving.LoadUpTo(minTime, completedCallback, statusCallba
   frame.targetTime = minTime
 
   frame:SetScript("OnUpdate", LoadNextArchive)
+end
+
+function Journalator.Archiving.IsLoadedUpTo(minTime)
+  return Journalator.State.MinTimeLoaded <= minTime or (frame and frame.index == 0)
 end

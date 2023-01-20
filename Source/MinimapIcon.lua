@@ -19,35 +19,6 @@ end
 
 local icon = LibStub("LibDBIcon-1.0")
 
-local isOpen = false
-local isLoading = false
-local function OnEnter(parent)
-  isOpen = true
-  GameTooltip:SetOwner(parent, "ANCHOR_BOTTOMLEFT")
-  if not isLoading then
-    isLoading = true
-    local startPoint = time() - math.max(GetMonthPeriod(), GetDayPeriod())
-    Journalator.Archiving.LoadUpTo(startPoint, function()
-      isLoading = false
-      if isOpen then
-        GameTooltip:SetText(JOURNALATOR_L_JOURNALATOR)
-        GameTooltip:AddDoubleLine(JOURNALATOR_L_MONTHLY_PROFIT, GetProfitString(GetMonthPeriod()))
-        GameTooltip:AddDoubleLine(JOURNALATOR_L_DAILY_PROFIT, GetProfitString(GetDayPeriod()))
-        GameTooltip:Show()
-      end
-    end, function(current, total)
-      if isOpen then
-        GameTooltip:SetText(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_LOADING_X_X:format(current, total)))
-        GameTooltip:Show()
-      end
-    end)
-  end
-end
-
-local function OnLeave(parent)
-  GameTooltip:Hide()
-  isOpen = false
-end
 
 function Journalator.MinimapIcon.Initialize()
   local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
@@ -63,8 +34,18 @@ function Journalator.MinimapIcon.Initialize()
         Journalator.ToggleView()
       end
     end,
-    OnEnter = OnEnter,
-    OnLeave = OnLeave,
+    OnTooltipShow = function(tip)
+      tip:SetText(JOURNALATOR_L_JOURNALATOR)
+
+      local startPoint = time() - math.max(GetMonthPeriod(), GetDayPeriod())
+      if Journalator.Archiving.IsLoadedUpTo(startPoint) then
+        tip:AddDoubleLine(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_MONTHLY_PROFIT), GetProfitString(GetMonthPeriod()))
+        tip:AddDoubleLine(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_DAILY_PROFIT), GetProfitString(GetDayPeriod()))
+      else
+        tip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_OPEN_TO_SEE_STATS))
+      end
+      tip:Show()
+    end
   })
 
   icon:Register("Journalator", dataObj, Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON))
