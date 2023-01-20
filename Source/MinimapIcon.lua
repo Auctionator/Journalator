@@ -1,3 +1,13 @@
+local function GetMonthPeriod()
+  local d = date("*t")
+  d.day = 1
+  return time() - (time(d) - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset())
+end
+
+local function GetDayPeriod()
+  return 24 * 60 * 60 - C_DateAndTime.GetSecondsUntilDailyReset()
+end
+
 local function GetProfitString(period)
   local profit = Journalator.GetProfit(time() - period, time())
   if profit < 0 then
@@ -7,18 +17,38 @@ local function GetProfitString(period)
   end
 end
 
-local function GetProfitMonthly()
-  local d = date("*t")
-  d.day = 1
-  local monthStart = time(d) - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset()
-  return GetProfitString(time() - monthStart)
-end
-
-local function GetProfitDaily()
-  return GetProfitString(24 * 60 * 60 - C_DateAndTime.GetSecondsUntilDailyReset())
-end
-
 local icon = LibStub("LibDBIcon-1.0")
+
+local isOpen = false
+local isLoading = false
+local function OnEnter(parent)
+  isOpen = true
+  GameTooltip:SetOwner(parent, "ANCHOR_BOTTOMLEFT")
+  if not isLoading then
+    isLoading = true
+    local startPoint = time() - math.max(GetMonthPeriod(), GetDayPeriod())
+    Journalator.Archiving.LoadUpTo(startPoint, function()
+      isLoading = false
+      if isOpen then
+        GameTooltip:SetText(JOURNALATOR_L_JOURNALATOR)
+        GameTooltip:AddDoubleLine(JOURNALATOR_L_MONTHLY_PROFIT, GetProfitString(GetMonthPeriod()))
+        GameTooltip:AddDoubleLine(JOURNALATOR_L_DAILY_PROFIT, GetProfitString(GetDayPeriod()))
+        GameTooltip:Show()
+      end
+    end, function(current, total)
+      if isOpen then
+        GameTooltip:SetText(JOURNALATOR_L_JOURNALATOR)
+        GameTooltip:SetText(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_LOADING_X_X:format(current, total)))
+        GameTooltip:Show()
+      end
+    end)
+  end
+end
+
+local function OnLeave(parent)
+  GameTooltip:Hide()
+  isOpen = false
+end
 
 function Journalator.MinimapIcon.Initialize()
   local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
@@ -34,12 +64,8 @@ function Journalator.MinimapIcon.Initialize()
         Journalator.ToggleView()
       end
     end,
-    OnTooltipShow = function(tip)
-      tip:SetText(JOURNALATOR_L_JOURNALATOR)
-      tip:AddDoubleLine(JOURNALATOR_L_MONTHLY_PROFIT, GetProfitMonthly())
-      tip:AddDoubleLine(JOURNALATOR_L_DAILY_PROFIT, GetProfitDaily())
-      tip:Show()
-    end
+    OnEnter = OnEnter,
+    OnLeave = OnLeave,
   })
 
   icon:Register("Journalator", dataObj, Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON))
