@@ -45,9 +45,15 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
   GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
   self.UpdateTooltip = self.OnEnter
   if not self.rowData.itemLink then
-    GameTooltip:SetText(self.rowData.itemName, 1, 1, 1)
+    GameTooltip:SetText(self.rowData.itemName)
   else
     GameTooltip:SetHyperlink(self.rowData.itemLink)
+  end
+  -- Sometimes the quest data is unavailable, this ensures some kind of tooltip
+  -- displays anyway
+  if not GameTooltip:IsVisible() then
+    GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    GameTooltip:SetText(self.rowData.itemName)
   end
 
   if self.rowData.requiredMoney ~= nil then
