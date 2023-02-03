@@ -78,63 +78,58 @@ local function GetSlotsWithReagents(recipeSchematic, reagents)
 end
 
 function JournalatorCraftingOrderFulfillingMonitorMixin:OnLoad()
-  if Auctionator.Constants.IsClassic then
-    -- No crafting orders
-    return
-  else
-    -- Not all state is available in the fulfilled event, so we record the
-    -- missing stuff when the API calls that use it happen.
+  -- Not all state is available in the fulfilled event, so we record the
+  -- missing stuff when the API calls that use it happen.
 
-    self:ResetState()
+  self:ResetState()
 
-    hooksecurefunc(C_CraftingOrders, "FulfillOrder", function(orderID, crafterNote, profession)
-      self.expectedCrafterNote.orderID = orderID
-      self.expectedCrafterNote.note = crafterNote
-    end)
+  hooksecurefunc(C_CraftingOrders, "FulfillOrder", function(orderID, crafterNote, profession)
+    self.expectedCrafterNote.orderID = orderID
+    self.expectedCrafterNote.note = crafterNote
+  end)
 
-    -- Normal recipe craft
-    hooksecurefunc(C_TradeSkillUI, "CraftRecipe", function(recipeID, _, craftingReagents, _, orderID)
-      if orderID == nil then
-        return
-      end
+  -- Normal recipe craft
+  hooksecurefunc(C_TradeSkillUI, "CraftRecipe", function(recipeID, _, craftingReagents, _, orderID)
+    if orderID == nil then
+      return
+    end
 
-      self.potentialLocalReagents.orderID = orderID
+    self.potentialLocalReagents.orderID = orderID
 
-      local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false)
+    local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false)
 
-      -- Note we don't need to consider modified or non-basic reagents that are
-      -- not included in the parameters because the recipe must have been
-      -- supplied with the complete parameters for a given slot, and if the
-      -- needed modified reagents _are_ missing the recipe craft fails.
+    -- Note we don't need to consider modified or non-basic reagents that are
+    -- not included in the parameters because the recipe must have been
+    -- supplied with the complete parameters for a given slot, and if the
+    -- needed modified reagents _are_ missing the recipe craft fails.
 
-      self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents or {})
+    self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents or {})
 
-      local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
+    local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
 
-      tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
-    end)
+    tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
+  end)
 
-    -- Recraft
-    hooksecurefunc(C_TradeSkillUI, "RecraftRecipeForOrder", function(orderID, itemGUID, craftingReagents)
-      local claimedOrder = C_CraftingOrders.GetClaimedOrder()
-      if not claimedOrder or claimedOrder.orderID ~= orderID then
-        return
-      end
+  -- Recraft
+  hooksecurefunc(C_TradeSkillUI, "RecraftRecipeForOrder", function(orderID, itemGUID, craftingReagents)
+    local claimedOrder = C_CraftingOrders.GetClaimedOrder()
+    if not claimedOrder or claimedOrder.orderID ~= orderID then
+      return
+    end
 
-      self.potentialLocalReagents.orderID = orderID
+    self.potentialLocalReagents.orderID = orderID
 
-      local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(claimedOrder.spellID, true)
+    local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(claimedOrder.spellID, true)
 
-      -- Same usage as for the CraftRecipe hook
-      self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents or {})
+    -- Same usage as for the CraftRecipe hook
+    self.potentialLocalReagents.reagents = GetSlotsWithReagents(recipeSchematic, craftingReagents or {})
 
-      local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
+    local basicMissingReagents = ExcludeMatching(GetBasicAndNotModifiedReagents(recipeSchematic), self.potentialLocalReagents.reagents)
 
-      tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
-    end)
+    tAppendAll(self.potentialLocalReagents.reagents, basicMissingReagents)
+  end)
 
-    FrameUtil.RegisterFrameForEvents(self, CRAFTING_ORDER_EVENTS)
-  end
+  FrameUtil.RegisterFrameForEvents(self, CRAFTING_ORDER_EVENTS)
 end
 
 function JournalatorCraftingOrderFulfillingMonitorMixin:ResetState()

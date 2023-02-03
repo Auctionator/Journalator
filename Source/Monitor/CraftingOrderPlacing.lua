@@ -3,12 +3,7 @@
 JournalatorCraftingOrderPlacingMonitorMixin = {}
 
 function JournalatorCraftingOrderPlacingMonitorMixin:OnLoad()
-  if Auctionator.Constants.IsClassic then
-    -- No crafting orders
-    return
-  else
-    self:HookPlacing()
-  end
+  self:HookPlacing()
 end
 
 local possibleCraftingOrderOptions
