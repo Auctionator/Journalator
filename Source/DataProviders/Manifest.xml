@@ -9,4 +9,5 @@
   <Script file="Fulfilling.lua" />
   <Script file="CraftingOrdersPlaced.lua" />
   <Script file="Questing.lua" />
+  <Script file="TradingPost.lua" />
 </Ui>

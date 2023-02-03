@@ -7,6 +7,7 @@
   <Script file="QuestsClassic.lua" />
   <Script file="QuestsMainline.lua" />
   <Script file="Reputation.lua" />
+  <Script file="TradingPost.lua" />
 
   <Include file="Mail.xml" />
   <Include file="Posting.xml" />
@@ -16,4 +17,5 @@
   <Include file="QuestsClassic.xml" />
   <Include file="QuestsMainline.xml" />
   <Include file="Reputation.xml" />
+  <Include file="TradingPost.xml" />
 </Ui>

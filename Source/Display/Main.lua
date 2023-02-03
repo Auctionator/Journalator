@@ -138,7 +138,7 @@ end
 
 function JournalatorDisplayMixin:HideCraftingOrderTabs()
   local startTab = self.CraftingOrdersPlacedTab
-  local endTab = self.FulfillingTab
+  local endTab = self.TradingPostTab
   local endTabIndex = tIndexOf(self.Tabs, endTab)
 
   local nextTab = self.Tabs[endTabIndex + 1]
@@ -147,6 +147,7 @@ function JournalatorDisplayMixin:HideCraftingOrderTabs()
 
   self.FulfillingTab:Hide()
   self.CraftingOrdersPlacedTab:Hide()
+  self.TradingPostTab:Hide()
 end
 
 function JournalatorDisplayMixin:SetupExportCSVDialog()

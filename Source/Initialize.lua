@@ -12,6 +12,10 @@ local function SetupMonitors()
     CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsMainlineMonitorTemplate")
   end
   JNRQuestsMonitor:SetReputationMonitor(repMonitor)
+
+  if not Auctionator.Constants.IsClassic then
+    CreateFrame("Frame", "JNRTradingPostMonitor", nil, "JournalatorTradingPostMonitorTemplate")
+  end
 end
 
 function Journalator.Initialize()
