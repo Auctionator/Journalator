@@ -54,16 +54,18 @@ function JournalatorPostingMonitorMixin:OnLoad()
 
       Journalator.Debug.Message("JournalatorPostingMonitor: Blizzard post commodity hook", link)
 
-      table.insert(Journalator.State.Logs.Posting, {
-        itemName = C_Item.GetItemName(location),
-        buyout = unitPrice,
-        bid = nil,
-        count = quantity,
-        deposit = deposit,
-        time = time(),
-        itemLink = link,
-        source = Journalator.State.Source,
-      })
+      Journalator.AddToLogs({ Posting = {
+        {
+          itemName = C_Item.GetItemName(location),
+          buyout = unitPrice,
+          bid = nil,
+          count = quantity,
+          deposit = deposit,
+          time = time(),
+          itemLink = link,
+          source = Journalator.State.Source,
+        }
+      }})
     end)
   end
 end
