@@ -109,7 +109,7 @@ function JournalatorQuestsMainlineMonitorMixin:OnEvent(eventName, ...)
 end
 
 function JournalatorQuestsMainlineMonitorMixin:HasAnyRewards(questInfo)
-  return #questInfo.rewardItems > 0 or #questInfo.rewardCurrencies > 0 or questInfo.experience > 0 or questInfo.rewardMoney > 0
+  return #questInfo.rewardItems > 0 or #questInfo.rewardCurrencies > 0 or #questInfo.reputationChanges > 0 or questInfo.experience > 0 or questInfo.rewardMoney > 0
 end
 
 function JournalatorQuestsMainlineMonitorMixin:HasAnyCosts(questInfo)
