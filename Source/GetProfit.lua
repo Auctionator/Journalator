@@ -65,6 +65,26 @@ function Journalator.GetProfit(startTime, endTime, filter)
     end
   end
 
+  local fulfillings = Journalator.Archiving.GetRange(startTime, "LootContainers")
+  for _, item in ipairs(fulfillings) do
+    local filterItem = {
+      time = item.time,
+      source = item.source,
+    }
+    if item.type == "item" then
+      filterItem.itemName = item.name
+    elseif item.type == "npc" then
+      filterItem.itemName = item.name
+    else
+      filterItem.itemName = JOURNALATOR_L_WORLD_OBJECT
+    end
+    if filterItem.time >= startTime and filterItem.time <= endTime then
+      if filter(filterItem) then
+        incoming = incoming + item.money
+      end
+    end
+  end
+
   return incoming - outgoing, incoming, outgoing
 end
 
