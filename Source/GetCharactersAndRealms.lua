@@ -17,6 +17,8 @@ function Journalator.GetCharactersAndRealms(fromTime)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "Fulfilling"), cache)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "CraftingOrdersPlaced"), cache)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "Questing"), cache)
+  SearchLog(Journalator.Archiving.GetRange(fromTime, "TradingPostVendoring"), cache)
+  SearchLog(Journalator.Archiving.GetRange(fromTime, "LootContainers"), cache)
 
   return cache
 end
