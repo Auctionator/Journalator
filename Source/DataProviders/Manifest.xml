@@ -10,4 +10,5 @@
   <Script file="CraftingOrdersPlaced.lua" />
   <Script file="Questing.lua" />
   <Script file="TradingPost.lua" />
+  <Script file="Looting.lua" />
 </Ui>

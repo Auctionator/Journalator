@@ -10,6 +10,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["PLACING_TITLE"] = "Journalator - Placing"
   L["TRADING_POST_TITLE"] = "Journalator - Trading Post"
   L["QUESTING_TITLE"] = "Journalator - Questing"
+  L["LOOTING_TITLE"] = "Journalator - Looting"
   L["INFO_TITLE"] = "Journalator - Info"
 
   L["INVOICES"] = "Invoices"
@@ -20,6 +21,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["FULFILLING"] = "Fulfilling"
   L["PLACING"] = "Placing"
   L["QUESTING"] = "Questing"
+  L["LOOTING"] = "Looting"
   L["TRADING_POST"] = "Trading Post"
   L["JOURNALATOR"] = "Journalator"
 
@@ -115,6 +117,9 @@ JOURNALATOR_LOCALES.enUS = function()
   L["REQUIRED_COLON"] = "Required:"
 
   L["IS_REFUND"] = "Is Refund?"
+
+  L["WORLD_OBJECT"] = "World Object"
+  L["DROPS_COLON"] = "Drops:"
 
   return L
 end

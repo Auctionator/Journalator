@@ -139,3 +139,48 @@ do
     return factionMap[factionName]
   end
 end
+
+do
+  local tooltip
+
+  function Journalator.GetTooltipFirstLine(link)
+    if not tooltip then
+      tooltip = CreateFrame("GameTooltip", "JournalatorFirstLineScanningTooltip", UIParent, "GameTooltipTemplate")
+    end
+
+    tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+    tooltip:SetHyperlink(link)
+    return _G["JournalatorFirstLineScanningTooltipTextLeft1"]:GetText()
+  end
+end
+
+do
+  local frame
+  local callbacks = {}
+  local function Check()
+    for link, list in pairs(callbacks) do
+      local name = Journalator.GetTooltipFirstLine(link)
+      if name ~= nil then
+        for _, c in ipairs(list) do
+          c(name)
+        end
+        callbacks[link] = nil
+      end
+    end
+    if next(callbacks) == nil then
+      frame:SetScript("OnUpdate", nil)
+    end
+  end
+
+  function Journalator.GetNPCNameFromGUID(guid, callback)
+    if not frame then
+      frame = CreateFrame("Frame", nil, UIParent)
+    end
+
+    local link = "unit:" .. guid
+    callbacks[link] = callbacks[link] or {}
+    table.insert(callbacks[link], callback)
+
+    frame:SetScript("OnUpdate", Check)
+  end
+end

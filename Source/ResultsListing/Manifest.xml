@@ -2,12 +2,14 @@
   <Include file="ResultsRow.lua" />
   <Include file="CraftingOrderRow.lua" />
   <Include file="QuestingRow.lua" />
+  <Include file="LootingRow.lua" />
   <Include file="TimeCell.lua" />
   <Include file="PriceCell.lua" />
 
   <Include file="ResultsRow.xml" />
   <Include file="CraftingOrderRow.xml" />
   <Include file="QuestingRow.xml" />
+  <Include file="LootingRow.xml" />
   <Include file="TimeCell.xml" />
   <Include file="PriceCell.xml" />
 </Ui>

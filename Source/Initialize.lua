@@ -19,6 +19,8 @@ local function SetupMonitors()
   if not Auctionator.Constants.IsClassic then
     CreateFrame("Frame", "JNRTradingPostMonitor", nil, "JournalatorTradingPostMonitorTemplate")
   end
+
+  CreateFrame("Frame", "JNRLootContainersMonitor", nil, "JournalatorLootContainersMonitorTemplate")
 end
 
 function Journalator.Initialize()
