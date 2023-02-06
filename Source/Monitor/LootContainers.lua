@@ -40,6 +40,18 @@ local function ConvertSourceInfo(slot)
   return converted
 end
 
+local LootSlotType = Enum.LootSlotType
+
+-- Classic Era
+if LootSlotType == nil then
+  LootSlotType = {
+    None = LOOT_SLOT_NONE,
+    Item = LOOT_SLOT_ITEM,
+    Money = LOOT_SLOT_MONEY,
+    Currency = LOOT_SLOT_CURRENCY,
+  }
+end
+
 function JournalatorLootContainersMonitorMixin:CacheLootAvailable()
   self.currentContainer = {}
   for slot = 1, GetNumLootItems() do
@@ -50,24 +62,24 @@ function JournalatorLootContainersMonitorMixin:CacheLootAvailable()
     local slotType = GetLootSlotType(slot)
 
     local item
-    if slotType == Enum.LootSlotType.Money then
+    if slotType == LootSlotType.Money then
       item = {
-        type = Enum.LootSlotType.Money,
+        type = LootSlotType.Money,
         sources = sources,
         looted = false,
         slot = slot,
       }
-    elseif slotType == Enum.LootSlotType.Currency then
+    elseif slotType == LootSlotType.Currency then
       item = {
-        type = Enum.LootSlotType.Currency,
+        type = LootSlotType.Currency,
         currencyID = currencyID,
         sources = sources,
         looted = false,
         slot = slot,
       }
-    elseif slotType == Enum.LootSlotType.Item then
+    elseif slotType == LootSlotType.Item then
       item = {
-        type = Enum.LootSlotType.Item,
+        type = LootSlotType.Item,
         itemLink = link,
         questID = questID,
         sources = sources,
@@ -92,11 +104,11 @@ local function AccumulateSources(sources)
 end
 
 local function DebugPrintItem(prefix, item)
-  if item.type == Enum.LootSlotType.Item then
+  if item.type == LootSlotType.Item then
     Journalator.Debug.Message(prefix, item.slot, item.type, #item.sources, item.itemLink)
-  elseif item.type == Enum.LootSlotType.Money then
+  elseif item.type == LootSlotType.Money then
     Journalator.Debug.Message(prefix, item.slot, item.type, #item.sources, GetMoneyString(AccumulateSources(item.sources), true))
-  elseif item.type == Enum.LootSlotType.Currency then
+  elseif item.type == LootSlotType.Currency then
     local quantity = AccumulateSources(item.sources)
     Journalator.Debug.Message(prefix, item.slot, item.type, #item.sources, C_CurrencyInfo.GetCurrencyLink(item.currencyID, quantity), quantity)
   else
@@ -167,14 +179,14 @@ function JournalatorLootContainersMonitorMixin:AddToLogs()
       source = Journalator.State.Source
     }
     for _, i in ipairs(items) do
-      if i.type == Enum.LootSlotType.Money then
+      if i.type == LootSlotType.Money then
         result.money = result.money + i.quantity
-      elseif i.type == Enum.LootSlotType.Currency then
+      elseif i.type == LootSlotType.Currency then
         table.insert(result.currencies, {
           currencyID = i.currencyID,
           quantity = i.quantity,
         })
-      elseif i.type == Enum.LootSlotType.Item then
+      elseif i.type == LootSlotType.Item then
         table.insert(result.items, {
           itemLink = i.itemLink,
           quantity = i.quantity,
