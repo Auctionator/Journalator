@@ -1,46 +1,5 @@
 JournalatorLogViewLootingRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
 
-local function IsGear(itemLink)
-  local classType = select(6, GetItemInfoInstant(itemLink))
-  return classType == Enum.ItemClass.Weapon
-    or classType == Enum.ItemClass.Armor
-    -- In DF profession equipment is its own class:
-    or (not Auctionator.Constants.IsClassic and classType ~= nil and classType == Enum.ItemClass.Profession)
-end
-
-local function AddItem(itemLink, quantity)
-  local itemInfo = {GetItemInfo(itemLink)}
-  local text = Auctionator.Utilities.GetNameFromLink(itemInfo[2])
-
-  if IsGear(itemLink) then
-    text = text .. " (" .. (GetDetailedItemLevelInfo(itemLink)) .. ")"
-  end
-
-  local qualityColor = ITEM_QUALITY_COLORS[itemInfo[3]]
-  text = qualityColor.color:WrapTextInColorCode(text)
-
-  if quantity > 1 then
-    text = text .. Auctionator.Utilities.CreateCountString(quantity)
-  end
-
-  GameTooltip:AddLine(text)
-end
-
-local function AddCurrency(currencyID, quantity)
-  local link = C_CurrencyInfo.GetCurrencyLink(currencyID, quantity)
-
-  local text = Auctionator.Utilities.GetNameFromLink(link)
-
-  local color = Auctionator.Utilities.GetQualityColorFromLink(link)
-  if color ~= nil then
-    text = "|c" .. color .. text .. "|r"
-  end
-
-  text = text .. Auctionator.Utilities.CreateCountString(quantity)
-
-  GameTooltip:AddLine(text)
-end
-
 function JournalatorLogViewLootingRowMixin:ShowTooltip()
   GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
   self.UpdateTooltip = self.OnEnter
@@ -56,6 +15,7 @@ function JournalatorLogViewLootingRowMixin:ShowTooltip()
     GameTooltip:SetText(self.rowData.itemName)
   end
 
+  GameTooltip:AddLine(" ")
   GameTooltip:AddLine(JOURNALATOR_L_DROPS_COLON)
 
   if self.rowData.money > 0 then
@@ -66,7 +26,7 @@ function JournalatorLogViewLootingRowMixin:ShowTooltip()
     if #self.rowData.items > 0 then
       for _, item in ipairs(self.rowData.items) do
         local name, link = GetItemInfo(item.itemLink)
-        AddItem(item.itemLink, item.quantity)
+        GameTooltip:AddLine(Journalator.Utilities.GetItemText(item.itemLink, item.quantity))
       end
     end
   end
@@ -74,7 +34,7 @@ function JournalatorLogViewLootingRowMixin:ShowTooltip()
   if self.rowData.currencies then
     if #self.rowData.currencies > 0 then
       for _, item in ipairs(self.rowData.currencies) do
-        AddCurrency(item.currencyID, item.quantity)
+        GameTooltip:AddLine(Journalator.Utilities.GetCurrencyText(item.currencyID, item.quantity))
       end
     end
   end

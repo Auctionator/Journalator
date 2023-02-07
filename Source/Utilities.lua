@@ -158,3 +158,43 @@ do
     frame:SetScript("OnUpdate", Check)
   end
 end
+
+do
+  local function IsGear(itemLink)
+    local classType = select(6, GetItemInfoInstant(itemLink))
+    return Auctionator.Utilities.IsEquipment(classType)
+  end
+
+  function Journalator.Utilities.GetItemText(itemLink, quantity)
+    local itemInfo = {GetItemInfo(itemLink)}
+    local text = Auctionator.Utilities.GetNameFromLink(itemInfo[2])
+
+    if IsGear(itemLink) then
+      text = text .. " (" .. (GetDetailedItemLevelInfo(itemLink)) .. ")"
+    end
+
+    local qualityColor = ITEM_QUALITY_COLORS[itemInfo[3]]
+    text = qualityColor.color:WrapTextInColorCode(text)
+
+    if quantity and quantity > 1 then
+      text = text .. Auctionator.Utilities.CreateCountString(quantity)
+    end
+
+    return text
+  end
+end
+
+function Journalator.Utilities.GetCurrencyText(currencyID, quantity)
+  local link = C_CurrencyInfo.GetCurrencyLink(currencyID, quantity)
+
+  local text = Auctionator.Utilities.GetNameFromLink(link)
+
+  local color = Auctionator.Utilities.GetQualityColorFromLink(link)
+  if color ~= nil then
+    text = "|c" .. color .. text .. "|r"
+  end
+
+  text = text .. Auctionator.Utilities.CreateCountString(quantity)
+
+  return text
+end
