@@ -118,6 +118,7 @@ JOURNALATOR_LOCALES.enUS = function()
 
   L["IS_REFUND"] = "Is Refund?"
 
+  L["ZONE"] = "Zone"
   L["WORLD_OBJECT"] = "World Object"
   L["DROPS_COLON"] = "Drops:"
 

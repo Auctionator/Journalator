@@ -41,6 +41,13 @@ local LOOTING_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_ZONE,
+    headerParameters = { "zone" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "zone" },
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_TIME_ELAPSED,
     headerParameters = { "rawDay" },
     cellTemplate = "JournalatorTimeCellTemplate",
@@ -87,6 +94,13 @@ function JournalatorLootingDataProviderMixin:Refresh()
         itemCount = #item.items,
         currencyCount = #item.currencies,
       }
+
+      local mapInfo = C_Map.GetMapInfo(item.map)
+      if mapInfo then
+        processedItem.zone = mapInfo.name
+      else
+        processedItem.zone = ""
+      end
 
       if item.type == "item" then
         processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemNamePretty, processedItem.itemLink)
