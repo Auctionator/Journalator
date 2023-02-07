@@ -48,6 +48,13 @@ local QUESTING_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_ZONE,
+    headerParameters = { "zone" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "zone" },
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_TIME_ELAPSED,
     headerParameters = { "rawDay" },
     cellTemplate = "JournalatorTimeCellTemplate",
@@ -86,6 +93,13 @@ function JournalatorQuestingDataProviderMixin:Refresh()
         experience = item.experience,
         experiencePretty = FormatLargeNumber(item.experience),
       }
+
+      local mapInfo = item.map and C_Map.GetMapInfo(item.map)
+      if mapInfo then
+        processedItem.zone = mapInfo.name
+      else
+        processedItem.zone = ""
+      end
 
       table.insert(results, processedItem)
     end

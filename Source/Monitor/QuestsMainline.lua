@@ -48,6 +48,7 @@ function JournalatorQuestsMainlineMonitorMixin:OnEvent(eventName, ...)
       rewardMoney = 0,
       requiredMoney = nil,
       time = time(),
+      map = C_Map.GetBestMapForUnit("player"),
       source = Journalator.State.Source,
     }
     if money >= 0 then
