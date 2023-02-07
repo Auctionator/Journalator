@@ -92,32 +92,6 @@ function Journalator.Utilities.CleanNumberString(numberString)
   return tonumber(cleaned)
 end
 
-function Journalator.Utilities.MergeReputationChanges(reputationChanges)
-  local seen = {}
-  for _, change in ipairs(reputationChanges) do
-    local factionName = change.factionName
-    if seen[factionName] then
-      seen[factionName] = seen[factionName] + change.reputationChange
-    else
-      seen[factionName] = change.reputationChange
-    end
-  end
-
-  local result = {}
-  for factionName, reputationChange in pairs(seen) do
-    table.insert(result, {
-      factionName = factionName,
-      reputationChange = reputationChange,
-    })
-  end
-
-  table.sort(result, function(a, b)
-    return a.factionName < b.factionName
-  end)
-
-  return result
-end
-
 do
   local factionMap
 
