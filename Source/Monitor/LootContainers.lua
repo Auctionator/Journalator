@@ -198,7 +198,7 @@ function JournalatorLootContainersMonitorMixin:AddToLogs()
     if guid:find("Creature") ~= nil then
       result.type = "npc"
       result.npcID = tonumber(guid:match("^%w+%-%d+%-%d+%-%d+%-%d+%-(%d+)%-%w+$"))
-      Journalator.GetNPCNameFromGUID(guid, function(name)
+      Journalator.Utilities.GetNPCNameFromGUID(guid, function(name)
         result.name = name
         result.time = time()
         Journalator.AddToLogs({ LootContainers = { result } })

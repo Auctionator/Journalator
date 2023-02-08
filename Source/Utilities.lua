@@ -146,7 +146,7 @@ do
     end
   end
 
-  function Journalator.GetNPCNameFromGUID(guid, callback)
+  function Journalator.Utilities.GetNPCNameFromGUID(guid, callback)
     if not frame then
       frame = CreateFrame("Frame", nil, UIParent)
     end
