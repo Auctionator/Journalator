@@ -210,9 +210,10 @@ function JournalatorLootContainersMonitorMixin:AddToLogs()
       Journalator.AddToLogs({ LootContainers = { result } })
     elseif guid:find("Item") ~= nil then
       result.type = "item"
-      local item = Item:CreateFromItemID(C_Item.GetItemIDByGUID(guid))
+      local location = Journalator.Utilities.GetItemLocationFromGUID(guid)
+      local item = Item:CreateFromItemLocation(location)
       item:ContinueOnItemLoad(function()
-        result.itemLink = C_Item.GetItemLinkByGUID(guid)
+        result.itemLink = C_Item.GetItemLink(location)
         result.name = (GetItemInfo(result.itemLink))
         result.time = time()
 
