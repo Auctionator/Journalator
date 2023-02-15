@@ -102,7 +102,7 @@ function JournalatorLootingDataProviderMixin:Refresh()
         processedItem.zone = ""
       end
 
-      if item.type == "item" then
+      if item.type == "item" and processedItem.itemLink then
         processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemNamePretty, processedItem.itemLink)
       elseif item.type == "npc" then
         processedItem.itemNamePretty = LIGHTYELLOW_FONT_COLOR:WrapTextInColorCode(processedItem.itemNamePretty)
