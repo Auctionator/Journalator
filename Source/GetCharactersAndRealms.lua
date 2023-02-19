@@ -1,9 +1,11 @@
 local function SearchLog(log, cache)
   for _, item in ipairs(log) do
-    if not cache[item.source.realm] then
-      cache[item.source.realm] = {}
+    if item.source ~= nil then
+      if not cache[item.source.realm] then
+        cache[item.source.realm] = {}
+      end
+      cache[item.source.realm][item.source.character] = true
     end
-    cache[item.source.realm][item.source.character] = true
   end
 end
 

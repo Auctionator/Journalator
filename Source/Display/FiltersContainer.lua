@@ -98,6 +98,11 @@ function JournalatorFiltersContainerMixin:Filter(item)
     check = check and (time() - item.time) <= self.filters.secondsToInclude
   end
 
+  -- Work around one-time error when source data wasn't saved
+  if item.source == nil then
+    return false
+  end
+
   check = check and self.filters.realm(item.source.realm)
 
   if self.filters.faction ~= "" then

@@ -23,23 +23,14 @@ local function SetupMonitors()
   CreateFrame("Frame", "JNRLootContainersMonitor", nil, "JournalatorLootContainersMonitorTemplate")
 end
 
-function Journalator.Initialize()
+function Journalator.InitializeBase()
   Journalator.Config.InitializeData()
 
   Journalator.Archiving.Initialize()
 
   Journalator.State.CurrentVersion = GetAddOnMetadata("Journalator", "Version")
 
-  SetupMonitors()
-
   Journalator.SlashCmd.Initialize()
-
-  local faction = UnitFactionGroup("player")
-  Journalator.State.Source = {
-    realm = GetRealmName(),
-    character = GetUnitName("player"),
-    faction = faction,
-  }
 
   Journalator.State.ItemIDToLink = {}
 
@@ -54,4 +45,15 @@ function Journalator.Initialize()
 
     JNRView:SetShown(not JNRView:IsShown())
   end
+end
+
+function Journalator.InitializeMonitoring()
+  local faction = UnitFactionGroup("player")
+  Journalator.State.Source = {
+    realm = GetRealmName(),
+    character = GetUnitName("player"),
+    faction = faction,
+  }
+
+  SetupMonitors()
 end
