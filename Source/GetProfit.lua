@@ -135,5 +135,14 @@ function Journalator.GetDetailedProfits(startTime, endTime, filter)
     end
   end
 
+  local fulfillings = Journalator.Archiving.GetRange(startTime, "Fulfilling")
+  for _, item in ipairs(fulfillings) do
+    if item.time >= startTime and item.time <= endTime then
+      if filter(item) then
+        sales = sales + item.tipAmount - item.consortiumCut
+      end
+    end
+  end
+
   return sales, purchases, lostFees, math.max(0, lostDeposits), (sales - purchases - lostDeposits - lostFees)
 end
