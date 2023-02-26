@@ -4,6 +4,10 @@ local function GetMonthPeriod()
   return time() - (time(d) - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset())
 end
 
+local function GetWeekPeriod()
+  return 7 * 24 * 60 * 60 - C_DateAndTime.GetSecondsUntilWeeklyReset()
+end
+
 local function GetDayPeriod()
   return 24 * 60 * 60 - C_DateAndTime.GetSecondsUntilDailyReset()
 end
@@ -40,6 +44,7 @@ function Journalator.MinimapIcon.Initialize()
       local startPoint = time() - math.max(GetMonthPeriod(), GetDayPeriod())
       if Journalator.Archiving.IsLoadedUpTo(startPoint) then
         tip:AddDoubleLine(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_MONTHLY_PROFIT), GetProfitString(GetMonthPeriod()))
+        tip:AddDoubleLine(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_WEEKLY_PROFIT), GetProfitString(GetWeekPeriod()))
         tip:AddDoubleLine(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_DAILY_PROFIT), GetProfitString(GetDayPeriod()))
       else
         tip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_OPEN_TO_SEE_STATS))
