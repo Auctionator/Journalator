@@ -65,8 +65,8 @@ function Journalator.GetProfit(startTime, endTime, filter)
     end
   end
 
-  local fulfillings = Journalator.Archiving.GetRange(startTime, "LootContainers")
-  for _, item in ipairs(fulfillings) do
+  local looting = Journalator.Archiving.GetRange(startTime, "LootContainers")
+  for _, item in ipairs(looting) do
     local filterItem = {
       time = item.time,
       source = item.source,
