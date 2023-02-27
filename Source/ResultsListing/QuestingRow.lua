@@ -66,13 +66,7 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
           factionName = item.factionName
         end
 
-        -- Work around Blizzard error where the guild factions don't return
-        -- anything for the name
-        if factionName == nil and item.factionID == 1168 or item.factionID == 1169 then
-          factionName = JOURNALATOR_L_GUILD
-        end
-
-        GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(factionName .. " " .. change))
+        GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode((factionName or AUCTIONATOR_L_UNKNOWN) .. " " .. change))
       end
     end
   end
