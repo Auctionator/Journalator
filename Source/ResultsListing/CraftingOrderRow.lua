@@ -62,6 +62,18 @@ function JournalatorLogViewCraftingOrdersRowMixin:ShowTooltip()
     GameTooltip:AddLine(lightBlue:WrapTextInColorCode(JOURNALATOR_L_INCLUDES_EXTRA_CRAFTS))
   end
 
+  if self.rowData.customerNote  and self.rowData.customerNote ~= "" then
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(lightBlue:WrapTextInColorCode(JOURNALATOR_L_CUSTOMER_NOTE .. ":"))
+    GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(self.rowData.customerNote), nil, nil, nil, true)
+  end
+
+  if self.rowData.crafterNote and self.rowData.crafterNote  ~= "" then
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(lightBlue:WrapTextInColorCode(JOURNALATOR_L_CRAFTER_NOTE .. ":"))
+    GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(self.rowData.crafterNote), nil, nil, nil, true)
+  end
+
   GameTooltip:Show()
 end
 
