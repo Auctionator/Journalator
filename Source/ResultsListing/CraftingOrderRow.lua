@@ -57,6 +57,11 @@ function JournalatorLogViewCraftingOrdersRowMixin:ShowTooltip()
     GameTooltip:AddLine(JOURNALATOR_L_NO_RECORDS_FOR_REAGENTS)
   end
 
+  if self.rowData.craftAttempts and self.rowData.craftAttempts > 1 then
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(lightBlue:WrapTextInColorCode(JOURNALATOR_L_INCLUDES_EXTRA_CRAFTS))
+  end
+
   GameTooltip:Show()
 end
 

@@ -101,6 +101,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["POSTING_FEE"] = "Posting Fee"
   
   L["RECRAFT_X_TO_X"] = "Recraft %s to %s"
+  L["INCLUDES_EXTRA_CRAFTS"] = "Includes extra crafts"
   L["CUSTOMER_REAGENTS_COLON"] = "Customer reagents:"
   L["CRAFTER_REAGENTS_COLON"] = "Crafter reagents:"
   L["NO_RECORDS_CUSTOMER_REAGENTS"] = "No records for customer reagents"
