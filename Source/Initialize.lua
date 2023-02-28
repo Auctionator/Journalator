@@ -32,8 +32,6 @@ function Journalator.InitializeBase()
 
   Journalator.SlashCmd.Initialize()
 
-  Journalator.State.ItemIDToLink = {}
-
   Journalator.Statistics.InitializeCache()
 
   Journalator.MinimapIcon.Initialize()
