@@ -224,3 +224,34 @@ function Journalator.Utilities.GetItemLocationFromGUID(wantedItemGUID)
 
   return nil
 end
+
+-- Removes any player-specific information on an item or pet link
+function Journalator.Utilities.CleanItemLink(itemLink)
+  if itemLink:find("item:") then
+    -- For reference
+    -- itemID : enchantID : gemID1 : gemID2 : gemID3 : gemID4
+    --: suffixID : uniqueID : linkLevel : specializationID : modifiersMask : itemContext
+    --: numBonusIDs[:bonusID1:bonusID2:...] : numModifiers[:modifierType1:modifierValue1:...]
+    --: relic1NumBonusIDs[:relicBonusID1:relicBonusID2:...] : relic2NumBonusIDs[...] : relic3NumBonusIDs[...]
+    --: crafterGUID : extraEnchantID
+    --
+    -- Remove the uniqueID, linkLevel, specializationID and itemContext
+    -- parameters from the item link
+    local cleaned = itemLink:gsub("(item:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:)[^:]*:[^:]*:[^:]*:([^:]*:)[^:]*:", "%1:::%2:")
+
+    if string.find(cleaned, ":Player[^: ]+:") then
+      cleaned = string.gsub(cleaned, ":Player[^: ]+:", "::")
+    end
+
+    return cleaned
+  elseif itemLink:find("battlepet:") then
+    -- For reference
+    -- battlepet : speciesID : level : breedQuality : maxHealth : [power] : [speed] : [battlePetID] : [displayID]
+    --
+    -- Remove the power, speed, battlePetID and displayID parameters from the
+    -- link
+    return itemLink:gsub("(battlepet:[^:]*:[^:]*:[^:]*)(:.-|h)?", "%1")
+  else
+    return itemLink
+  end
+end
