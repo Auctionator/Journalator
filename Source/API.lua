@@ -83,3 +83,30 @@ function Journalator.API.v1.GetRealmLastBoughtByItemName(callerID, itemName)
 
   return lastBought
 end
+
+function Journalator.API.v1.GetRealmLastBoughtByItemLink(callerID, itemLink)
+  assert(type(callerID) == "string")
+  if type(itemLink) ~= "string" then
+    Journalator.API.ComposeError(callerID, "Usage Journalator.API.v1.GetRealmLastBoughtByItemLink(string, string)")
+  end
+
+  local dbKey
+  Auctionator.Utilities.DBKeyFromLink(itemLink, function(dbKeys)
+    dbKey = dbKeys[1]
+  end)
+  if dbKey == nil then
+    Auctionator.Utilities.BasicDBKeyFromLink(itemLink)
+  end
+
+  local lastBought = nil
+  local lastBoughtTime
+  for _, realm in ipairs(Journalator.Utilities.GetRealmNames()) do
+    local realmData = Journalator.Statistics.GetByNormalizedRealmName(dbKey, realm)
+    if realmData ~= nil and realmData.lastBought ~= nil and (lastBoughtTime == nil or lastBoughtTime < realmData.lastBought.time) then
+      lastBought = realmData.lastBought.value
+      lastBoughtTime = realmData.lastBought.time
+    end
+  end
+
+  return lastBought
+end

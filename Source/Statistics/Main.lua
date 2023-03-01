@@ -1,4 +1,4 @@
-local STATISTICS_VERSION = 3
+local STATISTICS_VERSION = 4
 
 Journalator.Statistics = {}
 
@@ -40,14 +40,33 @@ function Journalator.Statistics.UpdateCache(newEntries)
   for key, entries in pairs(newEntries) do
     if key == "Invoices" then
       for _, item in ipairs(entries) do
-        local cache = AutoCreateCacheEntry(item.itemName, item.source.realm)
         if item.invoiceType == "seller" then
+          local cache = AutoCreateCacheEntry(item.itemName, item.source.realm)
           cache.successes = cache.successes + item.count
           cache.lastSold = {
             value = item.value / item.count,
             time = item.time
           }
+
         elseif item.invoiceType == "buyer" then
+          -- Store item id specific entry for items purchased in addition to
+          -- name only entry so that different DF quality items show the right
+          -- last bought price
+          Auctionator.Utilities.DBKeyFromLink(item.itemLink, function(dbKeys)
+            for _, key in ipairs(dbKeys) do
+              local cache = AutoCreateCacheEntry(dbKeys[1], item.source.realm)
+              if not cache.lastBought or cache.lastBought.time < item.time then
+                cache.lastBought = {
+                  value = item.value / item.count,
+                  time = item.time
+                }
+              end
+            end
+          end)
+
+          -- Store by item name so that the API works and battle pets get last
+          -- bought prices
+          local cache = AutoCreateCacheEntry(item.itemName, item.source.realm)
           cache.lastBought = {
             value = item.value / item.count,
             time = item.time
@@ -55,6 +74,7 @@ function Journalator.Statistics.UpdateCache(newEntries)
         end
         JOURNALATOR_STATISTICS.RealmConversion[Journalator.Utilities.NormalizeRealmName(item.source.realm)] = item.source.realm
       end
+
     elseif key == "Failures" then
       for _, item in ipairs(entries) do
         local cache = AutoCreateCacheEntry(item.itemName, item.source.realm)

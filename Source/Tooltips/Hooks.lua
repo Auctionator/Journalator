@@ -15,7 +15,7 @@ hooksecurefunc(Auctionator.Tooltip, "ShowTipWithPricingDBKey",
       return
     end
 
-    local salesRate, failedCount, lastSold, lastBought = Journalator.Tooltips.GetSalesInfo(itemName)
+    local salesRate, failedCount, lastSold, lastBought = Journalator.Tooltips.GetSalesInfo(itemName, itemLink)
 
     if salesRate ~= nil then
       tooltipFrame:AddDoubleLine(JOURNALATOR_L_SALE_RATE, WHITE_FONT_COLOR:WrapTextInColorCode(salesRate))

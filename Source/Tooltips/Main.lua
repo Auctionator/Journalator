@@ -21,8 +21,12 @@ local function GetLastSold(itemName)
   return Journalator.API.v1.GetRealmLastSoldByItemName(JOURNALATOR_L_JOURNALATOR, itemName)
 end
 
-local function GetLastBought(itemName)
-  return Journalator.API.v1.GetRealmLastBoughtByItemName(JOURNALATOR_L_JOURNALATOR, itemName)
+local function GetLastBought(itemName, itemLink)
+  if itemLink ~= nil then
+    return Journalator.API.v1.GetRealmLastBoughtByItemLink(JOURNALATOR_L_JOURNALATOR, itemLink)
+  else
+    return Journalator.API.v1.GetRealmLastBoughtByItemName(JOURNALATOR_L_JOURNALATOR, itemName)
+  end
 end
 
 function Journalator.Tooltips.AnyEnabled()
@@ -34,7 +38,7 @@ function Journalator.Tooltips.AnyEnabled()
     )
 end
 
-function Journalator.Tooltips.GetSalesInfo(itemName)
+function Journalator.Tooltips.GetSalesInfo(itemName, itemLink)
   local salesRate, failedString, lastSold, lastBought
 
   if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SALE_RATE) then
@@ -50,7 +54,7 @@ function Journalator.Tooltips.GetSalesInfo(itemName)
   end
 
   if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT) then
-    lastBought = GetLastBought(itemName)
+    lastBought = GetLastBought(itemName, itemLink)
   end
 
   return salesRate, failedString, lastSold, lastBought
