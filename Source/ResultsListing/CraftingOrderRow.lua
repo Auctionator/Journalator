@@ -137,5 +137,10 @@ function JournalatorLogViewCraftingOrdersRowMixin:OnClick(button)
         :Fire(self, Journalator.Events.RowClicked, self.rowData)
         :UnregisterSource(self)
     end
+  elseif button == "RightButton" and self.rowData.otherPlayer then
+    Auctionator.EventBus
+      :RegisterSource(self, "JournalatorLogViewCraftingOrdersRowMixin")
+      :Fire(self, Journalator.Events.RowClicked, {itemName = self.rowData.otherPlayer})
+      :UnregisterSource(self)
   end
 end

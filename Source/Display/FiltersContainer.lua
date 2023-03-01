@@ -116,7 +116,7 @@ function JournalatorFiltersContainerMixin:Filter(item)
     return false
   end
 
-  check = check and self.filters.search(item.itemName)
+  check = check and (self.filters.search(item.itemName) or (item.playerName and self.filters.search(item.playerName)))
 
   return check
 end
