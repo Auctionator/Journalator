@@ -1,5 +1,6 @@
 local itemInfoMap = {}
 
+-- Round deposit (retail and classic) and limit least value to 1s if on retail
 local function GetUnitDeposit(deposit, count)
   if Auctionator.Constants.IsClassic then
     return math.floor(deposit / count)
@@ -19,7 +20,9 @@ local function AddToMap(item)
   })
 end
 
+-- Size of the writable logs (ie. not read only) when the logs were last scanned
 local scannedInfos = 0
+-- Last timestamp the logs were scanned for item links
 local seenTime = nil
 local function MapItemLinks(timeLimit)
   local currentInfos = #Journalator.State.Logs.Posting
@@ -34,8 +37,10 @@ local function MapItemLinks(timeLimit)
   end
 end
 
--- Returns an item link, given a unit price.
--- If no unit price is known pass in 0.
+-- Returns an item link that is probably the one matching an sold item invoice.
+--
+-- Returns a stripped down item link missing item level information if
+-- unitPrice, unitDeposit or timestamp are not supplied
 function Journalator.GetItemInfo(name, unitPrice, unitDeposit, timestamp, timeLimit)
   MapItemLinks(timeLimit - Journalator.Constants.LINK_INTERVAL)
 
@@ -43,8 +48,12 @@ function Journalator.GetItemInfo(name, unitPrice, unitDeposit, timestamp, timeLi
     return nil
   end
 
+  if unitPrice == nil or unitDeposit == nil or timestamp == nil then
+    return Journalator.Utilities.PurgeLevelsFromLink(itemInfoMap[name][1].itemLink)
+  end
+
   for index, item in ipairs(itemInfoMap[name]) do
-    if item.time <= timestamp and item.unitDeposit == unitDeposit and item.unitPrice == unitPrice then
+    if item.time <= timestamp and item.unitDeposit == GetUnitDeposit(unitDeposit, 1) and item.unitPrice == unitPrice then
       return Journalator.Utilities.CleanItemLink(item.itemLink)
     end
   end

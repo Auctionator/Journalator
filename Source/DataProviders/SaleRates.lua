@@ -50,42 +50,137 @@ local SALE_RATES_DATA_PROVIDER_LAYOUT ={
 JournalatorSaleRatesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorSaleRatesDataProviderMixin:Refresh()
-  self:Reset()
+  self:GetItemLinks(function(...)
+    self:ProcessSales(...)
+  end)
+end
+
+function JournalatorSaleRatesDataProviderMixin:GetItemLinks(callback)
+  -- Conversion of item links to Auctionator DB keys for use later when grouping
+  self.seenLinks = self.seenLinks or {}
 
   local timeForRange = self:GetTimeForRange()
 
-  local salesCounts = {}
+  -- Sometimes an entry may not have an item link corresponding to it. This
+  -- causes Journalator to fall back to name matching in that case.
+  local isNameMatch = {}
+
+  -- Processed log entries with an item link
+  local failureLogEntries = {}
+  local successLogEntries = {}
+
+  local waiting = 0
+  local finished = false
+
+  local function FinishCheck()
+    if waiting == 0 and finished then
+      callback(isNameMatch, failureLogEntries, successLogEntries, timeForRange)
+    end
+  end
+
+  -- Work through all the relevant entries and convert item links into
+  -- Auctionator DB keys for grouping where possible
   for _, item in ipairs(Journalator.Archiving.GetRange(timeForRange, "Failures")) do
     if self:Filter(item) then
-      if salesCounts[item.itemName] == nil then
-        salesCounts[item.itemName] = {
-          sold = 0,
-          totalSaleValue = 0,
-          failed = 0,
-        }
+      table.insert(failureLogEntries, CopyTable(item))
+
+      if item.itemLink == nil then
+        isNameMatch[item.itemName] = true
+      elseif not self.seenLinks[item.itemLink] then
+        waiting = waiting + 1
+        Auctionator.Utilities.DBKeyFromLink(item.itemLink, function(dbKeys)
+          self.seenLinks[item.itemLink] = dbKeys[1]
+          waiting = waiting - 1
+          FinishCheck()
+        end)
       end
-      salesCounts[item.itemName].failed = salesCounts[item.itemName].failed + item.count
     end
   end
 
   for _, item in ipairs(Journalator.Archiving.GetRange(timeForRange, "Invoices")) do
     if self:Filter(item) then
       if item.invoiceType == "seller" then
-        if salesCounts[item.itemName] == nil then
-          salesCounts[item.itemName] = {
-            sold = 0,
-            totalSaleValue = 0,
-            failed = 0,
-          }
+        local itemLink = Journalator.GetItemInfo(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), item.time, timeForRange)
+
+        local tmpEntry = CopyTable(item)
+        tmpEntry.itemLink = itemLink
+
+        table.insert(successLogEntries, tmpEntry)
+        if itemLink == nil then
+          isNameMatch[item.itemName] = true
+        else
+          if not self.seenLinks[itemLink] then
+            waiting = waiting + 1
+            Auctionator.Utilities.DBKeyFromLink(itemLink, function(dbKeys)
+              self.seenLinks[itemLink] = dbKeys[1]
+              waiting = waiting - 1
+
+              FinishCheck()
+            end)
+          end
         end
-        salesCounts[item.itemName].sold = salesCounts[item.itemName].sold + item.count
-        salesCounts[item.itemName].totalSaleValue = salesCounts[item.itemName].totalSaleValue + item.value
       end
     end
   end
 
+  finished = true
+  FinishCheck()
+end
+
+-- Groups processed log entries to get sale rates and displays the results
+-- isNameMatch: Items to fall back to grouping by name
+function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failureLogEntries, successLogEntries, timeForRange)
+  self:Reset()
+
+  local salesCounts = {}
+
+  for _, item in ipairs(failureLogEntries) do
+    local key
+    -- Apply fallback grouping if necessary
+    if isNameMatch[item.itemName] then
+      key = item.itemName
+    else
+      key = self.seenLinks[item.itemLink]
+    end
+
+    if salesCounts[key] == nil then
+      salesCounts[key] = {
+        itemName = item.itemName,
+        itemLink = item.itemLink,
+
+        sold = 0,
+        totalSaleValue = 0,
+        failed = 0,
+      }
+    end
+    salesCounts[key].failed = salesCounts[key].failed + item.count
+  end
+
+  for _, item in ipairs(successLogEntries) do
+    local key
+    -- Apply fallback grouping if necessary
+    if isNameMatch[item.itemName] then
+      key = item.itemName
+    else
+      key = self.seenLinks[item.itemLink]
+    end
+
+    if salesCounts[key] == nil then
+      salesCounts[key] = {
+        itemName = item.itemName,
+        itemLink = item.itemLink,
+
+        sold = 0,
+        totalSaleValue = 0,
+        failed = 0,
+      }
+    end
+    salesCounts[key].sold = salesCounts[key].sold + item.count
+    salesCounts[key].totalSaleValue = salesCounts[key].totalSaleValue + item.value
+  end
+
   local results = {}
-  for key, entry in pairs(salesCounts) do
+  for _, entry in pairs(salesCounts) do
 
     local saleRate, saleRatePretty, meanPrice
     if entry.failed == 0 then
@@ -104,9 +199,9 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
     totalPrice = entry.totalSaleValue
 
     local item = {
-      itemName = key,
-      itemNamePretty = key,
-      itemLink = Journalator.GetItemInfo(key, 0, 0, timeForRange),
+      itemName = entry.itemName,
+      itemNamePretty = entry.itemName,
+      itemLink = entry.itemLink or Journalator.GetItemInfo(entry.itemName, nil, nil, nil, timeForRange),
       saleRate = saleRate,
       saleRatePretty = saleRatePretty,
       meanPrice = meanPrice,
@@ -117,6 +212,11 @@ function JournalatorSaleRatesDataProviderMixin:Refresh()
 
     if item.itemLink ~= nil then
       item.itemNamePretty = Journalator.ApplyQualityColor(item.itemName, item.itemLink)
+      -- Check if we matched prices by item link rather than name. If we did
+      -- include the quality icon.
+      if entry.itemLink ~= nil then
+        item.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(item.itemNamePretty, item.itemLink)
+      end
     end
 
     table.insert(results, item)

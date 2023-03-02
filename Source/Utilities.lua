@@ -250,8 +250,17 @@ function Journalator.Utilities.CleanItemLink(itemLink)
     --
     -- Remove the power, speed, battlePetID and displayID parameters from the
     -- link
-    return itemLink:gsub("(battlepet:[^:]*:[^:]*:[^:]*)(:.-|h)?", "%1")
+    return (itemLink:gsub("(battlepet:[^:]*:[^:]*:[^:]*)(:.-|h)?", "%1"))
   else
     return itemLink
+  end
+end
+
+-- Remove any item levels, stats or battle pet levels from a link
+function Journalator.Utilities.PurgeLevelsFromLink(link)
+  if string.match(link, "battlepet") then
+    return (string.gsub(link, ":%d+:%d+:%d+:%d+:%d+:%d+:%d+|", ":0:0:0:0:0:0:0|"))
+  elseif link then
+    return (string.gsub(link, "item:(%d+):.-|", "item:%1|"))
   end
 end
