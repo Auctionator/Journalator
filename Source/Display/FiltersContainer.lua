@@ -78,7 +78,7 @@ end
 
 function JournalatorFiltersContainerMixin:ReceiveEvent(eventName, eventData)
   if eventName == Journalator.Events.RowClicked and self:IsVisible() then
-    self.SearchFilter:SetText("\"" .. eventData.itemName .. "\"")
+    self.SearchFilter:SetText("\"" .. (eventData.searchTerm or eventData.itemName) .. "\"")
   end
 end
 
@@ -116,7 +116,7 @@ function JournalatorFiltersContainerMixin:Filter(item)
     return false
   end
 
-  check = check and (self.filters.search(item.itemName) or (item.playerName and self.filters.search(item.playerName)))
+  check = check and (self.filters.search(item.searchTerm or item.itemName) or (item.playerName and self.filters.search(item.playerName)))
 
   return check
 end

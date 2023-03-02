@@ -64,6 +64,7 @@ function JournalatorPostingDataProviderMixin:Refresh()
   for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Posting")) do
     if self:Filter(item) then
       local processedItem = {
+        searchTerm = item.itemName,
         itemName = item.itemName,
         itemNamePretty = item.itemName,
         total = (item.buyout or item.bid) * item.count,
@@ -78,6 +79,7 @@ function JournalatorPostingDataProviderMixin:Refresh()
       if processedItem.itemLink ~= nil then
         processedItem.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(processedItem.itemNamePretty, processedItem.itemLink)
         processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemNamePretty, processedItem.itemLink)
+        processedItem.itemName = Journalator.Utilities.AddTierToBasicName(processedItem.itemName, processedItem.itemLink)
       end
       table.insert(results, processedItem)
     end

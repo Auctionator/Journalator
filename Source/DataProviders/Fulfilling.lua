@@ -89,6 +89,7 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
     if self:Filter(item) then
       local processedItem = {
         orderType = TYPES_TO_TYPE_STRING[item.orderType],
+        searchTerm = item.itemName,
         itemName = item.itemName,
         itemNamePretty = item.itemName,
         moneyIn = item.tipAmount - item.consortiumCut,
@@ -107,6 +108,7 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
       }
 
       if processedItem.itemLink ~= nil then
+        processedItem.itemName = Journalator.Utilities.AddTierToBasicName(processedItem.itemName, processedItem.itemLink)
         processedItem.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(processedItem.itemNamePretty, processedItem.itemLink)
         processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemNamePretty, processedItem.itemLink)
       end

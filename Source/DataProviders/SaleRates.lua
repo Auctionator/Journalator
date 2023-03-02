@@ -199,6 +199,7 @@ function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failure
     totalPrice = entry.totalSaleValue
 
     local item = {
+      searchTerm = entry.itemName,
       itemName = entry.itemName,
       itemNamePretty = entry.itemName,
       itemLink = entry.itemLink or Journalator.GetItemInfo(entry.itemName, nil, nil, nil, timeForRange),
@@ -215,6 +216,7 @@ function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failure
       -- Check if we matched prices by item link rather than name. If we did
       -- include the quality icon.
       if entry.itemLink ~= nil then
+        item.itemName = Journalator.Utilities.AddTierToBasicName(item.itemName, item.itemLink)
         item.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(item.itemNamePretty, item.itemLink)
       end
     end
@@ -223,7 +225,11 @@ function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failure
   end
 
   table.sort(results, function(left, right)
-    return left.saleRate > right.saleRate
+    if left.saleRate == right.saleRate then
+      return left.itemName > right.itemName
+    else
+      return left.saleRate > right.saleRate
+    end
   end)
   self:AppendEntries(results, true)
 end

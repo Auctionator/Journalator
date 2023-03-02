@@ -81,9 +81,10 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
       end
       local timeSinceEntry = time() - item.time
 
-      local itemNamePretty = item.itemName
+      local itemName, itemNamePretty = item.itemName, item.itemName
       local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), item.time, rangeTime)
       if itemLink then
+        itemName = Journalator.Utilities.AddTierToBasicName(itemName, itemLink)
         itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(itemNamePretty, itemLink)
         itemNamePretty = Journalator.ApplyQualityColor(itemNamePretty, itemLink)
       end
@@ -100,7 +101,8 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
       local sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source)
 
       table.insert(results, {
-        itemName = item.itemName,
+        searchTerm = item.itemName,
+        itemName = itemName,
         itemNamePretty = itemNamePretty,
         moneyIn = moneyIn,
         moneyOut = moneyOut,

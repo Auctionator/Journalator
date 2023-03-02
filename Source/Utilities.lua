@@ -70,6 +70,24 @@ function Journalator.Utilities.AddQualityIconToItemName(itemName, itemLink)
   end
 end
 
+function Journalator.Utilities.AddTierToBasicName(itemName, itemLink)
+  if C_TradeSkillUI == nil or C_TradeSkillUI.GetItemReagentQualityByItemInfo == nil then
+    return itemName
+  end
+
+  local itemID = GetItemInfoInstant(itemLink)
+  if itemID == nil then -- pets won't have an item id from the link
+    return itemName
+  end
+
+  local quality = C_TradeSkillUI.GetItemReagentQualityByItemInfo(itemID)
+  if quality ~= nil then
+    return itemName .. " " .. AUCTIONATOR_L_TIER .. " " .. quality
+  else
+    return itemName
+  end
+end
+
 -- Removes slotID field from reagents entries
 function Journalator.Utilities.CleanReagents(reagents)
   local result = {}

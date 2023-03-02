@@ -51,7 +51,8 @@ function JournalatorFailuresDataProviderMixin:Refresh()
   for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Failures")) do
     if self:Filter(item) then
       local processedItem = {
-        itemName = item.itemName,
+        searchTerm = item.itemName,
+        itemName = Journalator.Utilities.AddTierToBasicName(item.itemName, item.itemLink),
         itemNamePretty = item.itemName,
         failedType = FAILED_TYPE_TO_TEXT[item.failedType],
         count = item.count,
@@ -61,6 +62,7 @@ function JournalatorFailuresDataProviderMixin:Refresh()
       }
 
       if processedItem.itemLink ~= nil then
+        processedItem.itemName = Journalator.Utilities.AddTierToBasicName(processedItem.itemName, processedItem.itemLink)
         processedItem.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(processedItem.itemNamePretty, processedItem.itemLink)
         processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemNamePretty, processedItem.itemLink)
       end

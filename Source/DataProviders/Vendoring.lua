@@ -85,7 +85,8 @@ function JournalatorVendoringDataProviderMixin:Refresh()
         itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(itemNamePretty, item.itemLink)
         itemNamePretty = Journalator.ApplyQualityColor(itemNamePretty, item.itemLink)
         table.insert(results, {
-          itemName = item.itemName,
+          searchTerm = item.itemName,
+          itemName = Journalator.Utilities.AddTierToBasicName(item.itemName, item.itemLink),
           itemNamePretty = itemNamePretty,
           moneyIn = moneyIn,
           moneyOut = moneyOut,
