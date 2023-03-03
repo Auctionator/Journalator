@@ -2,6 +2,8 @@
   <Script file="Main.lua" />
 
   <Script file="BasicOptions.lua" />
+  <Script file="Monitors.lua" />
 
   <Include file="BasicOptions.xml" />
+  <Include file="Monitors.xml" />
 </Ui>

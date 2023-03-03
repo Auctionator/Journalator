@@ -1,0 +1,77 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame
+    name="JournalatorConfigMonitorsOptionsFrame"
+    mixin="JournalatorConfigMonitorsOptionsFrameMixin"
+    hidden="true"
+    >
+
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnShow method="OnShow"/>
+      <OnHide method="Save"/>
+    </Scripts>
+
+    <Frames>
+      <Frame inherits="AuctionatorConfigurationTitleFrame" parentKey="TitleArea">
+        <KeyValues>
+          <KeyValue key="titleText" value="JOURNALATOR_L_CONFIG_MONITORS" type="global" />
+          <KeyValue key="subTitleText" value="JOURNALATOR_L_CONFIG_MONITORS_TEXT" type="global"/>
+        </KeyValues>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="AuctionHouse">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_AUCTION_HOUSE" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="Vendoring">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_VENDORING" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.AuctionHouse" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="CraftingOrders">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CRAFTING_ORDERS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.Vendoring" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TradingPost">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_TRADING_POST" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.CraftingOrders" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="Questing">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_QUESTING" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TradingPost" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="Looting">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_LOOTING" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.Questing" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+   </Frames>
+  </Frame>
+</Ui>

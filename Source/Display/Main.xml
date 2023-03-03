@@ -160,95 +160,66 @@
 					<KeyValue key="displayMode" value="Invoices" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_INVOICES_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="BOTTOMLEFT" x="20" y="-30"/>
-				</Anchors>
 			</Button>
 			<Button parentKey="PostingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="JOURNALATOR_L_POSTING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Posting" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_POSTING_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.InvoicesTab" relativePoint="RIGHT" x="-15" y="0"/>
-				</Anchors>
 			</Button>
 			<Button parentKey="SaleRatesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSaleRatesTab_Button" text="JOURNALATOR_L_SALE_RATES">
 				<KeyValues>
 					<KeyValue key="displayMode" value="SaleRates" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_SALE_RATES_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.PostingTab" relativePoint="RIGHT" x="-15" y="0"/>
-				</Anchors>
 			</Button>
 			<Button parentKey="FailuresTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFailuresTab_Button" text="JOURNALATOR_L_FAILURES">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Failures" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_FAILURES_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.SaleRatesTab" relativePoint="RIGHT" x="-15" y="0"/>
-				</Anchors>
 			</Button>
 			<Button parentKey="VendoringTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendoringTab_Button" text="JOURNALATOR_L_VENDORING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Vendoring" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_VENDORING_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.FailuresTab" relativePoint="RIGHT" x="-15" y="0"/>
-				</Anchors>
 			</Button>
 			<Button parentKey="CraftingOrdersPlacedTab" inherits="JournalatorTabButtonTemplate" name="JournalatorCraftingOrdersPlacedTab_Button" text="JOURNALATOR_L_PLACING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="CraftingOrdersPlaced" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_PLACING_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.VendoringTab" relativePoint="RIGHT" x="-15" y="0"/>
-				</Anchors>
 			</Button>
 			<Button parentKey="FulfillingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFulfillingTab_Button" text="JOURNALATOR_L_FULFILLING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Fulfilling" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_FULFILLING_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.CraftingOrdersPlacedTab" relativePoint="RIGHT" x="-15" y="0"/> </Anchors>
 			</Button>
 			<Button parentKey="TradingPostTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradingPostTab_Button" text="JOURNALATOR_L_TRADING_POST">
 				<KeyValues>
 					<KeyValue key="displayMode" value="TradingPost" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_TRADING_POST_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.FulfillingTab" relativePoint="RIGHT" x="-15" y="0"/> </Anchors>
 			</Button>
 			<Button parentKey="QuestingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorQuestingTab_Button" text="JOURNALATOR_L_QUESTING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Questing" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_QUESTING_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.TradingPostTab" relativePoint="RIGHT" x="-15" y="0"/> </Anchors>
 			</Button>
 			<Button parentKey="LootingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorLootingTab_Button" text="JOURNALATOR_L_LOOTING">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Looting" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_LOOTING_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.QuestingTab" relativePoint="RIGHT" x="-15" y="0"/> </Anchors>
 			</Button>
 			<Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Info" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_INFO_TITLE" type="global"/>
 				</KeyValues>
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.LootingTab" relativePoint="RIGHT" x="-15" y="0"/>
-				</Anchors>
 			</Button>
 
       <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_EXPORT_RESULTS" parentKey="ExportCSV">

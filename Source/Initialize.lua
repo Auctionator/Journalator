@@ -1,26 +1,51 @@
 local function SetupMonitors()
-  CreateFrame("Frame", "JNRMailMonitor", nil, "JournalatorMailMonitorTemplate")
-  CreateFrame("Frame", "JNRPostingMonitor", nil, "JournalatorPostingMonitorTemplate")
-  CreateFrame("Frame", "JNRVendorMonitor", nil, "JournalatorVendorMonitorTemplate")
-
-  if not Auctionator.Constants.IsClassic then
-    CreateFrame("Frame", "JNRCraftingOrderPlacingMonitor", nil, "JournalatorCraftingOrderPlacingMonitorTemplate")
-    CreateFrame("Frame", "JNRCraftingOrderFulfillingMonitor", nil, "JournalatorCraftingOrderFulfillingMonitorTemplate")
-  end
-
-  local repMonitor = CreateFrame("Frame", "JNRReputationMonitor", nil, "JournalatorReputationMonitorTemplate")
-  if Auctionator.Constants.IsClassic then
-    CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsClassicMonitorTemplate")
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE) then
+    CreateFrame("Frame", "JNRMailMonitor", nil, "JournalatorMailMonitorTemplate")
+    CreateFrame("Frame", "JNRPostingMonitor", nil, "JournalatorPostingMonitorTemplate")
   else
-    CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsMainlineMonitorTemplate")
-  end
-  JNRQuestsMonitor:SetReputationMonitor(repMonitor)
-
-  if not Auctionator.Constants.IsClassic then
-    CreateFrame("Frame", "JNRTradingPostMonitor", nil, "JournalatorTradingPostMonitorTemplate")
+    Journalator.Debug.Message("AH monitoring disabled")
   end
 
-  CreateFrame("Frame", "JNRLootContainersMonitor", nil, "JournalatorLootContainersMonitorTemplate")
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING) then
+    CreateFrame("Frame", "JNRVendorMonitor", nil, "JournalatorVendorMonitorTemplate")
+  else
+    Journalator.Debug.Message("vendor monitoring disabled")
+  end
+
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_CRAFTING_ORDERS) then
+    if not Auctionator.Constants.IsClassic then
+      CreateFrame("Frame", "JNRCraftingOrderPlacingMonitor", nil, "JournalatorCraftingOrderPlacingMonitorTemplate")
+      CreateFrame("Frame", "JNRCraftingOrderFulfillingMonitor", nil, "JournalatorCraftingOrderFulfillingMonitorTemplate")
+    end
+  else
+    Journalator.Debug.Message("crafting orders monitoring disabled")
+  end
+
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_QUESTING) then
+    local repMonitor = CreateFrame("Frame", "JNRReputationMonitor", nil, "JournalatorReputationMonitorTemplate")
+    if Auctionator.Constants.IsClassic then
+      CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsClassicMonitorTemplate")
+    else
+      CreateFrame("Frame", "JNRQuestsMonitor", nil, "JournalatorQuestsMainlineMonitorTemplate")
+    end
+    JNRQuestsMonitor:SetReputationMonitor(repMonitor)
+  else
+    Journalator.Debug.Message("quest monitoring disabled")
+  end
+
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_TRADING_POST) then
+    if not Auctionator.Constants.IsClassic then
+      CreateFrame("Frame", "JNRTradingPostMonitor", nil, "JournalatorTradingPostMonitorTemplate")
+    end
+  else
+    Journalator.Debug.Message("trading post monitor disabled")
+  end
+
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING) then
+    CreateFrame("Frame", "JNRLootContainersMonitor", nil, "JournalatorLootContainersMonitorTemplate")
+  else
+    Journalator.Debug.Message("looting monitor disabled")
+  end
 end
 
 function Journalator.InitializeBase()

@@ -15,9 +15,7 @@ function JournalatorDisplayMixin:OnLoad()
   PanelTemplates_SetNumTabs(self, #self.Tabs)
   table.insert(UISpecialFrames, self:GetName())
 
-  if Auctionator.Constants.IsClassic then
-    self:HideCraftingOrderTabs()
-  end
+  self:HideTabs()
 
   self:SetupExportCSVDialog()
 end
@@ -136,18 +134,34 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
   self.Filters:SetShown(self:GetCurrentDataView() ~= nil)
 end
 
-function JournalatorDisplayMixin:HideCraftingOrderTabs()
-  local startTab = self.CraftingOrdersPlacedTab
-  local endTab = self.TradingPostTab
-  local endTabIndex = tIndexOf(self.Tabs, endTab)
+function JournalatorDisplayMixin:HideTabs()
+  self.InvoicesTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
+  self.PostingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
+  self.SaleRatesTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
+  self.FailuresTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
 
-  local nextTab = self.Tabs[endTabIndex + 1]
-  nextTab:ClearAllPoints()
-  nextTab:SetPoint(startTab:GetPoint(1))
+  self.VendoringTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING))
 
-  self.FulfillingTab:Hide()
-  self.CraftingOrdersPlacedTab:Hide()
-  self.TradingPostTab:Hide()
+  self.CraftingOrdersPlacedTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_CRAFTING_ORDERS) and not Auctionator.Constants.IsClassic)
+  self.FulfillingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_CRAFTING_ORDERS) and not Auctionator.Constants.IsClassic)
+
+  self.TradingPostTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_TRADING_POST) and not Auctionator.Constants.IsClassic)
+
+  self.QuestingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_QUESTING))
+
+  self.LootingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING))
+
+  local lastTab = nil
+  for index, tab in ipairs(self.Tabs) do
+    if tab:IsShown() then
+      if lastTab == nil then
+        tab:SetPoint("BOTTOMLEFT", 20, -30)
+      else
+        tab:SetPoint("LEFT", lastTab, "RIGHT", -15, 0)
+      end
+      lastTab = tab
+    end
+  end
 end
 
 function JournalatorDisplayMixin:SetupExportCSVDialog()

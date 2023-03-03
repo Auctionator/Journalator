@@ -76,6 +76,11 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_VENDORING"] = "Vendoring"
   L["CONFIG_GROUP_JUNK"] = "Group junk items in the \"Vendoring\" tab"
   L["CONFIG_SHOW_DETAILED_STATUS"] = "Show more details in status text in the main view."
+  L["CONFIG_MONITORS"] = "Monitors"
+  L["CONFIG_MONITORS_TEXT"] = "Enable and disable different Journalator monitors for tracking activity ingame. A /reload is required to apply any changes."
+
+  L["AUCTION_HOUSE"] = "Auction House"
+  L["CRAFTING_ORDERS"] = "Crafting Orders"
 
   L["STATISTICS"] = "Statistics"
   L["COMPUTE_STATISTICS"] = "Compute Statistics"

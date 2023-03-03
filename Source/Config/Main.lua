@@ -8,6 +8,13 @@ Journalator.Config.Options = {
   MINIMAP_ICON = "minimap_icon",
 
   SHOW_DETAILED_STATUS = "show_detailed_status",
+  
+  MONITOR_AUCTION_HOUSE = "monitor_auction_house",
+  MONITOR_VENDORING = "monitor_vendoring",
+  MONITOR_CRAFTING_ORDERS = "monitor_crafting_orders",
+  MONITOR_TRADING_POST = "monitor_trading_post",
+  MONITOR_QUESTING = "monitor_questing",
+  MONITOR_LOOTING = "monitor_looting",
 
   DEBUG = "debug",
 }
@@ -20,6 +27,12 @@ Journalator.Config.Defaults = {
   [Journalator.Config.Options.VENDORING_GROUP_JUNK] = true,
   [Journalator.Config.Options.MINIMAP_ICON] = { hide = false },
   [Journalator.Config.Options.SHOW_DETAILED_STATUS] = false,
+  [Journalator.Config.Options.MONITOR_AUCTION_HOUSE] = true,
+  [Journalator.Config.Options.MONITOR_VENDORING] = true,
+  [Journalator.Config.Options.MONITOR_CRAFTING_ORDERS] = true,
+  [Journalator.Config.Options.MONITOR_TRADING_POST] = true,
+  [Journalator.Config.Options.MONITOR_QUESTING] = true,
+  [Journalator.Config.Options.MONITOR_LOOTING] = true,
   [Journalator.Config.Options.DEBUG] = false,
 }
 
