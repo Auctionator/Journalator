@@ -21,7 +21,17 @@ function JournalatorDisplayMixin:OnLoad()
 end
 
 function JournalatorDisplayMixin:OnShow()
-  self:SetDisplayMode(self.Tabs[1].displayMode)
+  local visibleTab
+  for _, tab in ipairs(self.Tabs) do
+    if tab:IsShown() then
+      visibleTab = tab
+      break
+    end
+  end
+
+  if visibleTab ~= nil then
+    self:SetDisplayMode(visibleTab.displayMode)
+  end
 
   Auctionator.EventBus:Register(self, REFRESH_EVENTS)
 
