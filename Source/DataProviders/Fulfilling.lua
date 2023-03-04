@@ -16,6 +16,22 @@ local FULFILLING_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_IS_RECRAFT,
+    headerParameters = { "isRecraftPretty" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "isRecraftPretty" },
+    defaultHide = true,
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_PROFESSION,
+    headerParameters = { "profession" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "profession" },
+    defaultHide = true,
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_NAME,
     headerParameters = { "itemName" },
     cellTemplate = "AuctionatorStringCellTemplate",
@@ -68,6 +84,11 @@ local FULFILLING_DATA_PROVIDER_LAYOUT ={
   },
 }
 
+local function GetProfessionName(recipeID)
+  local _, _, skillLineID = C_TradeSkillUI.GetTradeSkillLineForRecipe(recipeID)
+  return C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID).professionName
+end
+
 JournalatorFulfillingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorFulfillingDataProviderMixin:Refresh()
@@ -89,6 +110,7 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
     if self:Filter(item) then
       local processedItem = {
         orderType = TYPES_TO_TYPE_STRING[item.orderType],
+        profession = GetProfessionName(item.recipeID),
         searchTerm = item.itemName,
         itemName = item.itemName,
         itemNamePretty = item.itemName,
@@ -104,6 +126,7 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
         customerReagents = item.customerReagents,
         crafterReagents = item.crafterReagents,
         isRecraft = item.isRecraft,
+        isRecraftPretty = item.isRecraft and AUCTIONATOR_L_UNDERCUT_YES or AUCTIONATOR_L_UNDERCUT_NO,
         recraftItemLink = item.recraftItemLink,
       }
 

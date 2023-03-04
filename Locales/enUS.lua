@@ -114,6 +114,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["NO_RECORDS_FOR_REAGENTS"] = "No records for reagents"
   L["NO_CUSTOMER_REAGENTS"] = "No customer reagents"
   L["NO_CRAFTER_REAGENTS"] = "No crafter reagents"
+  L["IS_RECRAFT"] = "Is Recraft?"
+  L["PROFESSION"] = "Profession"
 
   L["MONEY"] = "Money"
   L["ITEMS"] = "Items"
