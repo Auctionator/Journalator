@@ -12,11 +12,45 @@ local function CacheMail(index)
   }
 end
 
+-- Order of parameters for the battle pet hyperlink string
+local battlePetTooltip = {
+  "battlePetSpeciesID",
+  "battlePetLevel",
+  "battlePetBreedQuality",
+  "battlePetMaxHealth",
+  "battlePetPower",
+  "battlePetSpeed",
+}
+-- Convert an attachment to a battle pet link as by default only the cage item
+-- is supplied on the attachment link, missing all the battle pet stats (retail
+-- only)
+local function ExtractBattlePetLink(mailIndex, attachmentIndex)
+  local tooltipInfo = C_TooltipInfo.GetInboxItem(mailIndex, attachmentIndex)
+  if tooltipInfo then
+    TooltipUtil.SurfaceArgs(tooltipInfo)
+
+    local itemString = "battlepet"
+    for _, key in ipairs(battlePetTooltip) do
+      itemString = itemString .. ":" .. tooltipInfo[key]
+    end
+
+    local name = C_PetJournal.GetPetInfoBySpeciesID(tooltipInfo.battlePetSpeciesID)
+    local quality = ITEM_QUALITY_COLORS[tooltipInfo.battlePetBreedQuality].color
+    return quality:WrapTextInColorCode("|H" .. itemString .. "|h[" .. name .. "]|h")
+  else
+    print("miss")
+  end
+end
+
 local function GetFirstAttachment(mailIndex)
   for attachmentIndex = 1, ATTACHMENTS_MAX do
     local link = GetInboxItemLink(mailIndex, attachmentIndex)
     if link ~= nil then
-      return link
+      if not Auctionator.Constants.IsClassic and link:find("item:" .. Auctionator.Constants.PET_CAGE_ID) then
+        return ExtractBattlePetLink(mailIndex, attachmentIndex) or link
+      else
+        return link
+      end
     end
   end
 end
