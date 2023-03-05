@@ -148,6 +148,8 @@ end
 local COMPARATORS = {
   orderType = Auctionator.Utilities.StringComparator,
   guildName = Auctionator.Utilities.StringComparator,
+  profession = Auctionator.Utilities.StringComparator,
+  isRecraftPretty = Auctionator.Utilities.StringComparator,
   itemName = Auctionator.Utilities.StringComparator,
   moneyIn = Auctionator.Utilities.NumberComparator,
   customerNote = Auctionator.Utilities.StringComparator,

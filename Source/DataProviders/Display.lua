@@ -1,5 +1,7 @@
 JournalatorDisplayDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
 
+local itemLinkToLevel = {}
+
 function JournalatorDisplayDataProviderMixin:OnLoad()
   AuctionatorDataProviderMixin.OnLoad(self)
   self.processCountPerUpdate = 200 --Reduce flickering when updating the display
@@ -7,6 +9,47 @@ function JournalatorDisplayDataProviderMixin:OnLoad()
   Auctionator.EventBus:Register(self, {
     Journalator.Events.FiltersChanged
   })
+
+  local function ApplyItemLevel(entry, itemLevel)
+    if entry.searchTerm == nil then
+      entry.searchTerm = entry.itemName
+    end
+
+    entry.itemName = entry.itemName .. " (" .. itemLevel .. ")"
+    entry.itemNamePretty = Journalator.ApplyQualityColor(entry.itemName, entry.itemLink)
+  end
+
+  -- Populate item level in any item names
+  self:SetOnEntryProcessedCallback(function(entry)
+    if entry.itemLink == nil then
+      self:NotifyCacheUsed()
+      return
+    end
+
+    local itemClass = select(6, GetItemInfoInstant(entry.itemLink))
+    if not Auctionator.Utilities.IsEquipment(itemClass) then
+      self:NotifyCacheUsed()
+      return
+    end
+
+    -- Use cached item level to reduce flickering and scroll jumping up and down
+    if itemLinkToLevel[entry.itemLink] then
+      ApplyItemLevel(entry, itemLinkToLevel[entry.itemLink])
+      self:NotifyCacheUsed()
+      return
+    end
+
+    local item = Item:CreateFromItemLink(entry.itemLink)
+    item:ContinueOnItemLoad(function()
+      local itemLevel = GetDetailedItemLevelInfo(entry.itemLink)
+
+      if itemLevel ~= nil then
+        itemLinkToLevel[entry.itemLink] = itemLevel
+        ApplyItemLevel(entry, itemLevel)
+        self:SetDirty()
+      end
+    end)
+  end)
 end
 
 function JournalatorDisplayDataProviderMixin:OnShow()
