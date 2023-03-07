@@ -110,7 +110,7 @@ local function DebugPrintItem(prefix, item)
     Journalator.Debug.Message(prefix, item.slot, item.type, #item.sources, GetMoneyString(AccumulateSources(item.sources), true))
   elseif item.type == LootSlotType.Currency then
     local quantity = AccumulateSources(item.sources)
-    Journalator.Debug.Message(prefix, item.slot, item.type, #item.sources, C_CurrencyInfo.GetCurrencyLink(item.currencyID, quantity), quantity)
+    Journalator.Debug.Message(prefix, item.slot, item.type, #item.sources, (C_CurrencyInfo and C_CurrencyInfo.GetCurrencyLink or GetCurrencyLink)(item.currencyID, quantity), quantity)
   else
     Journalator.Debug.Message(prefix, "missing type")
   end
