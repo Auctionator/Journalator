@@ -203,7 +203,7 @@ do
 end
 
 function Journalator.Utilities.GetCurrencyText(currencyID, quantity)
-  local link = C_CurrencyInfo.GetCurrencyLink(currencyID, quantity)
+  local link = (C_CurrencyInfo and C_CurrencyInfo.GetCurrencyLink or GetCurrencyLink)(currencyID, quantity)
 
   local text = Auctionator.Utilities.GetNameFromLink(link)
 
