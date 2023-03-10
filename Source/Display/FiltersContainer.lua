@@ -52,7 +52,7 @@ end
 
 function JournalatorFiltersContainerMixin:OnUpdate()
   self:UpdateMinTime(self:GetTimeForRange())
-  self:CheckFiltersChanged(self:GetFilters())
+  self:CheckFiltersChanged()
 end
 
 function JournalatorFiltersContainerMixin:UpdateRealms()
@@ -63,16 +63,17 @@ function JournalatorFiltersContainerMixin:UpdateRealms()
   self.RealmDropDown:SetRealms(realms, true)
 end
 
-function JournalatorFiltersContainerMixin:CheckFiltersChanged(filters)
+function JournalatorFiltersContainerMixin:CheckFiltersChanged()
   local prevFilters = self.filters
-  for key, val in pairs(prevFilters) do
-    if (type(filters[key]) == "function" and filters[key]()) or
-       (type(filters[key]) ~= "function" and filters[key] ~= val)
-       then
-      self.filters = filters
-      Auctionator.EventBus:Fire(self, Journalator.Events.FiltersChanged)
-      break
-    end
+  local hasChanged =
+    prevFilters.searchText ~= self.SearchFilter:GetText() or
+    prevFilters.secondsToInclude ~= self.TimePeriodDropDown:GetValue() or
+    self.RealmDropDown:HasChanged() or
+    prevFilters.faction ~= self.FactionDropDown:GetValue()
+
+  if hasChanged then
+    self.filters = self:GetFilters()
+    Auctionator.EventBus:Fire(self, Journalator.Events.FiltersChanged)
   end
 end
 
@@ -136,10 +137,6 @@ function JournalatorFiltersContainerMixin:GetSearch()
   end
 
   return function(itemName)
-    if itemName == nil then -- Not using function-based filter change check
-      return false
-    end
-
     local lower = string.lower(itemName)
     for _, term in ipairs(searchTerms) do
       if term.isExact then

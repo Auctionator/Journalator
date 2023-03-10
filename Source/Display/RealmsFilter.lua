@@ -32,16 +32,14 @@ end
 
 -- When realm ~= nil returns a boolean indicating whether the realm is toggled
 -- on.
--- If realm == nil returns true if the filter state has changed since the last
--- such call. Used to avoid refreshing DataProviders more than necessary.
 function JournalatorRealmsFilterDropDownMixin:GetValue(realm)
-  if realm ~= nil then
-    return self.settings[realm]
-  else
-    local changed = self.hasChanged
-    self.hasChanged = false
-    return changed
-  end
+  return self.settings[realm]
+end
+
+function JournalatorRealmsFilterDropDownMixin:HasChanged()
+  local changed = self.hasChanged
+  self.hasChanged = false
+  return changed
 end
 
 function JournalatorRealmsFilterDropDownMixin:SetRealms(allRealms, preserve)
