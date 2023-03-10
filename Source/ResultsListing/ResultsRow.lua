@@ -4,10 +4,11 @@ function JournalatorLogViewResultsRowMixin:OnEnter()
   AuctionatorResultsRowTemplateMixin.OnEnter(self)
 
   if self.rowData.itemLink then
+    GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+
     if string.match(self.rowData.itemLink, "battlepet") then
       BattlePetToolTip_ShowLink(self.rowData.itemLink)
     else
-      GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
       GameTooltip:SetHyperlink(self.rowData.itemLink)
       GameTooltip:Show()
     end
