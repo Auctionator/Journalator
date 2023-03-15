@@ -22,6 +22,7 @@
   <Include file="Questing.xml" />
   <Include file="TradingPost.xml" />
   <Include file="Looting.xml" />
+  <Include file="WoWTokens.xml" />
   <Include file="Info.xml" />
 
   <Include file="Main.xml" />

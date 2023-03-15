@@ -11,4 +11,5 @@
   <Script file="Questing.lua" />
   <Script file="TradingPost.lua" />
   <Script file="Looting.lua" />
+  <Script file="WoWTokens.lua" />
 </Ui>

@@ -22,6 +22,7 @@ function JournalatorConfigMonitorsOptionsFrameMixin:OnLoad()
     self.CraftingOrders:Hide()
     self.TradingPost:Hide()
     self.Questing:SetPoint("TOPLEFT", self.Vendoring, "BOTTOMLEFT")
+    self.WoWTokens:Hide()
   end
 end
 
@@ -38,6 +39,8 @@ function JournalatorConfigMonitorsOptionsFrameMixin:OnShow()
   self.Questing:SetChecked(Journalator.Config.Get(Journalator.Config.Options.MONITOR_QUESTING))
   -- looting/loot containers
   self.Looting:SetChecked(Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING))
+  -- purchasing wow tokens for gold
+  self.WoWTokens:SetChecked(Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS))
 end
 
 function JournalatorConfigMonitorsOptionsFrameMixin:Save()
@@ -47,6 +50,7 @@ function JournalatorConfigMonitorsOptionsFrameMixin:Save()
   Journalator.Config.Set(Journalator.Config.Options.MONITOR_TRADING_POST, self.TradingPost:GetChecked())
   Journalator.Config.Set(Journalator.Config.Options.MONITOR_QUESTING, self.Questing:GetChecked())
   Journalator.Config.Set(Journalator.Config.Options.MONITOR_LOOTING, self.Looting:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.MONITOR_WOW_TOKENS, self.WoWTokens:GetChecked())
 end
 
 function JournalatorConfigMonitorsOptionsFrameMixin:Cancel()

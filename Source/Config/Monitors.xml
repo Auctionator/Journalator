@@ -72,6 +72,15 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.Questing" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="WoWTokens">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_WOW_TOKENS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.Looting" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
    </Frames>
   </Frame>
 </Ui>

@@ -135,6 +135,16 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="JournalatorWoWTokensDisplayTemplate" parentArray="Views">
+				<KeyValues>
+					<KeyValue key="displayMode" value="WoWTokens" type="string"/>
+				</KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+        </Anchors>
+      </Frame>
+
       <Frame inherits="JournalatorInfoDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Info" type="string"/>
@@ -213,6 +223,12 @@
 				<KeyValues>
 					<KeyValue key="displayMode" value="Looting" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_LOOTING_TITLE" type="global"/>
+				</KeyValues>
+			</Button>
+			<Button parentKey="WoWTokensTab" inherits="JournalatorTabButtonTemplate" name="JournalatorWoWTokensTab_Button" text="JOURNALATOR_L_WOW_TOKENS">
+				<KeyValues>
+					<KeyValue key="displayMode" value="WoWTokens" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_WOW_TOKENS_TITLE" type="global"/>
 				</KeyValues>
 			</Button>
 			<Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">

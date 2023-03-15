@@ -85,6 +85,15 @@ function Journalator.GetProfit(startTime, endTime, filter)
     end
   end
 
+  local wowTokens = Journalator.Archiving.GetRange(startTime, "WoWTokens")
+  for _, item in ipairs(wowTokens) do
+    if item.time >= startTime and item.time <= endTime then
+      if filter(item) then
+        outgoing = outgoing + item.value
+      end
+    end
+  end
+
   return incoming - outgoing, incoming, outgoing
 end
 
@@ -140,6 +149,15 @@ function Journalator.GetDetailedProfits(startTime, endTime, filter)
     if item.time >= startTime and item.time <= endTime then
       if filter(item) then
         sales = sales + item.tipAmount - item.consortiumCut
+      end
+    end
+  end
+
+  local wowTokens = Journalator.Archiving.GetRange(startTime, "WoWTokens")
+  for _, item in ipairs(wowTokens) do
+    if item.time >= startTime and item.time <= endTime then
+      if filter(item) then
+        purchases = purchases + item.value
       end
     end
   end

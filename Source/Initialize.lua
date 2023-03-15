@@ -46,6 +46,14 @@ local function SetupMonitors()
   else
     Journalator.Debug.Message("looting monitor disabled")
   end
+
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS) then
+    if not Auctionator.Constants.IsClassic then
+      CreateFrame("Frame", "JNRWoWTokensMonitor", nil, "JournalatorWoWTokensMonitorTemplate")
+    end
+  else
+    Journalator.Debug.Message("wow token monitor disabled")
+  end
 end
 
 function Journalator.InitializeBase()

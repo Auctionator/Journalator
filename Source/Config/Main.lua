@@ -15,6 +15,7 @@ Journalator.Config.Options = {
   MONITOR_TRADING_POST = "monitor_trading_post",
   MONITOR_QUESTING = "monitor_questing",
   MONITOR_LOOTING = "monitor_looting",
+  MONITOR_WOW_TOKENS = "monitor_wow_tokens",
 
   DEBUG = "debug",
 }
@@ -33,6 +34,7 @@ Journalator.Config.Defaults = {
   [Journalator.Config.Options.MONITOR_TRADING_POST] = true,
   [Journalator.Config.Options.MONITOR_QUESTING] = true,
   [Journalator.Config.Options.MONITOR_LOOTING] = true,
+  [Journalator.Config.Options.MONITOR_WOW_TOKENS] = true,
   [Journalator.Config.Options.DEBUG] = false,
 }
 

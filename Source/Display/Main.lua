@@ -161,6 +161,8 @@ function JournalatorDisplayMixin:HideTabs()
 
   self.LootingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING))
 
+  self.WoWTokensTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS) and not Auctionator.Constants.IsClassic)
+
   local lastTab = nil
   for index, tab in ipairs(self.Tabs) do
     if tab:IsShown() then
