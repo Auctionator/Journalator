@@ -21,15 +21,22 @@ function JournalatorDisplayMixin:OnLoad()
 end
 
 function JournalatorDisplayMixin:OnShow()
+  local visibleDisplayModes = {}
   local visibleTab
   for _, tab in ipairs(self.Tabs) do
     if tab:IsShown() then
-      visibleTab = tab
-      break
+      table.insert(visibleDisplayModes, tab.displayMode)
+      if visibleTab == nil  then
+        visibleTab = tab
+      end
     end
   end
 
-  if visibleTab ~= nil then
+  local defaultMode = Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TAB)
+  if tIndexOf(visibleDisplayModes, defaultMode) ~= nil then
+    self:SetDisplayMode(defaultMode)
+  else
+    Journalator.Debug.Message("JournalatorDisplay invalid display mode", defaultMode)
     self:SetDisplayMode(visibleTab.displayMode)
   end
 
