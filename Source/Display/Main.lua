@@ -170,17 +170,20 @@ function JournalatorDisplayMixin:HideTabs()
 
   self.WoWTokensTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS) and not Auctionator.Constants.IsClassic)
 
+  self.Tabs = tFilter(self.Tabs, function(tab) return tab:IsShown() end, true)
+
   local lastTab = nil
   for index, tab in ipairs(self.Tabs) do
-    if tab:IsShown() then
-      if lastTab == nil then
-        tab:SetPoint("BOTTOMLEFT", 20, -30)
-      else
-        tab:SetPoint("LEFT", lastTab, "RIGHT", -15, 0)
-      end
-      lastTab = tab
+    tab:ClearAllPoints()
+    if lastTab == nil then
+      tab:SetPoint("BOTTOMLEFT", 20, -30)
+    else
+      tab:SetPoint("LEFT", lastTab, "RIGHT", -15, 0)
     end
+    lastTab = tab
   end
+
+  PanelTemplates_SetNumTabs(self, #self.Tabs)
 end
 
 function JournalatorDisplayMixin:SetupExportCSVDialog()
