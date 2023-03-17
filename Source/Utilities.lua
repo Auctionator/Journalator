@@ -137,10 +137,10 @@ do
 
   function Journalator.GetTooltipFirstLine(link)
     if not tooltip then
-      tooltip = CreateFrame("GameTooltip", "JournalatorFirstLineScanningTooltip", UIParent, "GameTooltipTemplate")
+      tooltip = CreateFrame("GameTooltip", "JournalatorFirstLineScanningTooltip", nil, "GameTooltipTemplate")
     end
 
-    tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+    tooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
     tooltip:SetHyperlink(link)
     return _G["JournalatorFirstLineScanningTooltipTextLeft1"]:GetText()
   end
