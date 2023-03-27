@@ -36,6 +36,12 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT" x="400"/>
         </Anchors>
       </Frame>
+
+      <DropDownToggleButton parentKey="CharacterDropDown" inherits="JournalatorCharactersFilterDropDownTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.SearchFilter" relativePoint="TOPRIGHT" x="615" y="-2"/>
+        </Anchors>
+      </DropDownToggleButton>
     </Frames>
   </Frame>
 </Ui>

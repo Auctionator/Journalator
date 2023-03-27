@@ -1,0 +1,32 @@
+<Ui>
+  <DropDownToggleButton name="JournalatorCharactersFilterDropDownTemplate" inherits="UIMenuButtonStretchTemplate" virtual="true" registerForClicks="LeftButtonDown" mixin="JournalatorCharactersFilterDropDownMixin">
+    <Size x="180" y="25"/>
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture parentKey="Icon" file="Interface\ChatFrame\ChatFrameExpandArrow">
+          <Size x="10" y="12"/>
+          <Anchors>
+            <Anchor point="RIGHT" relativeKey="$parent.Right" relativePoint="RIGHT" x="-5"/>
+          </Anchors>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button parentKey="ResetButton" inherits="AuctionatorResetButton">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPRIGHT" x="1" y="-6"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():Reset()
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Frame parentKey="DropDown"/>
+    </Frames>
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnClick method="OnClick"/>
+    </Scripts>
+  </DropDownToggleButton>
+</Ui>

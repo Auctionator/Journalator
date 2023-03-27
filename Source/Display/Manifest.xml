@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="RealmsFilter.lua" />
+  <Script file="CharactersFilter.lua" />
   <Script file="DataTab.lua" />
   <Script file="FiltersContainer.lua" />
   <Script file="Info.lua" />
@@ -8,6 +9,7 @@
   <Script file="Main.lua" />
 
   <Include file="RealmsFilter.xml" />
+  <Include file="CharactersFilter.xml" />
 
   <Include file="DataTab.xml" />
 

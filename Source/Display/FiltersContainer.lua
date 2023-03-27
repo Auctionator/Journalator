@@ -47,7 +47,7 @@ function JournalatorFiltersContainerMixin:OnLoad()
 end
 
 function JournalatorFiltersContainerMixin:OnShow()
-  self:UpdateRealms()
+  self:UpdateRealmsAndCharacters()
 end
 
 function JournalatorFiltersContainerMixin:OnUpdate()
@@ -55,12 +55,14 @@ function JournalatorFiltersContainerMixin:OnUpdate()
   self:CheckFiltersChanged()
 end
 
-function JournalatorFiltersContainerMixin:UpdateRealms()
+function JournalatorFiltersContainerMixin:UpdateRealmsAndCharacters()
   local realmsAndChars = Journalator.GetCharactersAndRealms(self.earliestRangeTime)
 
   local realms = Journalator.Utilities.GetSortedKeys(realmsAndChars)
 
   self.RealmDropDown:SetRealms(realms, true)
+
+  self.CharacterDropDown:SetCharacters(realmsAndChars, true)
 end
 
 function JournalatorFiltersContainerMixin:CheckFiltersChanged()
@@ -69,7 +71,8 @@ function JournalatorFiltersContainerMixin:CheckFiltersChanged()
     prevFilters.searchText ~= self.SearchFilter:GetText() or
     prevFilters.secondsToInclude ~= self.TimePeriodDropDown:GetValue() or
     self.RealmDropDown:HasChanged() or
-    prevFilters.faction ~= self.FactionDropDown:GetValue()
+    prevFilters.faction ~= self.FactionDropDown:GetValue() or
+    self.CharacterDropDown:HasChanged()
 
   if hasChanged then
     self.filters = self:GetFilters()
@@ -109,6 +112,8 @@ function JournalatorFiltersContainerMixin:Filter(item)
   if self.filters.faction ~= "" then
     check = check and self.filters.faction == item.source.faction
   end
+
+  check = check and self.filters.character(item.source.character, item.source.realm)
 
   -- Ignore broken results caused by WoW API not returning a valid name inside
   -- the item link (code that generated them has been replaced, but some may
@@ -160,6 +165,7 @@ function JournalatorFiltersContainerMixin:GetFilters()
     secondsToInclude = self.TimePeriodDropDown:GetValue(),
     realm = function(realmName) return self.RealmDropDown:GetValue(realmName) end,
     faction = self.FactionDropDown:GetValue(),
+    character = function(character, realm) return self.CharacterDropDown:GetValue(character, realm) end,
   }
 end
 
@@ -169,7 +175,7 @@ function JournalatorFiltersContainerMixin:UpdateMinTime(newTime)
     if not self.pending then
       self.pending = true
       Journalator.Archiving.LoadUpTo(self:GetTimeForRange(), function()
-        self:UpdateRealms()
+        self:UpdateRealmsAndCharacters()
         self.pending = false
       end)
     end
