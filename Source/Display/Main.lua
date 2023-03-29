@@ -63,7 +63,7 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName)
     local view = self:GetCurrentDataView()
     if view ~= nil then
       view.DataProvider:Refresh()
-      self.Filters:UpdateRealms()
+      self.Filters:UpdateRealmsAndCharacters()
     end
   elseif eventName == Journalator.Events.FiltersChanged and not self.ProgressBar:IsShown() then
     Journalator.Archiving.LoadUpTo(self.Filters:GetTimeForRange(), function()
