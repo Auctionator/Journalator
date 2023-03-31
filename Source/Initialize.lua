@@ -61,6 +61,7 @@ function Journalator.InitializeBase()
 
   Journalator.Archiving.Initialize()
 
+  local GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMetadata
   Journalator.State.CurrentVersion = GetAddOnMetadata("Journalator", "Version")
 
   Journalator.SlashCmd.Initialize()
