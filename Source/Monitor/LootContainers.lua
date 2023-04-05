@@ -8,6 +8,8 @@ function JournalatorLootContainersMonitorMixin:OnLoad()
 
   FrameUtil.RegisterFrameForEvents(self, {
     "LOOT_READY",
+    "LOOT_OPENED",
+    "LOOT_SLOT_CHANGED",
     "LOOT_SLOT_CLEARED",
     "LOOT_CLOSED",
   })
@@ -17,10 +19,16 @@ function JournalatorLootContainersMonitorMixin:OnEvent(eventName, ...)
   if eventName == "LOOT_READY" then
     self:QueueLooted()
     self:CacheLootAvailable()
+  elseif eventName == "LOOT_OPENED" then
+    self:QueueLooted()
+    self:CacheLootAvailable()
+  elseif eventName == "LOOT_SLOT_CHANGED" then
+    self:QueueLooted()
+    self:CacheLootAvailable()
   elseif eventName == "LOOT_SLOT_CLEARED" then
     local slot = ...
     self:TagLooted(slot)
-  else
+  elseif eventName == "LOOT_CLOSED" then
     self:QueueLooted()
     self:AddToLogs()
     self.waiting = {}
