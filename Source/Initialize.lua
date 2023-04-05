@@ -77,6 +77,14 @@ function Journalator.InitializeBase()
 
     JNRView:SetShown(not JNRView:IsShown())
   end
+
+  Journalator_CompartmentButton = function(addonName, button)
+    if button == "RightButton" then
+      Journalator.Config.Show()
+    else
+      Journalator.ToggleView()
+    end
+  end
 end
 
 function Journalator.InitializeMonitoring()
