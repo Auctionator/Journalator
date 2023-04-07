@@ -8,27 +8,12 @@ function JournalatorFiltersContainerMixin:OnLoad()
     Journalator.Events.RowClicked
   })
 
-  local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
-  self.TimePeriodDropDown:InitAgain({
-    JOURNALATOR_L_ALL_TIME,
-    JOURNALATOR_L_LAST_YEAR,
-    JOURNALATOR_L_LAST_6_MONTHS,
-    JOURNALATOR_L_LAST_3_MONTHS,
-    JOURNALATOR_L_LAST_MONTH,
-    JOURNALATOR_L_LAST_WEEK,
-    JOURNALATOR_L_LAST_DAY,
-    JOURNALATOR_L_LAST_HOUR,
-  }, {
-    0,
-    SECONDS_IN_A_MONTH * 12,
-    SECONDS_IN_A_MONTH * 6,
-    SECONDS_IN_A_MONTH * 3,
-    SECONDS_IN_A_MONTH,
-    7 * 24 * 60 * 60,
-    24 * 60 * 60,
-    60 * 60,
-  })
-  self.TimePeriodDropDown:SetValue(SECONDS_IN_A_MONTH)
+  self.TimePeriodDropDown:InitAgain(
+    Journalator.Constants.TimePeriods.Text,
+    Journalator.Constants.TimePeriods.Values
+  )
+  self.TimePeriodDropDown:SetValue(Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TIME_PERIOD))
+  assert(self.TimePeriodDropDown:GetValue())
 
   self.FactionDropDown:InitAgain({
     JOURNALATOR_L_ALL_FACTIONS,

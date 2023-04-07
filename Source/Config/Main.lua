@@ -19,6 +19,8 @@ Journalator.Config.Options = {
 
   DEFAULT_TAB = "default_tab",
 
+  DEFAULT_TIME_PERIOD = "default_time_period_display",
+
   DEBUG = "debug",
 }
 
@@ -38,6 +40,7 @@ Journalator.Config.Defaults = {
   [Journalator.Config.Options.MONITOR_LOOTING] = true,
   [Journalator.Config.Options.MONITOR_WOW_TOKENS] = true,
   [Journalator.Config.Options.DEFAULT_TAB] = "Invoices",
+  [Journalator.Config.Options.DEFAULT_TIME_PERIOD] = Journalator.Constants.TimePeriods.Month,
   [Journalator.Config.Options.DEBUG] = false,
 }
 
