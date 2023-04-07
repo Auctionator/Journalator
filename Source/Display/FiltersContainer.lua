@@ -12,8 +12,13 @@ function JournalatorFiltersContainerMixin:OnLoad()
     Journalator.Constants.TimePeriods.Text,
     Journalator.Constants.TimePeriods.Values
   )
-  self.TimePeriodDropDown:SetValue(Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TIME_PERIOD))
-  assert(self.TimePeriodDropDown:GetValue())
+  local currentPeriod = Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TIME_PERIOD)
+  if tIndexOf(Journalator.Constants.TimePeriods.Values, currentPeriod) == nil then
+    self.TimePeriodDropDown:SetValue(Journalator.Constants.TimePeriods.Month)
+    Journalator.Debug.Message("JournalatorFiltersContainer: invalid default time period", tostring(currentPeriod))
+  else
+    self.TimePeriodDropDown:SetValue(currentPeriod)
+  end
 
   self.FactionDropDown:InitAgain({
     JOURNALATOR_L_ALL_FACTIONS,

@@ -18,8 +18,7 @@ Journalator.Config.Options = {
   MONITOR_WOW_TOKENS = "monitor_wow_tokens",
 
   DEFAULT_TAB = "default_tab",
-
-  DEFAULT_TIME_PERIOD = "default_time_period_display",
+  DEFAULT_TIME_PERIOD = "default_time_period",
 
   DEBUG = "debug",
 }
