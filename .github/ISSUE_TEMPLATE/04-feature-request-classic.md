@@ -1,6 +1,6 @@
 ---
-name: Feature request (for classic)
-about: Journalator can always be better
+name: Feature request (classic)
+about: Suggest an idea for this project
 title: ''
 labels: [classic, enhancement]
 assignees: ''

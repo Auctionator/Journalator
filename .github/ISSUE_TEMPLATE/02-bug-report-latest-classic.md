@@ -1,6 +1,6 @@
 ---
-name: Bug report for the latest classic release
-about: You're using the latest normal release of Journalator on classic
+name: Bug report (classic)
+about: Create a report to help us improve
 title: ''
 labels: [classic, bug]
 assignees: ''

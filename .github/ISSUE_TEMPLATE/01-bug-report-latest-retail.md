@@ -1,6 +1,6 @@
 ---
-name: Bug report for the latest retail release (not classic)
-about: You're using the latest normal release of Journalator on retail
+name: Bug report (retail)
+about: Create a report to help us improve
 title: ''
 labels: [retail, bug]
 assignees: ''

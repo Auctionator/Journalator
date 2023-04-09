@@ -1,6 +1,6 @@
 ---
-name: Feature request for the latest release (not classic)
-about: Journalator can always be better
+name: Feature request (retail)
+about: Suggest an idea for this project
 title: ''
 labels: [retail, enhancement]
 assignees: ''
