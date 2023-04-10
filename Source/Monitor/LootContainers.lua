@@ -12,6 +12,7 @@ function JournalatorLootContainersMonitorMixin:OnLoad()
     "LOOT_SLOT_CHANGED",
     "LOOT_SLOT_CLEARED",
     "LOOT_CLOSED",
+    "UNIT_SPELLCAST_SENT",
   })
 end
 
@@ -32,6 +33,11 @@ function JournalatorLootContainersMonitorMixin:OnEvent(eventName, ...)
     self:QueueLooted()
     self:AddToLogs()
     self.waiting = {}
+  elseif eventName == "UNIT_SPELLCAST_SENT" then
+    local unit, targetName = ...
+    if unit == "player" then
+      self.worldObjectCast = targetName
+    end
   end
 end
 
@@ -213,6 +219,7 @@ function JournalatorLootContainersMonitorMixin:AddToLogs()
       end)
     elseif guid:find("GameObject") ~= nil then
       result.type = "world"
+      result.name = self.worldObjectCast or ""
       result.objectID = tonumber(guid:match("^%w+%-%d+%-%d+%-%d+%-%d+%-(%d+)%-%w+$"))
       result.time = time()
       Journalator.AddToLogs({ LootContainers = { result } })

@@ -68,7 +68,7 @@ function JournalatorLootingDataProviderMixin:Refresh()
     elseif item.type == "npc" then
       name = item.name
     else
-      name = JOURNALATOR_L_WORLD_OBJECT
+      name = (item.name ~= "" and item.name) or JOURNALATOR_L_WORLD_OBJECT
     end
     local filterItem = {
       itemName = name,
@@ -107,7 +107,7 @@ function JournalatorLootingDataProviderMixin:Refresh()
       elseif item.type == "npc" then
         processedItem.itemNamePretty = LIGHTYELLOW_FONT_COLOR:WrapTextInColorCode(processedItem.itemNamePretty)
       elseif item.type == "world" then
-        processedItem.itemNamePretty = BLUE_FONT_COLOR:WrapTextInColorCode(JOURNALATOR_L_WORLD_OBJECT)
+        processedItem.itemNamePretty = BLUE_FONT_COLOR:WrapTextInColorCode(processedItem.itemNamePretty)
       end
 
       table.insert(results, processedItem)
