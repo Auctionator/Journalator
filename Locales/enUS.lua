@@ -84,6 +84,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_MONITORS_TEXT"] = "Enable and disable different Journalator monitors for tracking activity ingame. A /reload is required to apply any changes."
 
   L["AUCTION_HOUSE"] = "Auction House"
+  L["VENDORS"] = "Vendors"
   L["CRAFTING_ORDERS"] = "Crafting Orders"
 
   L["STATISTICS"] = "Statistics"

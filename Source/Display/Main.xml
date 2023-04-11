@@ -10,7 +10,7 @@
     inherits="ButtonFrameTemplate"
     clampedToScreen="true"
   >
-    <Size x="1200" y="500"/>
+    <Size x="1200" y="530"/>
     <Scripts>
       <OnLoad method="OnLoad" />
       <OnShow method="OnShow" />
@@ -35,44 +35,100 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="JournalatorInvoiceDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Invoices" type="string"/>
-				</KeyValues>
+      <Frame parentKey="AuctionHouseContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT" y="30"/>
         </Anchors>
-      </Frame>
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnShow method="OnShow"/>
+        </Scripts>
+        <KeyValues>
+          <KeyValue key="displayMode" value="AuctionHouse" type="string"/>
+        </KeyValues>
+        <Frames>
+          <Frame inherits="JournalatorInvoiceDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Invoices" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
 
-      <Frame inherits="JournalatorPostingDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Posting" type="string"/>
-				</KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
-        </Anchors>
-      </Frame>
+          <Frame inherits="JournalatorPostingDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Posting" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
 
-      <Frame inherits="JournalatorSaleRatesDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="SaleRates" type="string"/>
-				</KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
-        </Anchors>
-      </Frame>
+          <Frame inherits="JournalatorSaleRatesDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="SaleRates" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
 
-      <Frame inherits="JournalatorFailuresDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Failures" type="string"/>
-				</KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
-        </Anchors>
+          <Frame inherits="JournalatorFailuresDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Failures" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Frame inherits="JournalatorWoWTokensDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="WoWTokens" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Button parentKey="InvoicesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="JOURNALATOR_L_INVOICES">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Invoices" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_INVOICES_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="PostingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="JOURNALATOR_L_POSTING">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Posting" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_POSTING_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="SaleRatesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSaleRatesTab_Button" text="JOURNALATOR_L_SALE_RATES">
+            <KeyValues>
+              <KeyValue key="displayMode" value="SaleRates" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_SALE_RATES_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="FailuresTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFailuresTab_Button" text="JOURNALATOR_L_FAILURES">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Failures" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_FAILURES_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="WoWTokensTab" inherits="JournalatorTabButtonTemplate" name="JournalatorWoWTokensTab_Button" text="JOURNALATOR_L_WOW_TOKENS">
+            <KeyValues>
+              <KeyValue key="displayMode" value="WoWTokens" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_WOW_TOKENS_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+        </Frames>
       </Frame>
 
       <Frame inherits="JournalatorVendoringDisplayTemplate" parentArray="Views">
@@ -85,24 +141,53 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="JournalatorCraftingOrdersPlacedDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="CraftingOrdersPlaced" type="string"/>
-				</KeyValues>
+      <Frame parentKey="CraftingOrdersContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT" y="30"/>
         </Anchors>
-      </Frame>
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnShow method="OnShow"/>
+        </Scripts>
+        <KeyValues>
+          <KeyValue key="displayMode" value="CraftingOrders" type="string"/>
+        </KeyValues>
+        <Frames>
+          <Frame inherits="JournalatorCraftingOrdersPlacedDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Placing" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
 
-      <Frame inherits="JournalatorFulfillingDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Fulfilling" type="string"/>
-				</KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
-        </Anchors>
+          <Frame inherits="JournalatorFulfillingDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Fulfilling" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Button parentKey="PlacingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorCraftingOrdersPlacingTab_Button" text="JOURNALATOR_L_PLACING">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Placing" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_PLACING_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+
+          <Button parentKey="FulfillingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFulfillingTab_Button" text="JOURNALATOR_L_FULFILLING">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Fulfilling" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_FULFILLING_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+        </Frames>
       </Frame>
 
       <Frame inherits="JournalatorTradingPostDisplayTemplate" parentArray="Views">
@@ -135,16 +220,6 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="JournalatorWoWTokensDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="WoWTokens" type="string"/>
-				</KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
-        </Anchors>
-      </Frame>
-
       <Frame inherits="JournalatorInfoDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Info" type="string"/>
@@ -155,62 +230,22 @@
         </Anchors>
       </Frame>
 
-<!--
-     <Button parentKey="SummaryTab" parentArray="Tabs" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryTab_Button" text="Summary">
+			<Button parentKey="AuctionHouseTab" hidden="true" inherits="JournalatorTabButtonTemplate" name="JournalatorAuctionHouseTab_Button" text="JOURNALATOR_L_AUCTION_HOUSE">
 				<KeyValues>
-					<KeyValue key="displayMode" value="Summary" type="string"/>
-				</KeyValues>
-				<Anchors>
-					<Anchor point="BOTTOMLEFT" x="20" y="-28"/>
-				</Anchors>
-			</Button>
--->
-			<Button parentKey="InvoicesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="JOURNALATOR_L_INVOICES">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Invoices" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_INVOICES_TITLE" type="global"/>
+					<KeyValue key="displayMode" value="AuctionHouse" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_AUCTION_HOUSE" type="global"/>
 				</KeyValues>
 			</Button>
-			<Button parentKey="PostingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="JOURNALATOR_L_POSTING">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Posting" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_POSTING_TITLE" type="global"/>
-				</KeyValues>
-			</Button>
-			<Button parentKey="SaleRatesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSaleRatesTab_Button" text="JOURNALATOR_L_SALE_RATES">
-				<KeyValues>
-					<KeyValue key="displayMode" value="SaleRates" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_SALE_RATES_TITLE" type="global"/>
-				</KeyValues>
-			</Button>
-			<Button parentKey="FailuresTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFailuresTab_Button" text="JOURNALATOR_L_FAILURES">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Failures" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_FAILURES_TITLE" type="global"/>
-				</KeyValues>
-			</Button>
-			<Button parentKey="VendoringTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendoringTab_Button" text="JOURNALATOR_L_VENDORING">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Vendoring" type="string"/>
+      <Button parentKey="VendoringTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendoringTab_Button" text="JOURNALATOR_L_VENDORS">
+        <KeyValues>
+          <KeyValue key="displayMode" value="Vendoring" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_VENDORING_TITLE" type="global"/>
 				</KeyValues>
 			</Button>
-			<Button parentKey="CraftingOrdersPlacedTab" inherits="JournalatorTabButtonTemplate" name="JournalatorCraftingOrdersPlacedTab_Button" text="JOURNALATOR_L_PLACING">
+			<Button parentKey="CraftingOrdersTab" inherits="JournalatorTabButtonTemplate" name="JournalatorCraftingOrdersTab_Button" text="JOURNALATOR_L_CRAFTING_ORDERS">
 				<KeyValues>
-					<KeyValue key="displayMode" value="CraftingOrdersPlaced" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_PLACING_TITLE" type="global"/>
-				</KeyValues>
-			</Button>
-			<Button parentKey="FulfillingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFulfillingTab_Button" text="JOURNALATOR_L_FULFILLING">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Fulfilling" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_FULFILLING_TITLE" type="global"/>
-				</KeyValues>
-			</Button>
-			<Button parentKey="TradingPostTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradingPostTab_Button" text="JOURNALATOR_L_TRADING_POST">
-				<KeyValues>
-					<KeyValue key="displayMode" value="TradingPost" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_TRADING_POST_TITLE" type="global"/>
+					<KeyValue key="displayMode" value="CraftingOrders" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_CRAFTING_ORDERS" type="global"/>
 				</KeyValues>
 			</Button>
 			<Button parentKey="QuestingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorQuestingTab_Button" text="JOURNALATOR_L_QUESTING">
@@ -225,18 +260,18 @@
 					<KeyValue key="title" value="JOURNALATOR_L_LOOTING_TITLE" type="global"/>
 				</KeyValues>
 			</Button>
-			<Button parentKey="WoWTokensTab" inherits="JournalatorTabButtonTemplate" name="JournalatorWoWTokensTab_Button" text="JOURNALATOR_L_WOW_TOKENS">
-				<KeyValues>
-					<KeyValue key="displayMode" value="WoWTokens" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_WOW_TOKENS_TITLE" type="global"/>
-				</KeyValues>
-			</Button>
-			<Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Info" type="string"/>
-					<KeyValue key="title" value="JOURNALATOR_L_INFO_TITLE" type="global"/>
-				</KeyValues>
-			</Button>
+        <Button parentKey="TradingPostTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradingPostTab_Button" text="JOURNALATOR_L_TRADING_POST">
+        <KeyValues>
+          <KeyValue key="displayMode" value="TradingPost" type="string"/>
+          <KeyValue key="title" value="JOURNALATOR_L_TRADING_POST_TITLE" type="global"/>
+        </KeyValues>
+      </Button>
+      <Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
+        <KeyValues>
+          <KeyValue key="displayMode" value="Info" type="string"/>
+          <KeyValue key="title" value="JOURNALATOR_L_INFO_TITLE" type="global"/>
+        </KeyValues>
+      </Button>
 
       <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_EXPORT_RESULTS" parentKey="ExportCSV">
         <Anchors>

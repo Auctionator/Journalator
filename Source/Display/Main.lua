@@ -152,23 +152,18 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
 end
 
 function JournalatorDisplayMixin:HideTabs()
-  self.InvoicesTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
-  self.PostingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
-  self.SaleRatesTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
-  self.FailuresTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
+  self.AuctionHouseTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE))
+  self.AuctionHouseContainer.WoWTokensTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS) and not Auctionator.Constants.IsClassic)
 
   self.VendoringTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING))
 
-  self.CraftingOrdersPlacedTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_CRAFTING_ORDERS) and not Auctionator.Constants.IsClassic)
-  self.FulfillingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_CRAFTING_ORDERS) and not Auctionator.Constants.IsClassic)
+  self.CraftingOrdersTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_CRAFTING_ORDERS) and not Auctionator.Constants.IsClassic)
 
   self.TradingPostTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_TRADING_POST) and not Auctionator.Constants.IsClassic)
 
   self.QuestingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_QUESTING))
 
   self.LootingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING))
-
-  self.WoWTokensTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS) and not Auctionator.Constants.IsClassic)
 
   self.Tabs = tFilter(self.Tabs, function(tab) return tab:IsShown() end, true)
 
@@ -193,8 +188,12 @@ end
 
 function JournalatorDisplayMixin:GetCurrentDataView()
   for _, view in ipairs(self.Views) do
-    if view:IsShown() and view.DataProvider ~= nil then
-      return view
+    if view:IsShown() then
+      if view.DataProvider ~= nil then
+        return view
+      elseif view.Views then
+        return view:GetCurrentDataView()
+      end
     end
   end
 end

@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="Invoices.xml" />
+  <Include file="Posting.xml" />
+  <Include file="SaleRates.xml" />
+  <Include file="Failures.xml" />
+  <Include file="WoWTokens.xml" />
+</Ui>

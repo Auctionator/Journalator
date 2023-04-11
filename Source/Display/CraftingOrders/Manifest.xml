@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="Fulfilling.xml" />
+  <Include file="CraftingOrdersPlaced.xml" />
+</Ui>
