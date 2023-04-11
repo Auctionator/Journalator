@@ -1,10 +1,20 @@
 JournalatorLootContainersMonitorMixin = {}
 
+local LootSlotType = Enum.LootSlotType
+
+-- Classic Era
+if LootSlotType == nil then
+  LootSlotType = {
+    None = LOOT_SLOT_NONE,
+    Item = LOOT_SLOT_ITEM,
+    Money = LOOT_SLOT_MONEY,
+    Currency = LOOT_SLOT_CURRENCY,
+  }
+end
+
 function JournalatorLootContainersMonitorMixin:OnLoad()
-  self.isLootReady = false
   self.currentContainer = nil
   self.waiting = {}
-  self.slotsLooted = {}
 
   FrameUtil.RegisterFrameForEvents(self, {
     "LOOT_READY",
@@ -19,20 +29,32 @@ end
 function JournalatorLootContainersMonitorMixin:OnEvent(eventName, ...)
   if eventName == "LOOT_READY" then
     self:QueueLooted()
-    self:CacheLootAvailable()
+    self:InitialLootCache()
+
   elseif eventName == "LOOT_OPENED" then
-    self:QueueLooted()
-    self:CacheLootAvailable()
+    if self.currentContainer == nil then
+      self:QueueLooted()
+      self:InitialLootCache()
+    end
+
+  -- Check for source quantity changes as loot gets picked up in chunks
+  -- internally
   elseif eventName == "LOOT_SLOT_CHANGED" then
-    self:QueueLooted()
-    self:CacheLootAvailable()
+    local slot = ...
+    self:UpdateCacheSlot(slot)
+
+  -- Loot item finished getting picked up
   elseif eventName == "LOOT_SLOT_CLEARED" then
     local slot = ...
     self:TagLooted(slot)
+
+  -- Loot window closed
   elseif eventName == "LOOT_CLOSED" then
     self:QueueLooted()
     self:AddToLogs()
     self.waiting = {}
+
+  -- Get the name of the object when herbing/mining
   elseif eventName == "UNIT_SPELLCAST_SENT" then
     local unit, targetName = ...
     if unit == "player" then
@@ -54,59 +76,19 @@ local function ConvertSourceInfo(slot)
   return converted
 end
 
-local LootSlotType = Enum.LootSlotType
-
--- Classic Era
-if LootSlotType == nil then
-  LootSlotType = {
-    None = LOOT_SLOT_NONE,
-    Item = LOOT_SLOT_ITEM,
-    Money = LOOT_SLOT_MONEY,
-    Currency = LOOT_SLOT_CURRENCY,
-  }
-end
-
-function JournalatorLootContainersMonitorMixin:CacheLootAvailable()
-  self.currentContainer = {}
-  for slot = 1, GetNumLootItems() do
-    local texture, itemName, quantity, currencyID, itemQuality, locked, isQuestItem, questID, isActive, isCoin = GetLootSlotInfo(slot)
-
-    local link = GetLootSlotLink(slot)
-    local sources = ConvertSourceInfo(slot)
-    local slotType = GetLootSlotType(slot)
-
-    local item
-    if slotType == LootSlotType.Money then
-      item = {
-        type = LootSlotType.Money,
-        sources = sources,
-        looted = false,
-        slot = slot,
-      }
-    elseif slotType == LootSlotType.Currency then
-      item = {
-        type = LootSlotType.Currency,
-        currencyID = currencyID,
-        sources = sources,
-        looted = false,
-        slot = slot,
-      }
-    elseif slotType == LootSlotType.Item then
-      item = {
-        type = LootSlotType.Item,
-        itemLink = link,
-        questID = questID,
-        sources = sources,
-        looted = false,
-        slot = slot,
-      }
+local function MergeSources(result, mergeFrom)
+  for _, s1 in ipairs(mergeFrom) do
+    local found = false
+    for _, s2 in ipairs(result) do
+      if s1.guid == s2.guid then
+        s2.quantity = s2.quantity + s1.quantity
+        found = true
+      end
     end
-
-    if item then
-      table.insert(self.currentContainer, item)
+    if not found then
+      table.insert(result, s1)
     end
   end
-  Journalator.Debug.Message("loot container cached", #self.currentContainer)
 end
 
 local function AccumulateSources(sources)
@@ -128,6 +110,130 @@ local function DebugPrintItem(prefix, item)
   else
     Journalator.Debug.Message(prefix, "missing type")
   end
+end
+
+function JournalatorLootContainersMonitorMixin:InitialLootCache()
+  self.currentContainer = {}
+  for slot = 1, GetNumLootItems() do
+    local texture, itemName, quantity, currencyID, itemQuality, locked, isQuestItem, questID, isActive, isCoin = GetLootSlotInfo(slot)
+
+    local link = GetLootSlotLink(slot)
+    local sources = ConvertSourceInfo(slot)
+    local slotType = GetLootSlotType(slot)
+
+    local item
+    if slotType == LootSlotType.Money then
+      item = {
+        type = LootSlotType.Money,
+        sources = sources,
+        looted = false,
+        slot = slot,
+
+        quantity = quantity,
+        lastQuantityShift = 0,
+        prevSources = CopyTable(sources),
+        importSources = {},
+      }
+    elseif slotType == LootSlotType.Currency then
+      item = {
+        type = LootSlotType.Currency,
+        currencyID = currencyID,
+        sources = sources,
+        looted = false,
+        slot = slot,
+
+        quantity = quantity,
+        lastQuantityShift = 0,
+        prevSources = CopyTable(sources),
+        importSources = {},
+      }
+    elseif slotType == LootSlotType.Item then
+      item = {
+        type = LootSlotType.Item,
+        itemLink = link,
+        questID = questID,
+        sources = sources,
+        looted = false,
+        slot = slot,
+
+        quantity = quantity,
+        lastQuantityShift = 0,
+        prevSources = CopyTable(sources),
+        importSources = {},
+      }
+    end
+
+    if item then
+      table.insert(self.currentContainer, item)
+    end
+  end
+  Journalator.Debug.Message("loot container cached", #self.currentContainer)
+end
+
+local function GetSeen(sources)
+  local result = {}
+  for _, s in ipairs(sources) do
+    result[s.guid .. " " .. s.quantity] = s
+  end
+  return result
+end
+
+function JournalatorLootContainersMonitorMixin:UpdateCacheSlot(slot)
+  if self.currentContainer == nil then
+    return
+  end
+
+  -- Find the slot's information
+  local slotInfo
+  for _, s in ipairs(self.currentContainer) do
+    if s.slot == slot then
+      slotInfo = s
+    end
+  end
+  if slotInfo == nil then
+    return
+  end
+
+  local quantity = select(3, GetLootSlotInfo(slot))
+
+  local shifted = false
+
+  if quantity ~= slotInfo.quantity then
+    slotInfo.lastQuantityShift = slotInfo.quantity - quantity
+    slotInfo.quantity = quantity
+    shifted = true
+  end
+
+  local sources = ConvertSourceInfo(slot)
+
+
+  -- Figure out which chunk (if any) has been picked up
+  -- 1. By comparing the chunks that exist this time round to last time
+  local oldSeen = GetSeen(slotInfo.prevSources)
+  local currentSeen = GetSeen(sources)
+  local anyMatched = false
+  for k, s in pairs(oldSeen) do
+    if currentSeen[k] == nil then
+      table.insert(slotInfo.importSources, s)
+      anyMatched = true
+    end
+  end
+  -- 2. By matching the quantity size change (backup option for when the items
+  -- don't change but the quantity does meaning a chunk got replaced with an
+  -- identical one
+  if not shifted and not anyMatched and slotInfo.lastQuantityShift > 0 then
+    for k, s in pairs(oldSeen) do
+      if s.quantity == slotInfo.lastQuantityShift then
+        table.insert(slotInfo.importSources, s)
+        break
+      end
+    end
+    slotInfo.lastQuantityShift = 0
+  end
+
+  slotInfo.sources = CopyTable(sources)
+  MergeSources(slotInfo.sources, CopyTable(slotInfo.importSources))
+  slotInfo.prevSources = sources
 end
 
 function JournalatorLootContainersMonitorMixin:TagLooted(slot)
