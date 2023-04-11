@@ -9,14 +9,6 @@ local LOOTING_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_SOURCE,
-    headerParameters = { "sourceCharacter" },
-    cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "sourceCharacter" },
-    defaultHide = true,
-  },
-  {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_CHARACTER,
     headerParameters = { "sourceCharacter" },
     cellTemplate = "AuctionatorStringCellTemplate",
