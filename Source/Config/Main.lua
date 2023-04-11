@@ -17,7 +17,7 @@ Journalator.Config.Options = {
   MONITOR_LOOTING = "monitor_looting",
   MONITOR_WOW_TOKENS = "monitor_wow_tokens",
 
-  DEFAULT_TAB = "default_tab",
+  DEFAULT_TAB = "default_tab_2",
   DEFAULT_TIME_PERIOD = "default_time_period",
 
   DEBUG = "debug",
@@ -38,7 +38,7 @@ Journalator.Config.Defaults = {
   [Journalator.Config.Options.MONITOR_QUESTING] = true,
   [Journalator.Config.Options.MONITOR_LOOTING] = true,
   [Journalator.Config.Options.MONITOR_WOW_TOKENS] = true,
-  [Journalator.Config.Options.DEFAULT_TAB] = "Invoices",
+  [Journalator.Config.Options.DEFAULT_TAB] = "AuctionHouse",
   [Journalator.Config.Options.DEFAULT_TIME_PERIOD] = Journalator.Constants.TimePeriods.Month,
   [Journalator.Config.Options.DEBUG] = false,
 }
