@@ -86,6 +86,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["AUCTION_HOUSE"] = "Auction House"
   L["VENDORS"] = "Vendors"
   L["CRAFTING_ORDERS"] = "Crafting Orders"
+  L["BY_SOURCE"] = "By Source"
+  L["BY_ITEM"] = "By Item"
 
   L["STATISTICS"] = "Statistics"
   L["COMPUTE_STATISTICS"] = "Compute Statistics"
@@ -135,6 +137,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["ZONE"] = "Zone"
   L["WORLD_OBJECT"] = "World Object"
   L["DROPS_COLON"] = "Drops:"
+  L["CHARACTER"] = "Character"
 
   return L
 end

@@ -210,14 +210,51 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="JournalatorLootingDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Looting" type="string"/>
-				</KeyValues>
+      <Frame parentKey="LootContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT" y="30"/>
         </Anchors>
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnShow method="OnShow"/>
+        </Scripts>
+        <KeyValues>
+          <KeyValue key="displayMode" value="Looting" type="string"/>
+        </KeyValues>
+        <Frames>
+          <Frame inherits="JournalatorLootBySourceDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="BySource" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+          <Frame inherits="JournalatorLootByItemDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByItem" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Button parentKey="BySourceTab" inherits="JournalatorTabButtonTemplate" name="JournalatorLootBySourceTab_Button" text="JOURNALATOR_L_BY_SOURCE">
+            <KeyValues>
+              <KeyValue key="displayMode" value="BySource" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_LOOTING_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="ByItemTab" inherits="JournalatorTabButtonTemplate" name="JournalatorLootByItemTab_Button" text="JOURNALATOR_L_BY_ITEM">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByItem" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_LOOTING_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+        </Frames>
       </Frame>
 
       <Frame inherits="JournalatorInfoDisplayTemplate" parentArray="Views">
@@ -260,7 +297,7 @@
 					<KeyValue key="title" value="JOURNALATOR_L_LOOTING_TITLE" type="global"/>
 				</KeyValues>
 			</Button>
-        <Button parentKey="TradingPostTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradingPostTab_Button" text="JOURNALATOR_L_TRADING_POST">
+      <Button parentKey="TradingPostTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradingPostTab_Button" text="JOURNALATOR_L_TRADING_POST">
         <KeyValues>
           <KeyValue key="displayMode" value="TradingPost" type="string"/>
           <KeyValue key="title" value="JOURNALATOR_L_TRADING_POST_TITLE" type="global"/>

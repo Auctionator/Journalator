@@ -33,7 +33,7 @@ local LOOTING_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_SOURCE,
+    headerText = JOURNALATOR_L_CHARACTER,
     headerParameters = { "sourceCharacter" },
     cellTemplate = "AuctionatorStringCellTemplate",
     cellParameters = { "sourceCharacter" },
@@ -55,9 +55,9 @@ local LOOTING_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorLootingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorLootBySourceDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorLootingDataProviderMixin:Refresh()
+function JournalatorLootBySourceDataProviderMixin:Refresh()
   self:Reset()
   local results = {}
   local count = 1
@@ -116,7 +116,7 @@ function JournalatorLootingDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorLootingDataProviderMixin:GetTableLayout()
+function JournalatorLootBySourceDataProviderMixin:GetTableLayout()
   return LOOTING_DATA_PROVIDER_LAYOUT
 end
 
@@ -125,11 +125,12 @@ local COMPARATORS = {
   money = Auctionator.Utilities.NumberComparator,
   itemCount = Auctionator.Utilities.NumberComparator,
   currencyCount = Auctionator.Utilities.NumberComparator,
+  zone = Auctionator.Utilities.StringComparator,
   sourceCharacter = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorLootingDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorLootBySourceDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -139,12 +140,12 @@ function JournalatorLootingDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-Journalator.Config.Create("COLUMNS_LOOTING", "columns_questing", {})
+Journalator.Config.Create("COLUMNS_LOOTING", "columns_loot_by_source", {})
 
-function JournalatorLootingDataProviderMixin:GetColumnHideStates()
+function JournalatorLootBySourceDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_LOOTING)
 end
 
-function JournalatorLootingDataProviderMixin:GetRowTemplate()
+function JournalatorLootBySourceDataProviderMixin:GetRowTemplate()
   return "JournalatorLogViewLootingRowTemplate"
 end
