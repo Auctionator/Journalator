@@ -9,6 +9,7 @@
   <Script file="Reputation.lua" />
   <Script file="TradingPost.lua" />
   <Script file="LootContainers.lua" />
+  <Script file="LootRightClickToOpen.lua" />
   <Script file="WoWTokens.lua" />
 
   <Include file="Mail.xml" />
@@ -21,5 +22,6 @@
   <Include file="Reputation.xml" />
   <Include file="TradingPost.xml" />
   <Include file="LootContainers.xml" />
+  <Include file="LootRightClickToOpen.xml" />
   <Include file="WoWTokens.xml" />
 </Ui>

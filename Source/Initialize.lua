@@ -43,6 +43,9 @@ local function SetupMonitors()
 
   if Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING) then
     CreateFrame("Frame", "JNRLootContainersMonitor", nil, "JournalatorLootContainersMonitorTemplate")
+    if not Auctionator.Constants.IsClassic then
+      CreateFrame("Frame", "JNRLootRightClickToOpenMonitor", nil, "JournalatorLootRightClickToOpenMonitorTemplate")
+    end
   else
     Journalator.Debug.Message("looting monitor disabled")
   end
