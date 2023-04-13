@@ -426,7 +426,6 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
 
     for i = 1, GetMerchantItemCostInfo(index) do
       local _, quantity, itemLink, currencyName = GetMerchantItemCostItem(index, i)
-      print(itemLink, currencyName)
       if currencyName ~= nil then
         local currencyID = Journalator.Utilities.GetCurrencyID(currencyName)
         if currencyID ~= nil then
