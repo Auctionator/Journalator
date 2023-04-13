@@ -133,6 +133,38 @@ do
 end
 
 do
+  local currencyMap
+
+  -- Converts from a currency name to the currency id. Assumes that the currency is
+  -- in the player's currencies listing.
+  function Journalator.Utilities.GetCurrencyID(currencyName)
+    if C_CurrencyInfo == nil then
+      return nil
+    end
+
+    if currencyMap == nil or currencyMap[currencyName] == nil then
+      currencyMap = {}
+
+      local index = 0
+      while index < C_CurrencyInfo.GetCurrencyListSize() do
+        index = index + 1
+        local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+        if info.isHeader then
+          C_CurrencyInfo.ExpandCurrencyList(index, true)
+        else
+          local link = C_CurrencyInfo.GetCurrencyListLink(index)
+          if link ~= nil then
+            currencyMap[info.name] = C_CurrencyInfo.GetCurrencyIDFromLink(link)
+          end
+        end
+      end
+    end
+
+    return currencyMap[currencyName]
+  end
+end
+
+do
   local tooltip
 
   function Journalator.GetTooltipFirstLine(link)

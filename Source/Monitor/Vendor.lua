@@ -51,11 +51,41 @@ end
 
 local function GetRefundInfo(bag, slot, isEquipped)
   if C_Container and C_Container.GetContainerItemPurchaseInfo then
-    local info = C_Container.GetContainerItemPurchaseInfo(bag, slot, isEquipped or false)
-    return info.money, info.refundSeconds
+    isEquipped = isEquipped or false
+    local info = C_Container.GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+
+    -- Get the currencies and items returned by the refund
+    local currencies, items = {}, {}
+    if C_CurrencyInfo then
+      for i = 1, info.currencyCount do
+        local currencyInfo = C_Container.GetContainerItemPurchaseCurrency(bag, slot, i, isEquipped)
+        local currencyID = Journalator.Utilities.GetCurrencyID(currencyInfo.name)
+        if currencyID ~= nil then
+          table.insert(currencies, {currencyID = currencyID, quantity = currencyInfo.currencyCount})
+        end
+      end
+    end
+
+    for i = 1, info.itemCount do
+      local itemInfo = C_Container.GetContainerItemPurchaseItem(bag, slot, i, isEquipped)
+      if itemInfo.hyperlink ~= nil then
+        table.insert(items, {itemLink = itemInfo.hyperlink, quantity = itemInfo.itemCount})
+      end
+    end
+
+    return info.money, currencies, items, info.refundSeconds
+
   else
-    local money, _, refundSec = GetContainerItemPurchaseInfo(bag, slot, isEquipped)
-    return money, refundSec
+    local money, itemCount, refundSec, currencyCount = GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+
+    -- assumed to be vanilla so currencyCount == 0
+    assert(currencyCount == 0)
+    local currencies, items = {}, {}
+    for i = 1, itemCount do
+      local _, itemQuantity, itemLink = GetContainerItemPurchaseItem(bag, slot, i, isEquipped)
+      table.insert(items, {itemLink = itemLink, quantity = quantity})
+    end
+    return money, currencies, items, refundSec
   end
 end
 
@@ -299,7 +329,7 @@ function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
       return
     end
 
-    local money, refundSec = GetRefundInfo(bag, slot, isEquipped)
+    local money, currencies, items, refundSec = GetRefundInfo(bag, slot, isEquipped)
 
     local itemCount, itemLink = GetCountLinkFromBagAndSlot(bag, slot)
 
@@ -319,6 +349,8 @@ function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
         itemName = (GetItemInfo(itemLink)),
         count = itemCount,
         unitPrice = money,
+        currencies = currencies,
+        items = items, -- Items exchanged to purchase this item
         itemLink = itemLink,
         time = time(),
         source = Journalator.State.Source,
@@ -367,6 +399,8 @@ function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
       itemName = name,
       count = quantity,
       unitPrice = price / quantity,
+      currencies = {},
+      items = {},
       itemLink = link,
       time = time(),
       source = Journalator.State.Source,
@@ -388,15 +422,26 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
     local name, _, price, stackSize, numInStock = GetMerchantItemInfo(index)
     local link = GetMerchantItemLink(index)
     local maxStackSize = GetMerchantItemMaxStack(index)
-    local extraCurrenciesNeeded = GetMerchantItemCostInfo(index)
+    local currencies, items = {}, {}
+
+    for i = 1, GetMerchantItemCostInfo(index) do
+      local _, quantity, itemLink, currencyName = GetMerchantItemCostItem(index, i)
+      print(itemLink, currencyName)
+      if currencyName ~= nil then
+        local currencyID = Journalator.Utilities.GetCurrencyID(currencyName)
+        if currencyID ~= nil then
+          table.insert(currencies, {currencyID = currencyID, quantity = quantity})
+        end
+      elseif itemLink ~= nil then
+        table.insert(items, {itemLink = itemLink, quantity = quantity})
+      end
+    end
 
     if
       -- Has an item link (some timewalking items don't)
       link ~= nil
       -- Has a copper/silver/gold price
-      and price ~= 0
-      -- Ignore special currencies (simplifies further calculations)
-      and extraCurrenciesNeeded == 0
+      and (price ~= 0 or #currencies > 0 or #items > 0)
       -- In stock, and not buying more than on sale
       and (numInStock == -1 or numInStock >= quantity)
       -- Buying more than a maxed out stack fails with "Internal Bag Error"
@@ -407,6 +452,8 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
         itemName = name,
         count = quantity,
         unitPrice = price / stackSize,
+        currencies = currencies,
+        items = items,
         itemLink = link,
         time = time(),
         source = Journalator.State.Source,

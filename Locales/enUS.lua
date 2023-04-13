@@ -131,6 +131,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["REWARDS_COLON"] = "Rewards:"
   L["REPUTATION_COLON"] = "Reputation:"
   L["REQUIRED_COLON"] = "Required:"
+  L["ADDITIONAL_COSTS_COLON"] = "Additional Costs:"
 
   L["IS_REFUND"] = "Is Refund?"
 

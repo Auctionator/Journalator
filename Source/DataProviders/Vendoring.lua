@@ -92,6 +92,8 @@ function JournalatorVendoringDataProviderMixin:Refresh()
           moneyOut = moneyOut,
           count = item.count,
           unitPrice = item.unitPrice,
+          currencies = item.currencies or {},
+          items = item.items or {},
           rawDay = item.time,
           itemLink = item.itemLink,
           sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
@@ -155,4 +157,8 @@ Journalator.Config.Create("COLUMNS_VENDORING", "columns_vendoring", {})
 
 function JournalatorVendoringDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_VENDORING)
+end
+
+function JournalatorVendoringDataProviderMixin:GetRowTemplate()
+  return "JournalatorLogViewVendoringRowTemplate"
 end

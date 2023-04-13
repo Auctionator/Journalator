@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Include file="ResultsRow.lua" />
+  <Include file="VendoringRow.lua" />
   <Include file="CraftingOrderRow.lua" />
   <Include file="QuestingRow.lua" />
   <Include file="LootingRow.lua" />
@@ -7,6 +8,7 @@
   <Include file="PriceCell.lua" />
 
   <Include file="ResultsRow.xml" />
+  <Include file="VendoringRow.xml" />
   <Include file="CraftingOrderRow.xml" />
   <Include file="QuestingRow.xml" />
   <Include file="LootingRow.xml" />
