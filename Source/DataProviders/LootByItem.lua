@@ -49,9 +49,11 @@ function JournalatorLootByItemDataProviderMixin:Refresh()
   for _, entry in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "LootContainers")) do
     if #entry.items > 0 then
       local zone = ""
-      local mapInfo = C_Map.GetMapInfo(entry.map)
-      if mapInfo then
-        zone = mapInfo.name
+      if entry.map then
+        local mapInfo = C_Map.GetMapInfo(entry.map)
+        if mapInfo then
+          zone = mapInfo.name
+        end
       end
       local sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(entry.source.character, entry.source)
 

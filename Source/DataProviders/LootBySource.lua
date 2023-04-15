@@ -93,13 +93,14 @@ function JournalatorLootBySourceDataProviderMixin:Refresh()
         currencies = item.currencies,
         itemCount = #item.items,
         currencyCount = #item.currencies,
+        zone = "",
       }
 
-      local mapInfo = C_Map.GetMapInfo(item.map)
-      if mapInfo then
-        processedItem.zone = mapInfo.name
-      else
-        processedItem.zone = ""
+      if item.map then
+        local mapInfo = C_Map.GetMapInfo(item.map)
+        if mapInfo then
+          processedItem.zone = mapInfo.name
+        end
       end
 
       if item.type == "item" and processedItem.itemLink then
