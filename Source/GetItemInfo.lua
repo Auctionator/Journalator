@@ -54,6 +54,9 @@ function Journalator.GetItemInfo(name, unitPrice, unitDeposit, timestamp, timeLi
 
   for index, item in ipairs(itemInfoMap[name]) do
     if item.time <= timestamp and item.unitDeposit == GetUnitDeposit(unitDeposit, 1) and item.unitPrice == unitPrice then
+      if item.itemLink == nil then
+        return nil
+      end
       return Journalator.Utilities.CleanItemLink(item.itemLink)
     end
   end
