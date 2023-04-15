@@ -315,7 +315,7 @@ function JournalatorLootContainersMonitorMixin:AddToLogs()
     end
 
     Journalator.Debug.Message("loot guid", guid)
-    if guid:find("Creature") ~= nil then
+    if guid:find("Creature") ~= nil or guid:find("Vehicle") ~= nil then
       result.type = "npc"
       result.npcID = tonumber(guid:match("^%w+%-%d+%-%d+%-%d+%-%d+%-(%d+)%-%w+$"))
       Journalator.Utilities.GetNPCNameFromGUID(guid, function(name)
@@ -346,6 +346,8 @@ function JournalatorLootContainersMonitorMixin:AddToLogs()
 
         Journalator.AddToLogs({ LootContainers = { result } })
       end
+    else
+      Journalator.Debug.Message("loot guid type not matched")
     end
   end
 end
