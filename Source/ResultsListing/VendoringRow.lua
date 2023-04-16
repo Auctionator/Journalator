@@ -1,5 +1,8 @@
 JournalatorLogViewVendoringRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
 
+JournalatorLogViewVendoringRowMixin.Populate = JournalatorLogViewResultsRowMixin.Populate
+JournalatorLogViewVendoringRowMixin.OnClick = JournalatorLogViewResultsRowMixin.OnClick
+
 function JournalatorLogViewVendoringRowMixin:ShowTooltip()
   local tooltip = GameTooltip
   tooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -79,20 +82,5 @@ function JournalatorLogViewVendoringRowMixin:OnLeave()
     BattlePetTooltip:Hide()
   else
     GameTooltip:Hide()
-  end
-end
-
-function JournalatorLogViewVendoringRowMixin:OnClick(button)
-  if button == "LeftButton" then
-    if IsModifiedClick("CHATLINK") then
-      if self.rowData.itemLink ~= nil then
-        ChatEdit_InsertLink(self.rowData.itemLink)
-      end
-    else
-      Auctionator.EventBus
-        :RegisterSource(self, "JournalatorLogViewVendoringRowMixin")
-        :Fire(self, Journalator.Events.RowClicked, self.rowData)
-        :UnregisterSource(self)
-    end
   end
 end

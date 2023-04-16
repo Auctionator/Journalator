@@ -46,9 +46,10 @@ local FAILED_TYPE_TO_TEXT = {
 JournalatorFailuresDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorFailuresDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Failures")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Failures")) do
     if self:Filter(item) then
       local processedItem = {
         searchTerm = item.itemName,
@@ -59,6 +60,9 @@ function JournalatorFailuresDataProviderMixin:Refresh()
         rawDay = item.time,
         itemLink = item.itemLink,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        index = index,
+        value = 0,
+        selected = self:IsSelected(index),
       }
 
       if processedItem.itemLink ~= nil then

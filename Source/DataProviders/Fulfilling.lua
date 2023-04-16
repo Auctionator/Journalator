@@ -97,6 +97,7 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
     return
   end
 
+  self.onPreserveScroll()
   self:Reset()
 
   local TYPES_TO_TYPE_STRING = {
@@ -106,7 +107,7 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
   }
 
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Fulfilling")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Fulfilling")) do
     if self:Filter(item) then
       local processedItem = {
         orderType = TYPES_TO_TYPE_STRING[item.orderType],
@@ -128,6 +129,9 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
         isRecraft = item.isRecraft,
         isRecraftPretty = item.isRecraft and AUCTIONATOR_L_UNDERCUT_YES or AUCTIONATOR_L_UNDERCUT_NO,
         recraftItemLink = item.recraftItemLink,
+        index = index,
+        value = item.tipAmount - item.consortiumCut,
+        selected = self:IsSelected(index),
       }
 
       if processedItem.itemLink ~= nil then

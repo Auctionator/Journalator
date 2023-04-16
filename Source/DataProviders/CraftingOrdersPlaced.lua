@@ -77,6 +77,7 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Refresh()
     return
   end
 
+  self.onPreserveScroll()
   self:Reset()
 
   local TYPES_TO_TYPE_STRING = {
@@ -86,7 +87,7 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Refresh()
   }
 
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "CraftingOrdersPlaced")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "CraftingOrdersPlaced")) do
     if self:Filter(item) then
       local processedItem = {
         orderType = TYPES_TO_TYPE_STRING[item.orderType],
@@ -104,6 +105,9 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Refresh()
         recraftItemLink = item.recraftItemLink,
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        index = index,
+        value = item.tipAmount + item.postingFee,
+        selected = self:IsSelected(index),
       }
 
       if processedItem.itemLink ~= nil then

@@ -61,12 +61,13 @@ local function IsNotJunk(itemLink)
 end
 
 function JournalatorVendoringDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
   local results = {}
   -- Used to group junk as one item (when the option is on), to avoid filling up
   -- the view with junk items.
   local junkValue = 0
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Vendoring")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Vendoring")) do
     if self:Filter(item) then
       local moneyIn = 0
       local moneyOut = 0
@@ -97,6 +98,9 @@ function JournalatorVendoringDataProviderMixin:Refresh()
           rawDay = item.time,
           itemLink = item.itemLink,
           sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+          index = index,
+          value = moneyIn - moneyOut,
+          selected = self:IsSelected(index),
         })
       else
         junkValue = junkValue + moneyIn - moneyOut

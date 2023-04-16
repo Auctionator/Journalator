@@ -65,9 +65,10 @@ local QUESTING_DATA_PROVIDER_LAYOUT ={
 JournalatorQuestingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorQuestingDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Questing")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Questing")) do
     local filterItem = {
       itemName = item.questName,
       time = item.time,
@@ -92,6 +93,9 @@ function JournalatorQuestingDataProviderMixin:Refresh()
         reputationChanges = item.reputationChanges,
         experience = item.experience,
         experiencePretty = FormatLargeNumber(item.experience),
+        index = index,
+        value = (item.rewardMoney or 0) - (item.requiredMoney or 0),
+        selected = self:IsSelected(index),
       }
 
       local mapInfo = item.map and C_Map.GetMapInfo(item.map)

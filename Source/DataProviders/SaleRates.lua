@@ -130,6 +130,7 @@ end
 -- Groups processed log entries to get sale rates and displays the results
 -- isNameMatch: Items to fall back to grouping by name
 function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failureLogEntries, successLogEntries, timeForRange)
+  self.onPreserveScroll()
   self:Reset()
 
   local salesCounts = {}

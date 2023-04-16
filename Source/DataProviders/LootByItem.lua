@@ -42,11 +42,12 @@ local LOOTING_DATA_PROVIDER_LAYOUT ={
 JournalatorLootByItemDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorLootByItemDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
   local results = {}
   local count = 1
   local items = {}
-  for _, entry in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "LootContainers")) do
+  for index, entry in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "LootContainers")) do
     if #entry.items > 0 then
       local zone = ""
       if entry.map then
@@ -76,6 +77,9 @@ function JournalatorLootByItemDataProviderMixin:Refresh()
             itemLink = i.itemLink,
             zone = zone,
             sourceCharacter = sourceCharacter,
+            index = index,
+            value = 0,
+            selected = self:IsSelected(index),
           }
 
           if processedItem.itemLink ~= nil then
