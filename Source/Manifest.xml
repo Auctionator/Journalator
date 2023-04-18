@@ -6,7 +6,7 @@
   <Script file="Utilities.lua" />
   <Script file="API.lua" />
 
-  <Script file="GetItemInfo.lua" />
+  <Script file="GetPostedItemLink.lua" />
   <Script file="GetProfit.lua" />
   <Script file="GetCharactersAndRealms.lua" />
 

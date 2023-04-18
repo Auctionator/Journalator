@@ -1,4 +1,4 @@
-local itemInfoMap = {}
+local itemLinkMap = {}
 
 -- Round deposit (retail and classic) and limit least value to 1s if on retail
 local function GetUnitDeposit(deposit, count)
@@ -10,9 +10,9 @@ local function GetUnitDeposit(deposit, count)
 end
 
 local function AddToMap(item)
-  itemInfoMap[item.itemName] = itemInfoMap[item.itemName] or {}
+  itemLinkMap[item.itemName] = itemLinkMap[item.itemName] or {}
 
-  table.insert(itemInfoMap[item.itemName], {
+  table.insert(itemLinkMap[item.itemName], {
     unitPrice = item.buyout or item.bid,
     unitDeposit = GetUnitDeposit(item.deposit, item.count),
     time = item.time,
@@ -41,18 +41,18 @@ end
 --
 -- Returns a stripped down item link missing item level information if
 -- unitPrice, unitDeposit or timestamp are not supplied
-function Journalator.GetItemInfo(name, unitPrice, unitDeposit, timestamp, timeLimit)
+function Journalator.GetPostedItemLink(name, unitPrice, unitDeposit, timestamp, timeLimit)
   MapItemLinks(timeLimit - Journalator.Constants.LINK_INTERVAL)
 
-  if not itemInfoMap[name] then
+  if not itemLinkMap[name] then
     return nil
   end
 
   if unitPrice == nil or unitDeposit == nil or timestamp == nil then
-    return Journalator.Utilities.PurgeLevelsFromLink(itemInfoMap[name][1].itemLink)
+    return Journalator.Utilities.PurgeLevelsFromLink(itemLinkMap[name][1].itemLink)
   end
 
-  for index, item in ipairs(itemInfoMap[name]) do
+  for index, item in ipairs(itemLinkMap[name]) do
     if item.time <= timestamp and item.unitDeposit == GetUnitDeposit(unitDeposit, 1) and item.unitPrice == unitPrice then
       if item.itemLink == nil then
         return nil

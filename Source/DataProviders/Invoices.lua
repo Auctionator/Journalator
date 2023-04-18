@@ -82,7 +82,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
       local timeSinceEntry = time() - item.time
 
       local itemName, itemNamePretty = item.itemName, item.itemName
-      local itemLink = item.itemLink or Journalator.GetItemInfo(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), item.time, rangeTime)
+      local itemLink = item.itemLink or Journalator.GetPostedItemLink(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), item.time, rangeTime)
       if itemLink then
         itemName = Journalator.Utilities.AddTierToBasicName(itemName, itemLink)
         itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(itemNamePretty, itemLink)

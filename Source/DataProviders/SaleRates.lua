@@ -100,7 +100,7 @@ function JournalatorSaleRatesDataProviderMixin:GetItemLinks(callback)
   for _, item in ipairs(Journalator.Archiving.GetRange(timeForRange, "Invoices")) do
     if self:Filter(item) then
       if item.invoiceType == "seller" then
-        local itemLink = Journalator.GetItemInfo(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), item.time, timeForRange)
+        local itemLink = Journalator.GetPostedItemLink(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), item.time, timeForRange)
 
         local tmpEntry = CopyTable(item)
         tmpEntry.itemLink = itemLink
@@ -202,7 +202,7 @@ function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failure
       searchTerm = entry.itemName,
       itemName = entry.itemName,
       itemNamePretty = entry.itemName,
-      itemLink = entry.itemLink or Journalator.GetItemInfo(entry.itemName, nil, nil, nil, timeForRange),
+      itemLink = entry.itemLink or Journalator.GetPostedItemLink(entry.itemName, nil, nil, nil, timeForRange),
       saleRate = saleRate,
       saleRatePretty = saleRatePretty,
       meanPrice = meanPrice,
