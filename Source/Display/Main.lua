@@ -3,6 +3,8 @@ JournalatorDisplayMixin = {}
 local REFRESH_EVENTS = {
   Journalator.Events.LogsUpdated,
   Journalator.Events.FiltersChanged,
+  Journalator.Events.AddValueForTotal,
+  Journalator.Events.RemoveValueFromTotal,
 }
 
 function JournalatorDisplayMixin:OnLoad()
@@ -14,6 +16,7 @@ function JournalatorDisplayMixin:OnLoad()
 
   PanelTemplates_SetNumTabs(self, #self.Tabs)
   table.insert(UISpecialFrames, self:GetName())
+  self:ResetRunningTotal()
 
   self:HideTabs()
 
@@ -57,9 +60,12 @@ function JournalatorDisplayMixin:OnHide()
   Auctionator.EventBus:Unregister(self, REFRESH_EVENTS)
 end
 
-function JournalatorDisplayMixin:ReceiveEvent(eventName)
+function JournalatorDisplayMixin:ReceiveEvent(eventName, ...)
   if eventName == Journalator.Events.LogsUpdated then
     Journalator.Debug.Message("JournalatorDisplay", eventName)
+
+    self:ResetRunningTotal()
+
     local view = self:GetCurrentDataView()
     if view ~= nil then
       view.DataProvider:Refresh()
@@ -71,6 +77,18 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName)
     end, function(current, total)
       self:UpdateProgressBar(current, total)
     end)
+
+  elseif eventName == Journalator.Events.AddValueForTotal then
+    local value = ...
+    self.runningTotal = self.runningTotal + value
+    self.runningTotalValueCount = self.runningTotalValueCount + 1
+    self:UpdateRunningTotal()
+
+  elseif eventName == Journalator.Events.RemoveValueFromTotal then
+    local value = ...
+    self.runningTotal = self.runningTotal - value
+    self.runningTotalValueCount = self.runningTotalValueCount - 1
+    self:UpdateRunningTotal()
   end
 end
 
@@ -127,6 +145,25 @@ function JournalatorDisplayMixin:SetProfitText()
   end
 end
 
+function JournalatorDisplayMixin:ResetRunningTotal()
+  self.runningTotal = 0
+  self.runningTotalValueCount = 0
+  self:UpdateRunningTotal()
+  Auctionator.EventBus
+    :RegisterSource(self, "JournalatorDisplay")
+    :Fire(self, Journalator.Events.ResetTotal)
+    :UnregisterSource(self)
+end
+
+function JournalatorDisplayMixin:UpdateRunningTotal()
+  if self.runningTotalValueCount == 0 then
+    self.RunningTotalButton:SetText("")
+  else
+    self.RunningTotalButton:SetText(JOURNALATOR_L_RUNNING_TOTAL_X:format(ApplyNegativeToMoneyString(self.runningTotal)))
+  end
+  self.RunningTotalButton:SetWidth(self.RunningTotalButton:GetTextWidth())
+end
+
 function JournalatorDisplayMixin:SetDisplayMode(displayMode)
   self.exportCSVDialog:Hide()
 
@@ -148,6 +185,7 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
 
   self.ExportCSV:SetShown(self:GetCurrentDataView() ~= nil)
   self.StatusText:SetShown(self:GetCurrentDataView() ~= nil)
+  self.RunningTotalButton:SetShown(self:GetCurrentDataView() ~= nil)
   self.Filters:SetShown(self:GetCurrentDataView() ~= nil)
 end
 

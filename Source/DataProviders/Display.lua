@@ -5,9 +5,13 @@ local itemLinkToLevel = {}
 function JournalatorDisplayDataProviderMixin:OnLoad()
   AuctionatorDataProviderMixin.OnLoad(self)
   self.processCountPerUpdate = 200 --Reduce flickering when updating the display
+  self.selectedIndexes = {}
 
   Auctionator.EventBus:Register(self, {
-    Journalator.Events.FiltersChanged
+    Journalator.Events.FiltersChanged,
+    Journalator.Events.RowSelected,
+    Journalator.Events.LogsUpdated,
+    Journalator.Events.ResetTotal,
   })
 
   local function ApplyItemLevel(entry, itemLevel)
@@ -61,10 +65,45 @@ end
 function JournalatorDisplayDataProviderMixin:ReceiveEvent(eventName, ...)
   if eventName == Journalator.Events.FiltersChanged then
     if self:IsVisible() then
-      self.onPreserveScroll()
       Journalator.Archiving.LoadUpTo(self:GetTimeForRange(), function()
         self:Refresh()
       end)
+    end
+  -- Reset selection on logs update.
+  -- This is to avoid extra code to give each log entry a unique ID or adding to
+  -- selection indexes in order to track it across log updates
+  elseif eventName == Journalator.Events.LogsUpdated then
+    self.selectedIndexes = {}
+  elseif eventName == Journalator.Events.ResetTotal then
+    local anySelected = next(self.selectedIndexes)
+    self.selectedIndexes = {}
+    if anySelected and self:IsVisible() then
+      self:Refresh()
+    end
+  -- Select a row for the totals calculation
+  elseif eventName == Journalator.Events.RowSelected then
+    local rowData = ...
+    if self:IsVisible() then
+      if rowData.index == nil or rowData.value == nil then
+        return
+      end
+      local value = rowData.value
+      if self.selectedIndexes[rowData.index] then
+        self.selectedIndexes[rowData.index] = nil
+
+        Auctionator.EventBus
+          :RegisterSource(self, "JournalatorDisplayDataProvider")
+          :Fire(self, Journalator.Events.RemoveValueFromTotal, value)
+          :UnregisterSource(self)
+      else
+        self.selectedIndexes[rowData.index] = true
+
+        Auctionator.EventBus
+          :RegisterSource(self, "JournalatorDisplayDataProvider")
+          :Fire(self, Journalator.Events.AddValueForTotal, value)
+          :UnregisterSource(self)
+      end
+      self:Refresh()
     end
   end
 end
@@ -76,6 +115,10 @@ end
 
 function JournalatorDisplayDataProviderMixin:Filter(item)
   return self:GetParent():GetParent().Filters:Filter(item)
+end
+
+function JournalatorDisplayDataProviderMixin:IsSelected(index)
+  return self.selectedIndexes[index] ~= nil
 end
 
 function JournalatorDisplayDataProviderMixin:GetTimeForRange()

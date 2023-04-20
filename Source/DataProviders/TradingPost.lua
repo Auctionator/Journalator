@@ -42,9 +42,10 @@ local TRADING_POST_DATA_PROVIDER_LAYOUT ={
 JournalatorTradingPostDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorTradingPostDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "TradingPostVendoring")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "TradingPostVendoring")) do
     if self:Filter(item) then
       local processedItem = {
         itemName = item.itemName,
@@ -53,6 +54,9 @@ function JournalatorTradingPostDataProviderMixin:Refresh()
         itemLink = item.itemLink,
         rawDay = item.time,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        index = index,
+        value = 0,
+        selected = self:IsSelected(index),
       }
 
       if item.isRefund then

@@ -59,9 +59,10 @@ local POSTING_DATA_PROVIDER_LAYOUT ={
 JournalatorPostingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorPostingDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Posting")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Posting")) do
     if self:Filter(item) then
       local processedItem = {
         searchTerm = item.itemName,
@@ -74,6 +75,9 @@ function JournalatorPostingDataProviderMixin:Refresh()
         deposit = item.deposit,
         itemLink = item.itemLink,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        index = index,
+        value = -item.deposit,
+        selected = self:IsSelected(index),
       }
 
       if processedItem.itemLink ~= nil then

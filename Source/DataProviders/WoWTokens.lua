@@ -34,9 +34,10 @@ local WOW_TOKENS_DATA_PROVIDER_LAYOUT ={
 JournalatorWoWTokensDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorWoWTokensDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "WoWTokens")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "WoWTokens")) do
     if self:Filter(item) then
       local processedItem = {
         itemName = item.itemName,
@@ -44,6 +45,8 @@ function JournalatorWoWTokensDataProviderMixin:Refresh()
         moneyOut = item.value,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         rawDay = item.time,
+        value = -item.value,
+        selected = self:IsSelected(index)
       }
       processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemName, processedItem.itemLink)
 

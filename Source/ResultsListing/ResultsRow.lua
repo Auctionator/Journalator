@@ -1,5 +1,10 @@
 JournalatorLogViewResultsRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
 
+function JournalatorLogViewResultsRowMixin:Populate(rowData, ...)
+  AuctionatorResultsRowTemplateMixin.Populate(self, rowData, ...)
+  self.SelectedHighlight:SetShown(rowData.selected)
+end
+
 function JournalatorLogViewResultsRowMixin:OnEnter()
   AuctionatorResultsRowTemplateMixin.OnEnter(self)
 
@@ -37,5 +42,10 @@ function JournalatorLogViewResultsRowMixin:OnClick(button)
         :Fire(self, Journalator.Events.RowClicked, self.rowData)
         :UnregisterSource(self)
     end
+  elseif button == "RightButton" then
+    Auctionator.EventBus
+      :RegisterSource(self, "JournalatorLogViewResultsRowMixin")
+      :Fire(self, Journalator.Events.RowSelected, self.rowData)
+      :UnregisterSource(self)
   end
 end

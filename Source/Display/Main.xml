@@ -319,6 +319,19 @@
         </Scripts>
       </Button>
 
+      <Button text="" parentKey="RunningTotalButton">
+        <NormalFont style="GameFontHighlight" />
+        <Anchors>
+          <Anchor point="BOTTOM" y="4"/>
+          <Anchor point="TOPRIGHT" relativeKey="$parent.ExportCSV" relativePoint="TOPLEFT" y="5" x="-15"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():ResetRunningTotal()
+          </OnClick>
+        </Scripts>
+      </Button>
+
       <StatusBar parentKey="ProgressBar" frameStrata="HIGH" inherits="CastingBarFrameTemplate">
         <Size x="195" y="13"/>
         <Anchors>

@@ -1,5 +1,8 @@
 JournalatorLogViewQuestingRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
 
+JournalatorLogViewQuestingRowMixin.Populate = JournalatorLogViewResultsRowMixin.Populate
+JournalatorLogViewQuestingRowMixin.OnClick = JournalatorLogViewResultsRowMixin.OnClick
+
 function JournalatorLogViewQuestingRowMixin:ShowTooltip()
   GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
   self.UpdateTooltip = self.OnEnter
@@ -112,19 +115,4 @@ function JournalatorLogViewQuestingRowMixin:OnLeave()
   self.UpdateTooltip = nil
   self:CancelContinuable()
   GameTooltip:Hide()
-end
-
-function JournalatorLogViewQuestingRowMixin:OnClick(button)
-  if button == "LeftButton" then
-    if IsModifiedClick("CHATLINK") then
-      if self.rowData.itemLink ~= nil then
-        ChatEdit_InsertLink(self.rowData.itemLink)
-      end
-    else
-      Auctionator.EventBus
-        :RegisterSource(self, "JournalatorLogViewQuestingRowMixin")
-        :Fire(self, Journalator.Events.RowClicked, self.rowData)
-        :UnregisterSource(self)
-    end
-  end
 end

@@ -58,10 +58,11 @@ local LOOTING_DATA_PROVIDER_LAYOUT ={
 JournalatorLootBySourceDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorLootBySourceDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
   local results = {}
   local count = 1
-  for _, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "LootContainers")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "LootContainers")) do
     local name
     if item.type == "item" then
       name = item.name
@@ -93,6 +94,9 @@ function JournalatorLootBySourceDataProviderMixin:Refresh()
         currencies = item.currencies,
         itemCount = #item.items,
         currencyCount = #item.currencies,
+        index = index,
+        value = item.money,
+        selected = self:IsSelected(index),
         zone = "",
       }
 

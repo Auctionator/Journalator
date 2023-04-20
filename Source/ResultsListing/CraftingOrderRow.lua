@@ -1,5 +1,8 @@
 JournalatorLogViewCraftingOrdersRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
 
+JournalatorLogViewCraftingOrdersRowMixin.Populate = JournalatorLogViewResultsRowMixin.Populate
+JournalatorLogViewCraftingOrdersRowMixin.OnClick = JournalatorLogViewResultsRowMixin.OnClick
+
 local lightBlue = CreateColor(116/255, 236/255, 252/255)
 
 local function AddReagents(reagents, headerText, noEntriesText, missingText)
@@ -123,24 +126,4 @@ function JournalatorLogViewCraftingOrdersRowMixin:OnLeave()
   self.UpdateTooltip = nil
   self:CancelContinuable()
   GameTooltip:Hide()
-end
-
-function JournalatorLogViewCraftingOrdersRowMixin:OnClick(button)
-  if button == "LeftButton" then
-    if IsModifiedClick("CHATLINK") then
-      if self.rowData.itemLink ~= nil then
-        ChatEdit_InsertLink(self.rowData.itemLink)
-      end
-    else
-      Auctionator.EventBus
-        :RegisterSource(self, "JournalatorLogViewCraftingOrdersRowMixin")
-        :Fire(self, Journalator.Events.RowClicked, self.rowData)
-        :UnregisterSource(self)
-    end
-  elseif button == "RightButton" and self.rowData.otherPlayer then
-    Auctionator.EventBus
-      :RegisterSource(self, "JournalatorLogViewCraftingOrdersRowMixin")
-      :Fire(self, Journalator.Events.RowClicked, {itemName = self.rowData.otherPlayer})
-      :UnregisterSource(self)
-  end
 end

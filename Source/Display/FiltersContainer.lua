@@ -70,9 +70,10 @@ function JournalatorFiltersContainerMixin:CheckFiltersChanged()
   end
 end
 
-function JournalatorFiltersContainerMixin:ReceiveEvent(eventName, eventData)
+function JournalatorFiltersContainerMixin:ReceiveEvent(eventName, ...)
   if eventName == Journalator.Events.RowClicked and self:IsVisible() then
-    self.SearchFilter:SetText("\"" .. (eventData.searchTerm or eventData.itemName) .. "\"")
+    local rowData = ...
+    self.SearchFilter:SetText("\"" .. (rowData.searchTerm or rowData.itemName) .. "\"")
   end
 end
 

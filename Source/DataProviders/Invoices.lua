@@ -66,11 +66,12 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
 JournalatorInvoicesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorInvoicesDataProviderMixin:Refresh()
+  self.onPreserveScroll()
   self:Reset()
 
   local rangeTime = self:GetTimeForRange()
   local results = {}
-  for _, item in ipairs(Journalator.Archiving.GetRange(rangeTime, "Invoices")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(rangeTime, "Invoices")) do
     if self:Filter(item) then
       local moneyIn = 0
       local moneyOut = 0
@@ -112,6 +113,9 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         otherPlayer = otherPlayer,
         sourceCharacter = sourceCharacter,
         itemLink = itemLink,
+        index = index,
+        value = moneyIn + moneyOut,
+        selected = self:IsSelected(index),
       })
     end
   end
