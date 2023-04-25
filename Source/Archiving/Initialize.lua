@@ -42,8 +42,13 @@ function Journalator.Archiving.InitializeStore(store)
     store.WoWTokens = {}
   end
 
-  if store.Version ~= 8 then
-    store.Version = 8
+  if store.Version == 8 then
+    store.Version = 9
+    store.VendorRepairs = {}
+  end
+
+  if store.Version ~= 9 then
+    store.Version = 9
     store.Invoices = {}
     store.Posting = {}
     store.Failures = {}
@@ -54,6 +59,7 @@ function Journalator.Archiving.InitializeStore(store)
     store.TradingPostVendoring = {}
     store.LootContainers = {}
     store.WoWTokens = {}
+    store.VendorRepairs = {}
   end
 end
 

@@ -142,5 +142,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["DROPS_COLON"] = "Drops:"
   L["CHARACTER"] = "Character"
 
+  L["REPAIRS"] = "Repairs"
+
   return L
 end

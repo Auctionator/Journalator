@@ -39,6 +39,20 @@ function Journalator.GetProfit(startTime, endTime, filter)
     end
   end
 
+  local vendorRepairs = Journalator.Archiving.GetRange(startTime, "VendorRepairs")
+  for _, item in ipairs(vendorRepairs) do
+    local filterItem = {
+      itemName = "",
+      time = item.time,
+      source = item.source,
+    }
+    if filterItem.time >= startTime and filterItem.time <= endTime then
+      if filter(filterItem) then
+        outgoing = outgoing + item.money
+      end
+    end
+  end
+
   local fulfillings = Journalator.Archiving.GetRange(startTime, "Fulfilling")
   for _, item in ipairs(fulfillings) do
     if item.time >= startTime and item.time <= endTime then
@@ -140,6 +154,20 @@ function Journalator.GetDetailedProfits(startTime, endTime, filter)
         else
           purchases = purchases + item.unitPrice * item.count
         end
+      end
+    end
+  end
+
+  local vendorRepairs = Journalator.Archiving.GetRange(startTime, "VendorRepairs")
+  for _, item in ipairs(vendorRepairs) do
+    local filterItem = {
+      itemName = "",
+      time = item.time,
+      source = item.source,
+    }
+    if filterItem.time >= startTime and filterItem.time <= endTime then
+      if filter(filterItem) then
+        purchases = purchases + item.money
       end
     end
   end

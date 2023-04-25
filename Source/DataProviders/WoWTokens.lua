@@ -46,7 +46,8 @@ function JournalatorWoWTokensDataProviderMixin:Refresh()
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         rawDay = item.time,
         value = -item.value,
-        selected = self:IsSelected(index)
+        selected = self:IsSelected(index),
+        index = index,
       }
       processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemName, processedItem.itemLink)
 

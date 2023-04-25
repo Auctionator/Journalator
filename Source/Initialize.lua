@@ -7,7 +7,8 @@ local function SetupMonitors()
   end
 
   if Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING) then
-    CreateFrame("Frame", "JNRVendorMonitor", nil, "JournalatorVendorMonitorTemplate")
+    CreateFrame("Frame", "JNRVendorItemsMonitor", nil, "JournalatorVendorItemsMonitorTemplate")
+    CreateFrame("Frame", "JNRVendorRepairsMonitor", nil, "JournalatorVendorRepairsMonitorTemplate")
   else
     Journalator.Debug.Message("vendor monitoring disabled")
   end

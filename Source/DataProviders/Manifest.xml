@@ -6,6 +6,7 @@
   <Script file="SaleRates.lua" />
   <Script file="Failures.lua" />
   <Script file="Vendoring.lua" />
+  <Script file="VendorRepairs.lua" />
   <Script file="Fulfilling.lua" />
   <Script file="CraftingOrdersPlaced.lua" />
   <Script file="Questing.lua" />

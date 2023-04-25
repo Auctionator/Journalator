@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="Items.xml" />
+  <Include file="Repairs.xml" />
+</Ui>

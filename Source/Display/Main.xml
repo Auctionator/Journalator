@@ -131,14 +131,50 @@
         </Frames>
       </Frame>
 
-      <Frame inherits="JournalatorVendoringDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Vendoring" type="string"/>
-				</KeyValues>
+      <Frame parentKey="VendorsContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT" y="30"/>
         </Anchors>
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnShow method="OnShow"/>
+        </Scripts>
+        <KeyValues>
+          <KeyValue key="displayMode" value="Vendors" type="string"/>
+        </KeyValues>
+        <Frames>
+          <Frame inherits="JournalatorVendoringDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Items" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+          <Frame inherits="JournalatorVendorRepairsDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Repairs" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Button parentKey="ItemsTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendorsItemsTab_Button" text="JOURNALATOR_L_ITEMS">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Items" type="string"/>
+            </KeyValues>
+          </Button>
+
+          <Button parentKey="RepairsTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendorsRepairsTab_Button" text="JOURNALATOR_L_REPAIRS">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Repairs" type="string"/>
+            </KeyValues>
+          </Button>
+        </Frames>
       </Frame>
 
       <Frame parentKey="CraftingOrdersContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
@@ -275,7 +311,7 @@
 			</Button>
       <Button parentKey="VendoringTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendoringTab_Button" text="JOURNALATOR_L_VENDORS">
         <KeyValues>
-          <KeyValue key="displayMode" value="Vendoring" type="string"/>
+          <KeyValue key="displayMode" value="Vendors" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_VENDORING_TITLE" type="global"/>
 				</KeyValues>
 			</Button>

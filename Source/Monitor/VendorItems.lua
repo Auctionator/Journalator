@@ -1,4 +1,4 @@
-JournalatorVendorMonitorMixin = {}
+JournalatorVendorItemsMonitorMixin = {}
 
 local EQUIPMENT_SLOT_CAP = 19
 
@@ -166,10 +166,10 @@ local PURCHASE_VALIDATION_EVENTS = {
   "BAG_UPDATE"
 }
 
-function JournalatorVendorMonitorMixin:OnLoad()
+function JournalatorVendorItemsMonitorMixin:OnLoad()
   self:ResetQueues()
 
-  if Auctionator.Constants.IsClassic then
+  if PlayerInteractionFrameManager == nil then
     FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS_CLASSIC)
   else
     FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS_RETAIL)
@@ -184,13 +184,13 @@ function JournalatorVendorMonitorMixin:OnLoad()
   self:RegisterPurchaseHandlers()
 end
 
-function JournalatorVendorMonitorMixin:OnUpdate()
+function JournalatorVendorItemsMonitorMixin:OnUpdate()
   self:UpdateCursorItem()
 
   self:CheckPurchaseQueueForBagSpace()
 end
 
-function JournalatorVendorMonitorMixin:ResetQueues()
+function JournalatorVendorItemsMonitorMixin:ResetQueues()
   -- Used to detect the successful sale or purchase of items
   -- Keeping a queue is necessary as addons automating merchants can make bulk
   -- purchases (reagents) and sales (e.g. of junk) which aren't fulfilled
@@ -199,7 +199,7 @@ function JournalatorVendorMonitorMixin:ResetQueues()
   self.purchaseQueue = {}
 end
 
-function JournalatorVendorMonitorMixin:RegisterRightClickToSellHandlers()
+function JournalatorVendorItemsMonitorMixin:RegisterRightClickToSellHandlers()
   local function ProcessDetails(bag, slot)
     if not self.merchantShown then
       return
@@ -241,7 +241,7 @@ end
 -- Used to identify the item selected/being dragged by the cursor
 -- The selected item may be sold, destroyed, repositioned in the bag, or left
 -- as-is.
-function JournalatorVendorMonitorMixin:UpdateCursorItem()
+function JournalatorVendorItemsMonitorMixin:UpdateCursorItem()
   self.lastCursorItem = nil
 
   if not self.merchantShown then
@@ -284,7 +284,7 @@ function JournalatorVendorMonitorMixin:UpdateCursorItem()
   end
 end
 
-function JournalatorVendorMonitorMixin:RegisterDragToSellHandlers()
+function JournalatorVendorItemsMonitorMixin:RegisterDragToSellHandlers()
   -- Handle case when the cursor is used to select and sell an item
   hooksecurefunc(_G, "PickupMerchantItem", function(index)
     if not self.merchantShown then
@@ -323,7 +323,7 @@ end
 
 -- Used to log refund amounts for heirlooms (and probably a few other refundable
 -- items)
-function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
+function JournalatorVendorItemsMonitorMixin:RegisterRefundHandlers()
   local function ProcessDetails(bag, slot, isEquipped)
     if not self.merchantShown then
       return
@@ -364,7 +364,7 @@ function JournalatorVendorMonitorMixin:RegisterRefundHandlers()
   end
 end
 
-function JournalatorVendorMonitorMixin:UpdateForCompletedSales()
+function JournalatorVendorItemsMonitorMixin:UpdateForCompletedSales()
   -- Checks if an item sold to a vendor has disappeared from the player's bag or
   -- equipped items.
   for guid, item in pairs(self.sellQueue) do
@@ -377,7 +377,7 @@ end
 
 -- Handle items being repurchased from the vendor aftering having been sold
 -- earlier.
-function JournalatorVendorMonitorMixin:RegisterBuybackHandlers()
+function JournalatorVendorItemsMonitorMixin:RegisterBuybackHandlers()
   hooksecurefunc(_G, "BuybackItem", function(index)
     if not self.merchantShown then
       return
@@ -411,18 +411,18 @@ end
 
 -- Handle normal purchase of items. This even works when the cursor is used to
 -- drag and item from the vendor into a bag.
-function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
+function JournalatorVendorItemsMonitorMixin:RegisterPurchaseHandlers()
   hooksecurefunc(_G, "BuyMerchantItem", function(index, quantity)
     if not self.merchantShown then
       return
     end
 
-    quantity = quantity or 1
-
     local name, _, price, stackSize, numInStock = GetMerchantItemInfo(index)
     local link = GetMerchantItemLink(index)
     local maxStackSize = GetMerchantItemMaxStack(index)
     local currencies, items = {}, {}
+
+    quantity = quantity or stackSize
 
     for i = 1, GetMerchantItemCostInfo(index) do
       local _, quantity, itemLink, currencyName = GetMerchantItemCostItem(index, i)
@@ -462,7 +462,7 @@ function JournalatorVendorMonitorMixin:RegisterPurchaseHandlers()
   end)
 end
 
-function JournalatorVendorMonitorMixin:SortPurchaseQueue()
+function JournalatorVendorItemsMonitorMixin:SortPurchaseQueue()
   -- Sort in descending order by stack size, grouped by item. Used to determine
   -- which purchases have gone through, and affects the order in which items are
   -- added to the vendor logs, by slotting each stack into the new stacks added,
@@ -476,7 +476,7 @@ function JournalatorVendorMonitorMixin:SortPurchaseQueue()
   end)
 end
 
-function JournalatorVendorMonitorMixin:UpdateForCompletedPurchases()
+function JournalatorVendorItemsMonitorMixin:UpdateForCompletedPurchases()
   local newStackSizes = GetGUIDStackSizes()
   local newQueue = {}
   for _, item in ipairs(self.purchaseQueue) do
@@ -520,7 +520,7 @@ end
 -- the items can fit independently. So when one item does get added to the bag
 -- the remaining items will either fit (and get purchased), or not, and get
 -- removed from the queue..
-function JournalatorVendorMonitorMixin:CheckPurchaseQueueForBagSpace()
+function JournalatorVendorItemsMonitorMixin:CheckPurchaseQueueForBagSpace()
   local newQueue = {}
   for index, item in ipairs(self.purchaseQueue) do
     if GetItemInfo(item.itemLink) == nil or
@@ -532,7 +532,7 @@ function JournalatorVendorMonitorMixin:CheckPurchaseQueueForBagSpace()
   self.purchaseQueue = newQueue
 end
 
-function JournalatorVendorMonitorMixin:OnMerchantShow()
+function JournalatorVendorItemsMonitorMixin:OnMerchantShow()
   self:SetScript("OnUpdate", self.OnUpdate)
   FrameUtil.RegisterFrameForEvents(self, PURCHASE_VALIDATION_EVENTS)
 
@@ -541,7 +541,7 @@ function JournalatorVendorMonitorMixin:OnMerchantShow()
   self.merchantShown = true
 end
 
-function JournalatorVendorMonitorMixin:OnMerchantHide()
+function JournalatorVendorItemsMonitorMixin:OnMerchantHide()
   self:SetScript("OnUpdate", nil)
   FrameUtil.UnregisterFrameForEvents(self, PURCHASE_VALIDATION_EVENTS)
 
@@ -549,7 +549,7 @@ function JournalatorVendorMonitorMixin:OnMerchantHide()
   self.merchantShown = false
 end
 
-function JournalatorVendorMonitorMixin:OnEvent(eventName, ...)
+function JournalatorVendorItemsMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MERCHANT_SHOW" then -- Classic
     self:OnMerchantShow()
 

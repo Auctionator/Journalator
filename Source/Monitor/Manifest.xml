@@ -1,7 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="Mail.lua" />
   <Script file="Posting.lua" />
-  <Script file="Vendor.lua" />
+  <Script file="VendorItems.lua" />
+  <Script file="VendorRepairs.lua" />
   <Script file="CraftingOrderPlacing.lua" />
   <Script file="CraftingOrderFulfilling.lua" />
   <Script file="QuestsClassic.lua" />
@@ -14,7 +15,8 @@
 
   <Include file="Mail.xml" />
   <Include file="Posting.xml" />
-  <Include file="Vendor.xml" />
+  <Include file="VendorItems.xml" />
+  <Include file="VendorRepairs.xml" />
   <Include file="CraftingOrderPlacing.xml" />
   <Include file="CraftingOrderFulfilling.xml" />
   <Include file="QuestsClassic.xml" />

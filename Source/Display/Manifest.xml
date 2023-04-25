@@ -15,9 +15,8 @@
   <Include file="DataTab.xml" />
 
   <Include file="AuctionHouse\Manifest.xml" />
+  <Include file="Vendors\Manifest.xml" />
   <Include file="CraftingOrders\Manifest.xml" />
-
-  <Include file="Vendoring.xml" />
 
   <Include file="FiltersContainer.xml" />
   <Include file="Questing.xml" />
