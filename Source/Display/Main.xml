@@ -162,6 +162,15 @@
               <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
             </Anchors>
           </Frame>
+          <Frame inherits="JournalatorTaxisDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Taxis" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
 
           <Button parentKey="ItemsTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendorsItemsTab_Button" text="JOURNALATOR_L_ITEMS">
             <KeyValues>
@@ -172,6 +181,12 @@
           <Button parentKey="RepairsTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendorsRepairsTab_Button" text="JOURNALATOR_L_REPAIRS">
             <KeyValues>
               <KeyValue key="displayMode" value="Repairs" type="string"/>
+            </KeyValues>
+          </Button>
+
+          <Button parentKey="TaxisTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTaxisTab_Button" text="JOURNALATOR_L_TAXIS">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Taxis" type="string"/>
             </KeyValues>
           </Button>
         </Frames>

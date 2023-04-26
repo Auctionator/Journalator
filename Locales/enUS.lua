@@ -144,5 +144,9 @@ JOURNALATOR_LOCALES.enUS = function()
 
   L["REPAIRS"] = "Repairs"
 
+  L["TAXIS"] = "Taxis"
+  L["START"] = "Start"
+  L["END"] = "End"
+
   return L
 end

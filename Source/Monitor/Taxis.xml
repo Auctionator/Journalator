@@ -1,0 +1,8 @@
+<Ui>
+  <Frame name="JournalatorTaxisMonitorTemplate" mixin="JournalatorTaxisMonitorMixin" virtual="true">
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnEvent method="OnEvent"/>
+    </Scripts>
+  </Frame>
+</Ui>

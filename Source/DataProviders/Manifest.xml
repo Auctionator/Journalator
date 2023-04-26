@@ -14,4 +14,5 @@
   <Script file="LootBySource.lua" />
   <Script file="LootByItem.lua" />
   <Script file="WoWTokens.lua" />
+  <Script file="Taxis.lua" />
 </Ui>

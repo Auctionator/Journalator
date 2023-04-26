@@ -3,6 +3,7 @@
   <Script file="Posting.lua" />
   <Script file="VendorItems.lua" />
   <Script file="VendorRepairs.lua" />
+  <Script file="Taxis.lua" />
   <Script file="CraftingOrderPlacing.lua" />
   <Script file="CraftingOrderFulfilling.lua" />
   <Script file="QuestsClassic.lua" />
@@ -17,6 +18,7 @@
   <Include file="Posting.xml" />
   <Include file="VendorItems.xml" />
   <Include file="VendorRepairs.xml" />
+  <Include file="Taxis.xml" />
   <Include file="CraftingOrderPlacing.xml" />
   <Include file="CraftingOrderFulfilling.xml" />
   <Include file="QuestsClassic.xml" />
