@@ -194,10 +194,10 @@ function JournalatorDisplayMixin:HideTabs()
   self.AuctionHouseContainer.WoWTokensTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS) and not Auctionator.Constants.IsClassic)
 
   self.VendoringTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING))
+  self.VendorsContainer.TradingPostTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_TRADING_POST) and not Auctionator.Constants.IsClassic)
 
   self.CraftingOrdersTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_CRAFTING_ORDERS) and not Auctionator.Constants.IsClassic)
 
-  self.TradingPostTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_TRADING_POST) and not Auctionator.Constants.IsClassic)
 
   self.QuestingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_QUESTING))
 

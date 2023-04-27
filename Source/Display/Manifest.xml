@@ -20,7 +20,6 @@
 
   <Include file="FiltersContainer.xml" />
   <Include file="Questing.xml" />
-  <Include file="TradingPost.xml" />
   <Include file="Loot\Manifest.xml" />
   <Include file="Info.xml" />
 

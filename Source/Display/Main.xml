@@ -171,22 +171,35 @@
               <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
             </Anchors>
           </Frame>
+          <Frame inherits="JournalatorTradingPostDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="TradingPost" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
 
           <Button parentKey="ItemsTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendorsItemsTab_Button" text="JOURNALATOR_L_ITEMS">
             <KeyValues>
               <KeyValue key="displayMode" value="Items" type="string"/>
             </KeyValues>
           </Button>
-
           <Button parentKey="RepairsTab" inherits="JournalatorTabButtonTemplate" name="JournalatorVendorsRepairsTab_Button" text="JOURNALATOR_L_REPAIRS">
             <KeyValues>
               <KeyValue key="displayMode" value="Repairs" type="string"/>
             </KeyValues>
           </Button>
-
           <Button parentKey="TaxisTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTaxisTab_Button" text="JOURNALATOR_L_TAXIS">
             <KeyValues>
               <KeyValue key="displayMode" value="Taxis" type="string"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="TradingPostTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradingPostTab_Button" text="JOURNALATOR_L_TRADING_POST">
+            <KeyValues>
+              <KeyValue key="displayMode" value="TradingPost" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_TRADING_POST_TITLE" type="global"/>
             </KeyValues>
           </Button>
         </Frames>
@@ -239,16 +252,6 @@
             </KeyValues>
           </Button>
         </Frames>
-      </Frame>
-
-      <Frame inherits="JournalatorTradingPostDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="TradingPost" type="string"/>
-				</KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
-        </Anchors>
       </Frame>
 
       <Frame inherits="JournalatorQuestingDisplayTemplate" parentArray="Views">
@@ -348,12 +351,6 @@
 					<KeyValue key="title" value="JOURNALATOR_L_LOOTING_TITLE" type="global"/>
 				</KeyValues>
 			</Button>
-      <Button parentKey="TradingPostTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradingPostTab_Button" text="JOURNALATOR_L_TRADING_POST">
-        <KeyValues>
-          <KeyValue key="displayMode" value="TradingPost" type="string"/>
-          <KeyValue key="title" value="JOURNALATOR_L_TRADING_POST_TITLE" type="global"/>
-        </KeyValues>
-      </Button>
       <Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
         <KeyValues>
           <KeyValue key="displayMode" value="Info" type="string"/>
