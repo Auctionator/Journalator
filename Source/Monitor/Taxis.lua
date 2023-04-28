@@ -17,13 +17,13 @@ function JournalatorTaxisMonitorMixin:OnLoad()
 
   hooksecurefunc("TakeTaxiNode", function(slot)
     if NumTaxiNodes() == 0 or TaxiNodeGetType(slot) ~= "REACHABLE" then
-      Journalator.Debug.Log("taxi unreachable/closed")
+      Journalator.Debug.Message("taxi unreachable/closed")
       return
     end
 
     local cost = TaxiNodeCost(slot)
     if GetMoney() < cost then
-      Journalator.Debug.Log("taxi unaffordable")
+      Journalator.Debug.Message("taxi unaffordable")
       return
     end
 
