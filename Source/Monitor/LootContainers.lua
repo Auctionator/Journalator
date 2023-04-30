@@ -206,7 +206,6 @@ function JournalatorLootContainersMonitorMixin:UpdateCacheSlot(slot)
 
   local sources = ConvertSourceInfo(slot)
 
-
   -- Figure out which chunk (if any) has been picked up
   -- 1. By comparing the chunks that exist this time round to last time
   local oldSeen = GetSeen(slotInfo.prevSources)
@@ -222,11 +221,24 @@ function JournalatorLootContainersMonitorMixin:UpdateCacheSlot(slot)
   -- don't change but the quantity does meaning a chunk got replaced with an
   -- identical one
   if not shifted and not anyMatched and slotInfo.lastQuantityShift > 0 then
+    local recovered = false
     for k, s in pairs(oldSeen) do
       if s.quantity == slotInfo.lastQuantityShift then
         table.insert(slotInfo.importSources, s)
+        recovered = true
         break
       end
+    end
+
+    -- The slot size needed isn't in the current sources list, so invent it
+    if not recovered and #sources > 0 then
+      Journalator.Debug.Message("recovery miss guessing again", slotInfo.lastQuantityShift)
+      table.insert(slotInfo.importSources, {
+        guid = sources[1].guid,
+        quantity = slotInfo.lastQuantityShift,
+      })
+    else
+      Journalator.Debug.Message("recovery miss nothing to guess with", #sources, #slotInfo.prevSources)
     end
     slotInfo.lastQuantityShift = 0
   end
