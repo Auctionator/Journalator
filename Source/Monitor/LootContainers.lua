@@ -237,7 +237,7 @@ function JournalatorLootContainersMonitorMixin:UpdateCacheSlot(slot)
         guid = sources[1].guid,
         quantity = slotInfo.lastQuantityShift,
       })
-    else
+    elseif not recovered then
       Journalator.Debug.Message("recovery miss nothing to guess with", #sources, #slotInfo.prevSources)
     end
     slotInfo.lastQuantityShift = 0
