@@ -77,7 +77,11 @@ function JournalatorCraftingOrderPlacingMonitorMixin:HookPlacing()
       TooltipUtil.SurfaceArgs(tooltipInfo)
       outputLink = tooltipInfo.hyperlink
     else
-      outputLink = Auctionator.CraftingInfo.GetOutputItemLink(recipeID, nil, orderInfo.craftingReagentItems)
+      local outputInfo = C_TradeSkillUI.GetRecipeOutputItemData(recipeID, orderInfo.craftingReagentItems, nil)
+      if not outputInfo then
+        return
+      end
+      outputLink = outputInfo.hyperlink
     end
 
     -- Save all reagents merging quality and non-quality reagents
