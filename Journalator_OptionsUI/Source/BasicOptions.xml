@@ -1,0 +1,151 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame
+    name="JournalatorConfigBasicOptionsFrame"
+    mixin="JournalatorConfigBasicOptionsFrameMixin"
+    hidden="true"
+    >
+
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnShow method="OnShow"/>
+      <OnHide method="Save"/>
+    </Scripts>
+
+    <Frames>
+      <Frame inherits="AuctionatorConfigurationTitleFrame" parentKey="TitleArea">
+        <KeyValues>
+          <KeyValue key="titleText" value="AUCTIONATOR_L_CONFIG_BASIC_OPTIONS_CATEGORY" type="global" />
+          <KeyValue key="subTitleText" value="JOURNALATOR_L_CONFIG_BASIC_OPTIONS_TEXT" type="global"/>
+        </KeyValues>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="TooltipsHeading" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="headingText" value="AUCTIONATOR_L_CONFIG_TOOLTIPS_CATEGORY" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipSaleRate" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_SALE_RATE" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipsHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipFailures" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_FAILURES" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipSaleRate" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipLastSold" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_LAST_SOLD" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipFailures" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipLastBought" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_LAST_BOUGHT" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastSold" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="VendoringHeading" parentArray="Display">
+        <KeyValues>
+          <KeyValue key="headingText" value="JOURNALATOR_L_CONFIG_VENDORING" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastBought" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="GroupJunk" parentArray="Display">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_GROUP_JUNK" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.VendoringHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="StatisticsHeading">
+        <KeyValues>
+          <KeyValue key="headingText" value="JOURNALATOR_L_STATISTICS" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.GroupJunk" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowDetailedStatus" parentArray="Display">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_SHOW_DETAILED_STATUS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.StatisticsHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="JOURNALATOR_L_COMPUTE_STATISTICS" parentKey="ComputeFullStatistics" parentArray="Statistics">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ShowDetailedStatus" relativePoint="BOTTOMLEFT" x="23"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():ComputeFullStatisticsClicked()
+          </OnClick>
+        </Scripts>
+      </Button>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="MinimapIconHeading" parentArray="Display">
+        <KeyValues>
+          <KeyValue key="headingText" value="JOURNALATOR_L_MINIMAP_ICON" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ComputeFullStatistics" relativePoint="BOTTOMLEFT" x="-23" y="-10"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowMinimapIcon" parentArray="Display">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_SHOW_MINIMAP_ICON" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.MinimapIconHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="AdvancedHeading">
+        <KeyValues>
+          <KeyValue key="headingText" value="AUCTIONATOR_L_CONFIG_ADVANCED_CATEGORY" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ShowMinimapIcon" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="DebugMode">
+        <KeyValues>
+          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_DEBUG" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.AdvancedHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+   </Frames>
+  </Frame>
+</Ui>

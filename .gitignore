@@ -4,5 +4,5 @@ Changelog*
 *.swp
 tmp
 .release
-Embeds/**
-Libs/**
+Journalator/Embeds/**
+Journalator_Display/Libs/**

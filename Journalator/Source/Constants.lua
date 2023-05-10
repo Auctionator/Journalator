@@ -1,0 +1,37 @@
+Journalator.Constants = {
+  LINK_INTERVAL = 7 * 24 * 60 * 60,
+
+  STORE_SIZE_LIMIT = 1500,
+  STORE_PREFIX = "Logs-",
+
+  QUEST_REWARD_DELAY = 2,
+  EARLY_REPUTATION_DELAY = 2,
+
+  PET_CAGE_ID = 82800,
+  IsClassic = WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE,
+}
+
+local SECONDS_IN_A_MONTH = 30 * 24 * 60 * 60
+Journalator.Constants.TimePeriods = {
+  Month = SECONDS_IN_A_MONTH,
+  Text = {
+    JOURNALATOR_L_ALL_TIME,
+    JOURNALATOR_L_LAST_YEAR,
+    JOURNALATOR_L_LAST_6_MONTHS,
+    JOURNALATOR_L_LAST_3_MONTHS,
+    JOURNALATOR_L_LAST_MONTH,
+    JOURNALATOR_L_LAST_WEEK,
+    JOURNALATOR_L_LAST_DAY,
+    JOURNALATOR_L_LAST_HOUR,
+  },
+  Values = {
+    0,
+    SECONDS_IN_A_MONTH * 12,
+    SECONDS_IN_A_MONTH * 6,
+    SECONDS_IN_A_MONTH * 3,
+    SECONDS_IN_A_MONTH,
+    7 * 24 * 60 * 60,
+    24 * 60 * 60,
+    60 * 60,
+  }
+}

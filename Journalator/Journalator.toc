@@ -1,0 +1,17 @@
+## Interface: 100100
+## Interface-Mainline: 100100
+## Interface-Wrath: 30401
+## Interface-Classic: 11403
+## Title: Journalator
+## Notes: Data storage and recording
+## Version: @project-version@
+## Author: plusmouse
+## OptionalDeps: Auctionator
+## SavedVariables: JOURNALATOR_CONFIG, JOURNALATOR_LOGS, JOURNALATOR_ARCHIVE, JOURNALATOR_ARCHIVE_TIMES
+## IconTexture: Interface/AddOns/Journalator/Images/icon
+
+Embeds.xml
+
+Locales\Manifest.xml
+
+Source\Manifest.xml

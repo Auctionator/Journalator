@@ -1,0 +1,11 @@
+## Interface: 11403
+## Title: Journalator (Display)
+## Notes: Main view
+## Version: @project-version@
+## Author: plusmouse
+## RequiredDeps: Auctionator, Journalator
+
+Libs.xml
+
+Source\Manifest.xml
+Source_Classic\Display\TabButton.xml

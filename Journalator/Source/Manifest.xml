@@ -1,0 +1,18 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="Locales.lua" />
+  <Script file="Objects.lua" />
+  <Script file="Constants.lua" />
+  <Script file="Events.lua" />
+  <Script file="Utilities.lua" />
+  <Script file="API.lua" />
+
+  <Script file="Initialize.lua" />
+  <Script file="AddToLogs.lua" />
+
+  <Script file="Debug.lua" />
+  <Script file="Config.lua" />
+  <Script file="SlashCmd.lua" />
+
+  <Include file="Archiving\Manifest.xml" />
+  <Include file="Monitor\Manifest.xml" />
+</Ui>

@@ -1,0 +1,12 @@
+## Interface: 100100
+## Interface-Mainline: 100100
+## Interface-Wrath: 30401
+## Interface-Classic: 11403
+## Title: Journalator (Options UI)
+## Notes: UI for changing settings
+## Version: @project-version@
+## Author: plusmouse
+## RequiredDeps: Journalator, Auctionator
+## IconTexture: Interface/AddOns/Journalator/Images/icon
+
+Source\Manifest.xml

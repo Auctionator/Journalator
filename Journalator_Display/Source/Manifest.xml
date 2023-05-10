@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+ <!--<Script file="Events.lua" />-->
+  <Script file="Utilities.lua" />
+
+  <Script file="GetPostedItemLink.lua" />
+  <Script file="GetProfit.lua" />
+  <Script file="GetCharactersAndRealms.lua" />
+
+  <Script file="Initialize.lua" />
+  <Script file="MinimapIcon.lua" />
+
+  <Include file="DataProviders\Manifest.xml" />
+  <Include file="ResultsListing\Manifest.xml" />
+  <Include file="Display\Manifest.xml" />
+</Ui>

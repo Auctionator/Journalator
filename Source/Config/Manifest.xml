@@ -1,9 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Script file="Main.lua" />
-
-  <Script file="BasicOptions.lua" />
-  <Script file="Monitors.lua" />
-
-  <Include file="BasicOptions.xml" />
-  <Include file="Monitors.xml" />
-</Ui>
