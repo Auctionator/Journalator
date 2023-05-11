@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Script file="Mail.lua" />
+  <Script file="AuctionMail.lua" />
   <Script file="Posting.lua" />
   <Script file="VendorItems.lua" />
   <Script file="VendorRepairs.lua" />
@@ -14,7 +14,7 @@
   <Script file="LootRightClickToOpen.lua" />
   <Script file="WoWTokens.lua" />
 
-  <Include file="Mail.xml" />
+  <Include file="AuctionMail.xml" />
   <Include file="Posting.xml" />
   <Include file="VendorItems.xml" />
   <Include file="VendorRepairs.xml" />

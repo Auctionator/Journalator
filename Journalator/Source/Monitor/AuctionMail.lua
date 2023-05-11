@@ -1,4 +1,4 @@
-JournalatorMailMonitorMixin = {}
+JournalatorAuctionMailMonitorMixin = {}
 
 local MAIL_EVENTS = {
   "MAIL_INBOX_UPDATE",
@@ -97,22 +97,21 @@ local function SaveFailed(failedType, itemInfo, itemLink)
   }})
 end
 
-function JournalatorMailMonitorMixin:OnLoad()
+function JournalatorAuctionMailMonitorMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, MAIL_EVENTS)
 end
 
-function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
+function JournalatorAuctionMailMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MAIL_INBOX_UPDATE" then
-    Journalator.Debug.Message("JournalatorMailMonitor: inbox update", GetInboxNumItems())
+    Journalator.Debug.Message("JournalatorAuctionMailMonitor: inbox update", GetInboxNumItems())
     self.seenAttachments = {}
 
-    -- Ask for all mail so that player names get cached before a user opens the
-    -- mail. On classic this reduces the chance that buyer names are missing.
     for mailIndex = 1, (GetInboxNumItems()) do
+      -- Ask for all mail so that player names get cached before a user opens
+      -- the mail. This reduces the chance that buyer/seller names are missing.
       local mail = CacheMail(mailIndex)
 
-      -- Cache basic attachment information (used when another addon finds a way
-      -- to skip the added hooks, say with a private copy of TakeInboxItem)
+      -- Keep the attachments for use after they've been removed from the mail
       self.seenAttachments[mailIndex] = {
         money = mail.header[5],
         link = GetFirstAttachment(mailIndex),
@@ -135,14 +134,14 @@ function JournalatorMailMonitorMixin:OnEvent(eventName, ...)
       self:ProcessMailWithItem(mail, attachment.link)
     end
 
-    Journalator.Debug.Message("JournalatorMailMonitor: close mail", mailIndex, mail.header[4], attachment.link, attachment.money)
+    Journalator.Debug.Message("JournalatorAuctionMailMonitor: close mail", mailIndex, mail.header[4], attachment.link, attachment.money)
   end
 end
 
 local expiredText = AUCTION_EXPIRED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 local cancelledText = AUCTION_REMOVED_MAIL_SUBJECT:gsub("%%s", "(.*)")
 
-function JournalatorMailMonitorMixin:ProcessMailWithItem(mail, itemLink)
+function JournalatorAuctionMailMonitorMixin:ProcessMailWithItem(mail, itemLink)
   if mail.header[4] == RETRIEVING_DATA then
     return
   end
@@ -158,7 +157,7 @@ function JournalatorMailMonitorMixin:ProcessMailWithItem(mail, itemLink)
   end
 end
 
-function JournalatorMailMonitorMixin:ProcessMailWithMoney(mail)
+function JournalatorAuctionMailMonitorMixin:ProcessMailWithMoney(mail)
   if mail.header[4] == RETRIEVING_DATA then
     return
   end
