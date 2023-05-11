@@ -16,8 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Add fallback toc
-      run: cp Journalator_Mainline.toc Journalator.toc
     - uses: BigWigsMods/packager@v2
       with:
         args: -S -p 453921 -a qv63EkGb

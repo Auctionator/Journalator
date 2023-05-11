@@ -10,7 +10,6 @@
 ## SavedVariables: JOURNALATOR_CONFIG, JOURNALATOR_LOGS, JOURNALATOR_ARCHIVE, JOURNALATOR_ARCHIVE_TIMES
 ## IconTexture: Interface/AddOns/Journalator/Images/icon
 
-
 Embeds.xml
 
 Locales\Manifest.xml
