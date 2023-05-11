@@ -106,7 +106,7 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Refresh()
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         index = index,
-        value = item.tipAmount + item.postingFee,
+        value =  - item.tipAmount - item.postingFee,
         selected = self:IsSelected(index),
       }
 
