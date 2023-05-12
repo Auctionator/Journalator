@@ -1,4 +1,4 @@
-WOW_TOKEN_EVENTS = {
+local WOW_TOKEN_EVENTS = {
   "TOKEN_BUY_RESULT",
 }
 

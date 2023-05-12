@@ -3,7 +3,7 @@
 -- Most of the code in this is detecting the reagents used,  with only the
 -- OnEvent function really being needed if detecting the order being fulfilling
 -- (no reagents) is enough.
-CRAFTING_ORDER_EVENTS = {
+local CRAFTING_ORDER_EVENTS = {
   "CRAFTINGORDERS_FULFILL_ORDER_RESPONSE",
 }
 
