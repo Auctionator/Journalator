@@ -197,8 +197,6 @@ function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failure
       meanPrice = math.floor(entry.totalSaleValue / entry.sold)
     end
 
-    totalPrice = entry.totalSaleValue
-
     local item = {
       searchTerm = entry.itemName,
       itemName = entry.itemName,
@@ -207,7 +205,7 @@ function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failure
       saleRate = saleRate,
       saleRatePretty = saleRatePretty,
       meanPrice = meanPrice,
-      totalPrice = totalPrice,
+      totalPrice = entry.totalSaleValue,
       sold = entry.sold,
       unsold = entry.failed,
     }
