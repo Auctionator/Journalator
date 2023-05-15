@@ -64,12 +64,30 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipSoldStats" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_SOLD_STATS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastBought" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipBoughtStats" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_BOUGHT_STATS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipSoldStats" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
       <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="VendoringHeading" parentArray="Display">
         <KeyValues>
           <KeyValue key="headingText" value="JOURNALATOR_L_CONFIG_VENDORING" type="global"/>
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastBought" relativePoint="BOTTOMLEFT"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipBoughtStats" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
@@ -126,24 +144,6 @@
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.MinimapIconHeading" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="AdvancedHeading">
-        <KeyValues>
-          <KeyValue key="headingText" value="AUCTIONATOR_L_CONFIG_ADVANCED_CATEGORY" type="global"/>
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.ShowMinimapIcon" relativePoint="BOTTOMLEFT"/>
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="DebugMode">
-        <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_DEBUG" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.AdvancedHeading" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
    </Frames>

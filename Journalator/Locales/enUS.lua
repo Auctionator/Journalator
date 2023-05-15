@@ -54,6 +54,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["ENGAGE_HEADER"] = "Engage With Journalator"
   L["LAST_SOLD"] = "Last Sold"
   L["LAST_BOUGHT"] = "Last Bought"
+  L["SOLD_MIN_MAX_MEAN"] = "Sold (min: %s, max: %s, mean: %s)"
+  L["BOUGHT_MIN_MAX_MEAN"] = "Bought (min: %s, max: %s, mean: %s)"
 
   L["ALL_TIME"] = "All time"
   L["LAST_YEAR"] = "Last year"
@@ -79,6 +81,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_TOOLTIP_FAILURES"] = "Show how many auctions failed for an item in the item's tooltip."
   L["CONFIG_TOOLTIP_LAST_SOLD"] = "Show the last price that your auction of an item sold for in the item's tooltip."
   L["CONFIG_TOOLTIP_LAST_BOUGHT"] = "Show the last price that you bought an auction of an item at in the item's tooltip."
+  L["CONFIG_TOOLTIP_SOLD_STATS"] = "Show the min/max/mean price that your items sold for in the item's tooltip."
+  L["CONFIG_TOOLTIP_BOUGHT_STATS"] = "Show the min/max/mean price that you paid for items in the item's tooltip."
   L["CONFIG_VENDORING"] = "Vendoring"
   L["CONFIG_GROUP_JUNK"] = "Group junk items in the \"Vendoring\" tab"
   L["CONFIG_SHOW_DETAILED_STATUS"] = "Show more details in status text in the main view."

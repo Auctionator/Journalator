@@ -34,14 +34,14 @@ function JournalatorConfigBasicOptionsFrameMixin:OnShow()
   self.TooltipFailures:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_FAILURES))
   self.TooltipLastSold:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_SOLD))
   self.TooltipLastBought:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT))
+  self.TooltipSoldStats:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SOLD_STATS))
+  self.TooltipBoughtStats:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_BOUGHT_STATS))
 
   self.GroupJunk:SetChecked(Journalator.Config.Get(Journalator.Config.Options.VENDORING_GROUP_JUNK))
 
   self.ShowDetailedStatus:SetChecked(Journalator.Config.Get(Journalator.Config.Options.SHOW_DETAILED_STATUS))
 
   self.ShowMinimapIcon:SetChecked(not Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON).hide)
-
-  self.DebugMode:SetChecked(Journalator.Config.Get(Journalator.Config.Options.DEBUG))
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Save()
@@ -49,6 +49,8 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
   Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_FAILURES, self.TooltipFailures:GetChecked())
   Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_LAST_SOLD, self.TooltipLastSold:GetChecked())
   Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT, self.TooltipLastBought:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_SOLD_STATS, self.TooltipSoldStats:GetChecked())
+  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_BOUGHT_STATS, self.TooltipBoughtStats:GetChecked())
 
   Journalator.Config.Set(Journalator.Config.Options.VENDORING_GROUP_JUNK, self.GroupJunk:GetChecked())
   Journalator.Config.Set(Journalator.Config.Options.SHOW_DETAILED_STATUS, self.ShowDetailedStatus:GetChecked())
@@ -57,8 +59,6 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
   if Journalator.MinimapIcon then
     Journalator.MinimapIcon.UpdateShown()
   end
-
-  Journalator.Config.Set(Journalator.Config.Options.DEBUG, self.DebugMode:GetChecked())
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:ComputeFullStatisticsClicked()

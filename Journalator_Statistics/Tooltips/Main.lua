@@ -29,6 +29,40 @@ local function GetLastBought(itemName, itemLink)
   end
 end
 
+local function GetBoughtStats(itemName, itemLink)
+  local result
+  if itemLink ~= nil then
+    result = {
+      min = Journalator.API.v1.GetRealmMinBoughtByItemLink(JOURNALATOR_L_JOURNALATOR, itemLink),
+      max = Journalator.API.v1.GetRealmMaxBoughtByItemLink(JOURNALATOR_L_JOURNALATOR, itemLink),
+      mean = Journalator.API.v1.GetRealmMeanBoughtByItemLink(JOURNALATOR_L_JOURNALATOR, itemLink),
+    }
+  else
+    result = {
+      min = Journalator.API.v1.GetRealmMinBoughtByItemName(JOURNALATOR_L_JOURNALATOR, itemName),
+      max = Journalator.API.v1.GetRealmMaxBoughtByItemName(JOURNALATOR_L_JOURNALATOR, itemName),
+      mean = Journalator.API.v1.GetRealmMeanBoughtByItemName(JOURNALATOR_L_JOURNALATOR, itemName),
+    }
+  end
+
+  if result.min == nil or result.max == nil or result.mean == nil then
+    return nil
+  end
+  return result
+end
+
+local function GetSoldStats(itemName, itemLink)
+  local result = {
+    min = Journalator.API.v1.GetRealmMinSoldByItemName(JOURNALATOR_L_JOURNALATOR, itemName),
+    max = Journalator.API.v1.GetRealmMaxSoldByItemName(JOURNALATOR_L_JOURNALATOR, itemName),
+    mean = Journalator.API.v1.GetRealmMeanSoldByItemName(JOURNALATOR_L_JOURNALATOR, itemName),
+  }
+  if result.min == nil or result.max == nil or result.mean == nil then
+    return nil
+  end
+  return result
+end
+
 function Journalator.Tooltips.AnyEnabled()
   return JOURNALATOR_STATISTICS ~= nil and (
     Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SALE_RATE) or
@@ -39,7 +73,7 @@ function Journalator.Tooltips.AnyEnabled()
 end
 
 function Journalator.Tooltips.GetSalesInfo(itemName, itemLink)
-  local salesRate, failedString, lastSold, lastBought
+  local salesRate, failedString, lastSold, lastBought, boughtStats, soldStats
 
   if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SALE_RATE) then
     salesRate = GetSaleRate(itemName)
@@ -57,5 +91,13 @@ function Journalator.Tooltips.GetSalesInfo(itemName, itemLink)
     lastBought = GetLastBought(itemName, itemLink)
   end
 
-  return salesRate, failedString, lastSold, lastBought
+  if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SOLD_STATS) then
+    soldStats = GetSoldStats(itemName)
+  end
+
+  if Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_BOUGHT_STATS) then
+    boughtStats = GetBoughtStats(itemName, itemLink)
+  end
+
+  return salesRate, failedString, lastSold, lastBought, boughtStats, soldStats
 end

@@ -3,6 +3,8 @@ Journalator.Config.Options = {
   TOOLTIP_FAILURES = "tooltip_failures",
   TOOLTIP_LAST_SOLD = "tooltip_last_sold",
   TOOLTIP_LAST_BOUGHT = "tooltip_last_bought",
+  TOOLTIP_BOUGHT_STATS = "tooltip_bought_stats",
+  TOOLTIP_SOLD_STATS = "tooltip_sold_stats",
 
   VENDORING_GROUP_JUNK = "vendoring_group_junk",
   MINIMAP_ICON = "minimap_icon",
@@ -28,6 +30,8 @@ Journalator.Config.Defaults = {
   [Journalator.Config.Options.TOOLTIP_FAILURES] = false,
   [Journalator.Config.Options.TOOLTIP_LAST_SOLD] = true,
   [Journalator.Config.Options.TOOLTIP_LAST_BOUGHT] = true,
+  [Journalator.Config.Options.TOOLTIP_BOUGHT_STATS] = false,
+  [Journalator.Config.Options.TOOLTIP_SOLD_STATS] = false,
   [Journalator.Config.Options.VENDORING_GROUP_JUNK] = true,
   [Journalator.Config.Options.MINIMAP_ICON] = { hide = false },
   [Journalator.Config.Options.SHOW_DETAILED_STATUS] = false,

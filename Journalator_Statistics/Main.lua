@@ -1,4 +1,4 @@
-local STATISTICS_VERSION = 4
+local STATISTICS_VERSION = 5
 
 Journalator.Statistics = {}
 
@@ -31,9 +31,60 @@ local function AutoCreateCacheEntry(itemName, realm)
       successes = 0,
       lastSold = nil,
       lastBought = nil,
+      totalSold = { count = 0, value = 0},
+      totalBought = { count = 0, value = 0},
     }
   end
   return JOURNALATOR_STATISTICS.Items[itemName][realm]
+end
+
+local function AddSellInfo(cache, item)
+  local unitPrice = item.value / item.count
+  cache.successes = cache.successes + item.count
+  cache.lastSold = {
+    value = unitPrice,
+    time = item.time
+  }
+
+  if cache.minSold == nil then
+    cache.minSold = unitPrice
+  else
+    cache.minSold = math.min(cache.minSold, unitPrice)
+  end
+
+  if cache.maxSold == nil then
+    cache.maxSold = unitPrice
+  else
+    cache.maxSold = math.max(cache.maxSold, unitPrice)
+  end
+
+  cache.totalSold.count = cache.totalSold.count + item.count
+  cache.totalSold.value = cache.totalSold.value + item.value
+end
+
+local function AddBuyInfo(cache, item)
+  local unitPrice = item.value / item.count
+  if not cache.lastBought or cache.lastBought.time < item.time then
+    cache.lastBought = {
+      value = unitPrice,
+      time = item.time
+    }
+  end
+
+  if cache.minBought == nil then
+    cache.minBought = unitPrice
+  else
+    cache.minBought = math.min(cache.minBought, unitPrice)
+  end
+
+  if cache.maxBought == nil then
+    cache.maxBought = unitPrice
+  else
+    cache.maxBought = math.max(cache.maxBought, unitPrice)
+  end
+
+  cache.totalBought.count = cache.totalBought.count + item.count
+  cache.totalBought.value = cache.totalBought.value + item.value
 end
 
 function Journalator.Statistics.UpdateCache(newEntries)
@@ -41,12 +92,7 @@ function Journalator.Statistics.UpdateCache(newEntries)
     if key == "Invoices" then
       for _, item in ipairs(entries) do
         if item.invoiceType == "seller" then
-          local cache = AutoCreateCacheEntry(item.itemName, item.source.realm)
-          cache.successes = cache.successes + item.count
-          cache.lastSold = {
-            value = item.value / item.count,
-            time = item.time
-          }
+          AddSellInfo(AutoCreateCacheEntry(item.itemName, item.source.realm), item)
 
         elseif item.invoiceType == "buyer" then
           -- Store item id specific entry for items purchased in addition to
@@ -54,23 +100,13 @@ function Journalator.Statistics.UpdateCache(newEntries)
           -- last bought price
           Auctionator.Utilities.DBKeyFromLink(item.itemLink, function(dbKeys)
             for _, key in ipairs(dbKeys) do
-              local cache = AutoCreateCacheEntry(dbKeys[1], item.source.realm)
-              if not cache.lastBought or cache.lastBought.time < item.time then
-                cache.lastBought = {
-                  value = item.value / item.count,
-                  time = item.time
-                }
-              end
+              AddBuyInfo(AutoCreateCacheEntry(key, item.source.realm), item)
             end
           end)
 
           -- Store by item name so that the API works and battle pets get last
           -- bought prices
-          local cache = AutoCreateCacheEntry(item.itemName, item.source.realm)
-          cache.lastBought = {
-            value = item.value / item.count,
-            time = item.time
-          }
+          AddBuyInfo(AutoCreateCacheEntry(item.itemName, item.source.realm), item)
         end
         JOURNALATOR_STATISTICS.RealmConversion[Journalator.Utilities.NormalizeRealmName(item.source.realm)] = item.source.realm
       end
