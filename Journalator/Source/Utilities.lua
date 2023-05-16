@@ -54,6 +54,19 @@ end
 do
   local currencyMap
 
+  local GetCurrencyListSize = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListSize or GetCurrencyListSize
+  local GetCurrencyListInfo = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListInfo or GetCurrencyListInfo
+  local ExpandCurrencyList = C_CurrencyInfo and C_CurrencyInfo.ExpandCurrencyList or ExpandCurrencyList
+  local GetCurrencyListLink = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListLink -- exists in Wrath and Retail
+
+  local function GetCurrencyIDFromLink(link)
+    if C_CurrencyInfo.GetCurrencyIDFromLink then
+      return C_CurrencyInfo.GetCurrencyIDFromLink(link)
+    else -- No GetCurrencyIDFromLink function exists in Wrath
+      return tonumber((link:match("|Hcurrency:(%d+)")))
+    end
+  end
+
   -- Converts from a currency name to the currency id. Assumes that the currency is
   -- in the player's currencies listing.
   function Journalator.Utilities.GetCurrencyID(currencyName)
@@ -65,15 +78,15 @@ do
       currencyMap = {}
 
       local index = 0
-      while index < C_CurrencyInfo.GetCurrencyListSize() do
+      while index < GetCurrencyListSize() do
         index = index + 1
-        local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+        local info = GetCurrencyListInfo(index)
         if info.isHeader then
-          C_CurrencyInfo.ExpandCurrencyList(index, true)
+          ExpandCurrencyList(index, true)
         else
-          local link = C_CurrencyInfo.GetCurrencyListLink(index)
+          local link = GetCurrencyListLink(index)
           if link ~= nil then
-            currencyMap[info.name] = C_CurrencyInfo.GetCurrencyIDFromLink(link)
+            currencyMap[info.name] = GetCurrencyIDFromLink(link)
           end
         end
       end
