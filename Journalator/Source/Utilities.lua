@@ -54,18 +54,6 @@ end
 do
   local currencyMap
 
-  local GetCurrencyListSize = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListSize or GetCurrencyListSize
-  local GetCurrencyListInfo = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListInfo or GetCurrencyListInfo
-  local ExpandCurrencyList = C_CurrencyInfo and C_CurrencyInfo.ExpandCurrencyList or ExpandCurrencyList
-  local GetCurrencyListLink = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListLink -- exists in Wrath and Retail
-
-  local function GetCurrencyIDFromLink(link)
-    if C_CurrencyInfo.GetCurrencyIDFromLink then
-      return C_CurrencyInfo.GetCurrencyIDFromLink(link)
-    else -- No GetCurrencyIDFromLink function exists in Wrath
-      return tonumber((link:match("|Hcurrency:(%d+)")))
-    end
-  end
 
   -- Converts from a currency name to the currency id. Assumes that the currency is
   -- in the player's currencies listing.
@@ -74,19 +62,54 @@ do
       return nil
     end
 
+    -- Cache currency info
     if currencyMap == nil or currencyMap[currencyName] == nil then
       currencyMap = {}
+
+      local GetCurrencyListSize = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListSize or GetCurrencyListSize
+      local GetCurrencyListLink = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListLink -- exists in Wrath and Retail
+
+      local GetCurrencyName, IsCurrencyIndexAHeader, ExpandHeader
+
+      if Journalator.Constants.IsClassic then
+        GetCurrencyName = function(index)
+          return (GetCurrencyListInfo(index))
+        end
+        IsCurrencyIndexAHeader = function(index)
+          return (select(2, GetCurrencyListInfo(index)))
+        end
+        ExpandHeader = function(index)
+          ExpandCurrencyList(index, 1)
+        end
+      else
+        GetCurrencyName = function(index)
+          return C_CurrencyInfo.GetCurrencyListInfo(index).name
+        end
+        IsCurrencyIndexAHeader = function(index)
+          return C_CurrencyInfo.GetCurrencyListInfo(index).isHeader
+        end
+        ExpandHeader = function(index)
+          C_CurrencyInfo.ExpandCurrencyList(index, true)
+        end
+      end
+
+      local function GetCurrencyIDFromLink(link)
+        if C_CurrencyInfo.GetCurrencyIDFromLink then
+          return C_CurrencyInfo.GetCurrencyIDFromLink(link)
+        else -- No GetCurrencyIDFromLink function exists in Wrath
+          return tonumber((link:match("|Hcurrency:(%d+)")))
+        end
+      end
 
       local index = 0
       while index < GetCurrencyListSize() do
         index = index + 1
-        local info = GetCurrencyListInfo(index)
-        if info.isHeader then
-          ExpandCurrencyList(index, true)
+        if IsCurrencyIndexAHeader(index) then
+          ExpandHeader(index)
         else
           local link = GetCurrencyListLink(index)
           if link ~= nil then
-            currencyMap[info.name] = GetCurrencyIDFromLink(link)
+            currencyMap[GetCurrencyName(index)] = GetCurrencyIDFromLink(link)
           end
         end
       end
