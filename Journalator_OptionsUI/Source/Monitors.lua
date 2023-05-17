@@ -15,7 +15,17 @@ function JournalatorConfigMonitorsOptionsFrameMixin:OnLoad()
     self:Save()
   end
 
-  InterfaceOptions_AddCategory(self, JOURNALATOR_L_JOURNALATOR)
+  self.OnCommit = self.okay
+  self.OnDefault = function() end
+  self.OnRefresh = function() end
+
+  if Settings then
+    local category = Settings.GetCategory(self.parent)
+    local subcategory = Settings.RegisterCanvasLayoutSubcategory(category, self, self.name)
+    Settings.RegisterAddOnCategory(subcategory)
+  else
+    InterfaceOptions_AddCategory(self, "Journalator")
+  end
 
   -- Hide options that don't apply to classic
   if Auctionator.Constants.IsClassic then

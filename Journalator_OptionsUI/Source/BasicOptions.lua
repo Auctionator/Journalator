@@ -14,7 +14,17 @@ function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
     self:Save()
   end
 
-  InterfaceOptions_AddCategory(self, "Journalator")
+  self.OnCommit = self.okay
+  self.OnDefault = function() end
+  self.OnRefresh = function() end
+
+  if Settings then
+    local category = Settings.RegisterCanvasLayoutCategory(self, self.name)
+    category.ID = self.name
+    Settings.RegisterAddOnCategory(category)
+  else
+    InterfaceOptions_AddCategory(self, self.name)
+  end
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:OnShow()
