@@ -1,0 +1,12 @@
+## Interface: 100100
+## Title: Journalator (Statistics and Tooltips)
+## Notes: Generates data for tooltips and shows them
+## Version: @project-version@
+## Author: plusmouse
+## RequiredDeps: Journalator, Auctionator
+## SavedVariables: JOURNALATOR_STATISTICS
+## IconTexture: Interface/AddOns/Journalator/Images/icon
+
+Main.lua
+API.lua
+Tooltips\Manifest.xml

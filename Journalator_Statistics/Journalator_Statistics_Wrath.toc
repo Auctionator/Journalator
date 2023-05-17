@@ -1,7 +1,4 @@
-## Interface: 100100
-## Interface-Mainline: 100100
-## Interface-Wrath: 30401
-## Interface-Classic: 11403
+## Interface: 30401
 ## Title: Journalator (Statistics and Tooltips)
 ## Notes: Generates data for tooltips and shows them
 ## Version: @project-version@
