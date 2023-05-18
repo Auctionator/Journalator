@@ -18,7 +18,7 @@ function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
   self.OnDefault = function() end
   self.OnRefresh = function() end
 
-  if Settings then
+  if Settings and SettingsPanel then
     local category = Settings.RegisterCanvasLayoutCategory(self, self.name)
     category.ID = self.name
     Settings.RegisterAddOnCategory(category)

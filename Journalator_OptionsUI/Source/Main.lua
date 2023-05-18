@@ -1,8 +1,8 @@
 function Journalator.Config.Show()
-  if InterfaceOptionsFrame ~= nil then
+  if Settings and SettingsPanel then
+    Settings.OpenToCategory(JOURNALATOR_L_JOURNALATOR)
+  elseif InterfaceOptionsFrame ~= nil then
     InterfaceOptionsFrame:Show()
     InterfaceOptionsFrame_OpenToCategory(JOURNALATOR_L_JOURNALATOR)
-  else
-    Settings.OpenToCategory(JOURNALATOR_L_JOURNALATOR)
   end
 end
