@@ -52,8 +52,14 @@ function Journalator.Archiving.InitializeStore(store)
     store.Taxis = {}
   end
 
-  if store.Version ~= 10 then
-    store.Version = 10
+  if store.Version == 10 then
+    store.Version = 11
+    store.CraftingOrdersFailed = {}
+    store.CraftingOrdersSucceeded = {}
+  end
+
+  if store.Version ~= 11 then
+    store.Version = 11
     store.Invoices = {}
     store.Posting = {}
     store.Failures = {}

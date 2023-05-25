@@ -76,6 +76,29 @@ function Journalator.GetProfit(startTime, endTime, filter)
     end
   end
 
+  local placings = Journalator.Archiving.GetRange(startTime, "Placed")
+  for _, item in ipairs(placings) do
+    if item.time >= startTime and item.time <= endTime then
+      if filter(item) then
+        outgoing = outgoing + item.postingFee
+      end
+    end
+  end
+
+  local succeeded = Journalator.Archiving.GetRange(startTime, "Succeeded")
+  for _, item in ipairs(succeeded) do
+    local filterItem = {
+      itemName = item.itemName or item.recipeName,
+      time = item.time,
+      source = item.source,
+    }
+    if filterItem.time >= startTime and filterItem.time <= endTime then
+      if filter(filterItem) then
+        outgoing = outgoing + item.commissionPaid
+      end
+    end
+  end
+
   local quests = Journalator.Archiving.GetRange(startTime, "Questing")
   for _, item in ipairs(quests) do
     local filterItem = {

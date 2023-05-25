@@ -106,7 +106,7 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Refresh()
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         index = index,
-        value =  - item.tipAmount - item.postingFee,
+        value =  - item.postingFee,
         selected = self:IsSelected(index),
       }
 
@@ -147,7 +147,7 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Sort(fieldName, sortDi
   self:SetDirty()
 end
 
-Journalator.Config.Create("COLUMNS_CO_PLACED", "columns_fulfilling", {})
+Journalator.Config.Create("COLUMNS_CO_PLACED", "columns_crafting_orders_placed", {})
 
 function JournalatorCraftingOrdersPlacedDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_CO_PLACED)

@@ -227,6 +227,24 @@
               <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
             </Anchors>
           </Frame>
+          <Frame inherits="JournalatorCraftingOrdersSucceededDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Succeeded" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+          <Frame inherits="JournalatorCraftingOrdersFailedDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Failed" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
 
           <Frame inherits="JournalatorFulfillingDisplayTemplate" parentArray="Views">
             <KeyValues>
@@ -242,6 +260,18 @@
             <KeyValues>
               <KeyValue key="displayMode" value="Placing" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_PLACING_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="SucceededTab" inherits="JournalatorTabButtonTemplate" name="JournalatorCraftingOrderSucceededTab_Button" text="JOURNALATOR_L_SUCCESSES">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Succeeded" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_SUCCESSES_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="FailedTab" inherits="JournalatorTabButtonTemplate" name="JournalatorCraftingOrdersFailedTab_Button" text="JOURNALATOR_L_FAILURES">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Failed" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_FAILURES_TITLE" type="global"/>
             </KeyValues>
           </Button>
 

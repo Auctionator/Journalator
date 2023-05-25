@@ -9,6 +9,8 @@
   <Script file="VendorRepairs.lua" />
   <Script file="Fulfilling.lua" />
   <Script file="CraftingOrdersPlaced.lua" />
+  <Script file="CraftingOrdersSucceeded.lua" />
+  <Script file="CraftingOrdersFailed.lua" />
   <Script file="Questing.lua" />
   <Script file="TradingPost.lua" />
   <Script file="LootBySource.lua" />

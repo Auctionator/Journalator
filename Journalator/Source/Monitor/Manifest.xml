@@ -6,6 +6,7 @@
   <Script file="Taxis.lua" />
   <Script file="CraftingOrderPlacing.lua" />
   <Script file="CraftingOrderFulfilling.lua" />
+  <Script file="CraftingOrderMail.lua" />
   <Script file="QuestsClassic.lua" />
   <Script file="QuestsMainline.lua" />
   <Script file="Reputation.lua" />
@@ -21,6 +22,7 @@
   <Include file="Taxis.xml" />
   <Include file="CraftingOrderPlacing.xml" />
   <Include file="CraftingOrderFulfilling.xml" />
+  <Include file="CraftingOrderMail.xml" />
   <Include file="QuestsClassic.xml" />
   <Include file="QuestsMainline.xml" />
   <Include file="Reputation.xml" />

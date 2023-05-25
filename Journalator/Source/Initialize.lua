@@ -18,6 +18,7 @@ local function SetupMonitors()
     if not Journalator.Constants.IsClassic then
       CreateFrame("Frame", "JNRCraftingOrderPlacingMonitor", nil, "JournalatorCraftingOrderPlacingMonitorTemplate")
       CreateFrame("Frame", "JNRCraftingOrderFulfillingMonitor", nil, "JournalatorCraftingOrderFulfillingMonitorTemplate")
+      CreateFrame("Frame", "JNRCraftingOrderMailMonitor", nil, "JournalatorCraftingOrderMailMonitorTemplate")
     end
   else
     Journalator.Debug.Message("crafting orders monitoring disabled")
