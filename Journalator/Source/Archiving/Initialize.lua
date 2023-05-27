@@ -58,6 +58,13 @@ function Journalator.Archiving.InitializeStore(store)
     store.CraftingOrdersSucceeded = {}
   end
 
+  if store.Version == 11 and store.CraftingOrdersSucceeded == nil then
+    store.CraftingOrdersSucceeded = store.CraftingOrdersSucceeded
+  end
+  if store.Version == 11 and store.CraftingOrdersFailed == nil then
+    store.CraftingOrdersFailed = store.CraftingOrdersFailed
+  end
+
   if store.Version ~= 11 then
     store.Version = 11
     store.Invoices = {}
@@ -66,6 +73,8 @@ function Journalator.Archiving.InitializeStore(store)
     store.Vendoring = {}
     store.Fulfilling = {}
     store.CraftingOrdersPlaced = {}
+    store.CraftingOrdersFailed = {}
+    store.CraftingOrdersSucceeded = {}
     store.Questing = {}
     store.TradingPostVendoring = {}
     store.LootContainers = {}
