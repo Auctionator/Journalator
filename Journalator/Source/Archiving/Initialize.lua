@@ -58,11 +58,11 @@ function Journalator.Archiving.InitializeStore(store)
     store.CraftingOrdersSucceeded = {}
   end
 
-  if store.Version == 11 and store.CraftingOrdersSucceeded == nil then
-    store.CraftingOrdersSucceeded = store.CraftingOrdersSucceeded
-  end
   if store.Version == 11 and store.CraftingOrdersFailed == nil then
-    store.CraftingOrdersFailed = store.CraftingOrdersFailed
+    store.CraftingOrdersFailed = []
+  end
+  if store.Version == 11 and store.CraftingOrdersSucceeded == nil then
+    store.CraftingOrdersSucceeded = {}
   end
 
   if store.Version ~= 11 then
