@@ -59,33 +59,37 @@ function JournalatorCraftingOrdersSucceededDataProviderMixin:Refresh()
 
   local results = {}
   for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "CraftingOrdersSucceeded")) do
-    local filterItem = {
-      itemName = item.itemName or item.recipeName,
-      time = item.time,
-      source = item.source,
-    }
-    if self:Filter(filterItem) then
-      local processedItem = {
-        searchTerm = filterItem.itemName,
-        itemName = filterItem.itemName,
-        itemNamePretty = filterItem.itemName,
-        commissionPaid = item.commissionPaid,
-        rawDay = item.time,
-        itemLink = item.itemLink,
-        crafterNote = item.crafterNote,
-        otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.crafterName, item.source),
-        sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-        index = index,
-        value = - item.commissionPaid,
-        selected = self:IsSelected(index),
+    -- Check to filter out corrupted entries from the API returning crafting
+    -- order data even when there wasn't an order attached to the mail.
+    if item.recipeName ~= "" then
+      local filterItem = {
+        itemName = item.itemName or item.recipeName,
+        time = item.time,
+        source = item.source,
       }
+      if self:Filter(filterItem) then
+        local processedItem = {
+          searchTerm = filterItem.itemName,
+          itemName = filterItem.itemName,
+          itemNamePretty = filterItem.itemName,
+          commissionPaid = item.commissionPaid,
+          rawDay = item.time,
+          itemLink = item.itemLink,
+          crafterNote = item.crafterNote,
+          otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.crafterName, item.source),
+          sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+          index = index,
+          value = - item.commissionPaid,
+          selected = self:IsSelected(index),
+        }
 
-      if processedItem.itemLink ~= nil then
-        processedItem.itemName = Journalator.Utilities.AddTierToBasicName(processedItem.itemName, processedItem.itemLink)
-        processedItem.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(processedItem.itemNamePretty, processedItem.itemLink)
-        processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemNamePretty, processedItem.itemLink)
+        if processedItem.itemLink ~= nil then
+          processedItem.itemName = Journalator.Utilities.AddTierToBasicName(processedItem.itemName, processedItem.itemLink)
+          processedItem.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(processedItem.itemNamePretty, processedItem.itemLink)
+          processedItem.itemNamePretty = Journalator.ApplyQualityColor(processedItem.itemNamePretty, processedItem.itemLink)
+        end
+        table.insert(results, processedItem)
       end
-      table.insert(results, processedItem)
     end
   end
   self:AppendEntries(results, true)

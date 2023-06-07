@@ -56,24 +56,30 @@ end
 
 function JournalatorCraftingOrderMailMonitorMixin:ProcessMail(orderDetails, subject, itemLink)
   if orderDetails.reason == Enum.RcoCloseReason.RcoCloseFulfill then
-    local entry = {
-      recipeName = orderDetails.recipeName,
-      commissionPaid = orderDetails.commissionPaid,
-      crafterNote = orderDetails.crafterNote,
-      crafterName = orderDetails.crafterName,
-      itemLink = itemLink,
-      source = Journalator.State.Source
-    }
-    if itemLink then
-      local item = Item:CreateFromItemLink(itemLink)
-      item:ContinueOnItemLoad(function()
-        entry.itemName = item:GetItemName()
+    -- Check to filter out corrupted entries from the API returning crafting
+    -- order data even when there wasn't an order attached to the mail.
+    if orderDetails.recipeName ~= "" then
+      local entry = {
+        recipeName = orderDetails.recipeName,
+        commissionPaid = orderDetails.commissionPaid,
+        crafterNote = orderDetails.crafterNote,
+        crafterName = orderDetails.crafterName,
+        itemLink = itemLink,
+        source = Journalator.State.Source
+      }
+      if itemLink then
+        local item = Item:CreateFromItemLink(itemLink)
+        item:ContinueOnItemLoad(function()
+          entry.itemName = item:GetItemName()
+          entry.time = time()
+          Journalator.AddToLogs({ CraftingOrdersSucceeded = { entry }})
+        end)
+      else
         entry.time = time()
         Journalator.AddToLogs({ CraftingOrdersSucceeded = { entry }})
-      end)
+      end
     else
-      entry.time = time()
-      Journalator.AddToLogs({ CraftingOrdersSucceeded = { entry }})
+      Journalator.Debug.Message("processing crafting order mail reject bad success")
     end
   else
     -- Its necessary to extract the item/recipe name from the subject for at
