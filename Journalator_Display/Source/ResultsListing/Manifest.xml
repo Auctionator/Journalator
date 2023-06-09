@@ -4,6 +4,7 @@
   <Include file="CraftingOrderRow.lua" />
   <Include file="QuestingRow.lua" />
   <Include file="LootingRow.lua" />
+  <Include file="SummaryRow.lua" />
   <Include file="TimeCell.lua" />
   <Include file="PriceCell.lua" />
 
@@ -12,6 +13,7 @@
   <Include file="CraftingOrderRow.xml" />
   <Include file="QuestingRow.xml" />
   <Include file="LootingRow.xml" />
+  <Include file="SummaryRow.xml" />
   <Include file="TimeCell.xml" />
   <Include file="PriceCell.xml" />
 </Ui>

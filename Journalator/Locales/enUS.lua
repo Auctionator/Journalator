@@ -1,6 +1,7 @@
 JOURNALATOR_LOCALES.enUS = function()
   local L = {}
 
+  L["SUMMARY_TITLE"] = "Journalator - Summary"
   L["INVOICES_TITLE"] = "Journalator - Invoices"
   L["POSTING_TITLE"] = "Journalator - Posting"
   L["SALE_RATES_TITLE"] = "Journalator - Sale Rates"
@@ -15,6 +16,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["WOW_TOKENS_TITLE"] = "Journalator - WoW Tokens"
   L["INFO_TITLE"] = "Journalator - Info"
 
+  L["SUMMARY"] = "Summary"
   L["INVOICES"] = "Invoices"
   L["POSTING"] = "Posting"
   L["SALE_RATES"] = "Sale Rates"

@@ -14,6 +14,8 @@
 
   <Include file="DataTab.xml" />
 
+  <Include file="Summary.xml" />
+
   <Include file="AuctionHouse\Manifest.xml" />
   <Include file="Vendors\Manifest.xml" />
   <Include file="CraftingOrders\Manifest.xml" />

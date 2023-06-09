@@ -35,6 +35,16 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="JournalatorSummaryDisplayTemplate" parentArray="Views">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Summary" type="string"/>
+				</KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="50"/>
+        </Anchors>
+      </Frame>
+
       <Frame parentKey="AuctionHouseContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
         <Anchors>
           <Anchor point="TOPLEFT"/>
@@ -351,6 +361,12 @@
         </Anchors>
       </Frame>
 
+			<Button parentKey="SummaryTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryTab_Button" text="JOURNALATOR_L_SUMMARY">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Summary" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_SUMMARY_TITLE" type="global"/>
+				</KeyValues>
+			</Button>
 			<Button parentKey="AuctionHouseTab" hidden="true" inherits="JournalatorTabButtonTemplate" name="JournalatorAuctionHouseTab_Button" text="JOURNALATOR_L_AUCTION_HOUSE">
 				<KeyValues>
 					<KeyValue key="displayMode" value="AuctionHouse" type="string"/>

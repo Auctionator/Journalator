@@ -5,6 +5,7 @@ local REFRESH_EVENTS = {
   Journalator.Events.FiltersChanged,
   Journalator.Events.AddValueForTotal,
   Journalator.Events.RemoveValueFromTotal,
+  Journalator.Events.RequestTabSwitch,
 }
 
 function JournalatorDisplayMixin:OnLoad()
@@ -89,6 +90,13 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName, ...)
     self.runningTotal = self.runningTotal - value
     self.runningTotalValueCount = self.runningTotalValueCount - 1
     self:UpdateRunningTotal()
+  elseif eventName == Journalator.Events.RequestTabSwitch then
+    local details = ...
+    self:SetDisplayMode(details.root)
+    if details.child then
+      local view = self:GetCurrentView()
+      view:SetDisplayMode(details.child)
+    end
   end
 end
 
@@ -232,6 +240,14 @@ function JournalatorDisplayMixin:GetCurrentDataView()
       elseif view.Views then
         return view:GetCurrentDataView()
       end
+    end
+  end
+end
+
+function JournalatorDisplayMixin:GetCurrentView()
+  for _, view in ipairs(self.Views) do
+    if view:IsShown() then
+      return view
     end
   end
 end

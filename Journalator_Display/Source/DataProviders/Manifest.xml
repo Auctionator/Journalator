@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="Display.lua" />
 
+  <Script file="Summary.lua" />
   <Script file="Invoices.lua" />
   <Script file="Posting.lua" />
   <Script file="SaleRates.lua" />
