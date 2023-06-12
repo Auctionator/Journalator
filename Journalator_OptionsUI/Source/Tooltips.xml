@@ -1,0 +1,77 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame
+    name="JournalatorConfigTooltipsFrame"
+    mixin="JournalatorConfigTooltipsFrameMixin"
+    hidden="true"
+    >
+
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnShow method="OnShow"/>
+      <OnHide method="Save"/>
+    </Scripts>
+
+    <Frames>
+      <Frame inherits="AuctionatorConfigurationTitleFrame" parentKey="TitleArea">
+        <KeyValues>
+          <KeyValue key="titleText" value="AUCTIONATOR_L_CONFIG_TOOLTIPS_CATEGORY" type="global" />
+          <KeyValue key="subTitleText" value="JOURNALATOR_L_CONFIG_TOOLTIPS_TEXT" type="global"/>
+        </KeyValues>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipSaleRate" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_SALE_RATE" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipFailures" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_FAILURES" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipSaleRate" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipLastSold" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_LAST_SOLD" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipFailures" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipLastBought" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_LAST_BOUGHT" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastSold" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipSoldStats" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_SOLD_STATS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastBought" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipBoughtStats" parentArray="Statistics">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_BOUGHT_STATS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipSoldStats" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+    </Frames>
+  </Frame>
+</Ui>

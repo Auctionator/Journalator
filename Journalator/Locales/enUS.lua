@@ -81,6 +81,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CANCELLED"] = "Cancelled"
 
   L["CONFIG_BASIC_OPTIONS_TEXT"] = "Basic options for enabling features in Journalator."
+  L["CONFIG_TOOLTIPS_TEXT"] = "Choose which information is included in your tooltips"
   L["CONFIG_TOOLTIP_SALE_RATE"] = "Show your sale rate for an item in the item's tooltip."
   L["CONFIG_TOOLTIP_FAILURES"] = "Show how many auctions failed for an item in the item's tooltip."
   L["CONFIG_TOOLTIP_LAST_SOLD"] = "Show the last price that your auction of an item sold for in the item's tooltip."

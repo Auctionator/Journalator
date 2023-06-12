@@ -17,7 +17,12 @@ function JournalatorTabbedViewMixin:OnLoad()
 end
 
 function JournalatorTabbedViewMixin:OnShow()
-  self:SetDisplayMode(self.Tabs[1].displayMode)
+  for index, view in ipairs(self.Views) do
+    if view:IsVisible() then
+      PanelTemplates_SetTab(self, index)
+      break
+    end
+  end
 end
 
 function JournalatorTabbedViewMixin:GetCurrentDataView()
@@ -26,6 +31,15 @@ function JournalatorTabbedViewMixin:GetCurrentDataView()
       return view
     end
   end
+end
+
+function JournalatorTabbedViewMixin:HasDisplayMode(displayMode)
+  for index, tab in ipairs(self.Tabs) do
+    if tab.displayMode == displayMode then
+      return true
+    end
+  end
+  return false
 end
 
 function JournalatorTabbedViewMixin:SetDisplayMode(displayMode)

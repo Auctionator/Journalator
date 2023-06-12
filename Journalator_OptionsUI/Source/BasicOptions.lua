@@ -25,6 +25,8 @@ function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
   else
     InterfaceOptions_AddCategory(self, self.name)
   end
+
+  self:SetupDefaultTabChooser()
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:OnShow()
@@ -40,28 +42,16 @@ function JournalatorConfigBasicOptionsFrameMixin:OnShow()
     end
   end
 
-  self.TooltipSaleRate:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SALE_RATE))
-  self.TooltipFailures:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_FAILURES))
-  self.TooltipLastSold:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_SOLD))
-  self.TooltipLastBought:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT))
-  self.TooltipSoldStats:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SOLD_STATS))
-  self.TooltipBoughtStats:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_BOUGHT_STATS))
-
   self.GroupJunk:SetChecked(Journalator.Config.Get(Journalator.Config.Options.VENDORING_GROUP_JUNK))
 
   self.ShowDetailedStatus:SetChecked(Journalator.Config.Get(Journalator.Config.Options.SHOW_DETAILED_STATUS))
 
   self.ShowMinimapIcon:SetChecked(not Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON).hide)
+
+  self:SetDefaultTabText()
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:Save()
-  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_SALE_RATE, self.TooltipSaleRate:GetChecked())
-  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_FAILURES, self.TooltipFailures:GetChecked())
-  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_LAST_SOLD, self.TooltipLastSold:GetChecked())
-  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT, self.TooltipLastBought:GetChecked())
-  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_SOLD_STATS, self.TooltipSoldStats:GetChecked())
-  Journalator.Config.Set(Journalator.Config.Options.TOOLTIP_BOUGHT_STATS, self.TooltipBoughtStats:GetChecked())
-
   Journalator.Config.Set(Journalator.Config.Options.VENDORING_GROUP_JUNK, self.GroupJunk:GetChecked())
   Journalator.Config.Set(Journalator.Config.Options.SHOW_DETAILED_STATUS, self.ShowDetailedStatus:GetChecked())
 
@@ -82,6 +72,74 @@ function JournalatorConfigBasicOptionsFrameMixin:ComputeFullStatisticsClicked()
   end)
 end
 
+function JournalatorConfigBasicOptionsFrameMixin:SetupDefaultTabChooser()
+  local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
+  local dropdown = LibDD:Create_UIDropDownMenu(self.DefaultTabChooser)
+  LibDD:UIDropDownMenu_SetWidth(dropdown, 220)
+  LibDD:UIDropDownMenu_SetInitializeFunction(dropdown, function(_, level, menuList)
+    if level == 1 then
+      local set = Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TAB)
+      for index, tabDetails in ipairs(Journalator.Constants.TabLayout) do
+        if not Journalator.Constants.IsClassic or not tabDetails.notClassic then
+          local info = LibDD:UIDropDownMenu_CreateInfo()
+          info.text = tabDetails.name
+          if tabDetails.children then
+            info.menuList = tabDetails
+            info.hasArrow = true
+          end
+          info.arg1 = tabDetails
+          info.checked = tabDetails.displayMode == set.root
+          info.func = function(_, arg1, arg2)
+            Journalator.Config.Set(Journalator.Config.Options.DEFAULT_TAB, {
+              root = arg1.displayMode, child = "",
+            })
+            LibDD:CloseDropDownMenus()
+            self:SetDefaultTabText()
+          end
+          LibDD:UIDropDownMenu_AddButton(info)
+        end
+      end
+    elseif menuList ~= nil then
+      local set = Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TAB)
+      for index, tabDetails in ipairs(menuList.children) do
+        if not Journalator.Constants.IsClassic or not tabDetails.notClassic then
+          local info = LibDD:UIDropDownMenu_CreateInfo()
+          info.text = tabDetails.name
+          info.arg1 = tabDetails
+          info.checked = menuList.displayMode == set.root and tabDetails.displayMode == set.child
+          info.func = function(_, arg1, arg2)
+            Journalator.Config.Set(Journalator.Config.Options.DEFAULT_TAB, {
+              root = menuList.displayMode, child = arg1.displayMode,
+            })
+            LibDD:CloseDropDownMenus()
+            self:SetDefaultTabText()
+          end
+          LibDD:UIDropDownMenu_AddButton(info, level)
+        end
+      end
+    end
+  end)
+end
+
+function JournalatorConfigBasicOptionsFrameMixin:SetDefaultTabText()
+  local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
+
+  local set = Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TAB)
+  for _, tabDetails in ipairs(Journalator.Constants.TabLayout) do
+    if tabDetails.displayMode == set.root then
+      if tabDetails.children and set.child ~= "" then
+        for _, childTabDetails in ipairs(tabDetails.children) do
+          if childTabDetails.displayMode == set.child then
+            LibDD:UIDropDownMenu_SetText(self.DefaultTabChooser, tabDetails.name .. " -> " .. childTabDetails.name)
+          end
+        end
+      else
+        LibDD:UIDropDownMenu_SetText(self.DefaultTabChooser, tabDetails.name)
+      end
+      break
+    end
+  end
+end
 
 function JournalatorConfigBasicOptionsFrameMixin:Cancel()
 

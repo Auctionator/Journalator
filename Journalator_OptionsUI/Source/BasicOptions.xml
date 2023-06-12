@@ -19,75 +19,12 @@
         </KeyValues>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="TooltipsHeading" parentArray="Statistics">
-        <KeyValues>
-          <KeyValue key="headingText" value="AUCTIONATOR_L_CONFIG_TOOLTIPS_CATEGORY" type="global"/>
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT"/>
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipSaleRate" parentArray="Statistics">
-        <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_SALE_RATE" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipsHeading" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipFailures" parentArray="Statistics">
-        <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_FAILURES" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipSaleRate" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipLastSold" parentArray="Statistics">
-        <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_LAST_SOLD" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipFailures" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipLastBought" parentArray="Statistics">
-        <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_LAST_BOUGHT" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastSold" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipSoldStats" parentArray="Statistics">
-        <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_SOLD_STATS" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipLastBought" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="TooltipBoughtStats" parentArray="Statistics">
-        <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_TOOLTIP_BOUGHT_STATS" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipSoldStats" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
-
       <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="VendoringHeading" parentArray="Display">
         <KeyValues>
           <KeyValue key="headingText" value="JOURNALATOR_L_CONFIG_VENDORING" type="global"/>
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.TooltipBoughtStats" relativePoint="BOTTOMLEFT"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
@@ -146,6 +83,22 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.MinimapIconHeading" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
-   </Frames>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="DefaultTabHeading" parentArray="Display">
+        <KeyValues>
+          <KeyValue key="headingText" value="AUCTIONATOR_L_DEFAULT_TAB" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ShowMinimapIcon" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Frame parentKey="DefaultTabChooser" parentArray="Display">
+        <Size x="180"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.DefaultTabHeading" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+    </Frames>
   </Frame>
 </Ui>

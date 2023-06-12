@@ -35,3 +35,51 @@ Journalator.Constants.TimePeriods = {
     60 * 60,
   }
 }
+
+Journalator.Constants.TabLayout = {
+  {
+    name = JOURNALATOR_L_SUMMARY, displayMode="Summary"
+  },
+  {
+    name = JOURNALATOR_L_AUCTION_HOUSE, displayMode="AuctionHouse",
+    children = {
+      {name = JOURNALATOR_L_INVOICES, displayMode="Invoices"},
+      {name = JOURNALATOR_L_POSTING, displayMode="Posting"},
+      {name = JOURNALATOR_L_SALE_RATES, displayMode="SaleRates"},
+      {name = JOURNALATOR_L_FAILURES, displayMode="Failures"},
+      {name = JOURNALATOR_L_WOW_TOKENS, displayMode="WoWTokens", notClassic = true},
+    }
+  },
+  {
+    name = JOURNALATOR_L_VENDORS, displayMode="Vendors",
+    children = {
+      {name = JOURNALATOR_L_ITEMS, displayMode="Items"},
+      {name = JOURNALATOR_L_REPAIRS, displayMode="Repairs"},
+      {name = JOURNALATOR_L_TAXIS, displayMode="Taxis"},
+      {name = JOURNALATOR_L_TRADING_POST, displayMode="TradingPost", notClassic = true},
+    }
+  },
+  {
+    name = JOURNALATOR_L_CRAFTING_ORDERS, displayMode="CraftingOrders",
+    notClassic = true,
+    children = {
+      {name = JOURNALATOR_L_PLACING, displayMode="Placing"},
+      {name = JOURNALATOR_L_SUCCESSES, displayMode="Succeeded"},
+      {name = JOURNALATOR_L_FAILURES, displayMode="Failured"},
+      {name = JOURNALATOR_L_FULFILLING, displayMode="Fulfilling"},
+    }
+  },
+  {
+    name = JOURNALATOR_L_QUESTING, displayMode="Questing",
+  },
+  {
+    name = JOURNALATOR_L_LOOTING, displayMode="Looting",
+    children = {
+      {name = JOURNALATOR_L_BY_SOURCE, displayMode="BySource"},
+      {name = JOURNALATOR_L_BY_ITEM, displayMode="ByItem"},
+    }
+  },
+  {
+    name = JOURNALATOR_L_JOURNALATOR, displayMode="Info",
+  },
+}

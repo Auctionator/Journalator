@@ -36,13 +36,7 @@ function JournalatorDisplayMixin:OnShow()
     end
   end
 
-  local defaultMode = Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TAB)
-  if tIndexOf(visibleDisplayModes, defaultMode) ~= nil then
-    self:SetDisplayMode(defaultMode)
-  else
-    Journalator.Debug.Message("JournalatorDisplay invalid display mode", defaultMode)
-    self:SetDisplayMode(visibleTab.displayMode)
-  end
+  self:SetTabFromDetails(Journalator.Config.Get(Journalator.Config.Options.DEFAULT_TAB))
 
   Auctionator.EventBus:Register(self, REFRESH_EVENTS)
 
@@ -92,12 +86,12 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName, ...)
     self:UpdateRunningTotal()
   elseif eventName == Journalator.Events.RequestTabSwitch then
     local details = ...
-    self:SetDisplayMode(details.root)
-    if details.child then
-      local view = self:GetCurrentView()
-      view:SetDisplayMode(details.child)
-    end
+    self:SetTabFromDetails(details)
   end
+end
+
+function JournalatorDisplayMixin:SetTabFromDetails(details)
+  self:SetDisplayMode(details.root, details.child)
 end
 
 function JournalatorDisplayMixin:OnLoadComplete()
@@ -172,7 +166,7 @@ function JournalatorDisplayMixin:UpdateRunningTotal()
   self.RunningTotalButton:SetWidth(self.RunningTotalButton:GetTextWidth())
 end
 
-function JournalatorDisplayMixin:SetDisplayMode(displayMode)
+function JournalatorDisplayMixin:SetDisplayMode(displayMode, childMode)
   self.exportCSVDialog:Hide()
 
   for index, tab in ipairs(self.Tabs) do
@@ -189,6 +183,14 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode)
 
   for _, view in ipairs(self.Views) do
     view:SetShown(view.displayMode == displayMode)
+
+    if view.SetDisplayMode then
+      if childMode == nil or childMode == "" or not view:HasDisplayMode(childMode) then
+        view:SetDisplayMode(view.Tabs[1].displayMode)
+      else
+        view:SetDisplayMode(childMode)
+      end
+    end
   end
 
   self.ExportCSV:SetShown(self:GetCurrentDataView() ~= nil)
