@@ -44,9 +44,10 @@ function JournalatorCraftingOrderMailMonitorMixin:OnEvent(eventName, ...)
   -- we wait for it to finish.
   elseif eventName == "CLOSE_INBOX_ITEM" then
     local mailIndex = ...
-    local orderDetails = C_Mail.GetCraftingOrderMailInfo(mailIndex)
+    local isConsortium = select(6, GetInboxText(mailIndex))
 
-    if orderDetails ~= nil then
+    if isConsortium then
+      local orderDetails = C_Mail.GetCraftingOrderMailInfo(mailIndex)
       Journalator.Debug.Message("processing crafting order mail close")
       local subject = select(4, GetInboxHeaderInfo(mailIndex))
       self:ProcessMail(orderDetails, subject, self.seenAttachments[mailIndex])
@@ -56,30 +57,24 @@ end
 
 function JournalatorCraftingOrderMailMonitorMixin:ProcessMail(orderDetails, subject, itemLink)
   if orderDetails.reason == Enum.RcoCloseReason.RcoCloseFulfill then
-    -- Check to filter out corrupted entries from the API returning crafting
-    -- order data even when there wasn't an order attached to the mail.
-    if orderDetails.recipeName ~= "" then
-      local entry = {
-        recipeName = orderDetails.recipeName,
-        commissionPaid = orderDetails.commissionPaid,
-        crafterNote = orderDetails.crafterNote,
-        crafterName = orderDetails.crafterName,
-        itemLink = itemLink,
-        source = Journalator.State.Source
-      }
-      if itemLink then
-        local item = Item:CreateFromItemLink(itemLink)
-        item:ContinueOnItemLoad(function()
-          entry.itemName = item:GetItemName()
-          entry.time = time()
-          Journalator.AddToLogs({ CraftingOrdersSucceeded = { entry }})
-        end)
-      else
+    local entry = {
+      recipeName = orderDetails.recipeName,
+      commissionPaid = orderDetails.commissionPaid,
+      crafterNote = orderDetails.crafterNote,
+      crafterName = orderDetails.crafterName,
+      itemLink = itemLink,
+      source = Journalator.State.Source
+    }
+    if itemLink then
+      local item = Item:CreateFromItemLink(itemLink)
+      item:ContinueOnItemLoad(function()
+        entry.itemName = item:GetItemName()
         entry.time = time()
         Journalator.AddToLogs({ CraftingOrdersSucceeded = { entry }})
-      end
+      end)
     else
-      Journalator.Debug.Message("processing crafting order mail reject bad success")
+      entry.time = time()
+      Journalator.AddToLogs({ CraftingOrdersSucceeded = { entry }})
     end
   else
     -- Its necessary to extract the item/recipe name from the subject for at

@@ -61,7 +61,7 @@ function JournalatorCraftingOrdersSucceededDataProviderMixin:Refresh()
   for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "CraftingOrdersSucceeded")) do
     -- Check to filter out corrupted entries from the API returning crafting
     -- order data even when there wasn't an order attached to the mail.
-    if item.recipeName ~= "" then
+    if item.recipeName ~= "" and item.commissionPaid ~= 0 then
       local filterItem = {
         itemName = item.itemName or item.recipeName,
         time = item.time,
