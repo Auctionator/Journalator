@@ -80,6 +80,9 @@ Journalator.Constants.TabLayout = {
     }
   },
   {
+    name = JOURNALATOR_L_MAIL, displayMode="BasicMail",
+  },
+  {
     name = JOURNALATOR_L_JOURNALATOR, displayMode="Info",
   },
 }

@@ -351,6 +351,38 @@
         </Frames>
       </Frame>
 
+      <Frame parentKey="BasicMailContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
+        <Anchors>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT" y="30"/>
+        </Anchors>
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnShow method="OnShow"/>
+        </Scripts>
+        <KeyValues>
+          <KeyValue key="displayMode" value="BasicMail" type="string"/>
+        </KeyValues>
+        <Frames>
+          <Frame inherits="JournalatorBasicMailSentDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Sent" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Button parentKey="SentTab" inherits="JournalatorTabButtonTemplate" name="JournalatorBasicMailSentTab_Button" text="JOURNALATOR_L_SENT">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Sent" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_MAIL_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+        </Frames>
+      </Frame>
+
       <Frame inherits="JournalatorInfoDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Info" type="string"/>
@@ -395,6 +427,12 @@
 				<KeyValues>
 					<KeyValue key="displayMode" value="Looting" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_LOOTING_TITLE" type="global"/>
+				</KeyValues>
+			</Button>
+			<Button parentKey="BasicMailTab" inherits="JournalatorTabButtonTemplate" name="JournalatorBasicMailTab_Button" text="JOURNALATOR_L_MAIL">
+				<KeyValues>
+					<KeyValue key="displayMode" value="BasicMail" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_MAIL_TITLE" type="global"/>
 				</KeyValues>
 			</Button>
       <Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
