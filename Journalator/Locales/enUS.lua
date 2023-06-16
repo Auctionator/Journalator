@@ -14,6 +14,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["QUESTING_TITLE"] = "Journalator - Questing"
   L["LOOTING_TITLE"] = "Journalator - Looting"
   L["WOW_TOKENS_TITLE"] = "Journalator - WoW Tokens"
+  L["MAIL_TITLE"] = "Journalator - Mail"
   L["INFO_TITLE"] = "Journalator - Info"
 
   L["SUMMARY"] = "Summary"
@@ -29,6 +30,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["LOOTING"] = "Looting"
   L["TRADING_POST"] = "Trading Post"
   L["WOW_TOKENS"] = "WoW Tokens"
+  L["MAIL"] = "Mail"
+  L["SENT"] = "Sent"
   L["JOURNALATOR"] = "Journalator"
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
@@ -37,6 +40,9 @@ JOURNALATOR_LOCALES.enUS = function()
   L["TOTAL"] = "Total"
   L["DEPOSIT"] = "Deposit"
   L["TIME_ELAPSED"] = "Time Elapsed"
+  L["COD"] = "C.O.D."
+  L["RECIPIENT"] = "Recipient"
+  L["SENDER"] = "Sender"
 
   L["YOU_LOST_X_WITH_XX"] = "You lost %s, with %s incoming and %s outgoing."
   L["YOU_GAINED_X_WITH_XX"] = "You gained %s, with %s incoming and %s outgoing."

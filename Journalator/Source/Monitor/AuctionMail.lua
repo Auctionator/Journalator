@@ -138,8 +138,8 @@ function JournalatorAuctionMailMonitorMixin:OnEvent(eventName, ...)
   end
 end
 
-local expiredText = AUCTION_EXPIRED_MAIL_SUBJECT:gsub("%%s", "(.*)")
-local cancelledText = AUCTION_REMOVED_MAIL_SUBJECT:gsub("%%s", "(.*)")
+local expiredText = Journalator.Utilities.GetChatPattern(AUCTION_EXPIRED_MAIL_SUBJECT)
+local cancelledText = Journalator.Utilities.GetChatPattern(AUCTION_REMOVED_MAIL_SUBJECT)
 
 function JournalatorAuctionMailMonitorMixin:ProcessMailWithItem(mail, itemLink)
   if mail.header[4] == RETRIEVING_DATA then
