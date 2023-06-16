@@ -184,7 +184,7 @@ function JournalatorDisplayMixin:SetDisplayMode(displayMode, childMode)
   for _, view in ipairs(self.Views) do
     view:SetShown(view.displayMode == displayMode)
 
-    if view.SetDisplayMode then
+    if view:IsShown() and view.SetDisplayMode then
       if childMode == nil or childMode == "" or not view:HasDisplayMode(childMode) then
         view:SetDisplayMode(view.Tabs[1].displayMode)
       else
