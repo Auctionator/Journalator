@@ -87,6 +87,7 @@ local COMPARATORS = {
   moneyOut = Auctionator.Utilities.NumberComparator,
   moneyIn = Auctionator.Utilities.NumberComparator,
   sourceCharacter = Auctionator.Utilities.StringComparator,
+  recipient = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
