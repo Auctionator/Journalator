@@ -256,11 +256,22 @@ end
 
 function JournalatorDisplayMixin:ExportCSVClicked()
   local view = self:GetCurrentDataView()
+  local json = LibStub("pm-json-rxi-0.1")
 
   if view ~= nil then
-    view.DataProvider:GetCSV(function(result)
-      self.exportCSVDialog:SetExportString(result)
+    if Journalator.Config.Get(Journalator.Config.Options.USE_JSON_NOT_CSV) then
+      local tmp = {}
+      for i = 1, view.DataProvider:GetCount() do
+        local entry = view.DataProvider:GetEntryAt(i)
+        table.insert(tmp, entry)
+      end
+      self.exportCSVDialog:SetExportString(json.encode(tmp))
       self.exportCSVDialog:Show()
-    end)
+    else
+      view.DataProvider:GetCSV(function(result)
+        self.exportCSVDialog:SetExportString(result)
+        self.exportCSVDialog:Show()
+      end)
+    end
   end
 end

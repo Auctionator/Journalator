@@ -170,6 +170,8 @@ JOURNALATOR_LOCALES.enUS = function()
 
   L["CONFIG_UI_DISABLED"] = "Unable to open options. The Options UI addon is disabled"
   L["DISPLAY_DISABLED"] = "Unable to open display. The Display addon is disabled"
+  L["EXPORTING"] = "Exporting"
+  L["CONFIG_USE_JSON_EXPORT"] = "Use JSON instead of CSV for exported data from the \"Export Results\" button"
 
   return L
 end

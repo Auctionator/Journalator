@@ -48,6 +48,8 @@ function JournalatorConfigBasicOptionsFrameMixin:OnShow()
 
   self.ShowMinimapIcon:SetChecked(not Journalator.Config.Get(Journalator.Config.Options.MINIMAP_ICON).hide)
 
+  self.UseJSONInsteadOfCSV:SetChecked(Journalator.Config.Get(Journalator.Config.Options.USE_JSON_NOT_CSV))
+
   self:SetDefaultTabText()
 end
 
@@ -59,6 +61,8 @@ function JournalatorConfigBasicOptionsFrameMixin:Save()
   if Journalator.MinimapIcon then
     Journalator.MinimapIcon.UpdateShown()
   end
+
+  Journalator.Config.Set(Journalator.Config.Options.USE_JSON_NOT_CSV,  self.UseJSONInsteadOfCSV:GetChecked())
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:ComputeFullStatisticsClicked()
