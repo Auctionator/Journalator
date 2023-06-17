@@ -5,21 +5,55 @@
 -- This file includes the code to convert from the original format into the
 -- Archivist based stores format.
 
--- Get the oldest time in any section (Invoices/Posting/etc.)
-local function GetOldestTime(input)
-  local oldestTime = nil
+-- Seen if every index has reached the end of the sections in the input
+local function CheckIfEndsNotReached(indexes, input)
+  for key, index in pairs(indexes) do
+    if #input[key] >= index then
+      return true
+    end
+  end
+  return false
+end
 
+local function GetTimeSteps(input)
+  local steps = {}
+
+  local indexes = {}
   for key, value in pairs(input) do
-    if type(value) == "table" and value[1] and value[1].time then
-      if oldestTime ~= nil then
-        oldestTime = math.min(oldestTime, value[1].time)
-      else
-        oldestTime = value[1].time
-      end
+    if type(value) == "table" then
+      indexes[key] = 1
     end
   end
 
-  return oldestTime
+  local countLeft = 0
+  local minTime = nil
+  local minKey = nil
+
+  while CheckIfEndsNotReached(indexes, input) do
+    -- Determine next newest entry
+    for key, index in pairs(indexes) do
+      local entry = input[key][index]
+      if entry ~= nil then
+        if minTime == nil or entry.time <= minTime then
+          minTime = entry.time
+          minKey = key
+        end
+      end
+    end
+
+    -- When the store would be filled with entries create a new store timestamp
+    countLeft = countLeft - 1
+    if countLeft < 0 then
+      table.insert(steps, minTime)
+      countLeft = Journalator.Constants.STORE_SIZE_LIMIT
+    end
+
+    -- Shift the current index along one to account for the entry counted
+    indexes[minKey] = indexes[minKey] + 1
+    minTime = nil
+  end
+
+  return steps
 end
 
 -- Place the items from the section (Invoices/Posting/etc.) in the correct store
@@ -36,18 +70,17 @@ end
 
 function Journalator.Archiving.Convert2021TablesToStores(input, archive)
   local currentTime = time()
-  local oldestTime = GetOldestTime(input) or currentTime
+  local timeSteps = GetTimeSteps(input) or { currentTime }
 
   local archiveTimes = {}
   local stores = {}
-  while oldestTime < currentTime do
-    table.insert(archiveTimes, oldestTime)
+  for _, step in ipairs(timeSteps) do
+    table.insert(archiveTimes, step)
 
-    local s = archive:Load("SometimesLocked", Journalator.Constants.STORE_PREFIX .. oldestTime)
+    local s = archive:Load("SometimesLocked", Journalator.Constants.STORE_PREFIX .. step)
     table.insert(stores, s)
 
     Journalator.Archiving.InitializeStore(stores[#stores])
-    oldestTime = oldestTime + Journalator.Constants.ARCHIVE_INTERVAL
   end
 
   ImportSection("Invoices", input, archiveTimes, stores)
