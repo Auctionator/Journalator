@@ -265,7 +265,7 @@ function JournalatorDisplayMixin:ExportCSVClicked()
         local entry = view.DataProvider:GetEntryAt(i)
         table.insert(tmp, entry)
       end
-      self.exportCSVDialog:SetExportString(json.encode(tmp))
+      self.exportCSVDialog:SetExportString(json.encode(tmp):gsub("|", "||"))
       self.exportCSVDialog:Show()
     else
       view.DataProvider:GetCSV(function(result)
