@@ -90,6 +90,7 @@ function JournalatorLootBySourceDataProviderMixin:Refresh()
         money = item.money,
         rawDay = item.time,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        realmID = item.source.realmID,
         items = item.items,
         currencies = item.currencies,
         itemCount = #item.items,

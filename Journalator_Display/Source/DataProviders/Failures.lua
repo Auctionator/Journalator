@@ -60,6 +60,7 @@ function JournalatorFailuresDataProviderMixin:Refresh()
         rawDay = item.time,
         itemLink = item.itemLink,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        realmID = item.source.realmID,
         index = index,
         value = 0,
         selected = self:IsSelected(index),

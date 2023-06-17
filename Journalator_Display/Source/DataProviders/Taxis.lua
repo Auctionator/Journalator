@@ -63,6 +63,7 @@ function JournalatorTaxisDataProviderMixin:Refresh()
         searchTerm = item.zone,
         moneyOut = item.money,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        realmID = item.source.realmID,
         zone = item.zone,
         target = item.target,
         origin = item.origin,

@@ -124,6 +124,7 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
         craftAttempts = item.craftAttempts,
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        realmID = item.source.realmID,
         customerReagents = item.customerReagents,
         crafterReagents = item.crafterReagents,
         isRecraft = item.isRecraft,

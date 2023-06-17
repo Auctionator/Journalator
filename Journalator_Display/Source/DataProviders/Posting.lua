@@ -75,6 +75,7 @@ function JournalatorPostingDataProviderMixin:Refresh()
         deposit = item.deposit,
         itemLink = item.itemLink,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+        realmID = item.source.realmID,
         index = index,
         value = -item.deposit,
         selected = self:IsSelected(index),

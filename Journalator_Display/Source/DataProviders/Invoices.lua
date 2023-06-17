@@ -112,6 +112,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
         rawDay = item.time,
         otherPlayer = otherPlayer,
         sourceCharacter = sourceCharacter,
+        realmID = item.source.realmID,
         itemLink = itemLink,
         index = index,
         value = moneyIn + moneyOut,

@@ -78,6 +78,7 @@ function JournalatorCraftingOrdersSucceededDataProviderMixin:Refresh()
           crafterNote = item.crafterNote,
           otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.crafterName, item.source),
           sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
+          realmID = item.source.realmID,
           index = index,
           value = - item.commissionPaid,
           selected = self:IsSelected(index),
