@@ -99,24 +99,6 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.DefaultTabHeading" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
-
-      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="ExportHeading" parentArray="Display">
-        <KeyValues>
-          <KeyValue key="headingText" value="JOURNALATOR_L_EXPORTING" type="global"/>
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.DefaultTabChooser" relativePoint="BOTTOMLEFT"/>
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="UseJSONInsteadOfCSV" parentArray="Display">
-        <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_USE_JSON_EXPORT" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.ExportHeading" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
     </Frames>
   </Frame>
 </Ui>

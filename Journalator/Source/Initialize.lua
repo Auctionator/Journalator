@@ -79,7 +79,6 @@ local function InitializeMonitoring()
   local faction = UnitFactionGroup("player")
   Journalator.State.Source = {
     realm = GetRealmName(),
-    realmID = GetRealmID(),
     character = GetUnitName("player"),
     faction = faction,
   }

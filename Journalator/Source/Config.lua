@@ -22,8 +22,6 @@ Journalator.Config.Options = {
   DEFAULT_TAB = "default_tab_4",
   DEFAULT_TIME_PERIOD = "default_time_period",
 
-  USE_JSON_NOT_CSV = "use_json_not_csv",
-
   DEBUG = "debug",
 }
 
@@ -46,7 +44,6 @@ Journalator.Config.Defaults = {
   [Journalator.Config.Options.MONITOR_WOW_TOKENS] = true,
   [Journalator.Config.Options.DEFAULT_TAB] = {root = "Summary", child = ""},
   [Journalator.Config.Options.DEFAULT_TIME_PERIOD] = Journalator.Constants.TimePeriods.Month,
-  [Journalator.Config.Options.USE_JSON_NOT_CSV] = false,
   [Journalator.Config.Options.DEBUG] = false,
 }
 
