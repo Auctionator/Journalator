@@ -171,7 +171,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
         end
       end
     end
-    Add(JOURNALATOR_L_REPAIRS, incoming, outgoing, {root="Vendors", child="Taxis"})
+    Add(JOURNALATOR_L_REPAIRS, incoming, outgoing, {root="Vendors", child="Repairs"})
   end
 
   do
