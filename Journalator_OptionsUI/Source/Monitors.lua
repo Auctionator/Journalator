@@ -33,6 +33,7 @@ function JournalatorConfigMonitorsOptionsFrameMixin:OnLoad()
     self.TradingPost:Hide()
     self.Questing:SetPoint("TOPLEFT", self.Vendoring, "BOTTOMLEFT")
     self.WoWTokens:Hide()
+    self.Mail:SetPoint("TOPLEFT", self.Looting, "BOTTOMLEFT")
   end
 end
 
