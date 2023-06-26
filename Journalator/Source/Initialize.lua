@@ -61,7 +61,11 @@ local function SetupMonitors()
     Journalator.Debug.Message("wow token monitor disabled")
   end
 
-  CreateFrame("Frame", "JNRBasicMailSendMonitor", nil, "JournalatorBasicMailSendMonitorTemplate")
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_BASIC_MAIL) then
+    CreateFrame("Frame", "JNRBasicMailSendMonitor", nil, "JournalatorBasicMailSendMonitorTemplate")
+  else
+    Journalator.Debug.Message("basic mail monitor disabled")
+  end
 end
 
 local function InitializeBase()

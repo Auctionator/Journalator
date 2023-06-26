@@ -213,6 +213,8 @@ function JournalatorDisplayMixin:HideTabs()
 
   self.LootingTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING))
 
+  self.BasicMailTab:SetShown(Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING))
+
   self.Tabs = tFilter(self.Tabs, function(tab) return tab:IsShown() end, true)
 
   local lastTab = nil
