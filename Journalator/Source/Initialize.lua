@@ -63,6 +63,7 @@ local function SetupMonitors()
 
   if Journalator.Config.Get(Journalator.Config.Options.MONITOR_BASIC_MAIL) then
     CreateFrame("Frame", "JNRBasicMailSendMonitor", nil, "JournalatorBasicMailSendMonitorTemplate")
+    CreateFrame("Frame", "JNRBasicMailReceiveMonitor", nil, "JournalatorBasicMailReceiveMonitorTemplate")
   else
     Journalator.Debug.Message("basic mail monitor disabled")
   end

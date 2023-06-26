@@ -13,13 +13,16 @@ function JournalatorBasicMailSendMonitorMixin:OnLoad()
 
     self:StartListening()
 
+    local money = GetSendMailMoney()
+
     self.result = {
       recipient = recipient,
       subject = subject,
       text = body,
 
       cod = GetSendMailCOD(),
-      money = GetSendMailMoney(),
+      money = money,
+      sendCost = GetSendMailPrice() - money,
       items = {},
 
       source = Journalator.State.Source

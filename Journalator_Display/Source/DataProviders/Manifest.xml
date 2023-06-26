@@ -19,4 +19,5 @@
   <Script file="WoWTokens.lua" />
   <Script file="Taxis.lua" />
   <Script file="BasicMailSent.lua" />
+  <Script file="BasicMailReceived.lua" />
 </Ui>

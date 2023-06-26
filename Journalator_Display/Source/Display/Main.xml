@@ -373,10 +373,25 @@
               <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
             </Anchors>
           </Frame>
+          <Frame inherits="JournalatorBasicMailReceivedDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Received" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
 
           <Button parentKey="SentTab" inherits="JournalatorTabButtonTemplate" name="JournalatorBasicMailSentTab_Button" text="JOURNALATOR_L_SENT">
             <KeyValues>
               <KeyValue key="displayMode" value="Sent" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_MAIL_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="ReceivedTab" inherits="JournalatorTabButtonTemplate" name="JournalatorBasicMailReceivedTab_Button" text="JOURNALATOR_L_RECEIVED">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Received" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_MAIL_TITLE" type="global"/>
             </KeyValues>
           </Button>

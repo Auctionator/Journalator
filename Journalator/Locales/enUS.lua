@@ -32,6 +32,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["WOW_TOKENS"] = "WoW Tokens"
   L["MAIL"] = "Mail"
   L["SENT"] = "Sent"
+  L["RECEIVED"] = "Received"
   L["JOURNALATOR"] = "Journalator"
 
   L["IN_INCLUDING_AH_CUT"] = "In (including AH cut)"
@@ -43,6 +44,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["COD"] = "C.O.D."
   L["RECIPIENT"] = "Recipient"
   L["SENDER"] = "Sender"
+  L["SEND_COST"] = "Send Cost"
 
   L["YOU_LOST_X_WITH_XX"] = "You lost %s, with %s incoming and %s outgoing."
   L["YOU_GAINED_X_WITH_XX"] = "You gained %s, with %s incoming and %s outgoing."

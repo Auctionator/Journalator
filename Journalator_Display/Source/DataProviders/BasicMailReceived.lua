@@ -1,4 +1,4 @@
-local BASIC_MAIL_SENT_DATA_PROVIDER_LAYOUT ={
+local BASIC_MAIL_RECEIVED_DATA_PROVIDER_LAYOUT ={
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_NAME,
@@ -9,15 +9,7 @@ local BASIC_MAIL_SENT_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_OUT,
-    headerParameters = { "moneyOut" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
-    cellParameters = { "moneyOut" },
-    width = 150,
-  },
-  {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_COD,
+    headerText = JOURNALATOR_L_IN,
     headerParameters = { "moneyIn" },
     cellTemplate = "AuctionatorPriceCellTemplate",
     cellParameters = { "moneyIn" },
@@ -25,22 +17,22 @@ local BASIC_MAIL_SENT_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_SEND_COST,
-    headerParameters = { "sendCost" },
+    headerText = JOURNALATOR_L_COD,
+    headerParameters = { "moneyOut" },
     cellTemplate = "AuctionatorPriceCellTemplate",
-    cellParameters = { "sendCost" },
+    cellParameters = { "moneyOut" },
     width = 150,
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_RECIPIENT,
-    headerParameters = { "recipient" },
+    headerText = JOURNALATOR_L_SENDER,
+    headerParameters = { "sender" },
     cellTemplate = "AuctionatorStringCellTemplate",
-    cellParameters = { "recipient" },
+    cellParameters = { "sender" },
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = JOURNALATOR_L_SENDER,
+    headerText = JOURNALATOR_L_RECIPIENT,
     headerParameters = { "sourceCharacter" },
     cellTemplate = "AuctionatorStringCellTemplate",
     cellParameters = { "sourceCharacter" },
@@ -55,13 +47,13 @@ local BASIC_MAIL_SENT_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorBasicMailSentDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorBasicMailReceivedDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorBasicMailSentDataProviderMixin:Refresh()
+function JournalatorBasicMailReceivedDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
   local results = {}
-  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "BasicMailSent")) do
+  for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "BasicMailReceived")) do
     local filterItem = {
       itemName = item.subject,
       time = item.time,
@@ -71,15 +63,14 @@ function JournalatorBasicMailSentDataProviderMixin:Refresh()
       local processedItem = {
         searchTerm = item.subject,
         itemName = item.subject,
-        moneyOut = item.money,
-        moneyIn = item.cod,
-        sendCost = item.sendCost,
+        moneyIn = item.money,
+        moneyOut = item.cod,
         rawDay = item.time,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         realmID = item.source.realmID,
-        recipient = Journalator.Utilities.AddRealmToPlayerName(item.recipient, item.source),
+        sender = Journalator.Utilities.AddRealmToPlayerName(item.sender, item.source),
         index = index,
-        value = -item.money,
+        value = item.money - item.cod,
         selected = self:IsSelected(index),
       }
       table.insert(results, processedItem)
@@ -88,8 +79,8 @@ function JournalatorBasicMailSentDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorBasicMailSentDataProviderMixin:GetTableLayout()
-  return BASIC_MAIL_SENT_DATA_PROVIDER_LAYOUT
+function JournalatorBasicMailReceivedDataProviderMixin:GetTableLayout()
+  return BASIC_MAIL_RECEIVED_DATA_PROVIDER_LAYOUT
 end
 
 local COMPARATORS = {
@@ -97,11 +88,11 @@ local COMPARATORS = {
   moneyOut = Auctionator.Utilities.NumberComparator,
   moneyIn = Auctionator.Utilities.NumberComparator,
   sourceCharacter = Auctionator.Utilities.StringComparator,
-  recipient = Auctionator.Utilities.StringComparator,
+  sender = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorBasicMailSentDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorBasicMailReceivedDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -111,8 +102,8 @@ function JournalatorBasicMailSentDataProviderMixin:Sort(fieldName, sortDirection
   self:SetDirty()
 end
 
-Journalator.Config.Create("COLUMNS_BASIC_MAIL_SENT", "columns_basic_mail_sent", {})
+Journalator.Config.Create("COLUMNS_BASIC_MAIL_RECEIVED", "columns_basic_mail_recieved", {})
 
-function JournalatorBasicMailSentDataProviderMixin:GetColumnHideStates()
-  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_BASIC_MAIL_SENT)
+function JournalatorBasicMailReceivedDataProviderMixin:GetColumnHideStates()
+  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_BASIC_MAIL_RECEIVED)
 end

@@ -204,7 +204,22 @@ function Journalator.GetInOut(startTime, endTime, filter)
       }
       if filterItem.time >= startTime and filterItem.time <= endTime then
         if filter(filterItem) then
-          outgoing = outgoing + item.money
+          outgoing = outgoing + item.money + (item.sendCost or 0)
+        end
+      end
+    end
+
+    local mailReceived = Journalator.Archiving.GetRange(startTime, "BasicMailRecieved")
+    for _, item in ipairs(mailSent) do
+      local filterItem = {
+        itemName = item.subject,
+        time = item.time,
+        source = item.source,
+      }
+      if filterItem.time >= startTime and filterItem.time <= endTime then
+        if filter(filterItem) then
+          outgoing = outgoing + item.cod
+          incoming = incoming + item.money
         end
       end
     end

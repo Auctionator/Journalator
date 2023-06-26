@@ -83,6 +83,7 @@ Journalator.Constants.TabLayout = {
     name = JOURNALATOR_L_MAIL, displayMode="BasicMail",
     children = {
       {name = JOURNALATOR_L_SENT, displayMode="Sent"},
+      {name = JOURNALATOR_L_RECEIVED, displayMode="Received"},
     }
   },
   {

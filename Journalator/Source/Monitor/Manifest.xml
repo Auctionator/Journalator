@@ -15,6 +15,7 @@
   <Script file="LootRightClickToOpen.lua" />
   <Script file="WoWTokens.lua" />
   <Script file="BasicMailSend.lua" />
+  <Script file="BasicMailReceive.lua" />
 
   <Include file="AuctionMail.xml" />
   <Include file="Posting.xml" />
@@ -32,4 +33,5 @@
   <Include file="LootRightClickToOpen.xml" />
   <Include file="WoWTokens.xml" />
   <Include file="BasicMailSend.xml" />
+  <Include file="BasicMailReceive.xml" />
 </Ui>
