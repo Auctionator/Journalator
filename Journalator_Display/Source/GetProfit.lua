@@ -7,7 +7,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     table.insert(result, {name = name, incoming = incoming, outgoing = outgoing, tabDetails = tabDetails})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE) then
     local incoming = 0
     local outgoing = 0
     local invoices = Journalator.Archiving.GetRange(startTime, "Invoices")
@@ -36,7 +36,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_AUCTION_HOUSE, incoming, outgoing, {root="AuctionHouse", child="Invoices"})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS) then
     local incoming = 0
     local outgoing = 0
     local wowTokens = Journalator.Archiving.GetRange(startTime, "WoWTokens")
@@ -50,7 +50,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_WOW_TOKENS, incoming, outgoing, {root="AuctionHouse", child="WoWTokens"})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_CRAFTING_ORDERS) then
     local incoming = 0
     local outgoing = 0
     local fulfillings = Journalator.Archiving.GetRange(startTime, "Fulfilling")
@@ -89,7 +89,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_CRAFTING_ORDERS, incoming, outgoing, {root="CraftingOrders"})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_QUESTING) then
     local incoming = 0
     local outgoing = 0
     local quests = Journalator.Archiving.GetRange(startTime, "Questing")
@@ -111,7 +111,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_QUESTING, incoming, outgoing, {root="Questing"})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_LOOTING) then
     local incoming = 0
     local outgoing = 0
     local looting = Journalator.Archiving.GetRange(startTime, "LootContainers")
@@ -136,7 +136,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_LOOTING, incoming, outgoing, {root="Looting", child="BySource"})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING) then
     local incoming = 0
     local outgoing = 0
     local taxis = Journalator.Archiving.GetRange(startTime, "Taxis")
@@ -155,7 +155,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_TAXIS, incoming, outgoing, {root="Vendors", child="Taxis"})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING) then
     local incoming = 0
     local outgoing = 0
     local vendorRepairs = Journalator.Archiving.GetRange(startTime, "VendorRepairs")
@@ -174,7 +174,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_REPAIRS, incoming, outgoing, {root="Vendors", child="Repairs"})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING) then
     local incoming = 0
     local outgoing = 0
     local vendoring = Journalator.Archiving.GetRange(startTime, "Vendoring")
@@ -192,7 +192,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_VENDORING, incoming, outgoing, {root="Vendors", child="Items"})
   end
 
-  do
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_BASIC_MAIL) then
     local incoming = 0
     local outgoing = 0
     local mailSent = Journalator.Archiving.GetRange(startTime, "BasicMailSent")
