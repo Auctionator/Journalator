@@ -78,6 +78,8 @@ function JournalatorBasicMailSentDataProviderMixin:Refresh()
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         realmID = item.source.realmID,
         recipient = Journalator.Utilities.AddRealmToPlayerName(item.recipient, item.source),
+        subject = item.subject,
+        text = item.text,
         index = index,
         value = -item.money,
         selected = self:IsSelected(index),
@@ -115,4 +117,8 @@ Journalator.Config.Create("COLUMNS_BASIC_MAIL_SENT", "columns_basic_mail_sent", 
 
 function JournalatorBasicMailSentDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_BASIC_MAIL_SENT)
+end
+
+function JournalatorBasicMailSentDataProviderMixin:GetRowTemplate()
+  return "JournalatorLogViewBasicMailRowTemplate"
 end
