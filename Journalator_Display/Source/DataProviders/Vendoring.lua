@@ -104,7 +104,7 @@ function JournalatorVendoringDataProviderMixin:Refresh()
           selected = self:IsSelected(index),
         })
       else
-        junkValue = junkValue + moneyIn - moneyOut
+        junkValue = junkValue + moneyIn + moneyOut
       end
     end
   end
