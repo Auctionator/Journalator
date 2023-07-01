@@ -178,6 +178,7 @@ function JournalatorVendorItemsMonitorMixin:OnLoad()
   self:RegisterRightClickToSellHandlers()
   self:RegisterDragToSellHandlers()
   self:RegisterRefundHandlers()
+  self:RegisterSellJunkButton()
 
   self:RegisterBuybackHandlers()
 
@@ -199,6 +200,7 @@ function JournalatorVendorItemsMonitorMixin:ResetQueues()
   self.purchaseQueue = {}
 end
 
+local ITEM_INFO_QUALITY = 3
 local ITEM_INFO_SELL_PRICE = 11
 
 function JournalatorVendorItemsMonitorMixin:RegisterRightClickToSellHandlers()
@@ -238,6 +240,53 @@ function JournalatorVendorItemsMonitorMixin:RegisterRightClickToSellHandlers()
   else
     hooksecurefunc(_G, "UseContainerItem", ProcessDetails)
   end
+end
+
+function JournalatorVendorItemsMonitorMixin:RegisterSellJunkButton()
+  if not C_MerchantFrame or not C_MerchantFrame.SellAllJunkItems then
+    return
+  end
+
+  -- Check if the item is junk before adding it to the queue
+  local function ProcessMaybeJunkItem(bag, slot)
+    local itemCount, itemLink = GetCountLinkFromBagAndSlot(bag, slot)
+
+    if itemLink == nil then
+      return
+    end
+
+    local item = Item:CreateFromItemLink(itemLink)
+    if item:IsItemEmpty() then
+      return
+    end
+
+    local guid = GetGUIDFromBagAndSlot(bag, slot)
+
+    local info = C_Container.GetContainerItemInfo(bag, slot)
+    item:ContinueOnItemLoad(function()
+      local quality = select(ITEM_INFO_QUALITY, GetItemInfo(itemLink))
+      if quality == Enum.ItemQuality.Poor and not info.hasNoValue then
+        local vendorPrice = select(ITEM_INFO_SELL_PRICE, GetItemInfo(itemLink))
+        self.sellQueue[guid] = {
+          vendorType = "sell",
+          itemName = (GetItemInfo(itemLink)),
+          count = itemCount,
+          unitPrice = vendorPrice,
+          itemLink = itemLink,
+          time = time(),
+          source = Journalator.State.Source,
+        }
+      end
+    end)
+  end
+
+  hooksecurefunc(C_MerchantFrame, "SellAllJunkItems", function()
+    for bag = 0, GetBagLimit() do
+      for slot = 1, GetSlots(bag) do
+        ProcessMaybeJunkItem(bag, slot)
+      end
+    end
+  end)
 end
 
 -- Used to identify the item selected/being dragged by the cursor
