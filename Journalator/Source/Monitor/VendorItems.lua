@@ -300,7 +300,7 @@ function JournalatorVendorItemsMonitorMixin:UpdateCursorItem()
   end
 
   local itemLocation = C_Cursor.GetCursorItem()
-  if itemLocation then
+  if itemLocation and itemLocation:HasAnyLocation() then
     local guid = GetGUIDFromLocation(itemLocation)
     local itemLink = C_Item.GetItemLink(itemLocation)
     local itemCount = C_Item.GetStackCount(itemLocation)
