@@ -90,3 +90,12 @@ Journalator.Constants.TabLayout = {
     name = JOURNALATOR_L_JOURNALATOR, displayMode="Info",
   },
 }
+
+if Journalator.Constants.IsClassic then
+  -- Include keyring bag
+  Journalator.Constants.BagIDs = {-2, 0, 1, 2, 3, 4}
+else
+  Journalator.Constants.BagIDs = {0, 1, 2, 3, 4, 5}
+end
+
+Journalator.Constants.EquipmentSlotCap = 19

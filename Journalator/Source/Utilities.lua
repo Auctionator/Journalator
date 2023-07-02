@@ -175,7 +175,7 @@ function Journalator.Utilities.GetItemLocationFromGUID(wantedItemGUID)
     end
   end
 
-  for _, bagID in ipairs(Auctionator.Constants.BagIDs) do
+  for _, bagID in ipairs(Journalator.Constants.BagIDs) do
     for slot = 1, NumSlots(bagID) do
       local location = ItemLocation:CreateFromBagAndSlot(bagID, slot)
       if C_Item.DoesItemExist(location) then
@@ -183,6 +183,16 @@ function Journalator.Utilities.GetItemLocationFromGUID(wantedItemGUID)
         if itemGUID == wantedItemGUID then
           return location
         end
+      end
+    end
+  end
+
+  for equipmentSlot = 1, Journalator.Constants.EquipmentSlotCap do
+    local location = ItemLocation:CreateFromEquipmentSlot(equipmentSlot)
+    if C_Item.DoesItemExist(location) then
+      local itemGUID = C_Item.GetItemGUID(location)
+      if itemGUID == wantedItemGUID then
+        return location
       end
     end
   end

@@ -2,14 +2,6 @@ JournalatorVendorItemsMonitorMixin = {}
 
 local EQUIPMENT_SLOT_CAP = 19
 
-local function GetBagLimit()
-  if Journalator.Constants.IsClassic then
-    return 4
-  else
-    return 5
-  end
-end
-
 local function GetGUIDFromLocation(location)
   if C_Item.DoesItemExist(location) then
     return C_Item.GetItemGUID(location)
@@ -91,7 +83,7 @@ end
 
 local function IsGUIDInPossession(guid)
   -- Check if an item in a bag has disappeared/been sold.
-  for bag = 0, GetBagLimit() do
+  for _, bag in ipairs(Journalator.Constants.BagIDs) do
     -- Start the slots at 0 in include the container's item
     for slot = 0, GetSlots(bag) do
       if GetGUIDFromBagAndSlot(bag, slot) == guid then
@@ -101,7 +93,7 @@ local function IsGUIDInPossession(guid)
   end
 
   -- Check if an equipped item has disappeared/been sold
-  for equipmentSlot = 1, EQUIPMENT_SLOT_CAP do
+  for equipmentSlot = 1, Journalator.Constants.EquipmentSlotCap do
     if GetGUIDFromEquipmentSlot(equipmentSlot) == guid then
       return true
     end
@@ -113,7 +105,7 @@ end
 local function GetGUIDStackSizes()
   local result = {}
 
-  for bag = 0, GetBagLimit() do
+  for _, bag in ipairs(Journalator.Constants.BagIDs) do
     -- Start the slots at 0 in include the container's item
     for slot = 0, GetSlots(bag) do
       local guid = GetGUIDFromBagAndSlot(bag, slot)
@@ -134,7 +126,7 @@ end
 local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
   local stackSize = select(8, GetItemInfo(itemLink))
 
-  for bag = 0, GetBagLimit() do
+  for _, bag in ipairs(Journalator.Constants.BagIDs) do
     local available = 0
 
     for slot = 1, GetSlots(bag) do
@@ -281,7 +273,7 @@ function JournalatorVendorItemsMonitorMixin:RegisterSellJunkButton()
   end
 
   hooksecurefunc(C_MerchantFrame, "SellAllJunkItems", function()
-    for bag = 0, GetBagLimit() do
+    for _, bag in ipairs(Journalator.Constants.BagIDs) do
       for slot = 1, GetSlots(bag) do
         ProcessMaybeJunkItem(bag, slot)
       end
