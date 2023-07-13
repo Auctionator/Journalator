@@ -13,12 +13,12 @@ JournalatorCraftingOrderFulfillingMonitorMixin = {}
 local function ExcludeMatching(array, toExclude)
   local hits = {}
   for _, item in ipairs(toExclude) do
-    hits[item.reagentSlot] = true
+    hits[item.slotIndex] = true
   end
 
   local result = {}
   for _, item in ipairs(array) do
-    if not hits[item.reagentSlot] then
+    if not hits[item.slotIndex] then
       table.insert(result, item)
     end
   end
@@ -50,7 +50,7 @@ local function GetBasicAndNotModifiedReagents(recipeSchematic)
       table.insert(result, {
         itemID = reagentSlotSchematic.reagents[1].itemID,
         quantity = reagentSlotSchematic.quantityRequired,
-        reagentSlot = reagentSlotSchematic.slotIndex
+        slotIndex = reagentSlotSchematic.slotIndex
       })
     end
   end
@@ -63,7 +63,7 @@ local function GetCustomerReagents(reagentsData)
     table.insert(result, {
       itemID = r.reagent.itemID,
       quantity = r.reagent.quantity,
-      reagentSlot = r.reagentSlot, -- Used in ExcludeMatching
+      slotIndex = r.slotIndex, -- Used in ExcludeMatching
     })
   end
   return result
@@ -86,7 +86,7 @@ local function GetSlotsWithReagents(recipeSchematic, reagents)
     table.insert(result, {
       itemID = r.itemID,
       quantity = r.quantity,
-      reagentSlot = reagentsToSlots[r.itemID] -- Used in ExcludeMatching
+      slotIndex = reagentsToSlots[r.itemID] -- Used in ExcludeMatching
     })
   end
 
