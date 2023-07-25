@@ -226,6 +226,26 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_MAIL, incoming, outgoing, {root="BasicMail", child="Sent"})
   end
 
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_TRADES) then
+    local incoming = 0
+    local outgoing = 0
+    local trades = Journalator.Archiving.GetRange(startTime, "Trades")
+    for _, item in ipairs(trades) do
+      local filterItem = {
+        itemName = item.player,
+        time = item.time,
+        source = item.source,
+      }
+      if filterItem.time >= startTime and filterItem.time <= endTime then
+        if filter(filterItem) then
+          incoming = incoming + item.moneyIn
+          outgoing = outgoing + item.moneyOut
+        end
+      end
+    end
+    Add(JOURNALATOR_L_TRADES, incoming, outgoing, {root="Trades"})
+  end
+
   return result
 end
 

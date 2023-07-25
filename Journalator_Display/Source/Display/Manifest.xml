@@ -24,6 +24,7 @@
   <Include file="Questing.xml" />
   <Include file="Loot\Manifest.xml" />
   <Include file="BasicMail\Manifest.xml" />
+  <Include file="Trades.xml" />
   <Include file="Info.xml" />
 
   <Include file="Main.xml" />

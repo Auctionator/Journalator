@@ -20,4 +20,5 @@
   <Script file="Taxis.lua" />
   <Script file="BasicMailSent.lua" />
   <Script file="BasicMailReceived.lua" />
+  <Script file="Trades.lua" />
 </Ui>

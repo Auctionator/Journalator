@@ -87,6 +87,9 @@ Journalator.Constants.TabLayout = {
     }
   },
   {
+    name = JOURNALATOR_L_TRADES, displayMode="Trades",
+  },
+  {
     name = JOURNALATOR_L_JOURNALATOR, displayMode="Info",
   },
 }

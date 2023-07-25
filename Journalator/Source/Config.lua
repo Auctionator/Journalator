@@ -19,6 +19,7 @@ Journalator.Config.Options = {
   MONITOR_LOOTING = "monitor_looting",
   MONITOR_WOW_TOKENS = "monitor_wow_tokens",
   MONITOR_BASIC_MAIL = "monitor_basic_mail",
+  MONITOR_TRADES = "monitor_trades",
 
   DEFAULT_TAB = "default_tab_4",
   DEFAULT_TIME_PERIOD = "default_time_period",
@@ -44,6 +45,7 @@ Journalator.Config.Defaults = {
   [Journalator.Config.Options.MONITOR_LOOTING] = true,
   [Journalator.Config.Options.MONITOR_WOW_TOKENS] = true,
   [Journalator.Config.Options.MONITOR_BASIC_MAIL] = true,
+  [Journalator.Config.Options.MONITOR_TRADES] = true,
   [Journalator.Config.Options.DEFAULT_TAB] = {root = "Summary", child = ""},
   [Journalator.Config.Options.DEFAULT_TIME_PERIOD] = Journalator.Constants.TimePeriods.Month,
   [Journalator.Config.Options.DEBUG] = false,

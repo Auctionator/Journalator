@@ -22,6 +22,9 @@ function Journalator.GetCharactersAndRealms(fromTime)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "Questing"), cache, fromTime)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "TradingPostVendoring"), cache, fromTime)
   SearchLog(Journalator.Archiving.GetRange(fromTime, "LootContainers"), cache, fromTime)
+  SearchLog(Journalator.Archiving.GetRange(fromTime, "BasicMailReceived"), cache, fromTime)
+  SearchLog(Journalator.Archiving.GetRange(fromTime, "BasicMailSent"), cache, fromTime)
+  SearchLog(Journalator.Archiving.GetRange(fromTime, "Trades"), cache, fromTime)
 
   return cache
 end

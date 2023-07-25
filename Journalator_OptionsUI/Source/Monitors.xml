@@ -90,6 +90,15 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.WoWTokens" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="Trades">
+        <KeyValues>
+          <KeyValue key="labelText" value="JOURNALATOR_L_TRADES" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.Mail" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
    </Frames>
   </Frame>
 </Ui>

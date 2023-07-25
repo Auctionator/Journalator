@@ -15,6 +15,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["LOOTING_TITLE"] = "Journalator - Looting"
   L["WOW_TOKENS_TITLE"] = "Journalator - WoW Tokens"
   L["MAIL_TITLE"] = "Journalator - Mail"
+  L["TRADES_TITLE"] = "Journalator - Trades"
   L["INFO_TITLE"] = "Journalator - Info"
 
   L["SUMMARY"] = "Summary"
@@ -104,6 +105,7 @@ JOURNALATOR_LOCALES.enUS = function()
 
   L["AUCTION_HOUSE"] = "Auction House"
   L["VENDORS"] = "Vendors"
+  L["TRADES"] = "Trades"
   L["CRAFTING_ORDERS"] = "Crafting Orders"
   L["BY_SOURCE"] = "By Source"
   L["BY_ITEM"] = "By Item"

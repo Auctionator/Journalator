@@ -67,6 +67,12 @@ local function SetupMonitors()
   else
     Journalator.Debug.Message("basic mail monitor disabled")
   end
+
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_TRADES) then
+    CreateFrame("Frame", "JNRTradesMonitor", nil, "JournalatorTradesMonitorTemplate")
+  else
+    Journalator.Debug.Message("trades monitor disabled")
+  end
 end
 
 local function InitializeBase()

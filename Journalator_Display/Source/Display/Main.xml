@@ -398,6 +398,16 @@
         </Frames>
       </Frame>
 
+      <Frame inherits="JournalatorTradesDisplayTemplate" parentArray="Views">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Trades" type="string"/>
+				</KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="50"/>
+        </Anchors>
+      </Frame>
+
       <Frame inherits="JournalatorInfoDisplayTemplate" parentArray="Views">
 				<KeyValues>
 					<KeyValue key="displayMode" value="Info" type="string"/>
@@ -448,6 +458,12 @@
 				<KeyValues>
 					<KeyValue key="displayMode" value="BasicMail" type="string"/>
 					<KeyValue key="title" value="JOURNALATOR_L_MAIL_TITLE" type="global"/>
+				</KeyValues>
+			</Button>
+			<Button parentKey="TradesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradesTab_Button" text="JOURNALATOR_L_TRADES">
+				<KeyValues>
+					<KeyValue key="displayMode" value="Trades" type="string"/>
+					<KeyValue key="title" value="JOURNALATOR_L_TRADES_TITLE" type="global"/>
 				</KeyValues>
 			</Button>
       <Button parentKey="InfoTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInfoTab_Button" text="JOURNALATOR_L_JOURNALATOR">
