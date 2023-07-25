@@ -76,7 +76,6 @@ function JournalatorBasicMailSentDataProviderMixin:Refresh()
         sendCost = item.sendCost,
         rawDay = item.time,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-        realmID = item.source.realmID,
         recipient = Journalator.Utilities.AddRealmToPlayerName(item.recipient, item.source),
         subject = item.subject,
         text = item.text,

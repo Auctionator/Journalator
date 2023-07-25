@@ -86,7 +86,6 @@ function JournalatorQuestingDataProviderMixin:Refresh()
         rawDay = item.time,
         itemLink = link,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-        realmID = item.source.realmID,
         items = item.rewardItems,
         currencies = item.rewardCurrencies,
         itemCount = #item.rewardItems,

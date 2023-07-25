@@ -105,7 +105,6 @@ function JournalatorCraftingOrdersPlacedDataProviderMixin:Refresh()
         recraftItemLink = item.recraftItemLink,
         otherPlayer = Journalator.Utilities.AddRealmToPlayerName(item.playerName, item.source),
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-        realmID = item.source.realmID,
         index = index,
         value =  - item.postingFee,
         selected = self:IsSelected(index),

@@ -38,7 +38,6 @@ function JournalatorVendorRepairsDataProviderMixin:Refresh()
       table.insert(results, {
         moneyOut = item.money,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-        realmID = item.source.realmID,
         rawDay = item.time,
         value = -item.money,
         selected = self:IsSelected(index),

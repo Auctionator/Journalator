@@ -77,7 +77,6 @@ function JournalatorLootByItemDataProviderMixin:Refresh()
             itemLink = i.itemLink,
             zone = zone,
             sourceCharacter = sourceCharacter,
-            realmID = i.source.realmID,
             index = index,
             value = 0,
             selected = self:IsSelected(index),

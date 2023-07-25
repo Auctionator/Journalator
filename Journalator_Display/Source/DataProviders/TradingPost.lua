@@ -54,7 +54,6 @@ function JournalatorTradingPostDataProviderMixin:Refresh()
         itemLink = item.itemLink,
         rawDay = item.time,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-        realmID = item.source.realmID,
         index = index,
         value = 0,
         selected = self:IsSelected(index),

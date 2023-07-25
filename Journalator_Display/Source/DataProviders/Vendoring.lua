@@ -98,7 +98,6 @@ function JournalatorVendoringDataProviderMixin:Refresh()
           rawDay = item.time,
           itemLink = item.itemLink,
           sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-          realmID = item.source.realmID,
           index = index,
           value = moneyIn - moneyOut,
           selected = self:IsSelected(index),

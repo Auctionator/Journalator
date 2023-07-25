@@ -44,7 +44,6 @@ function JournalatorWoWTokensDataProviderMixin:Refresh()
         itemLink = item.itemLink,
         moneyOut = item.value,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-        realmID = item.source.realmID,
         rawDay = item.time,
         value = -item.value,
         selected = self:IsSelected(index),
