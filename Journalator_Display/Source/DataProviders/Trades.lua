@@ -25,6 +25,22 @@ local TRADES_DATA_PROVIDER_LAYOUT ={
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_ITEMS_IN,
+    headerParameters = { "itemsInCount" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "itemsInCount" },
+    width = 100
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerText = JOURNALATOR_L_ITEMS_OUT,
+    headerParameters = { "itemsOutCount" },
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "itemsOutCount" },
+    width = 100
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = JOURNALATOR_L_SOURCE,
     headerParameters = { "sourceCharacter" },
     cellTemplate = "AuctionatorStringCellTemplate",
@@ -58,6 +74,8 @@ function JournalatorTradesDataProviderMixin:Refresh()
         searchTerm = item.player,
         otherPlayer = item.player,
         rawDay = item.time,
+        itemsInCount = #item.itemsIn,
+        itemsOutCount = #item.itemsOut,
         moneyIn = item.moneyIn,
         moneyOut = -item.moneyOut,
         value = item.moneyIn - item.moneyOut,

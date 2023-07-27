@@ -152,6 +152,8 @@ JOURNALATOR_LOCALES.enUS = function()
 
   L["MONEY"] = "Money"
   L["ITEMS"] = "Items"
+  L["ITEMS_IN"] = "Items In"
+  L["ITEMS_OUT"] = "Items Out"
   L["CURRENCIES"] = "Currencies"
   L["EXPERIENCE"] = "Experience"
   L["REWARDS_COLON"] = "Rewards:"
