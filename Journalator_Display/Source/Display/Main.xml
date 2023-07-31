@@ -35,14 +35,52 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="JournalatorSummaryDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Summary" type="string"/>
-				</KeyValues>
+      <Frame parentKey="SummaryContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="50"/>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT" y="30"/>
         </Anchors>
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnShow method="OnShow"/>
+        </Scripts>
+        <KeyValues>
+          <KeyValue key="displayMode" value="Summary" type="string"/>
+        </KeyValues>
+        <Frames>
+          <Frame inherits="JournalatorSummaryDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByType" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Frame inherits="JournalatorSummaryByCharacterDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByCharacter" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Button parentKey="ByTypeTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryByTypeTab_Button" text="JOURNALATOR_L_BY_TYPE">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByType" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_SUMMARY_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="ByCharacterTab" inherits="JournalatorTabButtonTemplate" name="JournalatorByCharacterTab_Button" text="JOURNALATOR_L_BY_CHARACTER">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByCharacter" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_SUMMARY_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+        </Frames>
       </Frame>
 
       <Frame parentKey="AuctionHouseContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">

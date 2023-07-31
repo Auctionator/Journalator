@@ -133,7 +133,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["TIP"] = "Tip"
   L["POSTING_FEE"] = "Posting Fee"
   L["COMMISSION_PAID"] = "Commission Paid"
-  
+
   L["RECRAFT_X_TO_X"] = "Recraft %s to %s"
   L["INCLUDES_EXTRA_CRAFTS"] = "Includes extra crafts"
   L["CUSTOMER_REAGENTS_COLON"] = "Customer reagents:"
@@ -176,6 +176,10 @@ JOURNALATOR_LOCALES.enUS = function()
   L["TAXIS"] = "Taxis"
   L["START"] = "Start"
   L["END"] = "End"
+
+  L["PROFIT"] = "Profit"
+  L["BY_TYPE"] = "By Type"
+  L["BY_CHARACTER"] = "By Character"
 
   L["CONFIG_UI_DISABLED"] = "Unable to open options. The Options UI addon is disabled"
   L["DISPLAY_DISABLED"] = "Unable to open display. The Display addon is disabled"

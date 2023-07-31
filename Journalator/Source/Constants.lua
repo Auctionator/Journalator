@@ -38,7 +38,11 @@ Journalator.Constants.TimePeriods = {
 
 Journalator.Constants.TabLayout = {
   {
-    name = JOURNALATOR_L_SUMMARY, displayMode="Summary"
+    name = JOURNALATOR_L_SUMMARY, displayMode="Summary",
+    children = {
+      {name = JOURNALATOR_L_BY_TYPE, displayMode="ByType"},
+      {name = JOURNALATOR_L_BY_CHARACTER, displayMode="ByCharacter"},
+    }
   },
   {
     name = JOURNALATOR_L_AUCTION_HOUSE, displayMode="AuctionHouse",
