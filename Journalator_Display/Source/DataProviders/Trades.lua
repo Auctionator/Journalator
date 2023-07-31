@@ -76,6 +76,8 @@ function JournalatorTradesDataProviderMixin:Refresh()
         rawDay = item.time,
         itemsInCount = #item.itemsIn,
         itemsOutCount = #item.itemsOut,
+        itemsIn = item.itemsIn,
+        itemsOut = item.itemsOut,
         moneyIn = item.moneyIn,
         moneyOut = -item.moneyOut,
         value = item.moneyIn - item.moneyOut,
@@ -118,5 +120,5 @@ function JournalatorTradesDataProviderMixin:GetColumnHideStates()
 end
 
 function JournalatorTradesDataProviderMixin:GetRowTemplate()
-  return "JournalatorLogViewResultsRowTemplate"
+  return "JournalatorLogViewTradesRowTemplate"
 end

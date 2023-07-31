@@ -6,6 +6,7 @@
   <Include file="LootingRow.lua" />
   <Include file="BasicMailRow.lua" />
   <Include file="SummaryRow.lua" />
+  <Include file="TradesRow.lua" />
   <Include file="TimeCell.lua" />
   <Include file="PriceCell.lua" />
 
@@ -16,6 +17,7 @@
   <Include file="LootingRow.xml" />
   <Include file="BasicMailRow.xml" />
   <Include file="SummaryRow.xml" />
+  <Include file="TradesRow.xml" />
   <Include file="TimeCell.xml" />
   <Include file="PriceCell.xml" />
 </Ui>

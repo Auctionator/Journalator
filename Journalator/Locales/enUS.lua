@@ -168,6 +168,9 @@ JOURNALATOR_LOCALES.enUS = function()
   L["DROPS_COLON"] = "Drops:"
   L["CHARACTER"] = "Character"
 
+  L["OUT_COLON"] = "Out:"
+  L["IN_COLON"] = "In:"
+
   L["REPAIRS"] = "Repairs"
 
   L["TAXIS"] = "Taxis"

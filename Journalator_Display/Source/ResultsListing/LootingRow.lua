@@ -28,7 +28,6 @@ function JournalatorLogViewLootingRowMixin:ShowTooltip()
   if self.rowData.items then
     if #self.rowData.items > 0 then
       for _, item in ipairs(self.rowData.items) do
-        local name, link = GetItemInfo(item.itemLink)
         GameTooltip:AddLine(Journalator.Utilities.GetItemText(item.itemLink, item.quantity))
       end
     end
