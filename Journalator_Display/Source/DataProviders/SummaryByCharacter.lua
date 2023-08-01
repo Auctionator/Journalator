@@ -45,7 +45,7 @@ function JournalatorSummaryByCharacterDataProviderMixin:Refresh()
         return false
       end)
 
-      if incoming ~= 0 and outgoing ~= 0 then
+      if incoming ~= 0 or outgoing ~= 0 then
         local sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(character, {realm = realm})
         table.insert(byCharacter, {character = sourceCharacter, moneyIn = incoming, moneyOut = -outgoing})
       end
