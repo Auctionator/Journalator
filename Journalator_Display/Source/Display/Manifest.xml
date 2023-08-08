@@ -12,6 +12,8 @@
   <Include file="RealmsFilter.xml" />
   <Include file="CharactersFilter.xml" />
 
+  <Include file="FiltersContainer.xml" />
+
   <Include file="DataTab.xml" />
 
   <Include file="Summary\Manifest.xml" />
@@ -20,8 +22,7 @@
   <Include file="Vendors\Manifest.xml" />
   <Include file="CraftingOrders\Manifest.xml" />
 
-  <Include file="FiltersContainer.xml" />
-  <Include file="Questing.xml" />
+  <Include file="Questing\Manifest.xml" />
   <Include file="Loot\Manifest.xml" />
   <Include file="BasicMail\Manifest.xml" />
   <Include file="Trades.xml" />

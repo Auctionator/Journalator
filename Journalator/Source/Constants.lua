@@ -75,6 +75,10 @@ Journalator.Constants.TabLayout = {
   },
   {
     name = JOURNALATOR_L_QUESTING, displayMode="Questing",
+    children = {
+      {name = JOURNALATOR_L_BY_SOURCE, displayMode="ByQuest"},
+      {name = JOURNALATOR_L_BY_ITEM, displayMode="ByItem"},
+    }
   },
   {
     name = JOURNALATOR_L_LOOTING, displayMode="Looting",

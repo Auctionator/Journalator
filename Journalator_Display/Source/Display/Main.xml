@@ -74,7 +74,7 @@
               <KeyValue key="title" value="JOURNALATOR_L_SUMMARY_TITLE" type="global"/>
             </KeyValues>
           </Button>
-          <Button parentKey="ByCharacterTab" inherits="JournalatorTabButtonTemplate" name="JournalatorByCharacterTab_Button" text="JOURNALATOR_L_BY_CHARACTER">
+          <Button parentKey="ByCharacterTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryByCharacterTab_Button" text="JOURNALATOR_L_BY_CHARACTER">
             <KeyValues>
               <KeyValue key="displayMode" value="ByCharacter" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_SUMMARY_TITLE" type="global"/>
@@ -332,14 +332,52 @@
         </Frames>
       </Frame>
 
-      <Frame inherits="JournalatorQuestingDisplayTemplate" parentArray="Views">
-				<KeyValues>
-					<KeyValue key="displayMode" value="Questing" type="string"/>
-				</KeyValues>
+      <Frame parentKey="QuestingContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="50"/>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT" y="30"/>
         </Anchors>
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnShow method="OnShow"/>
+        </Scripts>
+        <KeyValues>
+          <KeyValue key="displayMode" value="Questing" type="string"/>
+        </KeyValues>
+        <Frames>
+          <Frame inherits="JournalatorQuestsByQuestDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByQuest" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
+          <Frame inherits="JournalatorQuestsByItemDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByItem" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>-->
+
+          <Button parentKey="ByQuestTab" inherits="JournalatorTabButtonTemplate" name="JournalatorQuestsByQuestTab_Button" text="JOURNALATOR_L_BY_QUEST">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByQuest" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_QUESTING_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="ByItemTab" inherits="JournalatorTabButtonTemplate" name="JournalatorQuestsByItemTab_Button" text="JOURNALATOR_L_BY_ITEM">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByItem" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_QUESTING_TITLE" type="global"/>
+            </KeyValues>
+            </Button>-->
+        </Frames>
       </Frame>
 
       <Frame parentKey="LootContainer" mixin="JournalatorTabbedViewMixin" parentArray="Views">

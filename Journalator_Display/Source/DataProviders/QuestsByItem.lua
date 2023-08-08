@@ -1,4 +1,4 @@
-local LOOTING_DATA_PROVIDER_LAYOUT ={
+local QUESTS_BY_ITEM_DATA_PROVIDER_LAYOUT ={
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_NAME,
@@ -39,14 +39,14 @@ local LOOTING_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorLootByItemDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorQuestsByItemDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorLootByItemDataProviderMixin:Refresh()
+function JournalatorQuestsByItemDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
   local results = {}
-  for index, entry in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "LootContainers")) do
-    if #entry.items > 0 then
+  for index, entry in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Questing")) do
+    if #entry.rewardItems > 0 then
       local zone = ""
       if entry.map then
         local mapInfo = C_Map.GetMapInfo(entry.map)
@@ -56,7 +56,7 @@ function JournalatorLootByItemDataProviderMixin:Refresh()
       end
       local sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(entry.source.character, entry.source)
 
-      local sortedItems = CopyTable(entry.items)
+      local sortedItems = CopyTable(entry.rewardItems)
       for _, i in ipairs(sortedItems) do
         i.itemName = Auctionator.Utilities.GetNameFromLink(i.itemLink):gsub(" |A.*|a", "")
         i.source = entry.source
@@ -93,8 +93,8 @@ function JournalatorLootByItemDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorLootByItemDataProviderMixin:GetTableLayout()
-  return LOOTING_DATA_PROVIDER_LAYOUT
+function JournalatorQuestsByItemDataProviderMixin:GetTableLayout()
+  return QUESTS_BY_ITEM_DATA_PROVIDER_LAYOUT
 end
 
 local COMPARATORS = {
@@ -105,7 +105,7 @@ local COMPARATORS = {
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorLootByItemDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorQuestsByItemDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -115,8 +115,8 @@ function JournalatorLootByItemDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-Journalator.Config.Create("COLUMNS_LOOTING", "columns_loot_by_item", {})
+Journalator.Config.Create("COLUMNS_QUESTS_BY_ITEM", "columns_quests_by_item", {})
 
-function JournalatorLootByItemDataProviderMixin:GetColumnHideStates()
-  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_LOOTING)
+function JournalatorQuestsByItemDataProviderMixin:GetColumnHideStates()
+  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_QUESTS_BY_ITEM)
 end

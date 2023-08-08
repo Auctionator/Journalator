@@ -13,7 +13,8 @@
   <Script file="CraftingOrdersPlaced.lua" />
   <Script file="CraftingOrdersSucceeded.lua" />
   <Script file="CraftingOrdersFailed.lua" />
-  <Script file="Questing.lua" />
+  <Script file="QuestsByQuest.lua" />
+  <Script file="QuestsByItem.lua" />
   <Script file="TradingPost.lua" />
   <Script file="LootBySource.lua" />
   <Script file="LootByItem.lua" />

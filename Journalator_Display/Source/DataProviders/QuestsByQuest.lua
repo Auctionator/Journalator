@@ -1,4 +1,4 @@
-local QUESTING_DATA_PROVIDER_LAYOUT ={
+local QUESTS_BY_QUEST_DATA_PROVIDER_LAYOUT ={
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerText = AUCTIONATOR_L_NAME,
@@ -62,9 +62,9 @@ local QUESTING_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorQuestingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorQuestsByQuestDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorQuestingDataProviderMixin:Refresh()
+function JournalatorQuestsByQuestDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
   local results = {}
@@ -111,8 +111,8 @@ function JournalatorQuestingDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorQuestingDataProviderMixin:GetTableLayout()
-  return QUESTING_DATA_PROVIDER_LAYOUT
+function JournalatorQuestsByQuestDataProviderMixin:GetTableLayout()
+  return QUESTS_BY_QUEST_DATA_PROVIDER_LAYOUT
 end
 
 local COMPARATORS = {
@@ -125,7 +125,7 @@ local COMPARATORS = {
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorQuestingDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorQuestsByQuestDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -135,12 +135,12 @@ function JournalatorQuestingDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-Journalator.Config.Create("COLUMNS_QUESTING", "columns_questing", {})
+Journalator.Config.Create("COLUMNS_QUESTS_BY_QUEST", "columns_questing", {})
 
-function JournalatorQuestingDataProviderMixin:GetColumnHideStates()
-  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_QUESTING)
+function JournalatorQuestsByQuestDataProviderMixin:GetColumnHideStates()
+  return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_QUESTS_BY_QUEST)
 end
 
-function JournalatorQuestingDataProviderMixin:GetRowTemplate()
+function JournalatorQuestsByQuestDataProviderMixin:GetRowTemplate()
   return "JournalatorLogViewQuestingRowTemplate"
 end

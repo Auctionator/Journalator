@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="ByQuest.xml" />
+  <Include file="ByItem.xml" />
+</Ui>
