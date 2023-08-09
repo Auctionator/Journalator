@@ -12,7 +12,9 @@ function JournalatorConfigTooltipsFrameMixin:OnLoad()
   end
 
   self.okay = function()
-    self:Save()
+    if self.shownSettings then
+      self:Save()
+    end
   end
 
   self.OnCommit = self.okay
@@ -41,6 +43,8 @@ function JournalatorConfigTooltipsFrameMixin:OnShow()
   self.TooltipLastBought:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_LAST_BOUGHT))
   self.TooltipSoldStats:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_SOLD_STATS))
   self.TooltipBoughtStats:SetChecked(Journalator.Config.Get(Journalator.Config.Options.TOOLTIP_BOUGHT_STATS))
+
+  self.shownSettings = true
 end
 
 function JournalatorConfigTooltipsFrameMixin:Save()

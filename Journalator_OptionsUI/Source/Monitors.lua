@@ -12,7 +12,9 @@ function JournalatorConfigMonitorsOptionsFrameMixin:OnLoad()
   end
 
   self.okay = function()
-    self:Save()
+    if self.shownSettings then
+      self:Save()
+    end
   end
 
   self.OnCommit = self.okay
@@ -55,6 +57,8 @@ function JournalatorConfigMonitorsOptionsFrameMixin:OnShow()
 
   self.Mail:SetChecked(Journalator.Config.Get(Journalator.Config.Options.MONITOR_BASIC_MAIL))
   self.Trades:SetChecked(Journalator.Config.Get(Journalator.Config.Options.MONITOR_TRADES))
+
+  self.shownSettings = true
 end
 
 function JournalatorConfigMonitorsOptionsFrameMixin:Save()
