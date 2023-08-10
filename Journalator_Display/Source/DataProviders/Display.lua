@@ -57,6 +57,9 @@ function JournalatorDisplayDataProviderMixin:OnLoad()
 end
 
 function JournalatorDisplayDataProviderMixin:OnShow()
+  Auctionator.EventBus:RegisterSource(self, "JournalatorDisplayDataProviderMixin")
+    :Fire(self, Journalator.Events.ClearTotalQuantity)
+    :UnregisterSource(self)
   Journalator.Archiving.LoadUpTo(self:GetTimeForRange(), function()
     self:Refresh()
   end)

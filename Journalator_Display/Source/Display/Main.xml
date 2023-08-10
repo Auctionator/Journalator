@@ -604,6 +604,12 @@
             <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" y="15" x="20"/>
           </Anchors>
         </FontString>
+
+        <FontString text="" parentKey="TotalQuantity" inherits="GameFontHighlight">
+          <Anchors>
+            <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ExportCSV" relativePoint="TOPRIGHT" x="-15" y="13"/>
+          </Anchors>
+        </FontString>
       </Layer>
     </Layers>
   </Frame>

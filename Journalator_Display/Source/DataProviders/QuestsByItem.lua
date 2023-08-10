@@ -45,6 +45,7 @@ function JournalatorQuestsByItemDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
   local results = {}
+  local quantity = 0
   for index, entry in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Questing")) do
     if #entry.rewardItems > 0 then
       local zone = ""
@@ -79,6 +80,7 @@ function JournalatorQuestsByItemDataProviderMixin:Refresh()
             value = 0,
             selected = self:IsSelected(index),
           }
+          quantity = quantity + i.quantity
 
           if processedItem.itemLink ~= nil then
             processedItem.itemNamePretty = Journalator.Utilities.AddQualityIconToItemName(processedItem.itemNamePretty, processedItem.itemLink)
@@ -90,6 +92,9 @@ function JournalatorQuestsByItemDataProviderMixin:Refresh()
       end
     end
   end
+  Auctionator.EventBus:RegisterSource(self, "JournalatorQuestsByItemDataProviderMixin")
+    :Fire(self, Journalator.Events.UpdateTotalQuantity, quantity)
+    :UnregisterSource(self)
   self:AppendEntries(results, true)
 end
 

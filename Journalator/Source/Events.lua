@@ -7,4 +7,6 @@ Journalator.Events = {
   RemoveValueFromTotal = "journalator_remove_value_from_total",
   ResetTotal = "journalator_reset_total",
   RequestTabSwitch = "journalator_request_tab_switch",
+  UpdateTotalQuantity = "journalator_update_total_quantity",
+  ClearTotalQuantity = "journalator_hide_total_quantity",
 }

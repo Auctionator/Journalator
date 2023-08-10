@@ -53,6 +53,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["DETAILED_STATUS"] = "Total Sold: %s | AH Fees: %s | Deposits: %s | Purchases: %s | NET Profit: %s"
 
   L["RUNNING_TOTAL_X"] = "Running Total: %s"
+  L["TOTAL_QUANTITY_X"] = "Total Quantity: %s"
 
   L["MULTIPLE_BUYERS"] = "Multiple Buyers"
   L["MULTIPLE_SELLERS"] = "Multiple Sellers"

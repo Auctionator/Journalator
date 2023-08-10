@@ -6,6 +6,8 @@ local REFRESH_EVENTS = {
   Journalator.Events.AddValueForTotal,
   Journalator.Events.RemoveValueFromTotal,
   Journalator.Events.RequestTabSwitch,
+  Journalator.Events.UpdateTotalQuantity,
+  Journalator.Events.ClearTotalQuantity,
 }
 
 function JournalatorDisplayMixin:OnLoad()
@@ -87,6 +89,10 @@ function JournalatorDisplayMixin:ReceiveEvent(eventName, ...)
   elseif eventName == Journalator.Events.RequestTabSwitch then
     local details = ...
     self:SetTabFromDetails(details)
+  elseif eventName == Journalator.Events.ClearTotalQuantity then
+    self.TotalQuantity:SetText("")
+  elseif eventName == Journalator.Events.UpdateTotalQuantity then
+    self.TotalQuantity:SetText(JOURNALATOR_L_TOTAL_QUANTITY_X:format(...))
   end
 end
 
@@ -160,7 +166,9 @@ end
 function JournalatorDisplayMixin:UpdateRunningTotal()
   if self.runningTotalValueCount == 0 then
     self.RunningTotalButton:SetText("")
+    self.TotalQuantity:Show()
   else
+    self.TotalQuantity:Hide()
     self.RunningTotalButton:SetText(JOURNALATOR_L_RUNNING_TOTAL_X:format(ApplyNegativeToMoneyString(self.runningTotal)))
   end
   self.RunningTotalButton:SetWidth(self.RunningTotalButton:GetTextWidth())
