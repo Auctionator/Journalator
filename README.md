@@ -21,11 +21,8 @@ To see your summary click the minimap icon or run the slash command `/jnr`.
 * Mail: Gold received from and sent to other players
 * Trades: Items and gold traded with other players
 
-## Export CSV
-To export any view as a CSV to e.g. Excel, click the "Export Results" button.
-
 ## Options for tracking
 Different categories of items can be ignored by Journalator's tracking system if you're not interested in them. Turn the category off in the options under Journalator -> Monitors
 
-### Comments are on Discord
+## Comments are on Discord
 Visit our discord at  [https://discord.gg/xgz75Pp](https://discord.gg/xgz75Pp) (look for Journalator -> #general-jnr)
