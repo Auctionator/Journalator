@@ -304,6 +304,12 @@
             </Anchors>
           </Frame>
 
+          <Button parentKey="FulfillingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFulfillingTab_Button" text="JOURNALATOR_L_FULFILLING">
+            <KeyValues>
+              <KeyValue key="displayMode" value="Fulfilling" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_FULFILLING_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
           <Button parentKey="PlacingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorCraftingOrdersPlacingTab_Button" text="JOURNALATOR_L_PLACING">
             <KeyValues>
               <KeyValue key="displayMode" value="Placing" type="string"/>
@@ -320,13 +326,6 @@
             <KeyValues>
               <KeyValue key="displayMode" value="Failed" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_FAILURES_TITLE" type="global"/>
-            </KeyValues>
-          </Button>
-
-          <Button parentKey="FulfillingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFulfillingTab_Button" text="JOURNALATOR_L_FULFILLING">
-            <KeyValues>
-              <KeyValue key="displayMode" value="Fulfilling" type="string"/>
-              <KeyValue key="title" value="JOURNALATOR_L_FULFILLING_TITLE" type="global"/>
             </KeyValues>
           </Button>
         </Frames>
