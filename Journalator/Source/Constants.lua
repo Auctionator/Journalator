@@ -67,10 +67,10 @@ Journalator.Constants.TabLayout = {
     name = JOURNALATOR_L_CRAFTING_ORDERS, displayMode="CraftingOrders",
     notClassic = true,
     children = {
+      {name = JOURNALATOR_L_FULFILLING, displayMode="Fulfilling"},
       {name = JOURNALATOR_L_PLACING, displayMode="Placing"},
       {name = JOURNALATOR_L_SUCCESSES, displayMode="Succeeded"},
       {name = JOURNALATOR_L_FAILURES, displayMode="Failured"},
-      {name = JOURNALATOR_L_FULFILLING, displayMode="Fulfilling"},
     }
   },
   {
