@@ -48,7 +48,7 @@
 
       <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowDetailedStatus" parentArray="Display">
         <KeyValues>
-          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_SHOW_DETAILED_STATUS" type="global" />
+          <KeyValue key="labelText" value="JOURNALATOR_L_CONFIG_SHOW_AH_STATUS" type="global" />
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.StatisticsHeading" relativePoint="BOTTOMLEFT" />
