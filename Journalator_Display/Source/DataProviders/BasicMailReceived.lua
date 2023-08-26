@@ -58,6 +58,7 @@ function JournalatorBasicMailReceivedDataProviderMixin:Refresh()
       itemName = item.subject,
       time = item.time,
       source = item.source,
+      playerCheck = item.sender,
     }
     if self:Filter(filterItem) then
       local processedItem = {

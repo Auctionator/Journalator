@@ -98,7 +98,13 @@ function JournalatorSaleRatesDataProviderMixin:GetItemLinks(callback)
   end
 
   for _, item in ipairs(Journalator.Archiving.GetRange(timeForRange, "Invoices")) do
-    if self:Filter(item) then
+    local filterItem = {
+      itemName = item.itemName,
+      time = item.time,
+      source = item.source,
+      playerCheck = item.playerName,
+    }
+    if self:Filter(filterItem) then
       if item.invoiceType == "seller" then
         local itemLink = Journalator.GetPostedItemLink(item.itemName, math.floor(item.value / item.count), math.floor(item.deposit / item.count), item.time, timeForRange)
 

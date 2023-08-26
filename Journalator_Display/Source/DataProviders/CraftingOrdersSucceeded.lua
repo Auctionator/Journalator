@@ -66,6 +66,7 @@ function JournalatorCraftingOrdersSucceededDataProviderMixin:Refresh()
         itemName = item.itemName or item.recipeName,
         time = item.time,
         source = item.source,
+        playerCheck = item.crafterName,
       }
       if self:Filter(filterItem) then
         local processedItem = {

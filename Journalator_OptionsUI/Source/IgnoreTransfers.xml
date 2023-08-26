@@ -1,0 +1,119 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame
+    name="JournalatorConfigIgnoreTransfersOptionsFrame"
+    mixin="JournalatorConfigIgnoreTransfersOptionsFrameMixin"
+    hidden="true"
+    >
+
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnShow method="OnShow"/>
+      <OnHide method="Save"/>
+    </Scripts>
+
+    <Frames>
+      <Frame inherits="AuctionatorConfigurationTitleFrame" parentKey="TitleArea">
+        <KeyValues>
+          <KeyValue key="titleText" value="JOURNALATOR_L_CONFIG_IGNORE_TRANSFERS" type="global" />
+          <KeyValue key="subTitleText" value="JOURNALATOR_L_CONFIG_IGNORE_TRANSFERS_TEXT" type="global"/>
+        </KeyValues>
+      </Frame>
+
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="JOURNALATOR_L_ADD_CHARACTER_TO_IGNORE" parentKey="AddNewEntryButton">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT" x="15" y="-20"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():AddNewEntry()
+          </OnClick>
+        </Scripts>
+      </Button>
+
+      <EventFrame parentKey="ScrollBar" inherits="WowTrimScrollBar">
+        <Anchors>
+          <Anchor point="TOPRIGHT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMRIGHT" y="-50"/>
+          <Anchor point="BOTTOMRIGHT"/>
+        </Anchors>
+      </EventFrame>
+
+      <Frame inherits="WowScrollBox" parentKey="ScrollBox">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT" x="15" y="-50"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ScrollBar" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+        <Frames>
+          <Frame parentKey="Content" inherits="ResizeLayoutFrame">
+            <KeyValues>
+              <KeyValue key="scrollable" value="true" type="boolean" />
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOP"/>
+            </Anchors>
+          </Frame>
+        </Frames>
+      </Frame>
+   </Frames>
+  </Frame>
+
+  <Frame
+    name="JournalatorConfigIgnoreTransfersEntryTemplate"
+    mixin="JournalatorConfigIgnoreTransfersEntryMixin"
+    virtual="true"
+    >
+    <Size y="22"/>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString parentKey="NameText" text="JOURNALATOR_L_NAME_COLON" inherits="GameFontHighlight">
+          <Size y="22"/>
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <EditBox inherits="InputBoxTemplate" parentKey="Character" autofocus="false">
+        <Size x="150" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.NameText" x="10"/>
+        </Anchors>
+        <Scripts>
+          <OnTabPressed>self:GetParent().Realm:SetFocus()</OnTabPressed>
+        </Scripts>
+      </EditBox>
+    </Frames>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString parentKey="RealmText" text="JOURNALATOR_L_REALM_COLON" inherits="GameFontHighlight">
+          <Size y="22"/>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.Character" x="15"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <EditBox inherits="InputBoxTemplate" parentKey="Realm" autofocus="false">
+        <Size x="150" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.RealmText" x="10"/>
+        </Anchors>
+        <Scripts>
+          <OnTabPressed>self:GetParent().Character:SetFocus()</OnTabPressed>
+        </Scripts>
+      </EditBox>
+
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_DELETE" parentKey="DeleteEntryButton">
+        <Anchors>
+          <Anchor point="TOPLEFT" x="500" y="0"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():Remove()
+          </OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+  </Frame>
+</Ui>

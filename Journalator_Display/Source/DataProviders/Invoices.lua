@@ -72,7 +72,13 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
   local rangeTime = self:GetTimeForRange()
   local results = {}
   for index, item in ipairs(Journalator.Archiving.GetRange(rangeTime, "Invoices")) do
-    if self:Filter(item) then
+    local filterItem = {
+      itemName = item.itemName,
+      time = item.time,
+      source = item.source,
+      playerCheck = item.playerName,
+    }
+    if self:Filter(filterItem) then
       local moneyIn = 0
       local moneyOut = 0
       if item.invoiceType == "seller" then

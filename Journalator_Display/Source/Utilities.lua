@@ -29,6 +29,14 @@ function Journalator.Utilities.AddRealmToPlayerName(playerName, source)
   end
 end
 
+function Journalator.Utilities.GetIgnoredCharacterCheckString(playerName, source)
+  if not string.match(playerName, "-") then
+    return playerName .. "-" .. string.gsub(source.realm, "[ -]", "")
+  else
+    return playerName
+  end
+end
+
 function Journalator.Utilities.AddQualityIconToItemName(itemName, itemLink)
   if C_TradeSkillUI == nil or C_TradeSkillUI.GetItemReagentQualityByItemInfo == nil then
     return itemName

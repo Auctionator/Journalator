@@ -5,6 +5,7 @@
   <Script file="GetPostedItemLink.lua" />
   <Script file="GetProfit.lua" />
   <Script file="GetCharactersAndRealms.lua" />
+  <Script file="CacheIgnoredCharacters.lua" />
 
   <Script file="Initialize.lua" />
   <Script file="MinimapIcon.lua" />

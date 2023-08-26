@@ -103,6 +103,11 @@ JOURNALATOR_LOCALES.enUS = function()
   L["CONFIG_SHOW_AH_STATUS"] = "Show auction house focussed details in status text in the main view."
   L["CONFIG_MONITORS"] = "Monitors"
   L["CONFIG_MONITORS_TEXT"] = "Enable and disable different Journalator monitors for tracking activity ingame. A /reload is required to apply any changes."
+  L["CONFIG_IGNORE_TRANSFERS"] = "Ignore Transfers"
+  L["CONFIG_IGNORE_TRANSFERS_TEXT"] = "Ignore any transfers between specific characters. This can be characters you own so any moving your assets around won't affect the totals or history views shown. Will not affect entries that involve a character not on the below list."
+  L["ADD_CHARACTER_TO_IGNORE"] = "Add Character To Ignore"
+  L["NAME_COLON"] = "Name:"
+  L["REALM_COLON"] = "Realm:"
 
   L["AUCTION_HOUSE"] = "Auction House"
   L["VENDORS"] = "Vendors"

@@ -115,6 +115,10 @@ function JournalatorFiltersContainerMixin:Filter(item)
 
   check = check and (self.filters.search(item.searchTerm or item.itemName) or (item.playerName and self.filters.search(item.playerName)))
 
+  if item.playerCheck ~= nil then
+    check = check and Journalator.CheckCharacter(item.playerCheck, item.source)
+  end
+
   return check
 end
 

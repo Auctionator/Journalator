@@ -108,7 +108,13 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
 
   local results = {}
   for index, item in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Fulfilling")) do
-    if self:Filter(item) then
+    local filterItem = {
+      itemName = item.itemName,
+      time = item.time,
+      source = item.source,
+      playerCheck = item.playerName,
+    }
+    if self:Filter(filterItem) then
       local processedItem = {
         orderType = TYPES_TO_TYPE_STRING[item.orderType],
         profession = GetProfessionName(item.recipeID),

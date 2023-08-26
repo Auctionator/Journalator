@@ -1,6 +1,8 @@
 local function InitializeBase()
   Journalator.MinimapIcon.Initialize()
 
+  Journalator.CacheIgnoredCharacters()
+
   Journalator.ToggleView = function()
     if JNRView == nil then
       CreateFrame("Frame", "JNRView", UIParent, "JournalatorDisplayTemplate")

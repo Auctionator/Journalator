@@ -14,6 +14,12 @@ function Journalator.GetInOut(startTime, endTime, filter)
     -- Incoming and outgoing gold from sales and purchases
     for _, item in ipairs(invoices) do
       if item.time >= startTime and item.time <= endTime then
+        local filterItem = {
+          itemName = item.itemName,
+          time = item.time,
+          source = item.source,
+          playerCheck = item.playerName,
+        }
         if filter(item) then
           if item.invoiceType == "seller" then
             incoming = incoming + item.value + item.deposit - item.consignment
@@ -56,7 +62,13 @@ function Journalator.GetInOut(startTime, endTime, filter)
     local fulfillings = Journalator.Archiving.GetRange(startTime, "Fulfilling")
     for _, item in ipairs(fulfillings) do
       if item.time >= startTime and item.time <= endTime then
-        if filter(item) then
+        local filterItem = {
+          itemName = item.itemName,
+          time = item.time,
+          source = item.source,
+          playerCheck = item.playerName,
+        }
+        if filter(filterItem) then
           incoming = incoming + item.tipAmount - item.consortiumCut
         end
       end
@@ -65,7 +77,13 @@ function Journalator.GetInOut(startTime, endTime, filter)
     local placings = Journalator.Archiving.GetRange(startTime, "Placed")
     for _, item in ipairs(placings) do
       if item.time >= startTime and item.time <= endTime then
-        if filter(item) then
+        local filterItem = {
+          itemName = item.itemName,
+          time = item.time,
+          source = item.source,
+          playerCheck = item.crafterName,
+        }
+        if filter(filterItem) then
           outgoing = outgoing + item.postingFee
         end
       end
@@ -78,6 +96,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
           itemName = item.itemName or item.recipeName,
           time = item.time,
           source = item.source,
+          playerCheck = item.crafterName,
         }
         if filterItem.time >= startTime and filterItem.time <= endTime then
           if filter(filterItem) then
@@ -201,6 +220,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
         itemName = item.subject,
         time = item.time,
         source = item.source,
+        playerCheck = item.recipient,
       }
       if filterItem.time >= startTime and filterItem.time <= endTime then
         if filter(filterItem) then
@@ -215,6 +235,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
         itemName = item.subject,
         time = item.time,
         source = item.source,
+        playerCheck = item.sender,
       }
       if filterItem.time >= startTime and filterItem.time <= endTime then
         if filter(filterItem) then
@@ -235,6 +256,7 @@ function Journalator.GetInOut(startTime, endTime, filter)
         itemName = item.player,
         time = item.time,
         source = item.source,
+        playerCheck = item.player
       }
       if filterItem.time >= startTime and filterItem.time <= endTime then
         if filter(filterItem) then

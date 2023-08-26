@@ -5,8 +5,6 @@ function JournalatorConfigMonitorsOptionsFrameMixin:OnLoad()
   self.name = JOURNALATOR_L_CONFIG_MONITORS
   self.parent = JOURNALATOR_L_JOURNALATOR
 
-  self:Show()
-
   self.cancel = function()
     self:Cancel()
   end

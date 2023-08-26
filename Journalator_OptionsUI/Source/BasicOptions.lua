@@ -4,8 +4,6 @@ function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
   self:SetParent(SettingsPanel or InterfaceOptionsFrame)
   self.name = JOURNALATOR_L_JOURNALATOR
 
-  self:Show()
-
   self.cancel = function()
     self:Cancel()
   end

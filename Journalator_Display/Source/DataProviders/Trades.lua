@@ -68,6 +68,7 @@ function JournalatorTradesDataProviderMixin:Refresh()
       itemName = item.player,
       time = item.time,
       source = item.source,
+      playerCheck = item.player,
     }
     if self:Filter(filterItem) then
       local processedItem = {
