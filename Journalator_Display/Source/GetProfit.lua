@@ -229,8 +229,8 @@ function Journalator.GetInOut(startTime, endTime, filter)
       end
     end
 
-    local mailReceived = Journalator.Archiving.GetRange(startTime, "BasicMailRecieved")
-    for _, item in ipairs(mailSent) do
+    local mailReceived = Journalator.Archiving.GetRange(startTime, "BasicMailReceived")
+    for _, item in ipairs(mailReceived) do
       local filterItem = {
         itemName = item.subject,
         time = item.time,
