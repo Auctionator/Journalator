@@ -37,6 +37,22 @@ function Journalator.Utilities.GetIgnoredCharacterCheckString(playerName, source
   end
 end
 
+function Journalator.Utilities.UpdateRealmOnPlayerName(playerName, source)
+  local currentRealm = string.gsub(Journalator.State.Source.realm, "[ -]", "")
+  if string.match(playerName, currentRealm) then
+    return playerName:gsub("-" .. currentRealm, "")
+
+    -- Check for - to avoid adding a realm when the realm is already
+    -- indicated. Checks for * to avoid adding a realm when the realm data is
+    -- missing due to an old bug in the Trades monitor.
+  elseif source.realm ~= Journalator.State.Source.realm and not string.match(playerName, "[-%*]") then
+    return playerName .. "-" .. string.gsub(source.realm, "[ -]", "")
+
+  else
+    return playerName
+  end
+end
+
 function Journalator.Utilities.AddQualityIconToItemName(itemName, itemLink)
   if C_TradeSkillUI == nil or C_TradeSkillUI.GetItemReagentQualityByItemInfo == nil then
     return itemName

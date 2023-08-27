@@ -71,9 +71,10 @@ function JournalatorTradesDataProviderMixin:Refresh()
       playerCheck = item.player,
     }
     if self:Filter(filterItem) then
+      local otherPlayer = Journalator.Utilities.UpdateRealmOnPlayerName(item.player, item.source)
       local processedItem = {
-        searchTerm = item.player,
-        otherPlayer = item.player,
+        searchTerm = otherPlayer,
+        otherPlayer = otherPlayer,
         rawDay = item.time,
         itemsInCount = #item.itemsIn,
         itemsOutCount = #item.itemsOut,
