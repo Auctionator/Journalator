@@ -98,8 +98,12 @@ function JournalatorTradesDataProviderMixin:GetTableLayout()
 end
 
 local COMPARATORS = {
-  reason = Auctionator.Utilities.StringComparator,
-  itemName = Auctionator.Utilities.StringComparator,
+  otherPlayer = Auctionator.Utilities.StringComparator,
+  moneyIn = Auctionator.Utilities.NumberComparator,
+  moneyOut = Auctionator.Utilities.NumberComparator,
+  itemsInCount = Auctionator.Utilities.NumberComparator,
+  itemsOutCount = Auctionator.Utilities.NumberComparator,
+  moneyOut = Auctionator.Utilities.NumberComparator,
   sourceCharacter = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
 }
