@@ -30,7 +30,7 @@ function Journalator.Utilities.AddRealmToPlayerName(playerName, source)
 end
 
 function Journalator.Utilities.GetIgnoredCharacterCheckString(playerName, source)
-  if not string.match(playerName, "-") then
+  if not string.match(playerName, "[-%*]") then
     return playerName .. "-" .. string.gsub(source.realm, "[ -]", "")
   else
     return playerName
