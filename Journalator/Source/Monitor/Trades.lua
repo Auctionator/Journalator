@@ -25,7 +25,7 @@ function JournalatorTradesMonitorMixin:NewTrade()
     moneyIn = 0,
     itemsOut = {},
     itemsIn = {},
-    player = GetUnitName("NPC"),
+    player = GetUnitName("NPC", true),
     source = Journalator.State.Source,
   }
 end
