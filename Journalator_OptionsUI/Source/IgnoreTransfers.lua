@@ -36,6 +36,7 @@ function JournalatorConfigIgnoreTransfersOptionsFrameMixin:OnLoad()
   self.entriesPool = CreateFramePool("Frame", self.ScrollBox.Content, "JournalatorConfigIgnoreTransfersEntryTemplate")
 
   self.removeFunc = function(index)
+    self:Save()
     local ignoreList = Journalator.Config.Get(Journalator.Config.Options.IGNORE_TRANSFERS)
     table.remove(ignoreList, index)
     self:UpdateEntries()
@@ -51,6 +52,8 @@ function JournalatorConfigIgnoreTransfersOptionsFrameMixin:OnShow()
 end
 
 function JournalatorConfigIgnoreTransfersOptionsFrameMixin:AddNewEntry()
+  self:Save()
+
   local ignoreList = Journalator.Config.Get(Journalator.Config.Options.IGNORE_TRANSFERS)
   table.insert(ignoreList, {character="", realm=""})
   self:UpdateEntries()
