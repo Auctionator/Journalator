@@ -77,6 +77,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
       time = item.time,
       source = item.source,
       playerCheck = item.playerName,
+      playerName = item.playerName,
     }
     if self:Filter(filterItem) then
       local moneyIn = 0

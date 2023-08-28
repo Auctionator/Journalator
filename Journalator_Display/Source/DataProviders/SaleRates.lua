@@ -103,6 +103,7 @@ function JournalatorSaleRatesDataProviderMixin:GetItemLinks(callback)
       time = item.time,
       source = item.source,
       playerCheck = item.playerName,
+      playerName = item.playerName,
     }
     if self:Filter(filterItem) then
       if item.invoiceType == "seller" then
