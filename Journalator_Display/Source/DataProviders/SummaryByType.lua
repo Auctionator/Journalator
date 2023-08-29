@@ -54,14 +54,8 @@ end
 
 local COMPARATORS = {
   itemName = Auctionator.Utilities.StringComparator,
-  invoiceType = Auctionator.Utilities.StringComparator,
   moneyIn = Auctionator.Utilities.NumberComparator,
   moneyOut = Auctionator.Utilities.NumberComparator,
-  unitPrice = Auctionator.Utilities.NumberComparator,
-  count = Auctionator.Utilities.NumberComparator,
-  rawDay = Auctionator.Utilities.NumberComparator,
-  otherPlayer = Auctionator.Utilities.StringComparator,
-  sourceCharacter = Auctionator.Utilities.StringComparator,
 }
 
 function JournalatorSummaryByTypeDataProviderMixin:Sort(fieldName, sortDirection)
