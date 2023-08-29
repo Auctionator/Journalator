@@ -3,6 +3,7 @@
 
   <Script file="SummaryByType.lua" />
   <Script file="SummaryByCharacter.lua" />
+  <Script file="SummaryByDay.lua" />
   <Script file="AuctionInvoices.lua" />
   <Script file="AuctionPosting.lua" />
   <Script file="AuctionSaleRates.lua" />

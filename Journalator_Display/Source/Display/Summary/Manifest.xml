@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Include file="ByType.xml" />
   <Include file="ByCharacter.xml" />
+  <Include file="ByDay.xml" />
 </Ui>
