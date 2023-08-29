@@ -56,9 +56,9 @@ local POSTING_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorPostingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorAuctionPostingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorPostingDataProviderMixin:Refresh()
+function JournalatorAuctionPostingDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
   local results = {}
@@ -91,7 +91,7 @@ function JournalatorPostingDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorPostingDataProviderMixin:GetTableLayout()
+function JournalatorAuctionPostingDataProviderMixin:GetTableLayout()
   return POSTING_DATA_PROVIDER_LAYOUT
 end
 
@@ -105,7 +105,7 @@ local COMPARATORS = {
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorPostingDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorAuctionPostingDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -117,6 +117,6 @@ end
 
 Journalator.Config.Create("COLUMNS_POSTING", "columns_posting", {})
 
-function JournalatorPostingDataProviderMixin:GetColumnHideStates()
+function JournalatorAuctionPostingDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_POSTING)
 end

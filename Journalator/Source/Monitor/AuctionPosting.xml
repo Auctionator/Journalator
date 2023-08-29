@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="JournalatorPostingMonitorTemplate" mixin="JournalatorPostingMonitorMixin" virtual="true">
+  <Frame name="JournalatorAuctionPostingMonitorTemplate" mixin="JournalatorAuctionPostingMonitorMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
     </Scripts>

@@ -22,9 +22,9 @@ local SUMMARY_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorSummaryDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorSummaryByTypeDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorSummaryDataProviderMixin:Refresh()
+function JournalatorSummaryByTypeDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
 
@@ -48,7 +48,7 @@ function JournalatorSummaryDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorSummaryDataProviderMixin:GetTableLayout()
+function JournalatorSummaryByTypeDataProviderMixin:GetTableLayout()
   return SUMMARY_DATA_PROVIDER_LAYOUT
 end
 
@@ -64,7 +64,7 @@ local COMPARATORS = {
   sourceCharacter = Auctionator.Utilities.StringComparator,
 }
 
-function JournalatorSummaryDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorSummaryByTypeDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -76,10 +76,10 @@ end
 
 Journalator.Config.Create("COLUMNS_SUMMARY", "columns_summary", {})
 
-function JournalatorSummaryDataProviderMixin:GetColumnHideStates()
+function JournalatorSummaryByTypeDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_SUMMARY)
 end
 
-function JournalatorSummaryDataProviderMixin:GetRowTemplate()
+function JournalatorSummaryByTypeDataProviderMixin:GetRowTemplate()
   return "JournalatorLogSummaryViewRowTemplate"
 end

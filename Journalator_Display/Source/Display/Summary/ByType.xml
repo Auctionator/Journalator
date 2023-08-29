@@ -1,11 +1,11 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="JournalatorSummaryDisplayTemplate"
+    name="JournalatorSummaryByTypeDisplayTemplate"
     virtual="true"
     inherits="JournalatorDataTabDisplayTemplate"
   >
     <Frames>
-      <Frame parentKey="DataProvider" mixin="JournalatorSummaryDataProviderMixin">
+      <Frame parentKey="DataProvider" mixin="JournalatorSummaryByTypeDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnShow method="OnShow"/>

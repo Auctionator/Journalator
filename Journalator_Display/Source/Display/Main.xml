@@ -48,7 +48,7 @@
           <KeyValue key="displayMode" value="Summary" type="string"/>
         </KeyValues>
         <Frames>
-          <Frame inherits="JournalatorSummaryDisplayTemplate" parentArray="Views">
+          <Frame inherits="JournalatorSummaryByTypeDisplayTemplate" parentArray="Views">
             <KeyValues>
               <KeyValue key="displayMode" value="ByType" type="string"/>
             </KeyValues>
@@ -96,7 +96,7 @@
           <KeyValue key="displayMode" value="AuctionHouse" type="string"/>
         </KeyValues>
         <Frames>
-          <Frame inherits="JournalatorInvoiceDisplayTemplate" parentArray="Views">
+          <Frame inherits="JournalatorAuctionInvoiceDisplayTemplate" parentArray="Views">
             <KeyValues>
               <KeyValue key="displayMode" value="Invoices" type="string"/>
             </KeyValues>
@@ -106,7 +106,7 @@
             </Anchors>
           </Frame>
 
-          <Frame inherits="JournalatorPostingDisplayTemplate" parentArray="Views">
+          <Frame inherits="JournalatorAuctionPostingDisplayTemplate" parentArray="Views">
             <KeyValues>
               <KeyValue key="displayMode" value="Posting" type="string"/>
             </KeyValues>
@@ -116,7 +116,7 @@
             </Anchors>
           </Frame>
 
-          <Frame inherits="JournalatorSaleRatesDisplayTemplate" parentArray="Views">
+          <Frame inherits="JournalatorAuctionSaleRatesDisplayTemplate" parentArray="Views">
             <KeyValues>
               <KeyValue key="displayMode" value="SaleRates" type="string"/>
             </KeyValues>
@@ -126,7 +126,7 @@
             </Anchors>
           </Frame>
 
-          <Frame inherits="JournalatorFailuresDisplayTemplate" parentArray="Views">
+          <Frame inherits="JournalatorAuctionFailuresDisplayTemplate" parentArray="Views">
             <KeyValues>
               <KeyValue key="displayMode" value="Failures" type="string"/>
             </KeyValues>
@@ -146,25 +146,25 @@
             </Anchors>
           </Frame>
 
-          <Button parentKey="InvoicesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorInvoicesTab_Button" text="JOURNALATOR_L_INVOICES">
+          <Button parentKey="InvoicesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorAuctionInvoicesTab_Button" text="JOURNALATOR_L_INVOICES">
             <KeyValues>
               <KeyValue key="displayMode" value="Invoices" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_INVOICES_TITLE" type="global"/>
             </KeyValues>
           </Button>
-          <Button parentKey="PostingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorPostingTab_Button" text="JOURNALATOR_L_POSTING">
+          <Button parentKey="PostingTab" inherits="JournalatorTabButtonTemplate" name="JournalatorAuctionPostingTab_Button" text="JOURNALATOR_L_POSTING">
             <KeyValues>
               <KeyValue key="displayMode" value="Posting" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_POSTING_TITLE" type="global"/>
             </KeyValues>
           </Button>
-          <Button parentKey="SaleRatesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSaleRatesTab_Button" text="JOURNALATOR_L_SALE_RATES">
+          <Button parentKey="SaleRatesTab" inherits="JournalatorTabButtonTemplate" name="JournalatorAuctionSaleRatesTab_Button" text="JOURNALATOR_L_SALE_RATES">
             <KeyValues>
               <KeyValue key="displayMode" value="SaleRates" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_SALE_RATES_TITLE" type="global"/>
             </KeyValues>
           </Button>
-          <Button parentKey="FailuresTab" inherits="JournalatorTabButtonTemplate" name="JournalatorFailuresTab_Button" text="JOURNALATOR_L_FAILURES">
+          <Button parentKey="FailuresTab" inherits="JournalatorTabButtonTemplate" name="JournalatorAuctionFailuresTab_Button" text="JOURNALATOR_L_FAILURES">
             <KeyValues>
               <KeyValue key="displayMode" value="Failures" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_FAILURES_TITLE" type="global"/>
@@ -192,7 +192,7 @@
           <KeyValue key="displayMode" value="Vendors" type="string"/>
         </KeyValues>
         <Frames>
-          <Frame inherits="JournalatorVendoringDisplayTemplate" parentArray="Views">
+          <Frame inherits="JournalatorVendorItemsDisplayTemplate" parentArray="Views">
             <KeyValues>
               <KeyValue key="displayMode" value="Items" type="string"/>
             </KeyValues>
@@ -294,7 +294,7 @@
             </Anchors>
           </Frame>
 
-          <Frame inherits="JournalatorFulfillingDisplayTemplate" parentArray="Views">
+          <Frame inherits="JournalatorCraftingOrdersFulfillingDisplayTemplate" parentArray="Views">
             <KeyValues>
               <KeyValue key="displayMode" value="Fulfilling" type="string"/>
             </KeyValues>

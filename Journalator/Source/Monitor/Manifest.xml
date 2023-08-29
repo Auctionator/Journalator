@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="AuctionMail.lua" />
-  <Script file="Posting.lua" />
+  <Script file="AuctionPosting.lua" />
   <Script file="VendorItems.lua" />
   <Script file="VendorRepairs.lua" />
   <Script file="Taxis.lua" />
@@ -19,7 +19,7 @@
   <Script file="Trades.lua" />
 
   <Include file="AuctionMail.xml" />
-  <Include file="Posting.xml" />
+  <Include file="AuctionPosting.xml" />
   <Include file="VendorItems.xml" />
   <Include file="VendorRepairs.xml" />
   <Include file="Taxis.xml" />

@@ -43,9 +43,9 @@ local FAILED_TYPE_TO_TEXT = {
   ["cancelled"] = JOURNALATOR_L_CANCELLED,
 }
 
-JournalatorFailuresDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorAuctionFailuresDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorFailuresDataProviderMixin:Refresh()
+function JournalatorAuctionFailuresDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
   local results = {}
@@ -77,7 +77,7 @@ function JournalatorFailuresDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorFailuresDataProviderMixin:GetTableLayout()
+function JournalatorAuctionFailuresDataProviderMixin:GetTableLayout()
   return FAILURES_DATA_PROVIDER_LAYOUT
 end
 
@@ -89,7 +89,7 @@ local COMPARATORS = {
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorFailuresDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorAuctionFailuresDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -101,6 +101,6 @@ end
 
 Journalator.Config.Create("COLUMNS_FAILURES", "columns_failures", {})
 
-function JournalatorFailuresDataProviderMixin:GetColumnHideStates()
+function JournalatorAuctionFailuresDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_FAILURES)
 end

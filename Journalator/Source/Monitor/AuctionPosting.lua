@@ -1,4 +1,4 @@
-JournalatorPostingMonitorMixin = {}
+JournalatorAuctionPostingMonitorMixin = {}
 
 local function GetContainerItemLink(location)
   if C_Container and C_Container.GetContainerItemInfo then
@@ -8,14 +8,14 @@ local function GetContainerItemLink(location)
   end
 end
 
-function JournalatorPostingMonitorMixin:OnLoad()
+function JournalatorAuctionPostingMonitorMixin:OnLoad()
   if Journalator.Constants.IsTBC or Journalator.Constants.IsClassic then
     if not Auctionator or not Auctionator.EventBus then
       return
     end
     Auctionator.EventBus:Register({
       ReceiveEvent = function(self, eventName, auctionData)
-        Journalator.Debug.Message("JournalatorPostingMonitor: Auctionator post hook", auctionData.itemLink)
+        Journalator.Debug.Message("JournalatorAuctionPostingMonitor: Auctionator post hook", auctionData.itemLink)
         Journalator.AddToLogs({ Posting = {
           {
             itemName = Auctionator.Utilities.GetNameFromLink(auctionData.itemLink),
@@ -35,7 +35,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
       local link = GetContainerItemLink(location)
       local deposit = C_AuctionHouse.CalculateItemDeposit(location, duration, quantity)
 
-      Journalator.Debug.Message("JournalatorPostingMonitor: Blizzard post item hook", link)
+      Journalator.Debug.Message("JournalatorAuctionPostingMonitor: Blizzard post item hook", link)
 
       Journalator.AddToLogs({ Posting = {
         {
@@ -55,7 +55,7 @@ function JournalatorPostingMonitorMixin:OnLoad()
       local itemID = GetItemInfoInstant(link)
       local deposit = C_AuctionHouse.CalculateCommodityDeposit(itemID, duration, quantity)
 
-      Journalator.Debug.Message("JournalatorPostingMonitor: Blizzard post commodity hook", link)
+      Journalator.Debug.Message("JournalatorAuctionPostingMonitor: Blizzard post commodity hook", link)
 
       Journalator.AddToLogs({ Posting = {
         {

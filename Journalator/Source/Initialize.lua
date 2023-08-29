@@ -1,7 +1,7 @@
 local function SetupMonitors()
   if Journalator.Config.Get(Journalator.Config.Options.MONITOR_AUCTION_HOUSE) then
     CreateFrame("Frame", "JNRAuctionMailMonitor", nil, "JournalatorAuctionMailMonitorTemplate")
-    CreateFrame("Frame", "JNRPostingMonitor", nil, "JournalatorPostingMonitorTemplate")
+    CreateFrame("Frame", "JNRAuctionPostingMonitor", nil, "JournalatorAuctionPostingMonitorTemplate")
   else
     Journalator.Debug.Message("AH monitoring disabled")
   end

@@ -63,9 +63,9 @@ local INVOICES_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorInvoicesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorAuctionInvoicesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorInvoicesDataProviderMixin:Refresh()
+function JournalatorAuctionInvoicesDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
 
@@ -129,7 +129,7 @@ function JournalatorInvoicesDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorInvoicesDataProviderMixin:GetTableLayout()
+function JournalatorAuctionInvoicesDataProviderMixin:GetTableLayout()
   return INVOICES_DATA_PROVIDER_LAYOUT
 end
 
@@ -145,7 +145,7 @@ local COMPARATORS = {
   sourceCharacter = Auctionator.Utilities.StringComparator,
 }
 
-function JournalatorInvoicesDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorAuctionInvoicesDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -157,7 +157,7 @@ end
 
 Journalator.Config.Create("COLUMNS_INVOICES", "columns_invoices", {})
 
-function JournalatorInvoicesDataProviderMixin:GetColumnHideStates()
+function JournalatorAuctionInvoicesDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_INVOICES)
 end
 

@@ -47,15 +47,15 @@ local SALE_RATES_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorSaleRatesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorAuctionSaleRatesDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorSaleRatesDataProviderMixin:Refresh()
+function JournalatorAuctionSaleRatesDataProviderMixin:Refresh()
   self:GetItemLinks(function(...)
     self:ProcessSales(...)
   end)
 end
 
-function JournalatorSaleRatesDataProviderMixin:GetItemLinks(callback)
+function JournalatorAuctionSaleRatesDataProviderMixin:GetItemLinks(callback)
   -- Conversion of item links to Auctionator DB keys for use later when grouping
   self.seenLinks = self.seenLinks or {}
 
@@ -136,7 +136,7 @@ end
 
 -- Groups processed log entries to get sale rates and displays the results
 -- isNameMatch: Items to fall back to grouping by name
-function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failureLogEntries, successLogEntries, timeForRange)
+function JournalatorAuctionSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failureLogEntries, successLogEntries, timeForRange)
   self.onPreserveScroll()
   self:Reset()
 
@@ -240,7 +240,7 @@ function JournalatorSaleRatesDataProviderMixin:ProcessSales(isNameMatch, failure
   self:AppendEntries(results, true)
 end
 
-function JournalatorSaleRatesDataProviderMixin:GetTableLayout()
+function JournalatorAuctionSaleRatesDataProviderMixin:GetTableLayout()
   return SALE_RATES_DATA_PROVIDER_LAYOUT
 end
 
@@ -253,7 +253,7 @@ local COMPARATORS = {
   unsold = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorSaleRatesDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorAuctionSaleRatesDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -265,6 +265,6 @@ end
 
 Journalator.Config.Create("COLUMNS_SALE_RATES", "columns_sale_rates", {})
 
-function JournalatorSaleRatesDataProviderMixin:GetColumnHideStates()
+function JournalatorAuctionSaleRatesDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_SALE_RATES)
 end

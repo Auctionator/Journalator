@@ -1,11 +1,11 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="JournalatorSaleRatesDisplayTemplate"
+    name="JournalatorAuctionSaleRatesDisplayTemplate"
     virtual="true"
     inherits="JournalatorDataTabDisplayTemplate"
   >
     <Frames>
-      <Frame parentKey="DataProvider" mixin="JournalatorSaleRatesDataProviderMixin">
+      <Frame parentKey="DataProvider" mixin="JournalatorAuctionSaleRatesDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnShow method="OnShow"/>

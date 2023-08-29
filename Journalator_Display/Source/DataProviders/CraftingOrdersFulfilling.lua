@@ -89,9 +89,9 @@ local function GetProfessionName(recipeID)
   return C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID).professionName
 end
 
-JournalatorFulfillingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorCraftingOrdersFulfillingDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
-function JournalatorFulfillingDataProviderMixin:Refresh()
+function JournalatorCraftingOrdersFulfillingDataProviderMixin:Refresh()
   if Auctionator.Constants.IsClassic then
     -- Nothing to do, no crafting orders
     return
@@ -152,7 +152,7 @@ function JournalatorFulfillingDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorFulfillingDataProviderMixin:GetTableLayout()
+function JournalatorCraftingOrdersFulfillingDataProviderMixin:GetTableLayout()
   return FULFILLING_DATA_PROVIDER_LAYOUT
 end
 
@@ -170,7 +170,7 @@ local COMPARATORS = {
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorFulfillingDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorCraftingOrdersFulfillingDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -182,10 +182,10 @@ end
 
 Journalator.Config.Create("COLUMNS_FULFILLING", "columns_fulfilling", {})
 
-function JournalatorFulfillingDataProviderMixin:GetColumnHideStates()
+function JournalatorCraftingOrdersFulfillingDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_FULFILLING)
 end
 
-function JournalatorFulfillingDataProviderMixin:GetRowTemplate()
+function JournalatorCraftingOrdersFulfillingDataProviderMixin:GetRowTemplate()
   return "JournalatorLogViewCraftingOrdersRowTemplate"
 end

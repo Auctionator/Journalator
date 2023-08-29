@@ -53,14 +53,14 @@ local VENDORING_DATA_PROVIDER_LAYOUT ={
   },
 }
 
-JournalatorVendoringDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
+JournalatorVendorItemsDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 local JUNK_COLOR = "ff9d9d9d"
 local function IsNotJunk(itemLink)
   return Auctionator.Utilities.GetQualityColorFromLink(itemLink) ~= JUNK_COLOR
 end
 
-function JournalatorVendoringDataProviderMixin:Refresh()
+function JournalatorVendorItemsDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
   local results = {}
@@ -133,7 +133,7 @@ function JournalatorVendoringDataProviderMixin:Refresh()
   self:AppendEntries(results, true)
 end
 
-function JournalatorVendoringDataProviderMixin:GetTableLayout()
+function JournalatorVendorItemsDataProviderMixin:GetTableLayout()
   return VENDORING_DATA_PROVIDER_LAYOUT
 end
 
@@ -147,7 +147,7 @@ local COMPARATORS = {
   rawDay = Auctionator.Utilities.NumberComparator,
 }
 
-function JournalatorVendoringDataProviderMixin:Sort(fieldName, sortDirection)
+function JournalatorVendorItemsDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -159,10 +159,10 @@ end
 
 Journalator.Config.Create("COLUMNS_VENDORING", "columns_vendoring", {})
 
-function JournalatorVendoringDataProviderMixin:GetColumnHideStates()
+function JournalatorVendorItemsDataProviderMixin:GetColumnHideStates()
   return Journalator.Config.Get(Journalator.Config.Options.COLUMNS_VENDORING)
 end
 
-function JournalatorVendoringDataProviderMixin:GetRowTemplate()
+function JournalatorVendorItemsDataProviderMixin:GetRowTemplate()
   return "JournalatorLogViewVendoringRowTemplate"
 end
