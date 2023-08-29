@@ -42,6 +42,7 @@ Journalator.Constants.TabLayout = {
     children = {
       {name = JOURNALATOR_L_BY_TYPE, displayMode="ByType"},
       {name = JOURNALATOR_L_BY_CHARACTER, displayMode="ByCharacter"},
+      {name = JOURNALATOR_L_BY_DAY, displayMode="ByDay"},
     }
   },
   {
