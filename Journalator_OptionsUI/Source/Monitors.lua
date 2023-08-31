@@ -32,6 +32,8 @@ function JournalatorConfigMonitorsOptionsFrameMixin:OnLoad()
     self.CraftingOrders:Hide()
     self.TradingPost:Hide()
     self.Questing:SetPoint("TOPLEFT", self.Vendoring, "BOTTOMLEFT")
+  end
+  if not C_WowTokenPublic.GetCommerceSystemStatus() then
     self.WoWTokens:Hide()
     self.Mail:SetPoint("TOPLEFT", self.Looting, "BOTTOMLEFT")
   end

@@ -54,7 +54,7 @@ local function SetupMonitors()
   end
 
   if Journalator.Config.Get(Journalator.Config.Options.MONITOR_WOW_TOKENS) then
-    if not Journalator.Constants.IsClassic then
+    if C_WowTokenPublic.GetCommerceSystemStatus() then
       CreateFrame("Frame", "JNRWoWTokensMonitor", nil, "JournalatorWoWTokensMonitorTemplate")
     end
   else
