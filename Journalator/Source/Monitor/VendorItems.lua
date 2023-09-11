@@ -146,11 +146,7 @@ local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
   return false
 end
 
-local MERCHANT_EVENTS_CLASSIC = {
-  "MERCHANT_SHOW", "MERCHANT_CLOSED", "MERCHANT_UPDATE"
-}
-
-local MERCHANT_EVENTS_RETAIL = {
+local MERCHANT_EVENTS = {
   "PLAYER_INTERACTION_MANAGER_FRAME_SHOW", "PLAYER_INTERACTION_MANAGER_FRAME_HIDE", "MERCHANT_UPDATE"
 }
 
@@ -161,11 +157,7 @@ local PURCHASE_VALIDATION_EVENTS = {
 function JournalatorVendorItemsMonitorMixin:OnLoad()
   self:ResetQueues()
 
-  if PlayerInteractionFrameManager == nil then
-    FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS_CLASSIC)
-  else
-    FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS_RETAIL)
-  end
+  FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS)
 
   self:RegisterRightClickToSellHandlers()
   self:RegisterDragToSellHandlers()
@@ -593,19 +585,13 @@ function JournalatorVendorItemsMonitorMixin:OnMerchantHide()
 end
 
 function JournalatorVendorItemsMonitorMixin:OnEvent(eventName, ...)
-  if eventName == "MERCHANT_SHOW" then -- Classic
-    self:OnMerchantShow()
-
-  elseif eventName == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then -- Dragonflight
+  if eventName == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
     local showType = ...
     if showType == Enum.PlayerInteractionType.Merchant then
       self:OnMerchantShow()
     end
 
-  elseif eventName == "MERCHANT_CLOSED" then -- Classic
-    self:OnMerchantHide()
-
-  elseif eventName == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then -- Dragonflight
+  elseif eventName == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then
     local hideType = ...
     if hideType == Enum.PlayerInteractionType.Merchant then
       self:OnMerchantHide()

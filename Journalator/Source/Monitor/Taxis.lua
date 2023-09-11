@@ -1,19 +1,11 @@
 JournalatorTaxisMonitorMixin = {}
 
-local TAXI_EVENTS_CLASSIC = {
-  "TAXIMAP_CLOSED"
-}
-
-local TAXI_EVENTS_RETAIL = {
+local TAXI_EVENTS = {
   "PLAYER_INTERACTION_MANAGER_FRAME_HIDE"
 }
 
 function JournalatorTaxisMonitorMixin:OnLoad()
-  if PlayerInteractionFrameManager == nil then
-    FrameUtil.RegisterFrameForEvents(self, TAXI_EVENTS_CLASSIC)
-  else
-    FrameUtil.RegisterFrameForEvents(self, TAXI_EVENTS_RETAIL)
-  end
+  FrameUtil.RegisterFrameForEvents(self, TAXI_EVENTS)
 
   hooksecurefunc("TakeTaxiNode", function(slot)
     if NumTaxiNodes() == 0 or TaxiNodeGetType(slot) ~= "REACHABLE" then
@@ -70,12 +62,10 @@ function JournalatorTaxisMonitorMixin:OnTaxiHide()
 end
 
 function JournalatorTaxisMonitorMixin:OnEvent(eventName, ...)
-  if eventName == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then -- Dragonflight
+  if eventName == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then
     local showType = ...
     if showType == Enum.PlayerInteractionType.TaxiNode then
       self:OnTaxiHide()
     end
-  elseif eventName == "TAXIMAP_CLOSED" then
-    self:OnTaxiHide()
   end
 end

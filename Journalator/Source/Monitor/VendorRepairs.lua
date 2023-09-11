@@ -1,10 +1,6 @@
 JournalatorVendorRepairsMonitorMixin = {}
 
-local MERCHANT_EVENTS_CLASSIC = {
-  "MERCHANT_CLOSED"
-}
-
-local MERCHANT_EVENTS_RETAIL = {
+local MERCHANT_EVENTS = {
   "PLAYER_INTERACTION_MANAGER_FRAME_HIDE"
 }
 
@@ -16,11 +12,7 @@ local REPAIR_VALIDATION_EVENTS = {
 }
 
 function JournalatorVendorRepairsMonitorMixin:OnLoad()
-  if PlayerInteractionFrameManager == nil then
-    FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS_CLASSIC)
-  else
-    FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS_RETAIL)
-  end
+  FrameUtil.RegisterFrameForEvents(self, MERCHANT_EVENTS)
 
   self:RegisterRepairHandlers()
 end
@@ -56,10 +48,7 @@ function JournalatorVendorRepairsMonitorMixin:OnMerchantHide()
 end
 
 function JournalatorVendorRepairsMonitorMixin:OnEvent(eventName, ...)
-  if eventName == "MERCHANT_CLOSED" then -- Classic
-    self:OnMerchantHide()
-
-  elseif eventName == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then -- Dragonflight
+  if eventName == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" then
     local hideType = ...
     if hideType == Enum.PlayerInteractionType.Merchant then
       self:OnMerchantHide()
