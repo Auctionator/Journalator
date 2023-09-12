@@ -2,5 +2,6 @@
   <Include file="Items.xml" />
   <Include file="Repairs.xml" />
   <Include file="Taxis.xml" />
+  <Include file="TrainingCosts.xml" />
   <Include file="TradingPost.xml" />
 </Ui>

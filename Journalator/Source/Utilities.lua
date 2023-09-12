@@ -122,14 +122,17 @@ end
 do
   local tooltip
 
-  function Journalator.GetTooltipFirstLine(link)
+  function Journalator.GetTooltipLines(link)
     if not tooltip then
       tooltip = CreateFrame("GameTooltip", "JournalatorFirstLineScanningTooltip", nil, "GameTooltipTemplate")
     end
 
     tooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
     tooltip:SetHyperlink(link)
-    return _G["JournalatorFirstLineScanningTooltipTextLeft1"]:GetText()
+    return {
+      _G["JournalatorFirstLineScanningTooltipTextLeft1"]:GetText(),
+      _G["JournalatorFirstLineScanningTooltipTextLeft2"]:GetText(),
+    }
   end
 end
 
@@ -138,10 +141,14 @@ do
   local callbacks = {}
   local function Check()
     for link, list in pairs(callbacks) do
-      local name = Journalator.GetTooltipFirstLine(link)
-      if name ~= nil then
+      local lines = Journalator.GetTooltipLines(link)
+      if lines[1] ~= nil then
+        local details = {
+          name = lines[1],
+          group = lines[2],
+        }
         for _, c in ipairs(list) do
-          c(name)
+          c(details)
         end
         callbacks[link] = nil
       end
@@ -151,7 +158,7 @@ do
     end
   end
 
-  function Journalator.Utilities.GetNPCNameFromGUID(guid, callback)
+  function Journalator.Utilities.GetNPCDetailsFromGUID(guid, callback)
     if not frame then
       frame = CreateFrame("Frame", nil, UIParent)
     end

@@ -61,6 +61,7 @@ Journalator.Constants.TabLayout = {
       {name = JOURNALATOR_L_ITEMS, displayMode="Items"},
       {name = JOURNALATOR_L_REPAIRS, displayMode="Repairs"},
       {name = JOURNALATOR_L_TAXIS, displayMode="Taxis"},
+      {name = JOURNALATOR_L_TRAINERS, displayMode="TrainingCosts"},
       {name = JOURNALATOR_L_TRADING_POST, displayMode="TradingPost", notClassic = true},
     }
   },

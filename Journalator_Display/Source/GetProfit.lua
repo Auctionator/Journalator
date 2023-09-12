@@ -196,6 +196,25 @@ function Journalator.GetInOut(startTime, endTime, filter)
   if Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING) then
     local incoming = 0
     local outgoing = 0
+    local trainingCosts = Journalator.Archiving.GetRange(startTime, "TrainingCosts")
+    for _, item in ipairs(trainingCosts) do
+      local filterItem = {
+        itemName = item.item,
+        time = item.time,
+        source = item.source,
+      }
+      if filterItem.time >= startTime and filterItem.time <= endTime then
+        if filter(filterItem) then
+          outgoing = outgoing + item.money
+        end
+      end
+    end
+    Add(JOURNALATOR_L_TRAINERS, incoming, outgoing, {root="Vendors", child="TrainingCosts"})
+  end
+
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_VENDORING) then
+    local incoming = 0
+    local outgoing = 0
     local vendoring = Journalator.Archiving.GetRange(startTime, "Vendoring")
     for _, item in ipairs(vendoring) do
       if item.time >= startTime and item.time <= endTime then

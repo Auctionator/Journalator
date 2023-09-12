@@ -183,6 +183,12 @@ JOURNALATOR_LOCALES.enUS = function()
   L["START"] = "Start"
   L["END"] = "End"
 
+  L["TRAINER"] = "Trainer"
+  L["TRAINERS"] = "Trainers"
+  L["GROUP"] = "Group"
+  L["ITEM"] = "Item"
+  L["REQUIREMENTS"] = "Requirements"
+
   L["PROFIT"] = "Profit"
   L["BY_TYPE"] = "By Type"
   L["BY_CHARACTER"] = "By Character"

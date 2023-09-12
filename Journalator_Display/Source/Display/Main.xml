@@ -235,6 +235,15 @@
               <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
             </Anchors>
           </Frame>
+          <Frame inherits="JournalatorTrainingCostsDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="TrainingCosts" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
           <Frame inherits="JournalatorTradingPostDisplayTemplate" parentArray="Views">
             <KeyValues>
               <KeyValue key="displayMode" value="TradingPost" type="string"/>
@@ -258,6 +267,11 @@
           <Button parentKey="TaxisTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTaxisTab_Button" text="JOURNALATOR_L_TAXIS">
             <KeyValues>
               <KeyValue key="displayMode" value="Taxis" type="string"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="TrainingCostsTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTrainingCostsTab_Button" text="JOURNALATOR_L_TRAINERS">
+            <KeyValues>
+              <KeyValue key="displayMode" value="TrainingCosts" type="string"/>
             </KeyValues>
           </Button>
           <Button parentKey="TradingPostTab" inherits="JournalatorTabButtonTemplate" name="JournalatorTradingPostTab_Button" text="JOURNALATOR_L_TRADING_POST">
