@@ -174,16 +174,8 @@ end
 -- Necessary workaround as Wrath and Classic Era do not have
 -- C_Item.GetItemLocation
 function Journalator.Utilities.GetItemLocationFromGUID(wantedItemGUID)
-  local function NumSlots(bagID)
-    if C_Container and C_Container.GetContainerNumSlots then
-      return C_Container.GetContainerNumSlots(bagID)
-    else
-      return GetContainerNumSlots(bagID)
-    end
-  end
-
   for _, bagID in ipairs(Journalator.Constants.BagIDs) do
-    for slot = 1, NumSlots(bagID) do
+    for slot = 1, C_Container.GetContainerNumSlots(bagID) do
       local location = ItemLocation:CreateFromBagAndSlot(bagID, slot)
       if C_Item.DoesItemExist(location) then
         local itemGUID = C_Item.GetItemGUID(location)

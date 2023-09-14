@@ -1,11 +1,7 @@
 JournalatorAuctionPostingMonitorMixin = {}
 
 local function GetContainerItemLink(location)
-  if C_Container and C_Container.GetContainerItemInfo then
-    return C_Container.GetContainerItemInfo(location:GetBagAndSlot()).hyperlink
-  else
-    return (select(7, GetContainerItemInfo(location:GetBagAndSlot())))
-  end
+  return C_Container.GetContainerItemInfo(location:GetBagAndSlot()).hyperlink
 end
 
 function JournalatorAuctionPostingMonitorMixin:OnLoad()

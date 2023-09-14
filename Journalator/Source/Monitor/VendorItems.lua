@@ -19,73 +19,47 @@ local function GetGUIDFromEquipmentSlot(slot)
 end
 
 local function GetCountLinkFromBagAndSlot(bag, slot)
-  if C_Container and C_Container.GetContainerItemInfo then
-    local info = C_Container.GetContainerItemInfo(bag, slot)
+  local info = C_Container.GetContainerItemInfo(bag, slot)
 
-    if info then
-      return info.stackCount, info.hyperlink
-    else
-      return nil
-    end
+  if info then
+    return info.stackCount, info.hyperlink
   else
-    local _, count, _, _, _, _, itemLink = GetContainerItemInfo(bag, slot)
-    return count, itemLink
-  end
-end
-
-local function GetSlots(bag)
-  if C_Container and C_Container.GetContainerNumSlots then
-    return C_Container.GetContainerNumSlots(bag)
-  else
-    return GetContainerNumSlots(bag)
+    return nil
   end
 end
 
 local function GetRefundInfo(bag, slot, isEquipped)
-  if C_Container and C_Container.GetContainerItemPurchaseInfo then
-    isEquipped = isEquipped or false
-    local info = C_Container.GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+  isEquipped = isEquipped or false
 
-    -- Get the currencies and items returned by the refund
-    local currencies, items = {}, {}
-    if C_CurrencyInfo then
-      for i = 1, info.currencyCount do
-        local currencyInfo = C_Container.GetContainerItemPurchaseCurrency(bag, slot, i, isEquipped)
-        local currencyID = Journalator.Utilities.GetCurrencyID(currencyInfo.name)
-        if currencyID ~= nil then
-          table.insert(currencies, {currencyID = currencyID, quantity = currencyInfo.currencyCount})
-        end
+  local info = C_Container.GetContainerItemPurchaseInfo(bag, slot, isEquipped)
+
+  local currencies, items = {}, {}
+  -- Get the currencies and items returned by the refund
+  if C_CurrencyInfo then
+    for i = 1, info.currencyCount do
+      local currencyInfo = C_Container.GetContainerItemPurchaseCurrency(bag, slot, i, isEquipped)
+      local currencyID = Journalator.Utilities.GetCurrencyID(currencyInfo.name)
+      if currencyID ~= nil then
+        table.insert(currencies, {currencyID = currencyID, quantity = currencyInfo.currencyCount})
       end
     end
-
-    for i = 1, info.itemCount do
-      local itemInfo = C_Container.GetContainerItemPurchaseItem(bag, slot, i, isEquipped)
-      if itemInfo.hyperlink ~= nil then
-        table.insert(items, {itemLink = itemInfo.hyperlink, quantity = itemInfo.itemCount})
-      end
-    end
-
-    return info.money, currencies, items, info.refundSeconds
-
-  else
-    local money, itemCount, refundSec, currencyCount = GetContainerItemPurchaseInfo(bag, slot, isEquipped)
-
-    -- assumed to be vanilla so currencyCount == 0
-    assert(currencyCount == 0)
-    local currencies, items = {}, {}
-    for i = 1, itemCount do
-      local _, itemQuantity, itemLink = GetContainerItemPurchaseItem(bag, slot, i, isEquipped)
-      table.insert(items, {itemLink = itemLink, quantity = quantity})
-    end
-    return money, currencies, items, refundSec
   end
+
+  for i = 1, info.itemCount do
+    local itemInfo = C_Container.GetContainerItemPurchaseItem(bag, slot, i, isEquipped)
+    if itemInfo.hyperlink ~= nil then
+      table.insert(items, {itemLink = itemInfo.hyperlink, quantity = itemInfo.itemCount})
+    end
+  end
+
+  return info.money, currencies, items, info.refundSeconds
 end
 
 local function IsGUIDInPossession(guid)
   -- Check if an item in a bag has disappeared/been sold.
   for _, bag in ipairs(Journalator.Constants.BagIDs) do
     -- Start the slots at 0 in include the container's item
-    for slot = 0, GetSlots(bag) do
+    for slot = 0, C_Container.GetContainerNumSlots(bag) do
       if GetGUIDFromBagAndSlot(bag, slot) == guid then
         return true
       end
@@ -107,7 +81,7 @@ local function GetGUIDStackSizes()
 
   for _, bag in ipairs(Journalator.Constants.BagIDs) do
     -- Start the slots at 0 in include the container's item
-    for slot = 0, GetSlots(bag) do
+    for slot = 0, C_Container.GetContainerNumSlots(bag) do
       local guid = GetGUIDFromBagAndSlot(bag, slot)
       if guid ~= nil then
         local count, itemLink = GetCountLinkFromBagAndSlot(bag, slot)
@@ -129,7 +103,7 @@ local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
   for _, bag in ipairs(Journalator.Constants.BagIDs) do
     local available = 0
 
-    for slot = 1, GetSlots(bag) do
+    for slot = 1, C_Container.GetContainerNumSlots(bag) do
       local itemCount, slotLink = GetCountLinkFromBagAndSlot(bag, slot)
       if itemCount == 0 or itemCount == nil then
         available = available + stackSize
@@ -219,11 +193,7 @@ function JournalatorVendorItemsMonitorMixin:RegisterRightClickToSellHandlers()
   end
   --Detect when an attempt to sell an item is done by right-clicking an item in
   --a bag. This handler also works for addon automated sales.
-  if C_Container and C_Container.UseContainerItem then -- Dragonflight
-    hooksecurefunc(C_Container, "UseContainerItem", ProcessDetails)
-  else
-    hooksecurefunc(_G, "UseContainerItem", ProcessDetails)
-  end
+  hooksecurefunc(C_Container, "UseContainerItem", ProcessDetails)
 end
 
 function JournalatorVendorItemsMonitorMixin:RegisterSellJunkButton()
@@ -266,7 +236,7 @@ function JournalatorVendorItemsMonitorMixin:RegisterSellJunkButton()
 
   hooksecurefunc(C_MerchantFrame, "SellAllJunkItems", function()
     for _, bag in ipairs(Journalator.Constants.BagIDs) do
-      for slot = 1, GetSlots(bag) do
+      for slot = 1, C_Container.GetContainerNumSlots(bag) do
         ProcessMaybeJunkItem(bag, slot)
       end
     end
@@ -345,15 +315,9 @@ function JournalatorVendorItemsMonitorMixin:RegisterDragToSellHandlers()
   hooksecurefunc(_G, "PickupItem", function()
     self:UpdateCursorItem()
   end)
-  if C_Container and C_Container.PickupContainerItem then
-    hooksecurefunc(C_Container, "PickupContainerItem", function()
-      self:UpdateCursorItem()
-    end)
-  else
-    hooksecurefunc(_G, "PickupContainerItem", function()
-      self:UpdateCursorItem()
-    end)
-  end
+  hooksecurefunc(C_Container, "PickupContainerItem", function()
+    self:UpdateCursorItem()
+  end)
 end
 
 -- Used to log refund amounts for heirlooms (and probably a few other refundable
@@ -392,11 +356,7 @@ function JournalatorVendorItemsMonitorMixin:RegisterRefundHandlers()
       }
     end)
   end
-  if C_Container and C_Container.ContainerRefundItemPurchase then --Dragonflight
-    hooksecurefunc(C_Container, "ContainerRefundItemPurchase", ProcessDetails)
-  else
-    hooksecurefunc(_G, "ContainerRefundItemPurchase", ProcessDetails)
-  end
+  hooksecurefunc(C_Container, "ContainerRefundItemPurchase", ProcessDetails)
 end
 
 function JournalatorVendorItemsMonitorMixin:UpdateForCompletedSales()
