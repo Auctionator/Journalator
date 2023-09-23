@@ -24,7 +24,7 @@ end
 
 function JournalatorTrainingCostsMonitorMixin:Reset()
   self.awaitingRemoval = {}
-  self.payments = {}
+  self.moneyPending = 0
   self.awaitingPayment = {}
 end
 
@@ -137,9 +137,8 @@ function JournalatorTrainingCostsMonitorMixin:TrainerUpdate()
         self:LogPurchase(item)
       else
         -- See if the payment has been taken
-        local costIndex = tIndexOf(self.payments, item.cost)
-        if costIndex ~= nil then
-          table.remove(self.payments, costIndex)
+        if self.moneyPending >= item.cost then
+          self.moneyPending = self.moneyPending - item.cost
           self:LogPurchase(item)
         else
           -- Wait for the payment
@@ -171,20 +170,18 @@ function JournalatorTrainingCostsMonitorMixin:OnEvent(eventName, ...)
   -- Watch for outgoing payments corresponding to the service bought
   elseif eventName == "PLAYER_MONEY" then
     local diff = self.money - GetMoney()
+    self.moneyPending = self.moneyPending + diff
     self.money = GetMoney()
     local found = false
     -- See if a corresponding service has been removed from the available list
     for item in pairs(self.awaitingPayment) do
-      if item.cost == diff then
+      if item.cost <= self.moneyPending then
         found = true
         self.awaitingPayment[item] = nil
         self:LogPurchase(item)
+        self.moneyPending = self.moneyPending - item.cost
       end
     end
-    if not found then
-      table.insert(self.payments, diff)
-    end
-
   -- Watch for services being removed from the available list
   elseif eventName == "TRAINER_UPDATE" then
     self:SetScript("OnUpdate", self.TrainerUpdate)
