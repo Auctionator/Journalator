@@ -194,6 +194,7 @@ JOURNALATOR_LOCALES.enUS = function()
   L["BY_CHARACTER"] = "By Character"
   L["BY_DAY"] = "By Day"
   L["BY_QUEST"] = "By Quest"
+  L["BY_MONTH"] = "By Month"
 
   L["CONFIG_UI_DISABLED"] = "Unable to open options. The Options UI addon is disabled"
   L["DISPLAY_DISABLED"] = "Unable to open display. The Display addon is disabled"

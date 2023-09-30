@@ -78,6 +78,16 @@
             </Anchors>
           </Frame>
 
+          <Frame inherits="JournalatorSummaryByMonthDisplayTemplate" parentArray="Views">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByMonth" type="string"/>
+            </KeyValues>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-50"/>
+              <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="20"/>
+            </Anchors>
+          </Frame>
+
           <Button parentKey="ByTypeTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryByTypeTab_Button" text="JOURNALATOR_L_BY_TYPE">
             <KeyValues>
               <KeyValue key="displayMode" value="ByType" type="string"/>
@@ -93,6 +103,12 @@
           <Button parentKey="ByDayTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryByDayTab_Button" text="JOURNALATOR_L_BY_DAY">
             <KeyValues>
               <KeyValue key="displayMode" value="ByDay" type="string"/>
+              <KeyValue key="title" value="JOURNALATOR_L_SUMMARY_TITLE" type="global"/>
+            </KeyValues>
+          </Button>
+          <Button parentKey="ByMonthTab" inherits="JournalatorTabButtonTemplate" name="JournalatorSummaryByMonthTab_Button" text="JOURNALATOR_L_BY_MONTH">
+            <KeyValues>
+              <KeyValue key="displayMode" value="ByMonth" type="string"/>
               <KeyValue key="title" value="JOURNALATOR_L_SUMMARY_TITLE" type="global"/>
             </KeyValues>
           </Button>
