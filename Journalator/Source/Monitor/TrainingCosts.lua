@@ -85,7 +85,7 @@ function JournalatorTrainingCostsMonitorMixin:QueuePurchaseAttempt(index)
     details = GetAvailableServiceRetail(index)
   end
 
-  if details.cost > GetMoney() then
+  if details == nil or details.cost > GetMoney() then
     return
   end
 
