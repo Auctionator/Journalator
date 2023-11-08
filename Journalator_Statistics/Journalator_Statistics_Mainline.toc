@@ -1,4 +1,4 @@
-## Interface: 100107
+## Interface: 100200
 ## Title: Journalator (Statistics and Tooltips)
 ## Notes: Generates data for tooltips and shows them
 ## Version: @project-version@
