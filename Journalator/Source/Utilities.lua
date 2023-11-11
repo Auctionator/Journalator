@@ -43,7 +43,9 @@ do
         local factionInfo = {GetFactionInfo(i)}
         local name = factionInfo[1]
         local id = factionInfo[14]
-        factionMap[name] = id
+        if name ~= nil then
+          factionMap[name] = id
+        end
       end
     end
 
