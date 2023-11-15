@@ -4,6 +4,7 @@
 ## Version: @project-version@
 ## Author: plusmouse
 ## RequiredDeps: Auctionator, Journalator
+## IconTexture: Interface/AddOns/Journalator/Images/icon
 
 Libs.xml
 
