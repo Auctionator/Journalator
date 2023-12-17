@@ -75,16 +75,12 @@ function JournalatorQuestsByQuestDataProviderMixin:Refresh()
       source = item.source,
     }
     if self:Filter(filterItem) then
-      local link
-      if not Auctionator.Constants.IsClassic then
-        link = "quest:" .. item.questID
-      end
       local processedItem = {
         itemName = item.questName,
         rewardMoney = item.rewardMoney,
         requiredMoney = item.requiredMoney,
         rawDay = item.time,
-        itemLink = link,
+        itemLink = "quest:" .. item.questID,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
         items = item.rewardItems,
         currencies = item.rewardCurrencies,
