@@ -2,6 +2,7 @@
 ![Curse Build Status](https://github.com/Auctionator/Journalator/workflows/Curse%20Build/badge.svg)
 [![Auctionator Discord](https://img.shields.io/badge/discord-auctionator-blue.svg)](https://discord.gg/xgz75Pp)
 
+
 An addon that keeps track of all your sales and postings on the Auction House,
 sales and purchases with vendors, crafting orders, quest rewards, item drops,
 trades and mails, provides a summary view, sales percentage stats for the last
