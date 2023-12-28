@@ -10,14 +10,14 @@ function JournalatorBasicMailReceiveMonitorMixin:OnLoad()
     self:ProcessMail(index)
   end)
   hooksecurefunc("AutoLootMailItem", function(index)
-    self:ProcessMail(index)
+    self:ProcessMail(index, true)
   end)
   hooksecurefunc("TakeInboxItem", function(index, itemIndex)
-    self:ProcessMail(index)
+    self:ProcessMail(index, true)
   end)
 end
 
-function JournalatorBasicMailReceiveMonitorMixin:ProcessMail(index)
+function JournalatorBasicMailReceiveMonitorMixin:ProcessMail(index, codRequired)
   local packageIcon, stationeryIcon, sender, subject, money, CODAmount, daysLeft, itemCount, wasRead, wasReturned, textCreated, canReply = GetInboxHeaderInfo(index)
 
   if not canReply then
@@ -26,7 +26,7 @@ function JournalatorBasicMailReceiveMonitorMixin:ProcessMail(index)
   end
 
   -- No cash to pick up or cod to send
-  if CODAmount == 0 and money == 0 then
+  if (codRequired and CODAmount == 0) or (not codRequired and money == 0) then
     return
   end
 
