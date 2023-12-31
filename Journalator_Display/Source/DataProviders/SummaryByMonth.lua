@@ -49,7 +49,7 @@ function JournalatorSummaryByMonthDataProviderMixin:Refresh()
 
   local resetTime = date("*t", time() - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset())
   local startTime = self:GetTimeForRange()
-  local shiftedStartTime = GetMonthStart(date("*t", startTime), resetTime)
+  local shiftedStartTime = (startTime == 0 and 0) or GetMonthStart(date("*t", startTime), resetTime)
 
   -- Month when the archive started
   local archiveStart = GetMonthStart(date("*t", JOURNALATOR_ARCHIVE_TIMES[1]), resetTime)
