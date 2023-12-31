@@ -22,29 +22,51 @@ local SUMMARY_DATA_PROVIDER_LAYOUT ={
   },
 }
 
+-- Move the date to the start of the month that contains this date
+local function GetMonthStart(d, resetTime)
+  local origin = time(d)
+  d.min = resetTime.min
+  d.hour = resetTime.hour
+  d.sec = resetTime.sec
+  d.day = 1
+  local result = time(d)
+  if result > origin then
+    d.month = d.month - 1
+    if d.month < 1 then
+      d.month = 12
+      d.year = d.year - 1
+    end
+    return time(d)
+  end
+  return result
+end
+
 JournalatorSummaryByMonthDataProviderMixin = CreateFromMixins(JournalatorDisplayDataProviderMixin)
 
 function JournalatorSummaryByMonthDataProviderMixin:Refresh()
   self.onPreserveScroll()
   self:Reset()
 
+  local resetTime = date("*t", time() - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset())
   local startTime = self:GetTimeForRange()
-  local d = date("*t")
-  local dayOffset = - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset()
-  d.day = 1
-  local monthStart = time(d) + dayOffset
-  d = date("*t", monthStart)
+  local shiftedStartTime = GetMonthStart(date("*t", startTime), resetTime)
+
+  -- Month when the archive started
+  local archiveStart = GetMonthStart(date("*t", JOURNALATOR_ARCHIVE_TIMES[1]), resetTime)
 
   local results = {}
 
-  while monthStart >= JOURNALATOR_ARCHIVE_TIMES[1] and monthStart >= startTime do
+  local d = date("*t")
+  local monthStart = GetMonthStart(d, resetTime)
+
+  while monthStart >= archiveStart and monthStart >= shiftedStartTime do
     local monthEnd = CopyTable(d)
     monthEnd.month = monthEnd.month + 1
     if monthEnd.month > 12 then
       monthEnd.month = 1
       monthEnd.year = monthEnd.year + 1
     end
-    local _, incoming, outgoing = Journalator.GetProfit(monthStart, time(monthEnd), function(item)
+    local _, incoming, outgoing = Journalator.GetProfit(math.max(monthStart, startTime), time(monthEnd), function(item)
       return self:Filter(item)
     end)
     if incoming ~= 0 or outgoing ~= 0 then
@@ -53,7 +75,6 @@ function JournalatorSummaryByMonthDataProviderMixin:Refresh()
         itemName = month,
         moneyIn = incoming,
         moneyOut = -outgoing,
-        index = index,
       })
     end
 

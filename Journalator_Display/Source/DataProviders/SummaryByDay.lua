@@ -44,7 +44,6 @@ function JournalatorSummaryByDayDataProviderMixin:Refresh()
         itemName = Auctionator.Utilities.PrettyDate(dayStart),
         moneyIn = incoming,
         moneyOut = -outgoing,
-        index = index,
       })
     end
 
