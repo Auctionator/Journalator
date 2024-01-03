@@ -109,20 +109,24 @@ function JournalatorQuestsClassicMonitorMixin:PredictRewards(questID)
   for i = 1, basicRewards do
     local itemLink = GetQuestItemLink("reward", i)
     local quantity = select(3, GetQuestItemInfo("reward", i))
-    table.insert(items, {
-      itemLink = itemLink,
-      quantity = quantity,
-    })
+    if itemLink ~= nil then
+      table.insert(items, {
+        itemLink = itemLink,
+        quantity = quantity,
+      })
+    end
   end
 
   local choice = self.selectedChoice[questID]
   if choice ~= nil and choice ~= 0 then
     local itemLink = GetQuestItemLink("choice", choice)
     local quantity = select(3, GetQuestItemInfo("choice", choice))
-    table.insert(items, {
-      itemLink = itemLink,
-      quantity = quantity,
-    })
+    if itemLink ~= nil then
+      table.insert(items, {
+        itemLink = itemLink,
+        quantity = quantity,
+      })
+    end
   end
 
   -- Only Wrath onwards has currencies
@@ -131,10 +135,12 @@ function JournalatorQuestsClassicMonitorMixin:PredictRewards(questID)
     for i = 1, currencyRewards do
       local currencyID = GetQuestCurrencyID("reward", i)
       local quantity = select(3, GetQuestCurrencyInfo("reward", i))
-      table.insert(currencies, {
-        currencyID = currencyID,
-        quantity = quantity,
-      })
+      if currencyID ~= nil then
+        table.insert(currencies, {
+          currencyID = currencyID,
+          quantity = quantity,
+        })
+      end
     end
   end
 

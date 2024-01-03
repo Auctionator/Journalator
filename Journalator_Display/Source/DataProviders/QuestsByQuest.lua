@@ -75,6 +75,10 @@ function JournalatorQuestsByQuestDataProviderMixin:Refresh()
       source = item.source,
     }
     if self:Filter(filterItem) then
+      -- Need to filter out rewards with no item link data, generated due to
+      -- unexpected API results in SoD for Messenger to Darkshire (quest id 145)
+      local rewardItems = tFilter(item.rewardItems, function(i) return i.itemLink ~= nil end, true)
+      local rewardCurrencies = tFilter(item.rewardCurrencies, function(c) return c.currencyID ~= nil end, true)
       local processedItem = {
         itemName = item.questName,
         rewardMoney = item.rewardMoney,
@@ -82,10 +86,10 @@ function JournalatorQuestsByQuestDataProviderMixin:Refresh()
         rawDay = item.time,
         itemLink = "quest:" .. item.questID,
         sourceCharacter = Journalator.Utilities.AddRealmToPlayerName(item.source.character, item.source),
-        items = item.rewardItems,
-        currencies = item.rewardCurrencies,
-        itemCount = #item.rewardItems,
-        currencyCount = #item.rewardCurrencies,
+        items = rewardItems,
+        currencies = rewardCurrencies,
+        itemCount = #rewardItems,
+        currencyCount = #rewardCurrencies,
         reputationChanges = item.reputationChanges,
         experience = item.experience,
         experiencePretty = FormatLargeNumber(item.experience),

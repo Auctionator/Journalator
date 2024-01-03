@@ -47,7 +47,10 @@ function JournalatorQuestsByItemDataProviderMixin:Refresh()
   local results = {}
   local quantity = 0
   for index, entry in ipairs(Journalator.Archiving.GetRange(self:GetTimeForRange(), "Questing")) do
-    if #entry.rewardItems > 0 then
+    -- Need to filter out rewards with no item link data, generated due to
+    -- unexpected API results in SoD for Messenger to Darkshire (quest id 145)
+    local rewardItems = tFilter(entry.rewardItems, function(i) return i.itemLink ~= nil end, true)
+    if #rewardItems > 0 then
       local zone = ""
       if entry.map then
         local mapInfo = C_Map.GetMapInfo(entry.map)
