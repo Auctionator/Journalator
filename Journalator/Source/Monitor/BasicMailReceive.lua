@@ -58,12 +58,6 @@ end
 
 function JournalatorBasicMailReceiveMonitorMixin:OnEvent(eventName, ...)
   if eventName == "MAIL_FAILED" then
-    local data = ...
-    if self.result.cod == 0 and data ~= nil then
-      return
-    end
-    -- Either a cod with an item that failed to pickup or a no-item gold pickup
-    -- that failed.
     self:StopListening()
   elseif eventName == "MAIL_SUCCESS" then
     assert(self.result)
