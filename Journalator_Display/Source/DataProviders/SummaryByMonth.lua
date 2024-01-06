@@ -72,7 +72,7 @@ function JournalatorSummaryByMonthDataProviderMixin:Refresh()
     if incoming ~= 0 or outgoing ~= 0 then
       local month = _G["AUCTIONATOR_L_MONTH_" .. d.month]
       table.insert(results, {
-        itemName = month,
+        itemName = month .. " " .. d.year,
         moneyIn = incoming,
         moneyOut = -outgoing,
       })
