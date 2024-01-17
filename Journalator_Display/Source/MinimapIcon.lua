@@ -13,7 +13,9 @@ local function GetDayPeriod()
 end
 
 local function GetProfitString(period)
-  local profit = Journalator.GetProfit(time() - period, time())
+  local profit = Journalator.GetProfit(time() - period, time(), function(item)
+    return not item.playerCheck or Journalator.CheckCharacter(item.playerCheck, item.source)
+  end)
   if profit < 0 then
     return RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-profit, true))
   else
