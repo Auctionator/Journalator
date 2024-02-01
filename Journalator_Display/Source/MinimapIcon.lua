@@ -1,7 +1,20 @@
 local function GetMonthPeriod()
+  local origin = time()
+  local resetTime = date("*t", origin - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset())
   local d = date("*t")
+  d.min = resetTime.min
+  d.hour = resetTime.hour
+  d.sec = resetTime.sec
   d.day = 1
-  return time() - (time(d) - 24 * 60 * 60 + C_DateAndTime.GetSecondsUntilDailyReset())
+  local result = time(d)
+  if result > origin then
+    d.month = d.month - 1
+    if d.month < 1 then
+      d.month = 12
+      d.year = d.year - 1
+    end
+  end
+  return origin - time(d)
 end
 
 local function GetWeekPeriod()
