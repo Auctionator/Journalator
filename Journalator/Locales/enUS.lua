@@ -189,6 +189,8 @@ JOURNALATOR_LOCALES.enUS = function()
   L["ITEM"] = "Item"
   L["REQUIREMENTS"] = "Requirements"
 
+  L["MISSION_TABLES"] = "Mission Tables"
+
   L["PROFIT"] = "Profit"
   L["BY_TYPE"] = "By Type"
   L["BY_CHARACTER"] = "By Character"

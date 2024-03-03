@@ -81,8 +81,13 @@ function Journalator.Archiving.InitializeStore(store)
     store.TrainingCosts = {}
   end
 
-  if store.Version ~= 14 then
-    store.Version = 14
+  if store.Version == 14 then
+    store.Version = 15
+    store.MissionTables = {}
+  end
+
+  if store.Version ~= 15 then
+    store.Version = 15
     store.Invoices = {}
     store.Posting = {}
     store.Failures = {}
@@ -101,6 +106,7 @@ function Journalator.Archiving.InitializeStore(store)
     store.BasicMailReceived = {}
     store.Trades = {}
     store.TrainingCosts = {}
+    store.MissionTables = {}
   end
 end
 

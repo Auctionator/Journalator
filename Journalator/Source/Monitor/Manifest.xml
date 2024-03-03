@@ -18,6 +18,7 @@
   <Script file="BasicMailReceive.lua" />
   <Script file="Trades.lua" />
   <Script file="TrainingCosts.lua" />
+  <Script file="MissionTables.lua" />
 
   <Include file="AuctionMail.xml" />
   <Include file="AuctionPosting.xml" />
@@ -38,4 +39,5 @@
   <Include file="BasicMailReceive.xml" />
   <Include file="Trades.xml" />
   <Include file="TrainingCosts.xml" />
+  <Include file="MissionTables.xml" />
 </Ui>

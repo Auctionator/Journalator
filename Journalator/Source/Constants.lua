@@ -112,3 +112,10 @@ else
 end
 
 Journalator.Constants.EquipmentSlotCap = 19
+
+Journalator.Constants.MissionTableTypes = {
+  Draenor = 1,
+  Legion = 2,
+  BattleForAzeroth = 3,
+  Shadowlands = 4,
+}

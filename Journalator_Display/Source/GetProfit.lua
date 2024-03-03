@@ -287,6 +287,25 @@ function Journalator.GetInOut(startTime, endTime, filter)
     Add(JOURNALATOR_L_TRADES, incoming, outgoing, {root="Trades"})
   end
 
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_MISSION_TABLES) then
+    local incoming = 0
+    local outgoing = 0
+    local missions = Journalator.Archiving.GetRange(startTime, "MissionTables")
+    for _, item in ipairs(missions) do
+      local filterItem = {
+        itemName = item.missionName,
+        time = item.time,
+        source = item.source,
+      }
+      if filterItem.time >= startTime and filterItem.time <= endTime then
+        if filter(filterItem) then
+          incoming = incoming + item.money
+        end
+      end
+    end
+    Add(JOURNALATOR_L_MISSION_TABLES, incoming, outgoing, {root="MissionTables"})
+  end
+
   return result
 end
 

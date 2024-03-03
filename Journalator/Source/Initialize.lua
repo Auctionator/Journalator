@@ -74,6 +74,14 @@ local function SetupMonitors()
   else
     Journalator.Debug.Message("trades monitor disabled")
   end
+
+  if Journalator.Config.Get(Journalator.Config.Options.MONITOR_MISSION_TABLES) then
+    if not Journalator.Constants.IsClassic then
+      CreateFrame("Frame", "JNRMissionTablesMonitor", nil, "JournalatorMissionTablesMonitorTemplate")
+    end
+  else
+    Journalator.Debug.Message("mission tables monitor disabled")
+  end
 end
 
 local function InitializeBase()
