@@ -18,4 +18,6 @@ externals:
   Journalator_Display/Libs/LibDataBroker-1.1: https://github.com/tekkub/libdatabroker-1-1
   Journalator_Display/Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
   Journalator_Display/Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
+  Journalator_Statistics/Libs/LibStub: https://repos.wowace.com/wow/libstub/trunk
+  Journalator_Statistics/Libs/LibBattlePetTooltipLine: https://github.com/plusmouse/LibBattlePetTooltipLine
   Journalator/Embeds/Archivist: https://github.com/emptyrivers/Archivist

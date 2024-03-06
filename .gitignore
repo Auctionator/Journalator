@@ -6,3 +6,4 @@ tmp
 .release
 Journalator/Embeds/**
 Journalator_Display/Libs/**
+Journalator_Statistics/Libs/**

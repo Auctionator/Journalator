@@ -1,0 +1,4 @@
+<Ui>
+  <Script file="Libs\LibStub\LibStub.lua"/>
+  <Include file="Libs\LibBattlePetTooltipLine\LibBattlePetTooltipLine.xml"/>
+</Ui>
