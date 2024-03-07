@@ -75,6 +75,6 @@ hooksecurefunc(Auctionator.Tooltip, "AddPetTip",
       LibBattlePetTooltipLine:AddLine(BattlePetTooltip, JOURNALATOR_L_BOUGHT_MIN_MAX_MEAN:format(ColorMoney(GetMoneyString(boughtStats.min, true)), ColorMoney(GetMoneyString(boughtStats.max)), ColorMoney(GetMoneyString(boughtStats.mean))))
     end
     if soldStats ~= nil then
-     LibBattlePetTooltipLine:AddLine(JOURNALATOR_L_SOLD_MIN_MAX_MEAN:format(ColorMoney(GetMoneyString(soldStats.min, true)), ColorMoney(GetMoneyString(soldStats.max)), ColorMoney(GetMoneyString(soldStats.mean))))
+     LibBattlePetTooltipLine:AddLine(BattlePetTooltip, JOURNALATOR_L_SOLD_MIN_MAX_MEAN:format(ColorMoney(GetMoneyString(soldStats.min, true)), ColorMoney(GetMoneyString(soldStats.max)), ColorMoney(GetMoneyString(soldStats.mean))))
     end
 end)
