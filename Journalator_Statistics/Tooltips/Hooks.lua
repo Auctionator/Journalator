@@ -1,15 +1,10 @@
-local function IsAuctionableItem(itemLink)
-  local bindType = select(14, GetItemInfo(itemLink))
-  return bindType ~= LE_ITEM_BIND_ON_ACQUIRE and bindType ~= LE_ITEM_BIND_QUEST
-end
-
 local function ColorMoney(moneyString)
   return WHITE_FONT_COLOR:WrapTextInColorCode(moneyString)
 end
 
 hooksecurefunc(Auctionator.Tooltip, "ShowTipWithPricingDBKey",
   function(tooltipFrame, dbKeys, itemLink, itemCount)
-    if not Journalator.Tooltips.AnyEnabled() or #dbKeys == 0 or itemLink == nil or not IsAuctionableItem(itemLink) then
+    if not Journalator.Tooltips.AnyEnabled() or #dbKeys == 0 or itemLink == nil then
       return
     end
 
