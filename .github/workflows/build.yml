@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: BigWigsMods/packager@v2
+    - uses: BigWigsMods/packager
       with:
         args: -S -p 453921 -a qv63EkGb -g ${{matrix.type}}
       env:
