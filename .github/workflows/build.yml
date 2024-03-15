@@ -19,7 +19,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
     - uses: BigWigsMods/packager@master
       with:
         args: -S -p 453921 -a qv63EkGb -g ${{matrix.type}}
