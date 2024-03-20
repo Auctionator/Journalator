@@ -1,4 +1,4 @@
-## Interface: 100205
+## Interface: 100206
 ## Title: Journalator (Options UI)
 ## Notes: UI for changing settings
 ## Version: @project-version@
