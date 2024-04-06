@@ -12,6 +12,10 @@ function JournalatorMissionTablesMonitorMixin:OnEvent(eventName, ...)
     self.missionID = ...
     self.missionName = C_Garrison.GetMissionName(self.missionID)
   elseif eventName == "GARRISON_MISSION_BONUS_ROLL_LOOT" then
+    if GarrisonMissionFrame == nil and OrderHallMissionFrame == nil and CovenantMissionFrame == nil and BFAMissionFrameMissions == nil then
+      return
+    end
+
     local itemID, count = ...
     local money, itemCount = 0, 0
     if itemID == 0 then
