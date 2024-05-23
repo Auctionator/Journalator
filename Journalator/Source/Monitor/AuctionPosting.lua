@@ -48,7 +48,7 @@ function JournalatorAuctionPostingMonitorMixin:OnLoad()
     end)
     hooksecurefunc(C_AuctionHouse, "PostCommodity", function(location, duration, quantity, unitPrice)
       local link = GetContainerItemLink(location)
-      local itemID = GetItemInfoInstant(link)
+      local itemID = C_Item.GetItemInfoInstant(link)
       local deposit = C_AuctionHouse.CalculateCommodityDeposit(itemID, duration, quantity)
 
       Journalator.Debug.Message("JournalatorAuctionPostingMonitor: Blizzard post commodity hook", link)

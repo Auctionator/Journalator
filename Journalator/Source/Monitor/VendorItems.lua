@@ -95,10 +95,10 @@ local function GetGUIDStackSizes()
   return result
 end
 
--- Assumes GetItemInfo data is loaded
+-- Assumes C_Item.GetItemInfo data is loaded
 -- Returns true if a bag has the space for all of slotSizeNeeded*itemLink
 local function IsLargeEnoughSlotAvailable(itemLink, slotSizeNeeded)
-  local stackSize = select(8, GetItemInfo(itemLink))
+  local stackSize = select(8, C_Item.GetItemInfo(itemLink))
 
   for _, bag in ipairs(Journalator.Constants.BagIDs) do
     local available = 0
@@ -179,10 +179,10 @@ function JournalatorVendorItemsMonitorMixin:RegisterRightClickToSellHandlers()
 
     local guid = GetGUIDFromBagAndSlot(bag, slot)
     item:ContinueOnItemLoad(function()
-      local vendorPrice = select(ITEM_INFO_SELL_PRICE, GetItemInfo(itemLink))
+      local vendorPrice = select(ITEM_INFO_SELL_PRICE, C_Item.GetItemInfo(itemLink))
       self.sellQueue[guid] = {
         vendorType = "sell",
-        itemName = (GetItemInfo(itemLink)),
+        itemName = (C_Item.GetItemInfo(itemLink)),
         count = itemCount,
         unitPrice = vendorPrice,
         itemLink = itemLink,
@@ -218,12 +218,12 @@ function JournalatorVendorItemsMonitorMixin:RegisterSellJunkButton()
 
     local info = C_Container.GetContainerItemInfo(bag, slot)
     item:ContinueOnItemLoad(function()
-      local quality = select(ITEM_INFO_QUALITY, GetItemInfo(itemLink))
+      local quality = select(ITEM_INFO_QUALITY, C_Item.GetItemInfo(itemLink))
       if quality == Enum.ItemQuality.Poor and not info.hasNoValue then
-        local vendorPrice = select(ITEM_INFO_SELL_PRICE, GetItemInfo(itemLink))
+        local vendorPrice = select(ITEM_INFO_SELL_PRICE, C_Item.GetItemInfo(itemLink))
         self.sellQueue[guid] = {
           vendorType = "sell",
-          itemName = (GetItemInfo(itemLink)),
+          itemName = (C_Item.GetItemInfo(itemLink)),
           count = itemCount,
           unitPrice = vendorPrice,
           itemLink = itemLink,
@@ -272,12 +272,12 @@ function JournalatorVendorItemsMonitorMixin:UpdateCursorItem()
         return
       end
 
-      local vendorPrice = select(ITEM_INFO_SELL_PRICE, GetItemInfo(itemLink))
+      local vendorPrice = select(ITEM_INFO_SELL_PRICE, C_Item.GetItemInfo(itemLink))
       self.lastCursorItem = {
         guid = guid,
         item = {
           vendorType = "sell",
-          itemName = (GetItemInfo(itemLink)),
+          itemName = (C_Item.GetItemInfo(itemLink)),
           count = itemCount,
           unitPrice = vendorPrice,
           itemLink = itemLink,
@@ -312,7 +312,7 @@ function JournalatorVendorItemsMonitorMixin:RegisterDragToSellHandlers()
   hooksecurefunc(_G, "PickupBagFromSlot", function()
     self:UpdateCursorItem()
   end)
-  hooksecurefunc(_G, "PickupItem", function()
+  hooksecurefunc(C_Item, "PickupItem", function()
     self:UpdateCursorItem()
   end)
   hooksecurefunc(C_Container, "PickupContainerItem", function()
@@ -345,7 +345,7 @@ function JournalatorVendorItemsMonitorMixin:RegisterRefundHandlers()
     item:ContinueOnItemLoad(function()
       self.sellQueue[guid] = {
         vendorType = "sell",
-        itemName = (GetItemInfo(itemLink)),
+        itemName = (C_Item.GetItemInfo(itemLink)),
         count = itemCount,
         unitPrice = money,
         currencies = currencies,
@@ -518,7 +518,7 @@ end
 function JournalatorVendorItemsMonitorMixin:CheckPurchaseQueueForBagSpace()
   local newQueue = {}
   for index, item in ipairs(self.purchaseQueue) do
-    if GetItemInfo(item.itemLink) == nil or
+    if C_Item.GetItemInfo(item.itemLink) == nil or
         IsLargeEnoughSlotAvailable(item.itemLink, item.count) then
       table.insert(newQueue, item)
     end

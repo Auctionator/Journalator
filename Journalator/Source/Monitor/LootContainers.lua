@@ -348,7 +348,7 @@ function JournalatorLootContainersMonitorMixin:AddToLogs()
         local item = Item:CreateFromItemLocation(location)
         item:ContinueOnItemLoad(function()
           result.itemLink = C_Item.GetItemLink(location)
-          result.name = (GetItemInfo(result.itemLink))
+          result.name = (C_Item.GetItemInfo(result.itemLink))
           result.time = time()
 
           Journalator.AddToLogs({ LootContainers = { result } })

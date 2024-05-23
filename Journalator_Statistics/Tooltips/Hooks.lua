@@ -8,7 +8,7 @@ hooksecurefunc(Auctionator.Tooltip, "ShowTipWithPricingDBKey",
       return
     end
 
-    local itemName = GetItemInfo(itemLink)
+    local itemName = C_Item.GetItemInfo(itemLink)
 
     if itemName == nil then
       return

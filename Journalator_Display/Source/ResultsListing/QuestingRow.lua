@@ -33,7 +33,7 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
         shownRewardsHeader = true
       end
       for _, item in ipairs(self.rowData.items) do
-        local name, link = GetItemInfo(item.itemLink)
+        local name, link = C_Item.GetItemInfo(item.itemLink)
         GameTooltip:AddLine(Journalator.Utilities.GetItemText(item.itemLink, item.quantity))
       end
     end

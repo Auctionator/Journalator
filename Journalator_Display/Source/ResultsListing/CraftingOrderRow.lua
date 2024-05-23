@@ -9,7 +9,7 @@ local function AddReagents(reagents, headerText, noEntriesText, missingText)
   if reagents and #reagents > 0 then
     GameTooltip:AddLine(lightBlue:WrapTextInColorCode(headerText))
     for _, reagent in ipairs(reagents) do
-      local _, link = GetItemInfo(reagent.itemID)
+      local _, link = C_Item.GetItemInfo(reagent.itemID)
       if link ~= nil then
         GameTooltip:AddLine(WHITE_FONT_COLOR:WrapTextInColorCode(Auctionator.Utilities.GetNameFromLink(link)) .. Auctionator.Utilities.CreateCountString(reagent.quantity))
       end

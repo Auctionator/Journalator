@@ -19,7 +19,7 @@ function JournalatorWoWTokensMonitorMixin:OnEvent(eventName, ...)
 
     local item = Item:CreateFromItemID(WOW_TOKEN_ITEM_ID)
     item:ContinueOnItemLoad(function()
-      local itemName, itemLink = GetItemInfo(WOW_TOKEN_ITEM_ID)
+      local itemName, itemLink = C_Item.GetItemInfo(WOW_TOKEN_ITEM_ID)
 
       Journalator.AddToLogs({ WoWTokens = {
         {

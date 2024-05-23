@@ -58,7 +58,7 @@ function Journalator.Utilities.AddQualityIconToItemName(itemName, itemLink)
     return itemName
   end
 
-  local itemID = GetItemInfoInstant(itemLink)
+  local itemID = C_Item.GetItemInfoInstant(itemLink)
   if itemID == nil then -- pets won't have an item id from the link
     return itemName
   end
@@ -77,7 +77,7 @@ function Journalator.Utilities.AddTierToBasicName(itemName, itemLink)
     return itemName
   end
 
-  local itemID = GetItemInfoInstant(itemLink)
+  local itemID = C_Item.GetItemInfoInstant(itemLink)
   if itemID == nil then -- pets won't have an item id from the link
     return itemName
   end
@@ -92,12 +92,12 @@ end
 
 do
   local function IsGear(itemLink)
-    local classType = select(6, GetItemInfoInstant(itemLink))
+    local classType = select(6, C_Item.GetItemInfoInstant(itemLink))
     return Auctionator.Utilities.IsEquipment(classType)
   end
 
   function Journalator.Utilities.GetItemText(itemLink, quantity)
-    local itemInfo = {GetItemInfo(itemLink)}
+    local itemInfo = {C_Item.GetItemInfo(itemLink)}
     local text = Auctionator.Utilities.GetNameFromLink(itemInfo[2])
 
     if IsGear(itemLink) then

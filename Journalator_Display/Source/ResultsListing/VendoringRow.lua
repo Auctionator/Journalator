@@ -20,7 +20,7 @@ function JournalatorLogViewVendoringRowMixin:ShowTooltip()
     tooltip:AddLine(JOURNALATOR_L_ADDITIONAL_COSTS_COLON)
 
     for _, item in ipairs(self.rowData.items) do
-      local name, link = GetItemInfo(item.itemLink)
+      local name, link = C_Item.GetItemInfo(item.itemLink)
       tooltip:AddLine(Journalator.Utilities.GetItemText(item.itemLink, item.quantity))
     end
     for _, item in ipairs(self.rowData.currencies) do

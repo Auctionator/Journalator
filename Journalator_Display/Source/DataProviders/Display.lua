@@ -30,7 +30,7 @@ function JournalatorDisplayDataProviderMixin:OnLoad()
       return
     end
 
-    local itemClass = select(6, GetItemInfoInstant(entry.itemLink))
+    local itemClass = select(6, C_Item.GetItemInfoInstant(entry.itemLink))
     if not Auctionator.Utilities.IsEquipment(itemClass) then
       self:NotifyCacheUsed()
       return
