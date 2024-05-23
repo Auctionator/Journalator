@@ -85,7 +85,7 @@ function JournalatorConfigIgnoreTransfersOptionsFrameMixin:Save()
     ignoreList[frame.index] = {character = frame.Character:GetText(), realm = frame.Realm:GetText()}
   end
 
-  if IsAddOnLoaded("Journalator_Display") then
+  if C_AddOns.IsAddOnLoaded("Journalator_Display") then
     Journalator.CacheIgnoredCharacters()
   end
 end

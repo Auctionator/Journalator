@@ -101,7 +101,7 @@ do
     local text = Auctionator.Utilities.GetNameFromLink(itemInfo[2])
 
     if IsGear(itemLink) then
-      text = text .. " (" .. (GetDetailedItemLevelInfo(itemLink)) .. ")"
+      text = text .. " (" .. (C_Item.GetDetailedItemLevelInfo(itemLink)) .. ")"
     end
 
     local qualityColor = ITEM_QUALITY_COLORS[itemInfo[3]]

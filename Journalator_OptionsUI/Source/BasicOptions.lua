@@ -30,13 +30,13 @@ function JournalatorConfigBasicOptionsFrameMixin:OnLoad()
 end
 
 function JournalatorConfigBasicOptionsFrameMixin:OnShow()
-  if not IsAddOnLoaded("Journalator_Statistics") then
+  if not C_AddOns.IsAddOnLoaded("Journalator_Statistics") then
     for _, frame in ipairs(self.Statistics) do
       frame:SetAlpha(0.5)
     end
   end
 
-  if not IsAddOnLoaded("Journalator_Display") then
+  if not C_AddOns.IsAddOnLoaded("Journalator_Display") then
     for _, frame in ipairs(self.Display) do
       frame:SetAlpha(0.5)
     end

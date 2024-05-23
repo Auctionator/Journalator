@@ -45,7 +45,7 @@ function JournalatorDisplayDataProviderMixin:OnLoad()
 
     local item = Item:CreateFromItemLink(entry.itemLink)
     item:ContinueOnItemLoad(function()
-      local itemLevel = GetDetailedItemLevelInfo(entry.itemLink)
+      local itemLevel = C_Item.GetDetailedItemLevelInfo(entry.itemLink)
 
       if itemLevel ~= nil then
         itemLinkToLevel[entry.itemLink] = itemLevel
