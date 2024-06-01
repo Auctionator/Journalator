@@ -14,6 +14,9 @@ function JournalatorDisplayMixin:OnLoad()
   ButtonFrameTemplate_HidePortrait(self)
   ButtonFrameTemplate_HideButtonBar(self)
   self.Inset:Hide()
+  if TSM_API then
+    self:SetFrameStrata("HIGH")
+  end
 
   self:RegisterForDrag("LeftButton")
 
