@@ -472,6 +472,10 @@ function JournalatorVendorItemsMonitorMixin:SortPurchaseQueue()
 end
 
 function JournalatorVendorItemsMonitorMixin:UpdateForCompletedPurchases()
+  if #self.purchaseQueue == 0 then
+    return
+  end
+
   local newStackSizes = GetGUIDStackSizes()
   local newQueue = {}
   for _, item in ipairs(self.purchaseQueue) do
