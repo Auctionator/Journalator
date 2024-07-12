@@ -1,7 +1,13 @@
 JournalatorReputationMonitorMixin = {}
 
-local REP_INCREASED_PATTERN = Journalator.Utilities.GetChatPattern(FACTION_STANDING_INCREASED)
-local REP_DECREASED_PATTERN = Journalator.Utilities.GetChatPattern(FACTION_STANDING_DECREASED)
+local REP_INCREASED_PATTERNS = {
+  Journalator.Utilities.GetChatPattern(FACTION_STANDING_INCREASED),
+  FACTION_STANDING_INCREASED_ACCOUNT_WIDE and Journalator.Utilities.GetChatPattern(FACTION_STANDING_INCREASED_ACCOUNT_WIDE),
+}
+local REP_DECREASED_PATTERNS = {
+  Journalator.Utilities.GetChatPattern(FACTION_STANDING_DECREASED),
+  FACTION_STANDING_DECREASED_ACCOUNT_WIDE and Journalator.Utilities.GetChatPattern(FACTION_STANDING_DECREASED_ACCOUNT_WIDE),
+}
 
 function JournalatorReputationMonitorMixin:OnLoad()
   self.reportKey = nil
@@ -41,10 +47,21 @@ end
 function JournalatorReputationMonitorMixin:ProcessText(text)
   Journalator.Debug.Message("reputation change", text)
 
-  local factionName, amount = text:match(REP_INCREASED_PATTERN)
+  local factionName, amount
+  for _, pattern in ipairs(REP_INCREASED_PATTERNS) do
+    factionName, amount = text:match(pattern)
+    if factionName then
+      break
+    end
+  end
   local multiplier = 1
   if factionName == nil or amount == nil then
-    factionName, amount = text:match(REP_DECREASED_PATTERN)
+    for _, pattern in ipairs(REP_DECREASED_PATTERNS) do
+      factionName, amount = text:match(pattern)
+      if factionName then
+        break
+      end
+    end
     multiplier = -1
   end
 

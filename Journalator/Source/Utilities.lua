@@ -37,12 +37,21 @@ do
   function Journalator.Utilities.GetFactionID(factionName)
     if factionMap == nil or factionMap[factionName] == nil then
       factionMap = {}
-      ExpandAllFactionHeaders()
+      (C_Reputation and C_Reputation.ExpandAllFactionHeaders or ExpandAllFactionHeaders)()
+      local function GetNameAndID(index)
+        if C_Reputation and C_Reputation.GetFactionDataByIndex then
+          local data = C_Reputation.GetFactionDataByIndex(index)
+          if data then
+            return data.name, data.factionID
+          end
+        else
+          local data = {GetFactionInfo(index)}
+          return data[1], data[14]
+        end
+      end
 
-      for i = 1, GetNumFactions() do
-        local factionInfo = {GetFactionInfo(i)}
-        local name = factionInfo[1]
-        local id = factionInfo[14]
+      for i = 1, (C_Reputation and C_Reputation.GetNumFactions or GetNumFactions)() do
+        local name, id = GetNameAndID(i)
         if name ~= nil then
           factionMap[name] = id
         end

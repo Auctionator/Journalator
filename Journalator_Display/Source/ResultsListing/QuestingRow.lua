@@ -64,7 +64,12 @@ function JournalatorLogViewQuestingRowMixin:ShowTooltip()
 
         local factionName
         if item.factionID then
-          factionName = GetFactionInfoByID(item.factionID)
+          if C_Reputation and C_Reputation.GetFactionDataByID then
+            local data = C_Reputation.GetFactionDataByID(item.factionID)
+            factionName = data and data.name
+          else
+            factionName = GetFactionInfoByID(item.factionID)
+          end
         else
           factionName = item.factionName
         end
