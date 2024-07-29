@@ -28,6 +28,7 @@ local function GetSpellIDFromSkillLineAbilityID(skillLineAbilityID)
       includeLegendary = true,
       includeArtifact = true,
       isFavoritesSearch = false,
+      currentExpansionOnly = false,
     })
   end
 
