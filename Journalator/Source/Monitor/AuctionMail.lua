@@ -27,8 +27,6 @@ local battlePetTooltip = {
 local function ExtractBattlePetLink(mailIndex, attachmentIndex)
   local tooltipInfo = C_TooltipInfo.GetInboxItem(mailIndex, attachmentIndex)
   if tooltipInfo then
-    TooltipUtil.SurfaceArgs(tooltipInfo)
-
     local itemString = "battlepet"
     for _, key in ipairs(battlePetTooltip) do
       itemString = itemString .. ":" .. tooltipInfo[key]
