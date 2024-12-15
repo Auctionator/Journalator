@@ -18,7 +18,7 @@ function JournalatorVendorRepairsMonitorMixin:OnLoad()
 end
 
 function JournalatorVendorRepairsMonitorMixin:RegisterRepairHandlers()
-  hooksecurefunc("RepairAllItems", function(isGuild)
+  local hook = function(isGuild)
     if not CanMerchantRepair() or isGuild then
       return
     end
@@ -34,6 +34,18 @@ function JournalatorVendorRepairsMonitorMixin:RegisterRepairHandlers()
     FrameUtil.RegisterFrameForEvents(self, REPAIR_VALIDATION_EVENTS)
 
     Journalator.Debug.Message("repair hook", GetMoneyString(self.repairBill))
+  end
+  hooksecurefunc("RepairAllItems", hook)
+
+  EventUtil.ContinueOnAddOnLoaded("ElvUI", function()
+    local E, L, V, P, G = unpack(ElvUI)
+    local M = E:GetModule('Misc')
+    hooksecurefunc(M, "AttemptAutoRepair", function(_, playerOverride)
+      local defaultRepairType = E.db.general.autoRepair
+      local cost = GetRepairAllCost()
+      local useGuild = not playerOverride and defaultRepairType == 'GUILD' and IsInGuild() and CanGuildBankRepair() and cost <= GetGuildBankWithdrawMoney()
+      hook(useGuild)
+    end)
   end)
 end
 
