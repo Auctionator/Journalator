@@ -23,6 +23,8 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Install SVN
+      run: sudo apt install -y subversion
     - uses: BigWigsMods/packager@master
       with:
         args: -S -p 453921 -a qv63EkGb -g ${{matrix.type}}
