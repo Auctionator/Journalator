@@ -123,6 +123,7 @@ local COMPARATORS = {
   experience = Auctionator.Utilities.NumberComparator,
   sourceCharacter = Auctionator.Utilities.StringComparator,
   rawDay = Auctionator.Utilities.NumberComparator,
+  zone = Auctionator.Utilities.StringComparator,
 }
 
 function JournalatorQuestsByQuestDataProviderMixin:Sort(fieldName, sortDirection)
