@@ -5,7 +5,7 @@ local function GetContainerItemLink(location)
 end
 
 function JournalatorAuctionPostingMonitorMixin:OnLoad()
-  if Journalator.Constants.IsTBC or Journalator.Constants.IsClassic then
+  if Journalator.Constants.IsClassic and (not IsUsingLegacyAuctionClient or IsUsingLegacyAuctionClient()) then
     if not Auctionator or not Auctionator.EventBus then
       return
     end
