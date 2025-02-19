@@ -1,5 +1,5 @@
 ## Interface: 110005, 110007
-## Interface-Cata: 40401
+## Interface-Cata: 40402
 ## Interface-Vanilla: 11505
 ## Title: Journalator
 ## Notes: Data storage and recording
