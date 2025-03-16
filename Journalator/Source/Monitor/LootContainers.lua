@@ -45,6 +45,9 @@ function JournalatorLootContainersMonitorMixin:OnEvent(eventName, ...)
 
   -- Loot item finished getting picked up
   elseif eventName == "LOOT_SLOT_CLEARED" then
+    if not self.currentContainer then
+      return
+    end
     local slot = ...
     self:TagLooted(slot)
 
@@ -249,7 +252,6 @@ function JournalatorLootContainersMonitorMixin:UpdateCacheSlot(slot)
 end
 
 function JournalatorLootContainersMonitorMixin:TagLooted(slot)
-  assert(self.currentContainer)
   for _, item in ipairs(self.currentContainer) do
     if item.slot == slot and not item.looted then
       DebugPrintItem("loot slot cleared", item)
