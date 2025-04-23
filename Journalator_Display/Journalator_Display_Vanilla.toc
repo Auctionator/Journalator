@@ -1,4 +1,4 @@
-## Interface: 11505
+## Interface: 11507
 ## Title: Journalator (Display)
 ## Notes: Main view
 ## Version: @project-version@
