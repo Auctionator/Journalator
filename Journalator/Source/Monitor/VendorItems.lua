@@ -290,8 +290,7 @@ function JournalatorVendorItemsMonitorMixin:UpdateCursorItem()
 end
 
 function JournalatorVendorItemsMonitorMixin:RegisterDragToSellHandlers()
-  -- Handle case when the cursor is used to select and sell an item
-  hooksecurefunc(_G, "PickupMerchantItem", function(index)
+  local function OnMerchantSell()
     if not self.merchantShown then
       return
     end
@@ -300,19 +299,16 @@ function JournalatorVendorItemsMonitorMixin:RegisterDragToSellHandlers()
       self.sellQueue[self.lastCursorItem.guid] = self.lastCursorItem.item
     end
     self.lastCursorItem = nil
-  end)
+  end
+  -- Handle case when the cursor is used to select and sell an item
+  hooksecurefunc(_G, "PickupMerchantItem", OnMerchantSell)
+  hooksecurefunc(_G, "SellCursorItem", OnMerchantSell)
 
   -- Handle pickups by other addons
-  hooksecurefunc(_G, "PickupGuildBankItem", function()
-    self:UpdateCursorItem()
-  end)
   hooksecurefunc(_G, "PickupInventoryItem", function()
     self:UpdateCursorItem()
   end)
   hooksecurefunc(_G, "PickupBagFromSlot", function()
-    self:UpdateCursorItem()
-  end)
-  hooksecurefunc(C_Item, "PickupItem", function()
     self:UpdateCursorItem()
   end)
   hooksecurefunc(C_Container, "PickupContainerItem", function()
