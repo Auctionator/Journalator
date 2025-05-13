@@ -12,11 +12,16 @@ local TRADE_EVENTS = {
 function JournalatorTradesMonitorMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, TRADE_EVENTS)
 
-  hooksecurefunc("SetTradeMoney", function(money)
+  local function Hook(money)
     if self.queuedTrade ~= nil then
       self.queuedTrade.moneyOut = money
     end
-  end)
+  end
+  if SetTradeMoney then
+    hooksecurefunc("SetTradeMoney", Hook)
+  elseif C_TradeInfo and C_TradeInfo.SetTradeMoney then
+    hooksecurefunc(C_TradeInfo, "SetTradeMoney", Hook)
+  end
 end
 
 function JournalatorTradesMonitorMixin:NewTrade()
