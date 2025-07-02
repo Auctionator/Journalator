@@ -12,10 +12,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        type: [retail, classic, cata]
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,11 +19,9 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Install SVN
-      run: sudo apt install -y subversion
     - uses: BigWigsMods/packager@master
       with:
-        args: -S -p 453921 -a qv63EkGb -g ${{matrix.type}}
+        args: -S -p 453921 -a qv63EkGb
       env:
         CF_API_KEY: ${{ secrets.plusmouse_curseforge }}
         WAGO_API_TOKEN: ${{ secrets.plusmouse_wago }}
