@@ -1,4 +1,5 @@
 ## Interface: 110105
+## Interface-Mists: 50500
 ## Interface-Cata: 40402
 ## Interface-Vanilla: 11507
 ## Title: Journalator
