@@ -8,7 +8,7 @@ end
 function JournalatorLogViewResultsRowMixin:OnEnter()
   AuctionatorResultsRowTemplateMixin.OnEnter(self)
 
-  if self.rowData.itemLink then
+  if self.rowData and self.rowData.itemLink then
     GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 
     if string.match(self.rowData.itemLink, "battlepet") then
@@ -23,10 +23,12 @@ end
 function JournalatorLogViewResultsRowMixin:OnLeave()
   AuctionatorResultsRowTemplateMixin.OnLeave(self)
 
-  if self.rowData.itemLink and string.match(self.rowData.itemLink, "battlepet") then
-    BattlePetTooltip:Hide()
-  elseif self.rowData.itemLink then
-    GameTooltip:Hide()
+  if self.rowData then
+    if self.rowData.itemLink and string.match(self.rowData.itemLink, "battlepet") then
+      BattlePetTooltip:Hide()
+    elseif self.rowData.itemLink then
+      GameTooltip:Hide()
+    end
   end
 end
 
